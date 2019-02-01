@@ -1,0 +1,30 @@
+.btn {
+    font-size: 12pt;
+    padding: 10px 25px 10px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.btn-yellow-fill {
+    color: white;
+    background-color: $dark-yellow;
+    border: 1.5px solid $dark-yellow;
+}
+
+.btn-yellow-empty {
+    color: $dark-yellow;
+    background-color: transparent;
+    border: 1.5px solid $dark-yellow;
+}
+
+.btn-dark-teal-fill {
+    color: white;
+    background-color: $dark-teal;
+    border: 1.5px solid $dark-teal;
+}
+
+.btn-dark-teal-empty {
+    color: $dark-teal;
+    background-color: transparent;
+    border: 1.5px solid $dark-teal;
+}

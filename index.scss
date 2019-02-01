@@ -1,3 +1,102 @@
+@import "colors";
+@import "fonts";
+@import "components";
+
 body {
-    color: pink;
+    text-align: center;
+    margin: 0px 25px 0px 25px;
+}
+
+.nav-link{
+    color: $medium-gray;
+    font-size: 18pt;
+
+    &:hover {
+        color: $teal;
+    }
+}
+
+.navbar-mobile {
+    bottom: 0;
+    position: fixed;
+}
+
+.navbar {
+    display: none;
+    h1 {
+        color: $teal;
+    }
+}
+
+#donate, #sign-up {
+    display: none;
+}
+
+.last-nav-item {
+    display: none;
+}
+
+.logo-mobile {
+    display: inline;
+    text-align: center; 
+    color: $teal;
+}
+
+// #slogan {
+//     //margin: 0px 40px 0px 40px;
+// }
+
+@media (min-width: 769px) {
+    .logo {
+        margin-right: 10px;
+    }
+
+    .logo-mobile {
+        display: none;
+    }
+    
+    .navbar {
+        display: flex;
+        //justify-content: space-between;
+        flex-wrap: nowrap;
+
+        #nav-buttons {
+            margin-left: auto;
+            button {
+                margin: 0px 5px 0px 5px;
+            }
+        }
+
+        .nav-item {
+            margin: 0px 5px 0px 5px;
+        }
+    }
+    .navbar-nav {
+        //display: flex;
+        //align-items: center;
+        justify-content: space-between;  
+        //flex-wrap: nowrap;
+        flex-grow: 2;
+        margin: 0px 40px 0px 40px;
+    }
+}
+
+//These numbers will depend on the content in the nav bar. The buttons show up as the
+//navbar grows. This is to prevent the nav from wrapping gross.
+@media (min-width: 1035px) {
+    .last-nav-item {
+        display: inline;
+    }
+}
+
+@media (min-width: 1170px) {
+    #sign-up {
+        display: inline;
+    }
+}
+
+@media (min-width: 1289px) {
+        #donate {
+            display: inline;
+        }
 }

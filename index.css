@@ -1,5 +1,175 @@
 body {
-  color: pink;
+  font-family: "Source Sans Pro", sans-serif;
+  color: #666460;
+}
+
+.font-light {
+  font-weight: 300;
+}
+
+.font-regular {
+  font-weight: 400;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 32pt;
+}
+
+h2 {
+  font-size: 26pt;
+}
+
+h3 {
+  font-size: 22pt;
+}
+
+h4 {
+  font-size: 18pt;
+}
+
+p {
+  font-size: 12pt;
+  line-height: 1.25;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 48pt;
+  }
+
+  h2 {
+    font-size: 36pt;
+  }
+
+  h3 {
+    font-size: 28pt;
+  }
+
+  h4 {
+    font-size: 22pt;
+  }
+
+  p {
+    font-size: 14pt;
+  }
+}
+.btn {
+  font-size: 12pt;
+  padding: 10px 25px 10px 25px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.btn-yellow-fill {
+  color: white;
+  background-color: #f7e054;
+  border: 1.5px solid #f7e054;
+}
+
+.btn-yellow-empty {
+  color: #f7e054;
+  background-color: transparent;
+  border: 1.5px solid #f7e054;
+}
+
+.btn-dark-teal-fill {
+  color: white;
+  background-color: #01505b;
+  border: 1.5px solid #01505b;
+}
+
+.btn-dark-teal-empty {
+  color: #01505b;
+  background-color: transparent;
+  border: 1.5px solid #01505b;
+}
+
+body {
+  text-align: center;
+  margin: 0px 25px 0px 25px;
+}
+
+.nav-link {
+  color: #93918d;
+  font-size: 18pt;
+}
+.nav-link:hover {
+  color: #9bead1;
+}
+
+.navbar-mobile {
+  bottom: 0;
+  position: fixed;
+}
+
+.navbar {
+  display: none;
+}
+.navbar h1 {
+  color: #9bead1;
+}
+
+#donate, #sign-up {
+  display: none;
+}
+
+.last-nav-item {
+  display: none;
+}
+
+.logo-mobile {
+  display: inline;
+  text-align: center;
+  color: #9bead1;
+}
+
+@media (min-width: 769px) {
+  .logo {
+    margin-right: 10px;
+  }
+
+  .logo-mobile {
+    display: none;
+  }
+
+  .navbar {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  .navbar #nav-buttons {
+    margin-left: auto;
+  }
+  .navbar #nav-buttons button {
+    margin: 0px 5px 0px 5px;
+  }
+  .navbar .nav-item {
+    margin: 0px 5px 0px 5px;
+  }
+
+  .navbar-nav {
+    justify-content: space-between;
+    flex-grow: 2;
+    margin: 0px 40px 0px 40px;
+  }
+}
+@media (min-width: 1035px) {
+  .last-nav-item {
+    display: inline;
+  }
+}
+@media (min-width: 1170px) {
+  #sign-up {
+    display: inline;
+  }
+}
+@media (min-width: 1289px) {
+  #donate {
+    display: inline;
+  }
 }
 
 /*# sourceMappingURL=index.css.map */
