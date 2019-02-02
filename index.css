@@ -59,8 +59,8 @@ p {
 }
 .btn {
   font-size: 12pt;
-  padding: 10px 25px 10px 25px;
-  border-radius: 8px;
+  padding: 8px 12px 8px 12px;
+  border-radius: 0.25rem;
   font-weight: 600;
 }
 
@@ -69,11 +69,19 @@ p {
   background-color: #f7e054;
   border: 1.5px solid #f7e054;
 }
+.btn-yellow-fill:hover {
+  color: #f7e054;
+  background-color: transparent;
+}
 
 .btn-yellow-empty {
   color: #f7e054;
   background-color: transparent;
   border: 1.5px solid #f7e054;
+}
+.btn-yellow-empty:hover {
+  color: white;
+  background-color: #f7e054;
 }
 
 .btn-dark-teal-fill {
@@ -81,11 +89,71 @@ p {
   background-color: #01505b;
   border: 1.5px solid #01505b;
 }
+.btn-dark-teal-fill:hover {
+  color: #01505b;
+  background-color: transparent;
+}
 
 .btn-dark-teal-empty {
   color: #01505b;
   background-color: transparent;
   border: 1.5px solid #01505b;
+}
+.btn-dark-teal-empty:hover {
+  color: white;
+  background-color: #01505b;
+}
+
+.divider {
+  margin: 45px auto 0;
+  width: 60px;
+  border-top: 1.5px solid #f7e054;
+}
+
+.col.card {
+  padding-right: 0px;
+  padding-left: 0px;
+  margin: 0px 25px 50px 25px;
+}
+.col.card .card-body {
+  background-color: #f4f4f4;
+  text-align: left;
+  padding: 30px;
+}
+.col.card .card-body .card-title {
+  font-size: 22pt;
+}
+
+#form .form-control {
+  font-weight: 300;
+  border: 0.75px solid #cececc;
+}
+#form .form-control:focus {
+  border-color: #9bead1;
+  box-shadow: 0px 1px 1px rgba(155, 234, 209, 0.075) inset, 0px 0px 8px rgba(155, 234, 209, 0.5);
+}
+#form .form-control::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #cececc;
+  opacity: 1;
+  /* Firefox */
+}
+#form .form-control:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #cececc;
+}
+#form .form-control::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #cececc;
+}
+
+#footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#footer #contact p, #footer #contact #social {
+  display: inline-block;
 }
 
 body {
