@@ -154,16 +154,20 @@ p {
 }
 #footer #contact p, #footer #contact #social {
   display: inline-block;
+  vertical-align: middle;
 }
 
 body {
   text-align: center;
+}
+
+section {
   margin: 0px 25px 0px 25px;
 }
 
 .nav-link {
   color: #93918d;
-  font-size: 18pt;
+  font-size: 14pt;
 }
 .nav-link:hover {
   color: #9bead1;
@@ -176,6 +180,7 @@ body {
 
 .navbar {
   display: none;
+  padding: 0px 20px 0px 20px;
 }
 .navbar h1 {
   color: #9bead1;
@@ -193,6 +198,21 @@ body {
   display: inline;
   text-align: center;
   color: #9bead1;
+}
+
+.row-cards {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+#section-4 {
+  max-width: 300px;
+  margin: 0 auto;
+}
+#section-4 .btn {
+  width: 300px;
+  padding: 6px 12px 6px 12px;
 }
 
 @media (min-width: 769px) {
@@ -222,6 +242,10 @@ body {
     justify-content: space-between;
     flex-grow: 2;
     margin: 0px 40px 0px 40px;
+  }
+
+  #section-2 p {
+    font-size: 18pt;
   }
 }
 @media (min-width: 1035px) {
