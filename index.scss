@@ -3,13 +3,16 @@
 @import "components";
 
 body {
-    text-align: center;
+    text-align: center;  
+}
+
+section {
     margin: 0px 25px 0px 25px;
 }
 
 .nav-link{
     color: $medium-gray;
-    font-size: 18pt;
+    font-size: 14pt;
 
     &:hover {
         color: $teal;
@@ -23,6 +26,7 @@ body {
 
 .navbar {
     display: none;
+    padding: 0px 20px 0px 20px;
     h1 {
         color: $teal;
     }
@@ -42,9 +46,21 @@ body {
     color: $teal;
 }
 
-// #slogan {
-//     //margin: 0px 40px 0px 40px;
-// }
+.row-cards {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+#section-4 {
+    max-width: 300px;
+    margin: 0 auto;
+
+    .btn {
+        width: 300px;
+        padding: 6px 12px 6px 12px;
+    }
+}
 
 @media (min-width: 769px) {
     .logo {
@@ -57,11 +73,11 @@ body {
     
     .navbar {
         display: flex;
-        //justify-content: space-between;
         flex-wrap: nowrap;
 
         #nav-buttons {
             margin-left: auto;
+            
             button {
                 margin: 0px 5px 0px 5px;
             }
@@ -71,15 +87,20 @@ body {
             margin: 0px 5px 0px 5px;
         }
     }
+
     .navbar-nav {
-        //display: flex;
-        //align-items: center;
         justify-content: space-between;  
-        //flex-wrap: nowrap;
         flex-grow: 2;
         margin: 0px 40px 0px 40px;
     }
+
+    #section-2 {
+        p {
+            font-size: 18pt;
+        }
+    }
 }
+
 
 //These numbers will depend on the content in the nav bar. The buttons show up as the
 //navbar grows. This is to prevent the nav from wrapping gross.
