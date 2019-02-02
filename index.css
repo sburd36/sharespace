@@ -104,6 +104,26 @@ p {
   background-color: #01505b;
 }
 
+.btn-teal-fill {
+  color: white;
+  background-color: #9bead1;
+  border: 1.5px solid #9bead1;
+}
+.btn-teal-fill:hover {
+  color: #9bead1;
+  background-color: white;
+}
+
+.btn-teal-empty {
+  color: #9bead1;
+  background-color: transparent;
+  border: 1.5px solid #9bead1;
+}
+.btn-teal-empty:hover {
+  color: white;
+  background-color: #9bead1;
+}
+
 .divider {
   margin: 45px auto 0;
   width: 60px;
@@ -154,6 +174,7 @@ p {
 }
 #footer #contact p, #footer #contact #social {
   display: inline-block;
+  vertical-align: middle;
 }
 
 body {
@@ -221,6 +242,13 @@ section {
 
   .logo-mobile {
     display: none;
+  }
+
+  .leave-site {
+    position: -webkit-sticky;
+    /* Safari */
+    position: sticky;
+    top: 10px;
   }
 
   .navbar {

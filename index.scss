@@ -70,6 +70,12 @@ section {
     .logo-mobile {
         display: none;
     }
+
+    .leave-site {
+        position: -webkit-sticky; /* Safari */
+        position: sticky;
+        top: 10px;
+    }
     
     .navbar {
         display: flex;

@@ -49,6 +49,28 @@
     }
 }
 
+.btn-teal-fill {
+    color: white;
+    background-color: $teal;
+    border: 1.5px solid $teal;
+
+    &:hover {
+        color: $teal;
+        background-color: white;
+    }
+}
+
+.btn-teal-empty {
+    color: $teal;
+    background-color: transparent;
+    border: 1.5px solid $teal;
+
+    &:hover {
+        color: white;
+        background-color: $teal
+    }
+}
+
 .divider {
     margin: 45px auto 0;
     width: 60px;
