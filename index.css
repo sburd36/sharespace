@@ -227,10 +227,33 @@ section {
 }
 
 #section-4 {
+  margin-left: 125px;
+  margin-right: 100px;
+}
+#section-4 .team-img {
+  max-width: 150px;
+  max-height: 150px;
+  margin-bottom: 30px;
+  padding: 0;
+}
+#section-4 .team-row {
+  text-align: left;
+}
+#section-4 h5 {
+  margin: 0;
+}
+#section-4 p {
+  margin: 0;
+}
+#section-4 #position {
+  color: #9bead1;
+}
+
+#section-5 {
   max-width: 300px;
   margin: 0 auto;
 }
-#section-4 .btn {
+#section-5 .btn {
   width: 300px;
   padding: 6px 12px 6px 12px;
 }
