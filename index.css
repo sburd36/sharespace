@@ -182,7 +182,7 @@ body {
 }
 
 section {
-  margin: 0px 25px 0px 25px;
+  margin: 0 80px 0 80px;
 }
 
 .nav-link {
@@ -200,10 +200,23 @@ section {
 
 .navbar {
   display: none;
+  margin: 0;
   padding: 0px 20px 0px 20px;
 }
 .navbar h1 {
   color: #9bead1;
+}
+
+#section-1 img {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+#section-2 img {
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 #donate, #sign-up {
@@ -222,22 +235,19 @@ section {
 
 .row-cards {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   margin: 0;
 }
 
-#section-4 {
-  margin-left: 125px;
-  margin-right: 100px;
-}
 #section-4 .team-img {
   max-width: 150px;
   max-height: 150px;
-  margin-bottom: 30px;
   padding: 0;
+  margin-right: auto;
+  margin-left: auto;
 }
-#section-4 .team-row {
-  text-align: left;
+#section-4 .team-row .team-member {
+  margin-bottom: 20px;
 }
 #section-4 h5 {
   margin: 0;
@@ -268,10 +278,14 @@ section {
   }
 
   .leave-site {
-    position: -webkit-sticky;
-    /* Safari */
-    position: sticky;
-    top: 10px;
+    right: 0;
+    position: fixed;
+    z-index: 1;
+    margin-top: 10px;
+    padding-right: 80px;
+  }
+  .leave-site button {
+    padding: 10px 20px 10px 20px;
   }
 
   .navbar {
@@ -296,6 +310,17 @@ section {
 
   #section-2 p {
     font-size: 18pt;
+  }
+
+  #section-4 .team-row {
+    text-align: left;
+    margin-right: 15px;
+    margin-left: 15px;
+  }
+  #section-4 .team-row .team-img {
+    margin-bottom: 30px;
+    margin-right: 0;
+    margin-left: 0;
   }
 }
 @media (min-width: 1035px) {
