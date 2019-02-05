@@ -14,6 +14,13 @@ section {
     visibility: hidden;
 }
 
+.logo-mobile {
+    img {
+        max-width: 150px;
+        margin-top: 30px;
+    }
+}
+
 .nav-link{
     color: $medium-gray;
     font-size: 14pt;
@@ -46,6 +53,7 @@ section {
 }
 
 #section-2 {
+    text-align: center;
     img {
         width: 100%;
         margin-top: 30px;
@@ -118,7 +126,7 @@ section {
 
 @media (min-width: 769px) {
     .logo {
-        margin: 15px 200px 15px 15px;
+        margin: 15px 550px 15px 15px;
         max-width: 150px;
     }
 
@@ -172,8 +180,14 @@ section {
     }
     
     #section-2 {
+        text-align: left;
         p {
-            font-size: 18pt;
+            font-size: 16pt;
+        }
+
+        #what-we-do {
+            display: flex;
+            align-items: center;
         }
     }
 
