@@ -6,14 +6,12 @@ body {
     text-align: center; 
 }
 
-.logo {
-    img{
-        max-width: 10%;
-    }
-}
-
 section {
     margin: 0 80px 0 80px; 
+}
+
+.leave-site {
+    visibility: hidden;
 }
 
 .nav-link{
@@ -41,7 +39,7 @@ section {
 
 #section-1 {
     img {
-        margin-top: 30px;
+        margin-top: 60px;
         margin-bottom: 30px;
         width: 100%;
     }
@@ -120,7 +118,8 @@ section {
 
 @media (min-width: 769px) {
     .logo {
-        margin-right: 10px;
+        margin: 15px 0px 15px 15px;
+        max-width: 150px;
     }
 
     .logo-mobile {
@@ -128,10 +127,11 @@ section {
     }
 
     .leave-site {
+        visibility: visible;
         right: 0;
         position: fixed;
         z-index: 1;
-        margin-top: 10px;
+        margin-top: 55px;
         padding-right: 80px;
 
         button {
@@ -162,6 +162,15 @@ section {
         margin: 0px 40px 0px 40px;
     }
 
+    #section-1 {
+        img {
+            margin-top: 70px;
+            margin-bottom: 50px;
+            padding: 0px 100px 0px 100px;
+        }
+        margin-top: 60px;
+    }
+    
     #section-2 {
         p {
             font-size: 18pt;
