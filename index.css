@@ -244,8 +244,8 @@ section {
 }
 
 #section-4 .team-img {
-  max-width: 150px;
-  max-height: 150px;
+  max-width: 175px;
+  max-height: 175px;
   padding: 0;
   margin-right: auto;
   margin-left: auto;
@@ -274,7 +274,7 @@ section {
 
 @media (min-width: 769px) {
   .logo {
-    margin: 15px 0px 15px 15px;
+    margin: 15px 200px 15px 15px;
     max-width: 150px;
   }
 
