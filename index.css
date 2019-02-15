@@ -305,6 +305,7 @@ section {
   .navbar {
     display: flex;
     flex-wrap: nowrap;
+    background-color: white;
   }
   .navbar #nav-buttons {
     margin-left: auto;
