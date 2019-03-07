@@ -1,0 +1,231 @@
+@import "colors";
+@import "fonts";
+@import "components";
+
+body {
+    text-align: center; 
+}
+
+section {
+    margin: 0 80px 0 80px; 
+}
+
+.leave-site {
+    visibility: hidden;
+}
+
+.logo-mobile {
+    img {
+        max-width: 150px;
+        margin-top: 30px;
+    }
+}
+
+.nav-link{
+    color: $medium-gray;
+    font-size: 14pt;
+
+    &:hover {
+        color: $teal;
+    }
+}
+
+.navbar-mobile {
+    bottom: 0;
+    position: fixed;
+}
+
+.navbar {
+    display: none;
+    margin: 0;
+    padding: 0px 20px 0px 20px;
+    h1 {
+        color: $teal;
+    }
+}
+
+#section-1 {
+    img {
+        margin-top: 60px;
+        margin-bottom: 30px;
+        width: 100%;
+    }
+}
+
+#section-2 {
+    text-align: center;
+    img {
+        width: 100%;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+}
+
+#donate, #sign-up {
+    display: none;
+}
+
+.last-nav-item {
+    display: none;
+}
+
+.logo-mobile {
+    display: inline;
+    text-align: center; 
+    color: $teal;
+}
+
+.row-cards {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+}
+
+#section-4 {
+    // margin-left: 125px;
+    // margin-right: 100px;
+
+    .team-img {
+        max-width: 175px;
+        max-height: 175px;
+        padding: 0;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    
+    .team-row {
+       .team-member {
+           margin-bottom: 20px;
+       }
+
+    }
+
+    h5 {
+        margin: 0;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    #position {
+        color: $teal;
+    }
+
+}
+
+#section-5 {
+    max-width: 300px;
+    margin: 0 auto;
+
+    .btn {
+        width: 300px;
+        padding: 6px 12px 6px 12px;
+    }
+}
+
+@media (min-width: 769px) {
+    .logo {
+        margin: 15px 550px 15px 15px;
+        max-width: 150px;
+    }
+
+    .logo-mobile {
+        display: none;
+    }
+
+    .leave-site {
+        visibility: visible;
+        right: 0;
+        position: fixed;
+        z-index: 1;
+        margin-top: 55px;
+        padding-right: 80px;
+
+        button {
+            padding: 10px 20px 10px 20px;
+        }
+    }
+    
+    .navbar {
+        display: flex;
+        flex-wrap: nowrap;
+        background-color: white;
+
+        #nav-buttons {
+            margin-left: auto;
+            
+            button {
+                margin: 0px 5px 0px 5px;
+            }
+        }
+
+        .nav-item {
+            margin: 0px 5px 0px 5px;
+        }
+    }
+
+    .navbar-nav {
+        justify-content: space-between;  
+        flex-grow: 2;
+        margin: 0px 40px 0px 40px;
+    }
+
+    #section-1 {
+        img {
+            margin-top: 70px;
+            margin-bottom: 50px;
+            padding: 0px 100px 0px 100px;
+        }
+        margin-top: 60px;
+    }
+    
+    #section-2 {
+        text-align: left;
+        p {
+            font-size: 16pt;
+        }
+
+        #what-we-do {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    
+    #section-4 {
+        .team-row {
+            text-align: left;
+            margin-right: 15px;
+            margin-left: 15px;
+
+            .team-img {
+                margin-bottom: 30px;
+                margin-right: 0;
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+
+//These numbers will depend on the content in the nav bar. The buttons show up as the
+//navbar grows. This is to prevent the nav from wrapping gross.
+@media (min-width: 1035px) {
+    .last-nav-item {
+        display: inline;
+    }
+}
+
+@media (min-width: 1170px) {
+    #sign-up {
+        display: inline;
+    }
+}
+
+@media (min-width: 1289px) {
+        #donate {
+            display: inline;
+        }
+}
+
