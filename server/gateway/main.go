@@ -4,12 +4,22 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"github.com/huibrm/assignments-huibrm/servers/gateway/handlers"
+	"github.com/huibrm/capstone2019/server/gateway/handlers"
+	"gopkg.in/mgo.v2"
 )
 
 
 //main is the main entry point for the server
 func main() {
+
+	sess, err := mgo.Dial("127.0.0.1")
+	if err != nil {
+		fmt.Printf("error dialing mongo: %v\n", err)
+	} else {
+		fmt.Printf("connected successfully!")
+	}
+	mongoSess := &handlers.MongoContext{sess}
+
 	ADDR := os.Getenv("ADDR")
 	if len(ADDR) == 0 {
 		ADDR = ":443"
