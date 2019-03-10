@@ -36,8 +36,9 @@ func main() {
 	}
 	
 	mux := http.NewServeMux()
-	mux.HandleFunc("/v1/summary", handlers.SummaryHandler)
+	mux.HandleFunc("/v1/info", handlers.mongoSess.InfoHandler)
+	wrappedMux := handlers.NewCorsMW(mux)
 	
 	log.Printf("Server is listening at http://%s:", ADDR)
-	log.Fatal(http.ListenAndServeTLS(ADDR, TLSCERT, TLSKEY, mux))
+	log.Fatal(http.ListenAndServeTLS(addr, TLSCERT, TLSKEY, wrappedMux))
 }
