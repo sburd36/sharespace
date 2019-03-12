@@ -7,22 +7,25 @@ export default class Nav extends React.Component {
     // }
     render() {
         return (
-            <nav class="navbar navbar-expand-md mb-2 m-0 border-bottom">
-                <a href="https://sburd36.github.io/capstone2019/"><img src={logo}  class="logo"alt="logo"/></a>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">The Mission</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Resources</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Our Community</a>
-                    </li>
-                </ul>
+            <nav class="navbar navbar-expand-md border-bottom">
+                <div class="d-flex">
+                    <a ref="https://sburd36.github.io/capstone2019/" style={{width: "200px"}}><img src={logo}  class="logo"alt="logo"/></a>
+                    <ul class="navbar-nav d-flex justify-content-start align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <b>ABOUT US</b>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <b>OUR TOOL</b>
+                            </a>
+                        </li>
+                    </ul>
+                </div>     
                 <div id="nav-buttons">
-                    <button class="btn btn-yellow-fill" id="sign-up">Get Started</button>
-                    <button class="btn btn-teal-empty" id="donate">Donate</button>
+                    <button class="btn btn-yellow-empty" id="log-in">LOG IN</button>
+                    <button class="btn btn-teal-empty" id="donate">DONATE</button>
                 </div>
             </nav>
         )
