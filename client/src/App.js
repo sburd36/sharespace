@@ -1,24 +1,34 @@
 import React, { Component } from 'react';
-import { HashRouter as Router } from 'react-router-dom';
 import './style/index.css';
 import Nav from './Nav'
 import Signup from './Signup'
+import Stay from './Stay'
 // import Footer from './Footer'
+import {HashRouter as Router, Switch, Redirect, Route} from "react-router-dom";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          {/* <Router> */}
-            {/* <div> */}
-              <Nav />
-              <Signup />
-              {/* <Footer /> */}
-            {/* </div>
-          </Router> */}
-        </header>
+      <div>
+        <Nav />
+        <Router>
+            <Switch>
+                <Route exact path="/" component={Signup}></Route>
+                <Route path="/stay" component={Stay}></Route>
+            </Switch>
+        </Router>
       </div>
+
+      // <div className="App">
+      //   <header className="App-header">
+      //     {/* <Router> */}
+      //       {/* <div> */}
+      //         <Signup />
+      //         {/* <Footer /> */}
+      //       {/* </div>
+      //     </Router> */}
+      //   </header>
+      // </div>
     );
   }
 }

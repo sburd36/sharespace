@@ -7,7 +7,7 @@ export default class Nav extends React.Component {
     // }
     render() {
         return (
-            <nav class="navbar navbar-expand-md border-bottom">
+            <nav class="navbar navbar-expand-md border-bottom" style={{height: "4rem"}}>
                 <div class="d-flex">
                     <a ref="https://sburd36.github.io/capstone2019/" style={{width: "200px"}}><img src={logo}  class="logo"alt="logo"/></a>
                     <ul class="navbar-nav d-flex justify-content-start align-items-center">

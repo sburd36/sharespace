@@ -371,5 +371,15 @@ section {
   }
 }
 
+#type-cards img { 
+  border-radius: 20px;
+}
+
+#type-card {
+  border-radius: 20px;
+}
+#type-card:focus {
+  background-color: red;
+}
 /*# sourceMappingURL=index.css.map */
 

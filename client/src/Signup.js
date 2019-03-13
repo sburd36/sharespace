@@ -3,7 +3,7 @@ import cart from "./img/shoppingcart.jpg"
 import women from "./img/53-.jpg"
 import connect from "./img/Connecting.jpg"
 import Select from 'react-select'
-// import {BrowserRouter as Router, Route, Link} from "react-router-dom"
+import {BrowserRouter as Router, Route, Link} from "react-router-dom"
 
 export default class Signup extends React.Component {
     constructor(props) {
@@ -20,89 +20,40 @@ export default class Signup extends React.Component {
     }
 
     render() {
-        const options = [
-            { value: 'chocolate', label: 'Chocolate' },
-            { value: 'strawberry', label: 'Strawberry' },
-            { value: 'vanilla', label: 'Vanilla' }
-        ];
         return (
-                <div>
-                    {/* { this.state.choice === "all" &&
-                        <div>
-                            <header class="d-flex p-5 justify-content-center">
-                                <button type="button" class="btn btn-outline-secondary btn-lg" 
-                                    style={{position: "absolute", left:"100px"}}>Sign up</button>
-                                <h3>Which situation describes you best?</h3>
-                            </header>
-                            <div class="d-flex justify-content-around" >
-                                <a href="#" onClick={() => this.setState({choice: "place"})}
-                                    style={{textDecoration: "none", color: "inherit"}}>
-                                    <div class="card" style={{width: "25rem"}}>
-                                        <img class="card-img-top" src={cart} />
-                                        <div class="card-body">
-                                            <h5>I want to donate!</h5>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="#" onClick={() => this.setState({choice: "place"})}
-                                    style={{textDecoration: "none", color: "inherit"}}>
-                                    <div class="card" style={{width: "25rem"}}>
-                                        <img class="card-img-top" src={women} />
-                                        <div class="card-body">
-                                            <h5>I'm an advocate!</h5>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="#" onClick={() => this.setState({choice: "place"})} 
-                                    style={{textDecoration: "none", color: "inherit"}}>                    
-                                    <div class="card" style={{width: "25rem"}}>
-                                        <img class="card-img-top" src={connect} />
-                                        <div class="card-body" >
-                                            <h5>I need a place to stay!</h5>
-                                        </div>
-                                    </div>
-                                </a>
+            <div>
+                <header class="d-flex p-5 justify-content-center">
+                    <button type="button" class="btn btn-outline-secondary btn-lg" 
+                        style={{position: "absolute", left:"100px"}}>Sign up</button>
+                    <h3>Which situation describes you best?</h3>
+                </header>
+                <div class="d-flex justify-content-around" >
+                    <Link to="/stay" style={{textDecoration: "none", color: "inherit"}}>
+                        <div class="card" style={{width: "25rem"}}>
+                            <img class="card-img-top" src={cart} />
+                            <div class="card-body">
+                                <h5>I want to donate!</h5>
                             </div>
                         </div>
-                    }
-                    {
-                        this.state.choice === "place" &&  */}
-                        <div class="d-flex justify-content-around" style={{padding: "20px"}}>
-                            <div class="card" style={{width: "25rem"}}>
-                                <img class="card-img-top" src={connect}></img>
-                                <div class="card-body">
-                                    <h5>Type</h5>
-                                </div>
+                    </Link>
+                    <Link to="/stay" style={{textDecoration: "none", color: "inherit"}}>
+                        <div class="card" style={{width: "25rem"}}>
+                            <img class="card-img-top" src={women} />
+                            <div class="card-body">
+                                <h5>I'm an advocate!</h5>
                             </div>
-                            <div>
-                                Preferred neighborhood 
-                                <Select
-                                    
-                                    options={options}
-                                />
-                                <div class="d-flex justify-content-around align-items-end ">
-                                    <div class="card" style={{width: "10rem", height: "10rem"}}>
-                                        <img class="card-img-top" src={connect}></img>
-                                        <div class="card-body">
-                                            <h5>Type</h5>
-                                        </div>
-                                    </div>
-                                    <div class="card" style={{width: "10rem", height: "10rem"}}>
-                                        <img class="card-img-top" src={connect}></img>
-                                        <div class="card-body">
-                                            <h5>Type</h5>
-                                        </div>
-                                    </div>
-                                    <div class="card" style={{width: "10rem", height: "10rem"}}>
-                                        <img class="card-img-top" src={connect}></img>
-                                        <div class="card-body">
-                                            <h5>Type</h5>
-                                        </div>
-                                    </div>
-                                </div> 
+                        </div>
+                    </Link>
+                    <Link to="/stay" style={{textDecoration: "none", color: "inherit"}}>
+                        <div class="card" style={{width: "25rem"}}>
+                            <img class="card-img-top" src={connect} />
+                            <div class="card-body" >
+                                <h5>I need a place to stay!</h5>
                             </div>
-                        </div>            
+                        </div>
+                    </Link> 
                 </div>
+            </div>           
         )
     }
 }
