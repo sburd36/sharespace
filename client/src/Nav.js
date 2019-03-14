@@ -1,5 +1,6 @@
 import React from "react";
-import logo from './img/LOGO-teal.png'
+import logo from './img/logo-new.png'
+import {HashRouter as Link} from "react-router-dom";
 
 export default class Nav extends React.Component {
     // constructor(props) {
@@ -7,7 +8,7 @@ export default class Nav extends React.Component {
     // }
     render() {
         return (
-            <nav class="navbar navbar-expand-md border-bottom" style={{height: "4rem"}}>
+            <nav class="navbar navbar-expand-md border-bottom" style={{height: "5.5rem"}}>
                 <div class="d-flex">
                     <a ref="https://sburd36.github.io/capstone2019/" style={{width: "200px"}}><img src={logo}  class="logo"alt="logo"/></a>
                     <ul class="navbar-nav d-flex justify-content-start align-items-center">
@@ -17,9 +18,9 @@ export default class Nav extends React.Component {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                        <Link to="/signup">
                                 <b>OUR TOOL</b>
-                            </a>
+                        </Link>
                         </li>
                     </ul>
                 </div>     
