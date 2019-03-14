@@ -1,10 +1,21 @@
 .btn {
+    font-family: 'Josefin Sans', sans-serif;
     font-size: 12pt;
     padding: 8px 12px 8px 12px;
     border-radius: .25rem;
     font-weight: 600;
 }
 
+.btn-white-fill {
+    color: #f6c7b6;
+    background-color: white;
+    border: 1.5px solid white;
+
+    &:hover {
+        color: white;
+        background-color: transparent;
+    }
+}
 .btn-yellow-fill {
     color: white;
     background-color: $dark-yellow;
@@ -73,26 +84,28 @@
 
 .divider {
     margin: 45px auto 0;
-    width: 60px;
-    border-top: 1.5px solid $dark-yellow;
+    width: 300px;
+    border-top: 1.5px solid $light-pink;
 }
 
 
-.col.card {
-    padding-right: 0px;
-    padding-left: 0px;
-    margin: 0px 25px 50px 25px;
-    
-    .card-body {
-        background-color: $light-gray;
-        text-align: left;
-        padding : 30px;
+// .col.card {
+//     padding-right: 0px;
+//     padding-left: 0px;
+//     //margin: 0px 10px 0px 0px;
+//     border: none;
 
-        .card-title {
-            font-size: 22pt;
-        }
-    }
-}
+//     .card-body {
+//         text-align: left;
+//         padding : 0px;
+//         margin: 0px 30px 0px 0px;
+
+//         .card-title {
+//             font-size: 20pt;
+//             color: $dark-blue;
+//         }
+//     }
+// }
 
 #form .form-control {
     font-weight: 300;
@@ -127,5 +140,13 @@
             display: inline-block;
             vertical-align: middle;
         }
+    }
+}
+
+a {
+    color: $light-pink;
+
+    &:hover {
+        color: $teal;
     }
 }

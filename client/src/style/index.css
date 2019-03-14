@@ -1,4 +1,3 @@
-
 body {
   font-family: "Source Sans Pro", sans-serif;
   color: #666460;
@@ -21,6 +20,7 @@ h1 {
 }
 
 h2 {
+  font-family: "Josefin Sans", sans-serif;
   font-size: 26pt;
 }
 
@@ -59,30 +59,41 @@ p {
   }
 }
 .btn {
+  font-family: "Josefin Sans", sans-serif;
   font-size: 12pt;
   padding: 8px 12px 8px 12px;
   border-radius: 0.25rem;
   font-weight: 600;
 }
 
+.btn-white-fill {
+  color: #f6c7b6;
+  background-color: white;
+  border: 1.5px solid white;
+}
+.btn-white-fill:hover {
+  color: white;
+  background-color: transparent;
+}
+
 .btn-yellow-fill {
   color: white;
-  background-color: #f7e054;
-  border: 1.5px solid #f7e054;
+  background-color: #ea6648;
+  border: 1.5px solid #ea6648;
 }
 .btn-yellow-fill:hover {
-  color: #f7e054;
+  color: #ea6648;
   background-color: transparent;
 }
 
 .btn-yellow-empty {
-  color: #f7e054;
+  color: #ea6648;
   background-color: transparent;
-  border: 1.5px solid #f7e054;
+  border: 1.5px solid #ea6648;
 }
 .btn-yellow-empty:hover {
   color: white;
-  background-color: #f7e054;
+  background-color: #ea6648;
 }
 
 .btn-dark-teal-fill {
@@ -107,42 +118,28 @@ p {
 
 .btn-teal-fill {
   color: white;
-  background-color: #9bead1;
-  border: 1.5px solid #9bead1;
+  background-color: #7e95cd;
+  border: 1.5px solid #7e95cd;
 }
 .btn-teal-fill:hover {
-  color: #9bead1;
+  color: #7e95cd;
   background-color: white;
 }
 
 .btn-teal-empty {
-  color: #9bead1;
+  color: #7e95cd;
   background-color: transparent;
-  border: 1.5px solid #9bead1;
+  border: 1.5px solid #7e95cd;
 }
 .btn-teal-empty:hover {
   color: white;
-  background-color: #9bead1;
+  background-color: #7e95cd;
 }
 
 .divider {
   margin: 45px auto 0;
-  width: 60px;
-  border-top: 1.5px solid #f7e054;
-}
-
-.col.card {
-  padding-right: 0px;
-  padding-left: 0px;
-  margin: 0px 25px 50px 25px;
-}
-.col.card .card-body {
-  background-color: #f4f4f4;
-  text-align: left;
-  padding: 30px;
-}
-.col.card .card-body .card-title {
-  font-size: 22pt;
+  width: 300px;
+  border-top: 1.5px solid #f6c7b6;
 }
 
 #form .form-control {
@@ -150,7 +147,7 @@ p {
   border: 0.75px solid #cececc;
 }
 #form .form-control:focus {
-  border-color: #9bead1;
+  border-color: #7e95cd;
   box-shadow: 0px 1px 1px rgba(155, 234, 209, 0.075) inset, 0px 0px 8px rgba(155, 234, 209, 0.5);
 }
 #form .form-control::placeholder {
@@ -178,6 +175,13 @@ p {
   vertical-align: middle;
 }
 
+a {
+  color: #f6c7b6;
+}
+a:hover {
+  color: #7e95cd;
+}
+
 body {
   text-align: center;
 }
@@ -200,7 +204,7 @@ section {
   font-size: 14pt;
 }
 .nav-link:hover {
-  color: #9bead1;
+  color: #7e95cd;
 }
 
 .navbar-mobile {
@@ -214,13 +218,21 @@ section {
   padding: 0px 20px 0px 20px;
 }
 .navbar h1 {
-  color: #9bead1;
+  color: #7e95cd;
 }
 
+#section-1 {
+  color: #202e57;
+  text-align: left;
+}
 #section-1 img {
-  margin-top: 60px;
   margin-bottom: 30px;
   width: 100%;
+}
+#section-1 .logo-img {
+  max-width: 200px;
+  padding: 0 0 10px 0;
+  margin: 0;
 }
 
 #section-2 {
@@ -230,6 +242,21 @@ section {
   width: 100%;
   margin-top: 30px;
   margin-bottom: 30px;
+}
+
+#section-3 .col.card {
+  padding-right: 0px;
+  padding-left: 0px;
+  border: none;
+}
+#section-3 .col.card .card-body {
+  text-align: left;
+  padding: 0px;
+  margin: 0px 30px 0px 0px;
+}
+#section-3 .col.card .card-body .card-title {
+  font-size: 20pt;
+  color: #202e57;
 }
 
 #donate, #sign-up {
@@ -243,7 +270,7 @@ section {
 .logo-mobile {
   display: inline;
   text-align: center;
-  color: #9bead1;
+  color: #7e95cd;
 }
 
 .row-cards {
@@ -269,16 +296,28 @@ section {
   margin: 0;
 }
 #section-4 #position {
-  color: #9bead1;
+  color: #7e95cd;
 }
 
 #section-5 {
-  max-width: 300px;
-  margin: 0 auto;
+  margin: 0;
+  text-align: left;
+  color: white;
+  background: #f6c7b6;
+  padding: 100px 200px 200px 200px;
 }
 #section-5 .btn {
-  width: 300px;
-  padding: 6px 12px 6px 12px;
+  margin-top: 15px;
+  font-size: 20px;
+  padding: 15px 20px 10px 20px;
+}
+
+#section-6 {
+  padding: 50px 0 100px 0px;
+  text-align: left;
+}
+#section-6 h4 {
+  margin: 0;
 }
 
 @media (min-width: 769px) {
@@ -308,6 +347,9 @@ section {
     flex-wrap: nowrap;
     background-color: white;
   }
+  .navbar img {
+    max-height: 80px;
+  }
   .navbar #nav-buttons {
     margin-left: auto;
   }
@@ -326,24 +368,73 @@ section {
 
   #section-1 {
     margin-top: 60px;
+    margin-bottom: 50px;
   }
   #section-1 img {
-    margin-top: 70px;
-    margin-bottom: 50px;
-    padding: 0px 100px 0px 100px;
+    padding: 0px 25px 0px 100px;
+  }
+  #section-1 h2 {
+    padding-right: 150px;
   }
 
   #section-2 {
+    margin-top: 50px;
+    margin-bottom: 50px;
     text-align: left;
   }
-  #section-2 p {
-    font-size: 16pt;
+  #section-2 h4 {
+    margin-bottom: 0;
+    padding-right: 800px;
   }
-  #section-2 #what-we-do {
-    display: flex;
-    align-items: center;
+  #section-2 p {
+    margin-top: 10px;
+    padding-right: 750px;
+  }
+  #section-2 img {
+    margin: 0;
   }
 
+  #section-3 {
+    text-align: left;
+    padding-top: 30px;
+    margin-top: 50px;
+  }
+
+  #section-4 {
+    text-align: left;
+    margin-top: 50px;
+  }
+  #section-4 h4 {
+    margin-bottom: 20px;
+    color: #202e57;
+  }
+  #section-4 p {
+    padding-right: 75px;
+    font-size: 16px;
+  }
+  #section-4 img {
+    max-width: 150px;
+    max-height: 100px;
+  }
+  #section-4 .row {
+    display: flex;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  #section-4 .support-cards {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #section-4 .support-cards p {
+    padding: 0;
+    font-size: 14px;
+  }
+  #section-4 .support-cards .card {
+    border: none;
+  }
+  #section-4 .support-cards .card .card-title {
+    color: #202e57;
+  }
   #section-4 .team-row {
     text-align: left;
     margin-right: 15px;
@@ -371,15 +462,4 @@ section {
   }
 }
 
-#type-cards img { 
-  border-radius: 20px;
-}
-
-#type-card {
-  border-radius: 20px;
-}
-#type-card:focus {
-  background-color: red;
-}
 /*# sourceMappingURL=index.css.map */
-
