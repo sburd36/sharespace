@@ -3,20 +3,29 @@ import './style/index.css';
 import Nav from './Nav'
 import Signup from './Signup'
 import Stay from './Stay'
+import Landing from './Landing'
+import Advocate from './Advocate'
+import Login from './Login'
+
 // import Footer from './Footer'
 import {HashRouter as Router, Switch, Redirect, Route} from "react-router-dom";
-
 class App extends Component {
   render() {
     return (
       <div>
-        <Nav />
-        <Router>
+        <Router>  
+          <div>
+            <Nav />
             <Switch>
-                <Route exact path="/" component={Signup}></Route>
-                <Route path="/stay" component={Stay}></Route>
+                <Route exact path="/landing" component={Landing} />
+                <Route path="/login" component={Login} />
+                <Route path="/signup" component={Signup} />
+                <Route path="/stay" component={Stay} />
+                <Route path="/advocate" component={Advocate} />
             </Switch>
+          </div>      
         </Router>
+        
       </div>
 
       // <div className="App">
