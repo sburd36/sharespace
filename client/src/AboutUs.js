@@ -20,11 +20,10 @@ export default class Nav extends React.Component {
                 <div class="row">
                     <div class="col col-12 col-md-6">
                         <h2 style={{color: "#f9c1b3"}}>What is <span><img class="logo-long" src={logoLong}></img></span> ?</h2>
-                        <p class="font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
-                        Aenean velnisl justo. Mauris in ante quis sem convallis suscipit. Aenean at gravida ipsum.
+                        <p class="font-light">Sharespace is a online temporary housing platform for your community.
                         </p>
-                        <p class="font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
-                        Aenean velnisl justo.
+                        <p class="font-light">By working directly with local nonprofits, together we can dynamically share housing 
+                        resources for survivors transitioning out of domestically abusive relationships
                         </p>
                         <button class="btn btn-teal-fill">LEARN MORE</button>
                     </div>
@@ -40,11 +39,16 @@ export default class Nav extends React.Component {
                 <div class="row">
                     <div class="col col-12 col-md-6">
                         <h3 class="font-light">Who are we?</h3>
-                        <p class="font-light">We are a team of four women at the University of Washington passionate about making an impact.
-                        For our culminating senior project, we were given the opporunity to... Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
+                        <p class="font-light">We are a team of four women studying Informatics (Information + Technology + People) at the 
+                        University of Washington, ready to make an impact with technology. For our culminating senior project, we were given 
+                        the opportunity to design, create and pitch a product to market in 20 weeks in order to tackle a problem space that needed a solution. 
                         </p>
-                        <p class="font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
-                        Aenean velnisl justo.
+                        <p class="font-light">Using a build, measure, learn methodology, we are committed to create a product that lives beyond our 
+                        capstone and supports our communities to put an end to the cycle of domestic violence.
+                        </p>
+                        <p class="font-light">Given the incredible opportunity to do academic research, networking with influential advocates 
+                        throughout Seattle, and diverse user testing, we are dedicated to implementing a new conceptual design that leverages 
+                        everyone’s current efforts, and 
                         </p>
                     </div>
                     <div class="col col-12 col-md-6">
