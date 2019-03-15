@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/sburd36/capstone2019/precache-manifest.5bdcab505aa80159b4d4f7761c27a798.js"
+  "/capstone2019/precache-manifest.1dd43aa4df898bd5d99b2a8734e65b64.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/sburd36/capstone2019/index.html", {
+workbox.routing.registerNavigationRoute("/capstone2019/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
