@@ -27,32 +27,10 @@ class App extends Component {
                   <Route path="/advocate" component={Advocate} />
                   <Route path="/login" component={Login} />
               </Switch>
-          </div>
-        <Router>  
-          <div>
-            <Nav />
-            <Switch>
-                <Route exact path="/landing" component={Landing} />
-                <Route path="/login" component={Login} />
-                <Route path="/signup" component={Signup} />
-                <Route path="/stay" component={Stay} />
-                <Route path="/advocate" component={Advocate} />
-            </Switch>
-          </div>      
+          </div>    
         </Router>
         <Footer />
       </div>
-
-      // <div className="App">
-      //   <header className="App-header">
-      //     {/* <Router> */}
-      //       {/* <div> */}
-      //         <Signup />
-      //         {/* <Footer /> */}
-      //       {/* </div>
-      //     </Router> */}
-      //   </header>
-      // </div>
     );
   }
 }
