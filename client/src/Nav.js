@@ -9,7 +9,7 @@ export default class Nav extends React.Component {
     // }
     render() {
         return (
-            <nav class="navbar navbar-expand-md border-bottom" style={{height: "5.5rem"}}>
+            <nav class="navbar navbar-expand-md" style={{height: "5.5rem"}}>
                 <div class="d-flex">
                     <Link to="/">
                         <img src={logo} class="logo" alt="logo"/>
