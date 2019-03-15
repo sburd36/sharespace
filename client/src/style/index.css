@@ -1,4 +1,3 @@
-
 body {
   font-family: "Source Sans Pro", sans-serif;
   color: #666460;
@@ -371,15 +370,4 @@ section {
   }
 }
 
-#type-cards img { 
-  border-radius: 20px;
-}
-
-#type-card {
-  border-radius: 20px;
-}
-#type-card:focus {
-  background-color: red;
-}
 /*# sourceMappingURL=index.css.map */
-
