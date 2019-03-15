@@ -2,21 +2,23 @@ package handlers
 
 import (
 	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type MongoContext struct {
-	MongoSession *Session
+	MongoSession *mgo.Session
 }
 
 type MongoInfo struct {
-	ID 			bson.ObjectId `json: "id"`
-	Location 	string		  `json: "location"`
-	Choices 	[]string	  `json: "choices"`
-	Email 		string		  `json: "email"`
+	ID 			bson.ObjectId 	`bson:"_id"`
+	Choices 	[]string	  	`json: "choices"`
+	City 		string		  	`json: "city"`
+	State 		string			`json: "state"`
+	Email 		string		  	`json: "email"`
 }
 
 type MongoResources struct {
-	ID	 		bson.ObjectId	`json: "id"`
+	ID	 		bson.ObjectId	`bson:"_id"`
 	Name 		string 			`json: "name"`
 	City 	    string 			`json: "city"`
 	State 	    string 			`json: "state"`

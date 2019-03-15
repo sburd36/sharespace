@@ -4,8 +4,9 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"github.com/huibrm/capstone2019/server/gateway/handlers"
+	"capstone2019/server/gateway/handlers"
 	"gopkg.in/mgo.v2"
+	"fmt"
 )
 
 
@@ -20,7 +21,7 @@ func main() {
 	}
 	mongoSess := &handlers.MongoContext{sess}
 
-	ADDR := os.Getenv("ADDR")
+	ADDR := os.Getenv("GATEWAYADDR")
 	if len(ADDR) == 0 {
 		ADDR = ":443"
 	}
@@ -36,9 +37,9 @@ func main() {
 	}
 	
 	mux := http.NewServeMux()
-	mux.HandleFunc("/v1/info", handlers.mongoSess.InfoHandler)
+	mux.HandleFunc("/v1/info", mongoSess.InfoHandler)
 	wrappedMux := handlers.NewCorsMW(mux)
 	
 	log.Printf("Server is listening at http://%s:", ADDR)
-	log.Fatal(http.ListenAndServeTLS(addr, TLSCERT, TLSKEY, wrappedMux))
+	log.Fatal(http.ListenAndServeTLS(ADDR, TLSCERT, TLSKEY, wrappedMux))
 }
