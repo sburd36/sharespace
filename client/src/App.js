@@ -4,7 +4,9 @@ import Nav from './Nav'
 import Signup from './Signup'
 import Stay from './Stay'
 import Landing from './landing'
-// import Footer from './Footer'
+import Footer from './Footer'
+import AboutUs from './AboutUs'
+import OurTool from './OurTool'
 import {HashRouter as Router, Switch, Redirect, Route} from "react-router-dom";
 
 class App extends Component {
@@ -12,6 +14,8 @@ class App extends Component {
     return (
       <div>
         <Nav />
+        <OurTool />
+        <AboutUs />
         <Landing />
         <Router>
             <Switch>
@@ -20,7 +24,7 @@ class App extends Component {
                 <Route path="/stay" component={Stay}></Route>
             </Switch>
         </Router>
-        
+        <Footer />
       </div>
 
       // <div className="App">

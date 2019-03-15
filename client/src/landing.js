@@ -169,15 +169,15 @@ export default class Landing extends React.Component {
                     </div>
                 </section>
 
-                <section id="section-5">
+                <section id="section-5" class="pink-background">
                     <h1>Join your community to give back in a more meaningful way. Let's help end the cycle of domestic violence.</h1>
                     <button class="btn btn-white-fill mt-2">SIGN UP</button>
                 </section>
 
-                <section id="section-6">
+                {/* <section id="section-6">
                     <h4 class="font-light">Have questions?</h4>
                     <h4 class="font-light">Contact our team at <a href="mailto:hearu.info@gmail.com">hearu.info@gmail.com</a> or find a local organization near you.</h4>
-                </section>
+                </section> */}
             </>
         )
     }
