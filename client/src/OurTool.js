@@ -3,6 +3,7 @@ import logo from './img/logo-new.png'
 import {HashRouter as Link} from "react-router-dom";
 import hero from "./img/dash.png"
 import monthView from "./img/month-view.png"
+import hostDisplay from "./img/host-display.png"
 
 export default class Nav extends React.Component {
     // constructor(props) {
@@ -27,8 +28,10 @@ export default class Nav extends React.Component {
                         <p class="font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
                         Aenean vel nisl justo. Mauris in ante quis sem convallis suscipit. Aenean at gravida ipsum.</p>
                         <div>
-                            <button class="btn btn-yellow-fill">SIGN UP</button>
-                            <button class="btn btn-teal-fill">LEARN MORE</button>
+                            <Link to='/signup'>
+                                <button class="btn btn-teal-fill">SIGN UP</button>
+                            </Link>
+                            {/* <button class="btn btn-teal-fill">LEARN MORE</button> */}
                         </div>
                     </div>
                     <div class="col col-md-9">
@@ -40,12 +43,15 @@ export default class Nav extends React.Component {
             <section id="host-dash">
                 <div class="row">
                     <div class="col col-md-9">
-                        <img src={monthView}></img>
+                        <img src={hostDisplay}></img>
                     </div>
                     <div class="col col-md-3">
                         <h3>Contact hosts efficiently.</h3>
                         <p class="font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
                         Aenean vel nisl justo. Mauris in ante quis sem convallis suscipit. Aenean at gravida ipsum.</p>
+                        <Link to='/signup'>
+                            <button class="btn btn-teal-fill">SIGN UP</button>
+                        </Link>
                     </div>
                 </div>
             </section>

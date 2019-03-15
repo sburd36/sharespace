@@ -1,6 +1,6 @@
 import React from "react";
 import logo from './img/logo-new.png'
-import {HashRouter as Link} from "react-router-dom";
+import { Link} from "react-router-dom";
 
 export default class Nav extends React.Component {
     // constructor(props) {
@@ -10,18 +10,22 @@ export default class Nav extends React.Component {
         return (
             <nav class="navbar navbar-expand-md border-bottom" style={{height: "5.5rem"}}>
                 <div class="d-flex">
-                    <a ref="https://sburd36.github.io/capstone2019/" style={{width: "200px"}}><img src={logo}  class="logo"alt="logo"/></a>
+                    <Link to="/">
+                        <img src={logo} class="logo" alt="logo"/>
+                    </Link>
                     <ul class="navbar-nav d-flex justify-content-start align-items-center">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
+                        <Link to="/aboutus">
+                            <li class="nav-item">
                                 <b>ABOUT US</b>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                        <Link to="/signup">
-                                <b>OUR TOOL</b>
+                            </li>
                         </Link>
-                        </li>
+                        
+                        <Link to="/ourtool">
+                            <li class="nav-item">
+                                <b>OUR TOOL</b>
+                            </li>
+                        </Link>
+                        
                     </ul>
                 </div>     
                 <div id="nav-buttons">
