@@ -3,41 +3,34 @@ import './style/index.css';
 import Nav from './Nav'
 import Signup from './Signup'
 import Stay from './Stay'
-import Landing from './Landing'
+import Landing from './landing'
+import Footer from './Footer'
+import AboutUs from './AboutUs'
+import OurTool from './OurTool'
 import Advocate from './Advocate'
 import Login from './Login'
-
-// import Footer from './Footer'
 import {HashRouter as Router, Switch, Redirect, Route} from "react-router-dom";
+
 class App extends Component {
   render() {
     return (
       <div>
-        <Router>  
+        <Router>
           <div>
             <Nav />
-            <Switch>
-                <Route exact path="/landing" component={Landing} />
-                <Route path="/login" component={Login} />
-                <Route path="/signup" component={Signup} />
-                <Route path="/stay" component={Stay} />
-                <Route path="/advocate" component={Advocate} />
-            </Switch>
-          </div>      
+              <Switch>
+                  <Route exact path="/" component={Landing}></Route>
+                  <Route path="/signup" component={Signup}></Route>
+                  <Route path="/stay" component={Stay}></Route>
+                  <Route path="/aboutus" component={AboutUs}></Route>
+                  <Route path="/ourtool" component={OurTool}></Route>
+                  <Route path="/advocate" component={Advocate} />
+                  <Route path="/login" component={Login} />
+              </Switch>
+          </div>    
         </Router>
-        
+        <Footer />
       </div>
-
-      // <div className="App">
-      //   <header className="App-header">
-      //     {/* <Router> */}
-      //       {/* <div> */}
-      //         <Signup />
-      //         {/* <Footer /> */}
-      //       {/* </div>
-      //     </Router> */}
-      //   </header>
-      // </div>
     );
   }
 }

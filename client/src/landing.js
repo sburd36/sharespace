@@ -9,6 +9,7 @@ import APIChaya from './img/apichaya.png'
 import iSchool from './img/iSchool.png'
 import MarysPlace from './img/marysplace.png'
 import Pastry from './img/pastry.jpg'
+import { Link } from 'react-router-dom'
 
 export default class Landing extends React.Component {
     render() {
@@ -28,8 +29,12 @@ export default class Landing extends React.Component {
                             <p class="font-light">We take out the bureaucracy, wait time, and lack of usability out of resource
                                 planning by providing an easy-to-use platform.
                             </p>
-                            <button class="btn btn-yellow-empty mt-2 mr-4">LEARN MORE</button>
-                            <button class="btn btn-teal-empty mt-2">SIGN UP</button>
+                            <Link to='/ourtool'>
+                                <button class="btn btn-yellow-empty mt-2 mr-4">LEARN MORE</button>
+                            </Link>
+                            <Link to='/signup'>
+                                <button class="btn btn-teal-empty mt-2">SIGN UP</button>
+                            </Link>
                         </div>
                         <div class="col-12 col-md-6">
                             <img src={graphic1}/>
@@ -169,15 +174,17 @@ export default class Landing extends React.Component {
                     </div>
                 </section>
 
-                <section id="section-5">
+                <section id="section-5" class="pink-background">
                     <h1>Join your community to give back in a more meaningful way. Let's help end the cycle of domestic violence.</h1>
-                    <button class="btn btn-white-fill mt-2">SIGN UP</button>
+                    <Link to='/signup'>
+                        <button class="btn btn-white-fill mt-2">SIGN UP</button>
+                    </Link>
                 </section>
 
-                <section id="section-6">
+                {/* <section id="section-6">
                     <h4 class="font-light">Have questions?</h4>
                     <h4 class="font-light">Contact our team at <a href="mailto:hearu.info@gmail.com">hearu.info@gmail.com</a> or find a local organization near you.</h4>
-                </section>
+                </section> */}
             </>
         )
     }

@@ -182,8 +182,18 @@ a:hover {
   color: #7e95cd;
 }
 
+.pink-background {
+  background-color: #f6c7b6;
+  margin: 0;
+  text-align: left;
+  color: white;
+  background: #f6c7b6;
+  padding: 150px 150px 150px 150px;
+  font-weight: 600;
+}
+
 body {
-  text-align: center;
+  text-align: left;
 }
 
 section {
@@ -279,16 +289,6 @@ section {
   margin: 0;
 }
 
-#section-4 .team-img {
-  max-width: 175px;
-  max-height: 175px;
-  padding: 0;
-  margin-right: auto;
-  margin-left: auto;
-}
-#section-4 .team-row .team-member {
-  margin-bottom: 20px;
-}
 #section-4 h5 {
   margin: 0;
 }
@@ -299,13 +299,35 @@ section {
   color: #7e95cd;
 }
 
-#section-5 {
-  margin: 0;
-  text-align: left;
-  color: white;
-  background: #f6c7b6;
-  padding: 100px 200px 200px 200px;
+#meet-the-team {
+  line-height: 1;
 }
+#meet-the-team h3 {
+  color: #fe8b6b;
+  margin: 50px 0 0px 0;
+}
+#meet-the-team h5 {
+  margin-bottom: 0;
+}
+#meet-the-team .team-desc {
+  margin-bottom: 20px;
+  padding-right: 500px;
+}
+#meet-the-team #position {
+  color: #f6c7b6;
+  margin-bottom: 0;
+}
+#meet-the-team .team-img {
+  max-width: 175px;
+  max-height: 175px;
+  padding: 0;
+  margin-right: auto;
+  margin-left: auto;
+}
+#meet-the-team .team-row .team-member {
+  margin-bottom: 20px;
+}
+
 #section-5 .btn {
   margin-top: 15px;
   font-size: 20px;
@@ -320,9 +342,31 @@ section {
   margin: 0;
 }
 
+#what-is-sharespace {
+  margin-bottom: 75px;
+}
+#what-is-sharespace .what-is {
+  color: #f9c1b3;
+}
+
+#who-are-we {
+  margin-top: 75px;
+  margin-bottom: 75px;
+}
+#who-are-we h3 {
+  color: #fe8b6b;
+}
+#who-are-we img {
+  max-width: 100%;
+}
+#who-are-we .row {
+  display: flex;
+  align-items: center;
+}
+
 @media (min-width: 769px) {
   .logo {
-    margin: 15px 550px 15px 15px;
+    margin: 15px 15px 15px 15px;
     max-width: 150px;
   }
 
@@ -444,6 +488,72 @@ section {
     margin-bottom: 30px;
     margin-right: 0;
     margin-left: 0;
+  }
+
+  #what-is-sharespace {
+    margin-top: 75px;
+  }
+  #what-is-sharespace p {
+    padding-right: 75px;
+  }
+  #what-is-sharespace .logo-long {
+    max-width: 300px;
+  }
+  #what-is-sharespace .phone-img {
+    padding-left: 150px;
+  }
+
+  #meet-the-team .team-row {
+    margin: 0px 15px 15px 0px;
+  }
+  #meet-the-team .team-img {
+    margin: 0px 15px 15px 30px;
+  }
+
+  #dash-sample {
+    padding-top: 50px;
+    text-align: center;
+  }
+  #dash-sample img {
+    max-width: 1200px;
+  }
+  #dash-sample h3 {
+    color: #202e57;
+    margin-top: 20px;
+  }
+  #dash-sample p {
+    text-align: left;
+    padding: 0 200px 0 200px;
+  }
+
+  #calendar {
+    margin-right: 0;
+    margin-top: 75px;
+  }
+  #calendar .row {
+    align-items: center;
+  }
+  #calendar img {
+    max-width: 1000px;
+    float: right;
+  }
+  #calendar p {
+    margin-bottom: 50px;
+  }
+  #calendar .btn-yellow-fill {
+    margin-right: 20px;
+  }
+
+  #host-dash {
+    margin-left: 0;
+    margin-top: 75px;
+  }
+  #host-dash .row {
+    align-items: center;
+  }
+  #host-dash img {
+    max-width: 1000px;
+    float: left;
   }
 }
 @media (min-width: 1035px) {
