@@ -7,6 +7,8 @@ import Landing from './landing'
 import Footer from './Footer'
 import AboutUs from './AboutUs'
 import OurTool from './OurTool'
+import Advocate from './Advocate'
+import Login from './Login'
 import {HashRouter as Router, Switch, Redirect, Route} from "react-router-dom";
 
 class App extends Component {
@@ -22,8 +24,21 @@ class App extends Component {
                   <Route path="/stay" component={Stay}></Route>
                   <Route path="/aboutus" component={AboutUs}></Route>
                   <Route path="/ourtool" component={OurTool}></Route>
+                  <Route path="/advocate" component={Advocate} />
+                  <Route path="/login" component={Login} />
               </Switch>
           </div>
+        <Router>  
+          <div>
+            <Nav />
+            <Switch>
+                <Route exact path="/landing" component={Landing} />
+                <Route path="/login" component={Login} />
+                <Route path="/signup" component={Signup} />
+                <Route path="/stay" component={Stay} />
+                <Route path="/advocate" component={Advocate} />
+            </Switch>
+          </div>      
         </Router>
         <Footer />
       </div>

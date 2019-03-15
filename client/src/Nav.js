@@ -1,6 +1,7 @@
 import React from "react";
 import logo from './img/logo-new.png'
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { NONAME } from "dns";
 
 export default class Nav extends React.Component {
     // constructor(props) {
@@ -29,7 +30,7 @@ export default class Nav extends React.Component {
                     </ul>
                 </div>     
                 <div id="nav-buttons">
-                    <button class="btn btn-yellow-empty" id="log-in">LOG IN</button>
+                    <Link to="/login"><button class="btn btn-yellow-empty" id="log-in">LOG IN</button></Link>
                     <button class="btn btn-teal-empty" id="donate">DONATE</button>
                 </div>
             </nav>
