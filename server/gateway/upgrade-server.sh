@@ -4,7 +4,7 @@ export MONGOADDR='resourcedb:27017'
 export MONGONAME='resourcedb'
 export NETWORK="capstone"
 export GATEWAYNAME="gate"
-export GATEWAYADDR=':443'
+export GATEWAYADDR=':444'
 
 # removeing existing dockers
 
@@ -26,15 +26,18 @@ docker network create $NETWORK
 
 docker run -d \
 --name $MONGONAME \
--e ADDR='mongodb:27017' \
+-e ADDR=$MONGOADDR \
 --network $NETWORK mongo
+
+sleep 10s
 
 docker run -d \
 --name $GATEWAYNAME \
 --network $NETWORK \
--p 443:443 \
+-p 444:444 \
 -e TLSCERT=$TLSCERT \
 -e TLSKEY=$TLSKEY \
+-e GATEWAYADDRESS=$GATEWAYADDR \
 -e MONGOADDR=$MONGOADDR \
 -v /etc/letsencrypt:/etc/letsencrypt:ro \
 maryhuibregtse/capstone-gateway

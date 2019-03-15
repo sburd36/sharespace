@@ -1,5 +1,5 @@
 FROM alpine
 RUN apk add --no-cache ca-certificates
-COPY gateway / capstone-gateway 
-EXPOSE 443
+COPY gateway /capstone-gateway 
+EXPOSE 444
 ENTRYPOINT ["/capstone-gateway"]

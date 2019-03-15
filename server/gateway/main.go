@@ -8,12 +8,21 @@ import (
 	"gopkg.in/mgo.v2"
 	"fmt"
 )
-
+// HelloHandler is a handler to check if the dcode server is alive
+func HelloHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Welcome to Sharespace Server! :) "))
+}
 
 //main is the main entry point for the server
 func main() {
-
-	sess, err := mgo.Dial("127.0.0.1")
+	mongoAddr := os.Getenv("MONGOADDR")
+	gatewayAddr := os.Getenv("GATEWAYADDR")
+	if len(gatewayAddr) == 0 {
+		gatewayAddr = ":444"
+	}
+	
+	// connecting to resources
+	sess, err := mgo.Dial("mongodb://"+mongoAddr)
 	if err != nil {
 		fmt.Printf("error dialing mongo: %v\n", err)
 	} else {
@@ -21,10 +30,7 @@ func main() {
 	}
 	mongoSess := &handlers.MongoContext{sess}
 
-	ADDR := os.Getenv("GATEWAYADDR")
-	if len(ADDR) == 0 {
-		ADDR = ":443"
-	}
+
 	
 	TLSCERT := os.Getenv("TLSCERT")
 	if len(TLSCERT) == 0 {
@@ -35,11 +41,12 @@ func main() {
 	if len(TLSKEY) == 0 {
 		log.Fatal("No TLSKEY environment variable found")
 	}
-	
+
 	mux := http.NewServeMux()
-	mux.HandleFunc("/v1/info", mongoSess.InfoHandler)
+	mux.HandleFunc("/sharespace", HelloHandler)
+	mux.HandleFunc("/sharespace/info", mongoSess.InfoHandler)
 	wrappedMux := handlers.NewCorsMW(mux)
 	
-	log.Printf("Server is listening at http://%s:", ADDR)
-	log.Fatal(http.ListenAndServeTLS(ADDR, TLSCERT, TLSKEY, wrappedMux))
+	log.Printf("Server is listening at http://%s:", gatewayAddr)
+	log.Fatal(http.ListenAndServeTLS(gatewayAddr, TLSCERT, TLSKEY, wrappedMux))
 }
