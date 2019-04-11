@@ -160,3 +160,16 @@ a {
     padding: 150px 150px 150px 150px;
     font-weight: 600;
 }
+
+.back-button {
+    margin-left: 75px;
+    margin-top: 25px;
+    color: $medium-gray;
+    text-decoration: none;
+    width: 200px;
+    font-size: 20px;
+
+    &:hover {
+        text-decoration: none;
+    }
+}

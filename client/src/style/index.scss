@@ -1,6 +1,7 @@
 @import "colors";
 @import "fonts";
 @import "components";
+@import "signup";
 
 body {
     text-align: left; 
@@ -21,12 +22,13 @@ section {
     }
 }
 
-.nav-link{
-    color: $medium-gray;
-    font-size: 14pt;
+.nav-item {
+    color: $teal;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 15pt;
 
     &:hover {
-        color: $teal;
+        color: $light-orange;
     }
 }
 
@@ -42,6 +44,8 @@ section {
     h1 {
         color: $teal;
     }
+    border-bottom: 0.25px solid $baby-blue;
+
 }
 
 #section-1 {
@@ -243,7 +247,7 @@ section {
         }
 
         .nav-item {
-            margin: 0px 5px 0px 5px;
+            margin: 0px 25px 0px 10px;
         }
     }
 
@@ -426,6 +430,20 @@ section {
         img {
             max-width: 1000px;
             float: left;
+        }
+    }
+
+    #analytics {
+        margin-right: 0;
+        margin-top: 75px;
+
+        .row {
+            align-items: center;
+        }
+        
+        img {
+            max-width: 1000px;
+            float: right;
         }
     }
 }
