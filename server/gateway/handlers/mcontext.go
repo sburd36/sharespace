@@ -5,7 +5,7 @@ import (
 )
 
 type MongoContext struct {
-	MongoSession *Session
+	MongoSession *mgo.Session
 }
 
 type MongoInfo struct {

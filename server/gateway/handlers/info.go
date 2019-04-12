@@ -55,6 +55,7 @@ func (mctx *MongoContext) InfoHandler(w http.ResponseWriter, r *http.Request) {
 			choices.Choices,
 			email, 
 		}
+		i := mctx
 		info := mctx.DB("mydata").C("Info")
 		if err := info.Insert(toDataBase); err != nil {
 			fmt.Printf("error inserting document: %v\n", err)
