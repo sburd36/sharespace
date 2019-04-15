@@ -107,6 +107,36 @@ export default class Nav extends React.Component {
                     </div>
                 </div>
             </section>
+            <div class="container p-4 d-md-flex">
+                        <form id="contact" class="container" action="https://formspree.io/turtlemaster0828@gmail.com" method="POST">
+                            <h2 class="mt-5">Send Us a Message</h2>
+                            <div class="form-group">
+                                <label for="email" class="mb-0">
+                                    Email Address
+                                    <label class="text-danger">*</label>
+                                </label>
+                                <input id="emailAddress" type="email" class="form-control" placeholder="Your email" name="_replyto" aria-label="Name" aria-describedby="basic-addon1"
+                                    required />
+                            </div>
+                            <div class="form-group">
+                                <label for="subject" class="mb-0">
+                                    Subject
+                                    <label class="text-danger">*</label>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Title your message" name="subject" aria-label="Name" aria-describedby="basic-addon1"
+                                    required></input>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment" class="mb-0">
+                                    Message
+                                    <label class="text-danger">*</label>
+                                </label>
+                                <textarea class="form-control" placeholder="Type your message here" name="comment" rows="5" id="comment" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <input type="hidden" name="_next" value="/"></input>
+                        </form>
+                </div>
         <div class="divider mb-3"></div>
             </>
         )

@@ -1,6 +1,6 @@
 import React from "react";
 import logo from './img/logo-new.png'
-import {HashRouter as Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import hero from "./img/dash.png"
 import monthView from "./img/month-view.png"
 import hostDisplay from "./img/host-display.png"
@@ -13,13 +13,28 @@ export default class Nav extends React.Component {
     render() {
         return (
             <>
+            <div class="d-flex justify-content-center p-3">
+                <Link to="/calendar">                            
+                    <button class="btn btn-teal-fill">GO TO CALENDAR</button>
+                </Link>
+            </div>
             <section id="dash-sample">
                 <img src={hero}></img>
                 <h3>All your housing resources in one place.</h3>
                 <p class="font-light">Our team works closely with your nonprofit to take out the bureaucracy, 
                 wait time, and lack of integration, out of housing resource planning by providing this easy-to-use platform.</p>
             </section>
-
+            <div class="container p-4 d-md-flex">
+                <form id="contact" class="container" action="https://formspree.io/turtlemaster0828@gmail.com" method="POST">
+                    <h2 class="mt-5">Join Email List</h2>
+                    <div class="form-group">
+                        <input id="emailAddress" type="email" class="form-control" placeholder="Enter email" name="_replyto" aria-label="Name" aria-describedby="basic-addon1"
+                            required />
+                    </div>
+                    <button type="submit" class="btn btn-primary">JOIN</button>
+                    <input type="hidden" name="_next" value="/"></input>
+                </form>
+            </div>
             <div class="divider mb-3"></div>
 
             <section id="calendar">

@@ -48,7 +48,7 @@ export default class Landing extends React.Component {
                         </div> 
                     </div>
                 </section>
-
+                    
                 <div class="divider mb-3"></div>
                 
                 <section id="section-2"> 

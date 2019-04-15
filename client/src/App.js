@@ -9,6 +9,8 @@ import AboutUs from './AboutUs'
 import OurTool from './OurTool'
 import Advocate from './Advocate'
 import Login from './Login'
+import Calendar from './Calendar'
+
 import {HashRouter as Router, Switch, Redirect, Route} from "react-router-dom";
 
 class App extends Component {
@@ -19,13 +21,14 @@ class App extends Component {
           <div>
             <Nav />
               <Switch>
-                  <Route exact path="/" component={Landing}></Route>
-                  <Route path="/signup" component={Signup}></Route>
-                  <Route path="/stay" component={Stay}></Route>
-                  <Route path="/aboutus" component={AboutUs}></Route>
-                  <Route path="/ourtool" component={OurTool}></Route>
+                  <Route exact path="/" component={Landing} />
+                  <Route path="/signup" component={Signup} />
+                  <Route path="/stay" component={Stay} />
+                  <Route path="/aboutus" component={AboutUs} />
+                  <Route path="/ourtool" component={OurTool} />
                   <Route path="/advocate" component={Advocate} />
                   <Route path="/login" component={Login} />
+                  <Route path="/calendar" component={Calendar} />
               </Switch>
           </div>    
         </Router>
