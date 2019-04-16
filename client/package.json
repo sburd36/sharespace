@@ -5,13 +5,18 @@
   "homepage" : "http://sburd36.github.io/sharespace.github.io",
   "dependencies": {
     "@dashboardcode/bsmultiselect": "^0.2.20",
+    "@fullcalendar/core": "^4.0.2",
+    "@fullcalendar/daygrid": "^4.0.1",
+    "@fullcalendar/list": "^4.0.1",
+    "@fullcalendar/timegrid": "^4.0.1",
     "jquery": "^3.3.1",
     "live-server": "^1.2.1",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.5",
-    "react-select": "^2.4.2"
+    "react-scripts": "^2.1.8",
+    "react-select": "^2.4.2",
+    "typescript": "^3.4.3"
   },
   "scripts": {
     "start": "react-scripts start",
