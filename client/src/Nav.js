@@ -9,23 +9,25 @@ export default class Nav extends React.Component {
     // }
     render() {
         return (
-            <nav class="navbar navbar-expand-md border-bottom" style={{height: "5.5rem"}}>
+            <nav class="navbar navbar-expand-md" style={{height: "5.5rem"}}>
                 <div class="d-flex">
-                <Link to="/landing" style={{width: "200px"}}>
-                    <img src={logo}  class="logo" alt="logo" />
-                </Link>
-                <ul class="navbar-nav d-flex justify-content-start align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <b>ABOUT US</b>
-                        </a>
-                    </li>
-                    <Link to="/signup" style={{textDecoration: "none", color: "inherit"}}>
-                        <li class="nav-item">
-                            <b>OUR TOOLS</b>
-                        </li>
+                    <Link to="/">
+                        <img src={logo} class="logo" alt="logo"/>
                     </Link>
-                </ul>
+                    <ul class="navbar-nav d-flex justify-content-start align-items-center">
+                        <Link to="/aboutus">
+                            <li class="nav-item">
+                                <b>ABOUT US</b>
+                            </li>
+                        </Link>
+                        
+                        <Link to="/ourtool">
+                            <li class="nav-item">
+                                <b>OUR TOOL</b>
+                            </li>
+                        </Link>
+                        
+                    </ul>
                 </div>     
                 <div id="nav-buttons">
                     <Link to="/login"><button class="btn btn-yellow-empty" id="log-in">LOG IN</button></Link>

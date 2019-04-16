@@ -1,0 +1,49 @@
+@import "colors";
+@import "fonts";
+@import "components";
+
+
+#situation {
+    h4 {
+        text-align: center;
+    }
+
+    .card {
+        border: 1px solid $light-pink;
+        height: 475px;
+
+        &:hover {
+            border: 1px solid $teal;
+        }
+    }
+}
+
+#place-to-stay {
+    .card-body {
+        text-align: center;
+        padding: 0 0 10px 0px;
+        font-weight: 300;
+        font-size: 20px;
+    }
+
+    .btn {
+        float: right;
+        padding: 10px 25px 10px 25px; 
+
+    }
+}
+
+.concerns {
+    flex-wrap: wrap;
+}
+
+.orgs {
+    p {
+        padding:0;
+        margin: 0;
+    }
+
+    a {
+        color: $teal;
+    }
+}

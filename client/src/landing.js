@@ -9,6 +9,7 @@ import APIChaya from './img/apichaya.png'
 import iSchool from './img/iSchool.png'
 import MarysPlace from './img/marysplace.png'
 import Pastry from './img/pastry.jpg'
+import { Link } from 'react-router-dom'
 
 export default class Landing extends React.Component {
     render() {
@@ -19,17 +20,28 @@ export default class Landing extends React.Component {
                         <div class="col-12 col-md-6">
                             <img class="logo-img" src={logoLong}></img>
                             <h2>Share your space for good.</h2>
-                            <p class="font-light">Sharespace is a women sponsoring women platform where socially and economically stable women
-                                can sponsor, support, and enable women in difficult situations. 
+                            <p class="font-light">Sharespace is a online temporary housing platform for your community. 
+                            By working directly with local nonprofits, together we can dynamically share housing resources
+                            for survivors transitioning out of domestically abusive relationships.
                             </p>
-                            <p class="font-light">Through community support, we help them take the first steps towards leaving while
-                                developing their social skills, planning skills, and stability to build long term confidence.
+                            <p class="font-light">Through a collaborative community effort, we can open up more opportunities
+                            to lessen the load on overcrowded shelters and give dignity back to those who need it most.
+                            Research shows that just two-weeks to a month is enough to get someone back on their feet.
                             </p>
-                            <p class="font-light">We take out the bureaucracy, wait time, and lack of usability out of resource
-                                planning by providing an easy-to-use platform.
+                            {/* <p class="font-light">Along the way, we create new opportunities to re-integrate themselves into their
+                            communities and develop the independence they need to safely leave.
+                            </p> */}
+                            {/* <p class="font-light">Our team works closely with your nonprofit to take out the bureaucracy,
+                            wait time, and lack of integration, out of housing resource planning by providing this easy-to-use platform.
+                            </p> */}
+                            <p class="font-light">Consider opening up your home today.
                             </p>
-                            <button class="btn btn-yellow-empty mt-2 mr-4">LEARN MORE</button>
-                            <button class="btn btn-teal-empty mt-2">SIGN UP</button>
+                            <Link to='/ourtool'>
+                                <button class="btn btn-yellow-empty mt-2 mr-4">LEARN MORE</button>
+                            </Link>
+                            <Link to='/signup'>
+                                <button class="btn btn-teal-empty mt-2">SIGN UP</button>
+                            </Link>
                         </div>
                         <div class="col-12 col-md-6">
                             <img src={graphic1}/>
@@ -42,9 +54,10 @@ export default class Landing extends React.Component {
                 <section id="section-2"> 
                         <div>
                             <h4> <span style={{color: "#7e95cd"}}>We all face unexpected situations.</span> For millions of women, it means having to leave their home.</h4>
-                            <p class="font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
-                                Aenean vel nisl justo. Mauris in ante quis sem convallis suscipit. Aenean at gravida ipsum.
-                                Sed nec elementum mi, eu laoreet libero. Sed lacus neque, cursus ut elit ac, rutrum mollis libero.</p>
+                            <p class="font-light">Emergency shelter and transitional housing continue to be
+                            the most urgent unmet needs for domestic violence survivors. It is becoming more
+                            necessary than ever to activate our resources/do something so that more people
+                            can stay off the streets and avoid longer term consequences like debt and homelessness.</p>
                         </div>
                         <img src={graphic2}></img>
                 </section>
@@ -58,9 +71,9 @@ export default class Landing extends React.Component {
                             <img src={shopping} class="card-img-top" alt="..."/>
                             <div class="card-body">
                                 <h5 class="card-title">Refer community members to host with a local organization.</h5>
-                                <p class="card-text font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
-                                Aenean vel nisl justo. Mauris in ante quis sem convallis suscipit. Aenean at gravida ipsum.
-                                Sed nec elementum mi, eu laoreet libero. Sed lacus neque, cursus ut elit ac, rutrum mollis libero.
+                                <p class="card-text font-light">You know your community best. With the help of technology,
+                                Sharespace can effectively connect hosts with nonprofits’ calendars in real time to ensure 
+                                housing availability is an option for those who need it.
                                 </p>
                             </div>
                         </div>
@@ -68,9 +81,9 @@ export default class Landing extends React.Component {
                             <img src={group} class="card-img-top" alt="..."/>
                             <div class="card-body">
                                 <h5 class="card-title">Connect surviors with us or a local organization.</h5>
-                                <p class="card-text font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
-                                Aenean vel nisl justo. Mauris in ante quis sem convallis suscipit. Aenean at gravida ipsum.
-                                Sed nec elementum mi, eu laoreet libero. Sed lacus neque, cursus ut elit ac, rutrum mollis libero.
+                                <p class="card-text font-light">Survivors turn to their friends and family first, but
+                                sometimes it's better to get them what they really need. Sharespace works closely with 
+                                local nonprofits and organizers to provide the special support that survivors need to get to their goals. 
                                 </p>
                             </div>
                         </div>
@@ -79,9 +92,9 @@ export default class Landing extends React.Component {
                             <div class="card-body">
                                 <h5 class="card-title">Share your home with people on the road
                                 to independence.</h5>
-                                <p class="card-text font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
-                                Aenean vel nisl justo. Mauris in ante quis sem convallis suscipit. Aenean at gravida ipsum.
-                                Sed nec elementum mi, eu laoreet libero. Sed lacus neque, cursus ut elit ac, rutrum mollis libero.
+                                <p class="card-text font-light">Anything helps. Whether you have an extra bed or a guest home that lays 
+                                empty some nights - or an Airbnb listing that you’d like to do more with, your space can become a meaningful 
+                                experience and give back to your community.
                                 </p>
                             </div>
                         </div>
@@ -125,42 +138,46 @@ export default class Landing extends React.Component {
                         </div>
                         <div class="col col-12 col-md-6">
                             <h4>How we support you</h4>
-                            <p class="font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
-                                Aenean velnisl justo. Mauris in ante quis sem convallis suscipit. Aenean at gravida ipsum.</p>
+                            <p class="font-light">We understand this can sound like a lot to sign up for. That’s why
+                            Sharespace will be there to offer support and resources every step of the way.</p>
                             <div class="row support-cards">
                                 <div class="card col col-12 col-md-6 d-flex">
                                     <img class="card-img-top" alt="..." src={Pastry}/>
                                     <div class="card-body">
-                                        <p class="card-title">Lorem Ipsum</p>
-                                        <p class="card-text font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
-                                        Aenean vel nisl justo. Mauris in ante quis sem convallis suscipit. Aenean at gravida ipsum.
+                                        <p class="card-title">Screenings and Checks</p>
+                                        <p class="card-text font-light">Background checks will be conducted on guests and local 
+                                        organizations are vetted before joining our platform. All must meet safety qualifications 
+                                        before being considered for a homestay.
                                         </p>
                                     </div>
                                 </div>
                                 <div class="card col col-12 col-md-6 d-flex">
                                     <img class="card-img-top" alt="..." src={Pastry}/>
                                     <div class="card-body">
-                                        <p class="card-title">Lorem Ipsum</p>
-                                        <p class="card-text font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
-                                        Aenean vel nisl justo. Mauris in ante quis sem convallis suscipit. Aenean at gravida ipsum.
+                                        <p class="card-title">Connecting with an Advocate</p>
+                                        <p class="card-text font-light">Before any stay, advocates from the local organization we 
+                                        partner with will personally handle the booking, communications, needs-assessment, and 
+                                        cultural preferences matching to ensure the right pairing.
                                         </p>
                                     </div>
                                 </div>
                                 <div class="card col col-12 col-md-6 d-flex">
                                     <img class="card-img-top" alt="..." src={Pastry}/>
                                     <div class="card-body">
-                                        <p class="card-title">Lorem Ipsum</p>
-                                        <p class="card-text font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
-                                        Aenean vel nisl justo. Mauris in ante quis sem convallis suscipit. Aenean at gravida ipsum.
+                                        <p class="card-title">Routine Evaluations</p>
+                                        <p class="card-text font-light">We’re constantly building, integrating, and improving our platform. 
+                                        Hosts and organizations make this level of impact possible, so it's our priority to make sure your 
+                                        needs are met and tackle issues as they arise.
                                         </p>
                                     </div>
                                 </div>
                                 <div class="card col col-12 col-md-6 d-flex">
                                     <img class="card-img-top" alt="..." src={Pastry}/>
                                     <div class="card-body">
-                                        <p class="card-title">Lorem Ipsum</p>
-                                        <p class="card-text font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
-                                        Aenean vel nisl justo. Mauris in ante quis sem convallis suscipit. Aenean at gravida ipsum.
+                                        <p class="card-title">Online Support and Resources</p>
+                                        <p class="card-text font-light">We have your back. Our platform supports a 24/7 chat service that is 
+                                        available to you, in addition to the local organization leader who will be your main point of contact. 
+                                        Sharespace tries to provide 
                                         </p>
                                     </div>
                                 </div>
@@ -169,15 +186,17 @@ export default class Landing extends React.Component {
                     </div>
                 </section>
 
-                <section id="section-5">
+                <section id="section-5" class="pink-background">
                     <h1>Join your community to give back in a more meaningful way. Let's help end the cycle of domestic violence.</h1>
-                    <button class="btn btn-white-fill mt-2">SIGN UP</button>
+                    <Link to='/signup'>
+                        <button class="btn btn-white-fill mt-2">SIGN UP</button>
+                    </Link>
                 </section>
 
-                <section id="section-6">
+                {/* <section id="section-6">
                     <h4 class="font-light">Have questions?</h4>
                     <h4 class="font-light">Contact our team at <a href="mailto:hearu.info@gmail.com">hearu.info@gmail.com</a> or find a local organization near you.</h4>
-                </section>
+                </section> */}
             </>
         )
     }
