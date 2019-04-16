@@ -2,6 +2,7 @@
   "name": "capstone2019",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "http://sburd36.github.io/sharespace.github.io",
   "dependencies": {
     "@dashboardcode/bsmultiselect": "^0.2.20",
     "jquery": "^3.3.1",

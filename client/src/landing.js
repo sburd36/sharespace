@@ -28,12 +28,12 @@ export default class Landing extends React.Component {
                             to lessen the load on overcrowded shelters and give dignity back to those who need it most.
                             Research shows that just two-weeks to a month is enough to get someone back on their feet.
                             </p>
-                            <p class="font-light">Along the way, we create new opportunities to re-integrate themselves into their
+                            {/* <p class="font-light">Along the way, we create new opportunities to re-integrate themselves into their
                             communities and develop the independence they need to safely leave.
-                            </p>
-                            <p class="font-light">Our team works closely with your nonprofit to take out the bureaucracy,
+                            </p> */}
+                            {/* <p class="font-light">Our team works closely with your nonprofit to take out the bureaucracy,
                             wait time, and lack of integration, out of housing resource planning by providing this easy-to-use platform.
-                            </p>
+                            </p> */}
                             <p class="font-light">Consider opening up your home today.
                             </p>
                             <Link to='/ourtool'>
