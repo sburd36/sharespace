@@ -38,7 +38,7 @@ export default class Nav extends React.Component {
                     <input type="hidden" name="_next" value="/"></input>
                 </form>
                 <div id="nav-buttons">
-                    <Link to="/login"><button class="btn btn-yellow-empty" id="log-in">LOG IN</button></Link>
+                    <Link to="/signin"><button class="btn btn-yellow-empty" id="log-in">LOG IN</button></Link>
                     <button class="btn btn-teal-empty" id="donate">DONATE</button>
                 </div>
             </nav>

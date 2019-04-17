@@ -9,7 +9,6 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
-import women from "./img/53-.jpg"
 
 const styles = theme => ({
   main: {
@@ -43,37 +42,25 @@ const styles = theme => ({
   },
 });
 
-function SignUp(props) {
+function SignIn(props) {
   const { classes } = props;
 
   return (
     <main className={classes.main}>
       <CssBaseline />
       <Paper className={classes.paper}>
-        {/* <Avatar className={classes.avatar}>
-        </Avatar> */}
-        <h4>I'm an advocate!</h4>
-        <img class="card-img-top" src={women} style={{width: "25rem"}} />
-        <h4>Sign Up</h4>
+        <h4>Sign In</h4>
         <form className={classes.form}>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="name">Name</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email"/>
+            <Input id="email" name="email" autoComplete="email" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
             <Input name="password" type="password" id="password" autoComplete="current-password" />
           </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Confirm Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
-          </FormControl>
           <FormControlLabel
-            control={<Checkbox value="remember" color="pink" />}
+            control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
           <Button
@@ -83,7 +70,7 @@ function SignUp(props) {
             color="primary"
             className={classes.submit}
           >
-            Sign up
+            Sign in
           </Button>
         </form>
       </Paper>
@@ -91,8 +78,8 @@ function SignUp(props) {
   );
 }
 
-SignUp.propTypes = {
+SignIn.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SignUp);
+export default withStyles(styles)(SignIn);
