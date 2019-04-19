@@ -1,8 +1,8 @@
 {
-  "name": "capstone2019",
+  "name": "sharespace",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://sburd36.github.io/sharespace.github.io/",
+  "homepage": "https://sburd36.github.io/sharespace",
   "dependencies": {
     "@dashboardcode/bsmultiselect": "^0.2.20",
     "@fullcalendar/core": "^4.0.2",
