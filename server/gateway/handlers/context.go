@@ -1,12 +1,14 @@
 package handlers
 
 import (
-	"capstone/servers/gateway/models/users"
-	"capstone/servers/gateway/models/sessions"
+	"sharespace/server/gateway/models/users"
+	"sharespace/server/gateway/sessions"
+	// "gopkg.in/mgo.v2"
 )
 type HandlerContext struct {
 	Key          string
 	UserStore    users.Store
 	SessionStore sessions.Store
-	Trie		*indexes.Trie
+	// MongoConn	 *mgo.Session
+	
 }

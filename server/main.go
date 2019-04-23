@@ -7,12 +7,12 @@ import (
 	"os"
 	"time"
 	"database/sql"
-	"sharespace/server/gateway/handlers"
-	"sharespace/server/gateway/sessions"
-	// "gopkg.in/mgo.v2"
+	"capstone2019/server/gateway/handlers"
+	"capstone2019/server/gateway/sessions"
+	"gopkg.in/mgo.v2"
 	"github.com/go-redis/redis"
 	_ "github.com/go-sql-driver/mysql"
-	"sharespace/server/gateway/models/users"
+	"capstone2019/server/gateway/models/users"
 )
 
 
@@ -48,12 +48,12 @@ func main() {
 		log.Fatal("UserStore could not initiate")
 	}
 	defer userdb.Close()
-	// mongoConn, err := mgo.Dial("127.0.0.1")
-	// if err != nil {
-	// 	fmt.Printf("error dialing mongo: %v\n", err)
-	// } else {
-	// 	fmt.Printf("connected successfully!")
-	// }
+	mongoConn, err := mgo.Dial("127.0.0.1")
+	if err != nil {
+		fmt.Printf("error dialing mongo: %v\n", err)
+	} else {
+		fmt.Printf("connected successfully!")
+	}
 	TLSCERT := os.Getenv("TLSCERT")
 	if len(TLSCERT) == 0 {
 		log.Fatal("No TLSCERT environment variable found")
@@ -66,14 +66,14 @@ func main() {
 
 	ADDR := os.Getenv("ADDR")
 	if len(ADDR) == 0 {
-		ADDR = ":4000"
+		ADDR = ":443"
 	}
 	
 	ctx := &handlers.HandlerContext{
 		sesKey,
 		userStore,
 		sesStore,
-		// mongoConn,
+		mongoConn,
 	}
 	mux := http.NewServeMux()
 	// mux.HandleFunc("/v1/info", handlers.mongoSess.InfoHandler)

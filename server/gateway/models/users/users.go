@@ -2,16 +2,13 @@ package users
 
 import (
 	"crypto/md5"
-	"encoding/hex"
 	"fmt"
 	"net/mail"
-	"strings"
 	"time"
+	"strings"
 	"unicode"
-
 	"golang.org/x/crypto/bcrypt"
 )
-
 //gravatarBasePhotoURL is the base URL for Gravatar image requests.
 //See https://id.gravatar.com/site/implement/images/ for details
 const gravatarBasePhotoURL = "https://www.gravatar.com/avatar/"
@@ -33,8 +30,9 @@ type User struct {
 	UserName  string `json:"userName"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
-	Title     string `json: "title"`
-	PhotoURL  string `json:"photoURL"`
+	OrgID     int64  `json:"orgID`
+	Title     string `json:"title"`
+
 }
 
 //Credentials represents user sign-in credentials
@@ -51,7 +49,9 @@ type NewUser struct {
 	UserName     string `json:"userName"`
 	FirstName    string `json:"firstName"`
 	LastName     string `json:"lastName"`
-	Title     	 string `json: "title"`
+	OrgID     int64  `json:"orgID`
+	Title     	 string `json:"title"`
+
 }
 
 //Updates represents allowed updates to a user profile
@@ -123,8 +123,8 @@ func (nu *NewUser) ToUser() (*User, error) {
 		nu.UserName,
 		nu.FirstName,
 		nu.LastName,
+		nu.OrgID,
 		nu.Title,
-		"",
 	}
 	//Leave the ID field as the zero-value; your Store
 	//implementation will set that field to the DBMS-assigned
@@ -134,7 +134,6 @@ func (nu *NewUser) ToUser() (*User, error) {
 	email = strings.ToLower(email)
 	hash := md5.New()
 	hash.Write([]byte(email))
-	user.PhotoURL = gravatarBasePhotoURL + hex.EncodeToString(hash.Sum(nil))
 
 	// setting user PassHash
 	err = user.SetPassword(nu.Password)

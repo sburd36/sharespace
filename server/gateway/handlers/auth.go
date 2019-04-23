@@ -9,10 +9,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"sort"
-	"github.com/huibrm/assignments-huibrm/servers/gateway/models/users"
-	"github.com/huibrm/assignments-huibrm/servers/gateway/sessions"
-	"github.com/huibrm/assignments-huibrm/servers/gateway/indexes"
+	// "sort"
+	"sharespace/server/gateway/models/users"
+	"sharespace/server/gateway/sessions"
 
 )
 
@@ -27,7 +26,7 @@ const ContentTypeApplicationJSON = "application/json"
 
 //NewHandlerContext constructs a new HandlerContext,
 //ensuring that the dependencies are valid values
-func NewHandlerContext(Key string, UserStore users.Store, SessionStore sessions.Store, Trie *indexes.Trie) *HandlerContext {
+func NewHandlerContext(Key string, UserStore users.Store, SessionStore sessions.Store) *HandlerContext {
 	if UserStore == nil {
 		panic("nil SQLDB session!")
 	}
@@ -37,7 +36,7 @@ func NewHandlerContext(Key string, UserStore users.Store, SessionStore sessions.
 	if len(Key) < 1 {
 		panic("no key passed!")
 	}
-	return &HandlerContext{Key, UserStore, SessionStore, Trie}
+	return &HandlerContext{Key, UserStore, SessionStore}
 }
 
 // UsersHandler gets get user out of json
@@ -79,13 +78,12 @@ func (ctx *HandlerContext) UsersHandler(w http.ResponseWriter, r *http.Request) 
 			http.Error(w, fmt.Sprintf("error: could not insert user in db, %v", theErr), 400)
 			return
 		}
-		ctx.HandleTrie(theUser, true, false)
 		// chekc to see if you
 		if theUser.ID < 1 {
 			http.Error(w, fmt.Sprintf("error: user couldn no be inserted in db, %v", err), 500)
 			return
 		}
-		sessionState := &SessionsState{
+		sessionState := &SessionState{
             Time: time.Now(),
             User: theUser,
         }
@@ -107,38 +105,6 @@ func (ctx *HandlerContext) UsersHandler(w http.ResponseWriter, r *http.Request) 
 				http.StatusInternalServerError)
 			return
 		}
-	// added for trie
-	// case http.MethodGet:
-	// 	sesState := &SessionsState{}
-	// 	_, err := sessions.GetState(r, ctx.Key, ctx.SessionStore, sesState); 
-	// 	if err != nil {
-	// 		http.Error(w, fmt.Sprintf("Not a signed in user: %v", http.StatusUnauthorized), 401)
-	// 		return
-	// 	}
-	// 	query := r.FormValue("q")
-	// 	if len(query) == 0 {
-	// 		http.Error(w, fmt.Sprintf("Not a signed in user: %v", http.StatusBadRequest), 400)
-	// 		return
-	
-	// 	}
-	// 	userRecords := []*users.User{}
-	// 	results, _ := ctx.Trie.Find(query, 20)
-	// 	for _, id := range results {
-	// 		user, err := ctx.UserStore.GetByID(id)
-	// 		if err != nil {
-	// 			http.Error(w, fmt.Sprintf("No existing user: %v", http.StatusBadRequest), 400)
-	// 			return
-	// 		}
-	// 		userRecords = append(userRecords, user)
-
-	// 	}
-	// 	sort.Slice(userRecords, func(i, j int) bool { return userRecords[i].UserName < userRecords[j].UserName })
-	// 	w.Header().Add("Content-Type", "application/json")
-	// 	w.WriteHeader(http.StatusCreated)
-	// 	if err := json.NewEncoder(w).Encode(userRecords); err != nil {
-	// 		http.Error(w, fmt.Sprintf("Error encoding JSON: %v", http.StatusInternalServerError), 500)
-	// 		return
-	// 	}
 
 	default:
 		// Handles any methods not allowed at this resource path
@@ -146,30 +112,7 @@ func (ctx *HandlerContext) UsersHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 }
-// Do we want to use tries to have a search host option? 
-// HandleTrie updates trie for add, delete, update   
-// func (ctx *HandlerContext) HandleTrie(user *users.User, username bool, remove bool) {
-// 	var names [][]string
-// 	fname := strings.Split(user.FirstName, " ")
-// 	lname := strings.Split(user.LastName, " ")
-// 	if username {
-// 		useName := strings.Split(user.UserName, " ")
-// 		names = append(names, useName)
-// 	}	
-// 	id := user.ID
-// 	names = append(names, fname)
-// 	names = append(names, lname)
-	
-// 	for _, name := range names {
-// 		for _ ,word := range name {
-// 			if remove {
-// 				ctx.Trie.Remove(word, id)
-// 			} else {
-// 				ctx.Trie.Add(word, id)
-// 			}			
-// 		}
-// 	}
-// }
+
 // SpecificUsersHandler suports a signed is user and functions
 func (ctx *HandlerContext) SpecificUsersHandler(w http.ResponseWriter, r *http.Request) {
 	id := path.Base(r.URL.Path)
@@ -178,7 +121,7 @@ func (ctx *HandlerContext) SpecificUsersHandler(w http.ResponseWriter, r *http.R
 	// 	http.Error(w, fmt.Sprintf("error: no user id found"),400)
 	// 	return
 	// }
-	sesState := &SessionsState{}
+	sesState := &SessionState{}
 	_, err := sessions.GetState(r, ctx.Key, ctx.SessionStore, sesState)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Not a signed in user: %v", http.StatusUnauthorized), 401)
@@ -234,12 +177,7 @@ func (ctx *HandlerContext) SpecificUsersHandler(w http.ResponseWriter, r *http.R
 			http.Error(w, fmt.Sprintf("Error decoding JSON: %v", err), http.StatusBadRequest)
 			return
 		}
-		ctx.HandleTrie(user, true, true)
-		if err := user.ApplyUpdates(updates); err != nil {
-			http.Error(w, fmt.Sprintf("non valide characters for name %v", err), 400)
-			return
-		}
-		ctx.HandleTrie(user, false, false)
+
 		_, err := ctx.UserStore.Update(userID, updates)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("Error occurred while updating user: %v", err),
