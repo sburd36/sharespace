@@ -23,7 +23,7 @@ export default class Nav extends React.Component {
                         <p class="font-light">Sharespace is a online temporary housing platform for your community.
                         </p>
                         <p class="font-light">By working directly with local nonprofits, together we can dynamically share housing 
-                        resources for survivors transitioning out of domestically abusive relationships
+                        resources for survivors transitioning out of domestically abusive relationships.
                         </p>
                         <button class="btn btn-teal-fill">LEARN MORE</button>
                     </div>
@@ -41,14 +41,11 @@ export default class Nav extends React.Component {
                         <h3 class="font-light">Who are we?</h3>
                         <p class="font-light">We are a team of four women studying Informatics (Information + Technology + People) at the 
                         University of Washington, ready to make an impact with technology. For our culminating senior project, we were given 
-                        the opportunity to design, create and pitch a product to market in 20 weeks in order to tackle a problem space that needed a solution. 
+                        20 weeks to design and develop a technology solution for a problem we saw in the world.
+
                         </p>
-                        <p class="font-light">Using a build, measure, learn methodology, we are committed to create a product that lives beyond our 
-                        capstone and supports our communities to put an end to the cycle of domestic violence.
-                        </p>
-                        <p class="font-light">Given the incredible opportunity to do academic research, networking with influential advocates 
-                        throughout Seattle, and diverse user testing, we are dedicated to implementing a new conceptual design that leverages 
-                        everyone’s current efforts, and 
+                        <p class="font-light">Using a build-measure-learn methodology, we committed to create a product that supported our 
+                        communities to put an end to the cycle of domestic violence.
                         </p>
                     </div>
                     <div class="col col-12 col-md-6">
@@ -108,7 +105,7 @@ export default class Nav extends React.Component {
                 </div>
             </section>
             <div class="container p-4 d-md-flex">
-                        <form id="contact" class="container" action="https://formspree.io/turtlemaster0828@gmail.com" method="POST">
+                        <form id="contact" class="container" action="https://formspree.io/sharespace.app@gmail.com" method="POST">
                             <h2 class="mt-5">Send Us a Message</h2>
                             <div class="form-group">
                                 <label for="email" class="mb-0">

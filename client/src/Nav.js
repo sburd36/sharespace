@@ -28,7 +28,7 @@ export default class Nav extends React.Component {
                         </Link>
                     </ul>
                 </div>     
-                <form id="contact" class="container d-flex justify-content-end" action="https://formspree.io/turtlemaster0828@gmail.com" method="POST">
+                <form id="contact" class="container d-flex justify-content-end" action="https://formspree.io/sharespace.app@gmail.com" method="POST">
                     <div class="p-2"><b>JOIN US</b></div>
                     <div class="form-group pt-3 pr-2">
                         <input id="emailAddress" type="email" class="form-control" placeholder="Enter email" name="_replyto" aria-label="Name" aria-describedby="basic-addon1"
@@ -38,7 +38,7 @@ export default class Nav extends React.Component {
                     <input type="hidden" name="_next" value="/"></input>
                 </form>
                 <div id="nav-buttons">
-                    <Link to="/signin"><button class="btn btn-yellow-empty" id="log-in">LOG IN</button></Link>
+                    <Link to="/signin"><button class="btn btn-yellow-empty" id="log-in">SIGN IN</button></Link>
                     <button class="btn btn-teal-empty" id="donate">DONATE</button>
                 </div>
             </nav>

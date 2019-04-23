@@ -44,7 +44,7 @@ export default class Footer extends React.Component {
         // </footer>
         <section id="section-6">
         <h4 class="font-light">Have questions?</h4>
-        <h4 class="font-light">Contact our team at <a href="mailto:hearu.info@gmail.com">hearu.info@gmail.com</a> or find a local organization near you.</h4>
+        <h4 class="font-light">Contact our team at <a href="mailto:sharespace.app@gmail.com">sharespace.app@gmail.com</a></h4>
     </section>
         )
     }

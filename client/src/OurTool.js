@@ -20,7 +20,7 @@ export default class Nav extends React.Component {
             </div>
             <section id="dash-sample">
                 <img src={hero}></img>
-                <h3>All your housing resources in one place.</h3>
+                <h3>ALL YOUR HOUSING RESOURCES IN ONE PLACE.</h3>
                 <p class="font-light">Our team works closely with your nonprofit to take out the bureaucracy, 
                 wait time, and lack of integration, out of housing resource planning by providing this easy-to-use platform.</p>
             </section>
@@ -41,8 +41,9 @@ export default class Nav extends React.Component {
                 <div class="row">
                     <div class="col col-md-3">
                         <h3>A calendar of all calendars.</h3>
-                        <p class="font-light">Get a one-glance overview of all your participant’s availabilities and existing bookings. 
-                        Our powerful software provides real time updates of interactions so your organization can maximize their efforts and coordination.</p>
+                        <p class="font-light">Get a one-glance overview of all your participant’s availabilities and existing 
+                        bookings. Our powerful software provides real time updates of interactions so your organization can maximize scheduling and minimize the costs of coordination.
+                        </p>
                         <div>
                             <Link to='/signup'>
                                 <button class="btn btn-teal-fill">SIGN UP</button>
@@ -63,8 +64,9 @@ export default class Nav extends React.Component {
                     </div>
                     <div class="col col-md-3">
                         <h3>Contact hosts efficiently.</h3>
-                        <p class="font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
-                        Aenean vel nisl justo. Mauris in ante quis sem convallis suscipit. Aenean at gravida ipsum.</p>
+                        <p class="font-light">Our platform makes contacting and verifying hosts easy. Contact cards show host locations, reviews, phone, email, and receipts from past 
+                        trips. Customer management relationships for housing advocates have never been more accessible.
+                        </p>
                         <Link to='/signup'>
                             <button class="btn btn-teal-fill">SIGN UP</button>
                         </Link>

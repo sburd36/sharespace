@@ -19,20 +19,14 @@ export default class Landing extends React.Component {
                     <div class="row" id="what-we-do">
                         <div class="col-12 col-md-6">
                             <img class="logo-img" src={logoLong}></img>
-                            <h2>Share your space for good.</h2>
+                            <h3>Share your space for good.</h3>
                             <p class="font-light">Sharespace is a online temporary housing platform for your community. 
                             By working directly with local nonprofits, together we can dynamically share housing resources
                             for survivors transitioning out of domestically abusive relationships.
                             </p>
-                            <p class="font-light">Through a collaborative community effort, we can open up more opportunities
-                            to lessen the load on overcrowded shelters and give dignity back to those who need it most.
-                            Research shows that just two-weeks to a month is enough to get someone back on their feet.
-                            </p>
-                            <p class="font-light">Along the way, we create new opportunities to re-integrate themselves into their
-                            communities and develop the independence they need to safely leave.
-                            </p>
                             <p class="font-light">Our team works closely with your nonprofit to take out the bureaucracy,
-                            wait time, and lack of integration, out of housing resource planning by providing this easy-to-use platform.
+                            wait time, and lack of integration, out of housing resource planning by providing this easy-to-use 
+                            platform to dynamically find and book spaces for those who need it..
                             </p>
                             <p class="font-light">Consider opening up your home today.
                             </p>
@@ -56,7 +50,7 @@ export default class Landing extends React.Component {
                             <h4> <span style={{color: "#7e95cd"}}>We all face unexpected situations.</span> For millions of women, it means having to leave their home.</h4>
                             <p class="font-light">Emergency shelter and transitional housing continue to be
                             the most urgent unmet needs for domestic violence survivors. It is becoming more
-                            necessary than ever to activate our resources/do something so that more people
+                            necessary coordinate our resources so that more people
                             can stay off the streets and avoid longer term consequences like debt and homelessness.</p>
                         </div>
                         <img src={graphic2}></img>
@@ -65,13 +59,13 @@ export default class Landing extends React.Component {
                 <div class="divider mb-3"></div>
 
                 <section id="section-3">
-                    <h3>How you can help</h3>
+                    <h3>How can you help</h3>
                     <div class="mt-4 row row-cards ml-0">
                         <div class="card col col-12 col-md-4 d-flex">
                             <img src={shopping} class="card-img-top" alt="..."/>
                             <div class="card-body">
                                 <h5 class="card-title">Refer community members to host with a local organization.</h5>
-                                <p class="card-text font-light">You know your community best. With the help of technology,
+                                <p class="card-text font-light">You know your community best. With the help of cloud technology,
                                 Sharespace can effectively connect hosts with nonprofits’ calendars in real time to ensure 
                                 housing availability is an option for those who need it.
                                 </p>
@@ -82,8 +76,8 @@ export default class Landing extends React.Component {
                             <div class="card-body">
                                 <h5 class="card-title">Connect surviors with us or a local organization.</h5>
                                 <p class="card-text font-light">Survivors turn to their friends and family first, but
-                                sometimes it's better to get them what they really need. Sharespace works closely with 
-                                local nonprofits and organizers to provide the special support that survivors need to get to their goals. 
+                                sometimes it's better to get them the special support they really need. Sharespace works closely with 
+                                local nonprofits and organizers to to find affordable and safe housing. 
                                 </p>
                             </div>
                         </div>
@@ -92,9 +86,9 @@ export default class Landing extends React.Component {
                             <div class="card-body">
                                 <h5 class="card-title">Share your home with people on the road
                                 to independence.</h5>
-                                <p class="card-text font-light">Anything helps. Whether you have an extra bed or a guest home that lays 
-                                empty some nights - or an Airbnb listing that you’d like to do more with, your space can become a meaningful 
-                                experience and give back to your community.
+                                <p class="card-text font-light">Anything helps. Whether you have an extra bed, 
+                                a guest home that lays empty some nights, or an Airbnb listing that you’d like 
+                                to do more with, your space can become a meaningful experience and a way to give back to your community.
                                 </p>
                             </div>
                         </div>
@@ -165,9 +159,9 @@ export default class Landing extends React.Component {
                                     <img class="card-img-top" alt="..." src={Pastry}/>
                                     <div class="card-body">
                                         <p class="card-title">Routine Evaluations</p>
-                                        <p class="card-text font-light">We’re constantly building, integrating, and improving our platform. 
-                                        Hosts and organizations make this level of impact possible, so it's our priority to make sure your 
-                                        needs are met and tackle issues as they arise.
+                                        <p class="card-text font-light">We’re constantly building, integrating, and improving our 
+                                        platform. Hosts and organizations make this level of impact possible, so it's our priority 
+                                        to make sure your needs are met and tackle issues as they arise.
                                         </p>
                                     </div>
                                 </div>
@@ -177,7 +171,6 @@ export default class Landing extends React.Component {
                                         <p class="card-title">Online Support and Resources</p>
                                         <p class="card-text font-light">We have your back. Our platform supports a 24/7 chat service that is 
                                         available to you, in addition to the local organization leader who will be your main point of contact. 
-                                        Sharespace tries to provide 
                                         </p>
                                     </div>
                                 </div>
