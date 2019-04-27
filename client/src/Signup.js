@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +10,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
 import women from "./img/53-.jpg"
+import { withFirebase } from './Firebase';
+import { compose } from 'recompose';
+import { Link, withRouter } from 'react-router-dom';
+
 
 const styles = theme => ({
   main: {
@@ -43,65 +47,78 @@ const styles = theme => ({
   },
 });
 
-export default withStyles(styles)(class extends React.Component {
+
+const INITIAL_STATE = {
+  firstname: '',
+  lastname: '',
+  email: '',
+  password: '',
+  passwordConf: '',
+  type: 'Advocate',
+  error: null,
+};
+
+const ERROR_CODE_ACCOUNT_EXISTS = 'auth/email-already-in-use';
+
+const ERROR_MSG_ACCOUNT_EXISTS = `
+  An account with this E-Mail address already exists.
+  Try to login with this account instead. If you think the
+  account is already used from one of the social logins, try
+  to sign in with one of them. Afterward, associate your accounts
+  on your personal account page.
+`;
+// if firebase error, disable submit button
+
+
+class SignUpFormBase extends Component {
   constructor(props) {
-    super(props)
-    this.state = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      type: "advocate"
-    }
+    super(props);
 
+    this.state = { ...INITIAL_STATE };
   }
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
-  }
+  onSubmit = event => {
+    event.preventDefault();
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(this.state)
-    const SIGNUP_API = `http://localhost:4000/dcode`;
-    let requestURL = `${SIGNUP_API}/v1/user`;
-    // fetch(requestURL, {
-    //   method: "POST",
-    //   body: this.state
-    // })
-    //   .then(res => {
-    //     return res.text();
-    //   })
-    //   .then(body => {
-    //     console.log(body)
-    //   })
-    //   .catch(err => {
-    //     console.log(`Error: ${err}`);
-    //   })
-  }
+    console.log("inside event")
+    const { email, password } = this.state;
+    console.log("current state: " + this.state)
+    this.props.firebase
+      .doCreateUserWithEmailAndPassword(email, password)
+      .then(authUser => {
+        this.setState({ ...INITIAL_STATE });
+        this.props.history.push('/');
+        console.log("user: " + authUser)
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
 
-  // fetchSessionID() {
-  //   let requestURL = `${DCODE_API}/v1/new`;
-  //   // send request to API
-  //   fetch(requestURL, {
-  //       method: "GET",
-  //   })
-  //   .then(res => {
-  //       return res.text();
-  //   })
-  //   .then(body => {
-  //       this.props.getSessionID(body);
-  //       this.props.history.push(`/dcode/${body}`);
-  //   })
-  //   .catch(err => {
-  //       console.log(`Error: ${err}`);
-  //   });
-  // }
+  };
+
+  onChange = event => {
+    console.log(event.target.name + "   " + event.target.value)
+    this.setState({ [event.target.name]: event.target.value });
+  };
+  
   render() {
     const { classes } = this.props;
+    const {
+      firstname,
+      lastname,
+      email,
+      password,
+      passwordConf,
+      type,
+      error,
+    } = this.state;
+
+    const isInvalid =
+      password !== passwordConf ||
+      password === '' ||
+      email === '' ||
+      firstname === '' ||
+      lastname === '';
 
     return (
       <main className={classes.main}>
@@ -112,49 +129,53 @@ export default withStyles(styles)(class extends React.Component {
           <h4>I'm an advocate!</h4>
           <img class="card-img-top" src={women} style={{width: "25rem"}} />
           <h4>Sign Up</h4>
-          <form className={classes.form} onSubmit={this.handleSubmit}>
-            <FormControl margin="normal" required fullWidth>
+          <form className={classes.form} onSubmit={this.onSubmit}>
+            <FormControl margin="normal" fullWidth>
               <InputLabel htmlFor="name">First Name</InputLabel>
-              <Input id="firstName" name="firstName" autoComplete="firstName" onChange={this.handleChange} autoFocus />
+              <Input id="firstName" name="firstName" required autoComplete="firstName" onChange={this.onChange} autoFocus />
             </FormControl>
-            <FormControl margin="normal" required fullWidth>
+            <FormControl margin="normal" fullWidth>
               <InputLabel htmlFor="name">Last Name</InputLabel>
-              <Input id="lastName" name="lastName" autoComplete="lastName" onChange={this.handleChange}/>
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
+              <Input id="lastName" name="lastName" required autoComplete="lastName" onChange={this.onChange}/>
+            </FormControl> 
+            <FormControl margin="normal"  fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input id="email" name="email" autoComplete="email" onChange={this.handleChange}/>
+              <Input id="email" name="email" required autoComplete="email" onChange={this.onChange}/>
             </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input name="password" type="password" id="password" autoComplete="current-password" onChange={this.handleChange}/>
+            <FormControl margin="normal" fullWidth>
+              <InputLabel htmFor="password">Password</InputLabel>
+              <Input name="password" required type="password" id="password" autoComplete="current-password" onChange={this.onChange}/>
             </FormControl>
-            <FormControl margin="normal" required fullWidth>
+            <FormControl margin="normal" fullWidth>
               <InputLabel htmlFor="password">Confirm Password</InputLabel>
-              <Input name="confirmPassword" type="confirmPassword" id="confirmPassword" autoComplete="current-password" onChange={this.handleChange}/>
+              <Input name="confirmPassword" required type="confirmPassword" id="confirmPassword" autoComplete="current-password" onChange={this.onChange}/>
             </FormControl>
             <FormControlLabel
-              control={<Checkbox value="remember" color="pink" />}
+              control={<Checkbox value="remember" color="secondary" />}
               label="Remember me"
             />
-            <Button
+            <Button 
               type="submit"
               fullWidth
               variant="contained"
               color="primary"   
               className={classes.submit}
             >
-              Sign up
+              Sign up Bitches
             </Button>
+            {error && <p>{error.message}</p>}
           </form>
         </Paper>
       </main>
     );
   }
-})
+}
 
-// SignUp.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
+const SignUpForm = compose(
+  withRouter,
+  withStyles(styles),
+  withFirebase,
+)(SignUpFormBase);
 
-// export default withStyles(styles)(SignUp);
+
+export default SignUpForm;

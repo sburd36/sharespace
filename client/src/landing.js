@@ -33,7 +33,7 @@ export default class Landing extends React.Component {
                             <Link to='/ourtool'>
                                 <button class="btn btn-yellow-empty mt-2 mr-4">LEARN MORE</button>
                             </Link>
-                            <Link to='/signup'>
+                            <Link to='/situation'>
                                 <button class="btn btn-teal-empty mt-2">SIGN UP</button>
                             </Link>
                         </div>

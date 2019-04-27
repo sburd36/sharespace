@@ -18,8 +18,9 @@
     "react-big-calendar": "^0.20.4",
     "react-dom": "^16.8.3",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.5",
+    "react-scripts": "^3.0.0",
     "react-select": "^2.4.2",
+    "recompose": "^0.30.0",
     "typescript": "^3.4.5"
   },
   "scripts": {

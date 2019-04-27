@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './style/index.css';
 import Nav from './Nav'
-import SignUp from './Situation'
+import SignUp from './Signup'
 import Stay from './Stay'
 import Landing from './landing'
 import Footer from './Footer'
@@ -10,6 +10,7 @@ import OurTool from './OurTool'
 import Advocate from './Advocate'
 import SignIn from './SignIn'
 import Calendar from './Calendar'
+import Situation from './Situation'
 
 import {HashRouter as Router, Switch, Redirect, Route} from "react-router-dom";
 
@@ -29,6 +30,8 @@ class App extends Component {
                   <Route path="/advocate" component={Advocate} />
                   <Route path="/signin" component={SignIn} />
                   <Route path="/calendar" component={Calendar} />
+                  <Route path="/situation" component={Situation} />
+
               </Switch>
           </div>    
         </Router>

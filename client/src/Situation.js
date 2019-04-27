@@ -35,7 +35,7 @@ export default class Signup extends React.Component {
                             </div>
                         </div>
                     </Link>
-                    <Link to="/advocate" style={{textDecoration: "none", color: "inherit"}}>
+                    <Link to="/signup" style={{textDecoration: "none", color: "inherit"}}>
                         <div class="card" style={{width: "25rem"}}>
                             <img class="card-img-top" src={women} />
                             <div class="card-body">
