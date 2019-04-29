@@ -11,10 +11,17 @@ import Advocate from './Advocate'
 import SignIn from './SignIn'
 import Calendar from './Calendar'
 import Situation from './Situation'
+import { withAuthentication } from './Sessions';
+
 
 import {HashRouter as Router, Switch, Redirect, Route} from "react-router-dom";
+import PasswordForgetPage from './PassForget';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <div>
@@ -31,6 +38,9 @@ class App extends Component {
                   <Route path="/signin" component={SignIn} />
                   <Route path="/calendar" component={Calendar} />
                   <Route path="/situation" component={Situation} />
+                  <Route path="/PassForget" component={PasswordForgetPage} />
+
+
 
               </Switch>
           </div>    
@@ -41,7 +51,7 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withAuthentication(App);
 // <img src={logo} className="App-logo" alt="logo" />
 
 // <a
