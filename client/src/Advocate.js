@@ -22,9 +22,6 @@ const styles = theme => ({
         height: window.innerHeight,
         width: window.innerWidth / 2 + 230,
     },
-    control: {
-      padding: theme.spacing.unit * 2,
-    },
     bigAvatar: {
         position: "relative",
         width: window.innerWidth / 4,
