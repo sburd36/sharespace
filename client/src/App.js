@@ -12,10 +12,13 @@ import SignIn from './SignIn'
 import Calendar from './Calendar'
 import Situation from './Situation'
 import { withAuthentication } from './Sessions';
+import Dash from './Dash';
+import PasswordForgetPage from './PassForget';
+import Admin from './Admin';
+
 
 
 import {HashRouter as Router, Switch, Redirect, Route} from "react-router-dom";
-import PasswordForgetPage from './PassForget';
 
 class App extends Component {
   constructor(props) {
@@ -39,6 +42,10 @@ class App extends Component {
                   <Route path="/calendar" component={Calendar} />
                   <Route path="/situation" component={Situation} />
                   <Route path="/PassForget" component={PasswordForgetPage} />
+                  <Route path="/Dash" component={Dash} />
+                  <Route path="/Admin" component={Admin} />
+
+
 
 
 

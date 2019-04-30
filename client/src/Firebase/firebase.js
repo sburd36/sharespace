@@ -1,5 +1,6 @@
 import app from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database';
 
 const config = {
     apiKey:"AIzaSyDQ6iu5uEvZsLIUT_dI-xL86zgd71G7E2I",
@@ -14,6 +15,8 @@ const config = {
     constructor() {
       app.initializeApp(config);
       this.auth = app.auth();
+      this.db = app.database();
+
     }
     
     // *** Auth API ***
@@ -29,6 +32,15 @@ const config = {
 
     doPasswordUpdate = password =>
       this.auth.currentUser.updatePassword(password);
+    
+    // *** User API ***
+    user = uid => this.db.ref(`users/${uid}`);
+
+    users = () => this.db.ref('users');
+
+    tag = uid => this.db.ref(`hosts/${uid}`);
+
+    tags = () => this.db.ref('hosts')
 
   }
   

@@ -80,14 +80,24 @@ class SignUpFormBase extends Component {
     event.preventDefault();
 
     console.log("inside event")
-    const { email, password } = this.state;
+    const { email, password, firstname, lastname, type } = this.state;
     console.log("current state: " + this.state)
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then(authUser => {
+        // Create a user in your Firebase realtime database
+        return this.props.firebase
+          .user(authUser.user.uid)
+          .set({
+            firstname,
+            lastname,
+            email,
+            type,
+          });
+      })
+      .then(() => {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push('/');
-        console.log("user: " + authUser)
       })
       .catch(error => {
         this.setState({ error });
@@ -142,7 +152,7 @@ class SignUpFormBase extends Component {
               <Input id="email" name="email" required autoComplete="email" onChange={this.onChange}/>
             </FormControl>
             <FormControl margin="normal" fullWidth>
-              <InputLabel htmFor="password">Password</InputLabel>
+              <InputLabel htmlFor="password">Password</InputLabel>
               <Input name="password" required type="password" id="password" autoComplete="current-password" onChange={this.onChange}/>
             </FormControl>
             <FormControl margin="normal" fullWidth>

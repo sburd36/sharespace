@@ -13,6 +13,7 @@ import { withFirebase } from './Firebase';
 import { compose } from 'recompose';
 import { Link, withRouter } from 'react-router-dom';
 
+
 const PasswordForgetPage = () => (
     <div>
       <ForgetPassForm />
