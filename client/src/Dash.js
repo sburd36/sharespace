@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import women from "./img/53-.jpg";
+import person from './img/person.svg';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -9,21 +10,30 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+// For filter expansion
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import Checkbox from '@material-ui/core/Checkbox';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+// confirm host view
+import Host from './HostInfo';
 
 const styles = theme => ({
     root: {
       flexGrow: 1,
     },
     side: {
-      height: window.innerHeight,
+      height: window.outerHeight,
       width: window.innerWidth / 4 + 100,
+      padding: '2rem'
     }, 
+    hosts: {
+        height: window.outerHeight,
+        width: window.innerWidth / 2 + 230,
+    },
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
@@ -38,16 +48,47 @@ const styles = theme => ({
     },
     date: {
         padding: "1.5rem 0 0 4rem"
+    },
+    button: {
+        margin: theme.spacing.unit,
+    },
+    avatar: {
+        width: "100px",
+        height: "100px"
     }
   });
 
 const guests = [1,2,3,4]
+const filters = [
+                    {
+                        type: 'languages',
+                        name: 'Languages',
+                        values: ['English', 'Chinese(Mandarin)', 'Chinese(Cantonese)', 'Spanish', 'French', 'Japanese']
+                    },
+                    {
+                        type: 'homeType',
+                        name: 'Home Types',
+                        values: ["Entire Place", "Private Bedroom", 'Hotel Room', 'Shared Room', 'Shelter']
+                    },
+                    {
+                        type: 'amentities',
+                        name: 'Amentities',
+                        values: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Computer Access', 'Microwave', 'Self-Check in', 'Parking', 'Bike Storage', 'Private Bathroom', 'Meals', 'Voicemail']
+                    },
+                    {
+                        type: 'needs',
+                        name: 'Needs',
+                        values: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Child-Friendly', 'Near Public Transport', 'Women Only']
+                    },
+                    {
+                        type: 'ethnicities',
+                        name: 'Ethnicities',
+                        values: ['African Americans', 'Hispanic', 'Asian', 'White', 'Native/American Indian']
+                    },
+                ]
 const ethinicities = []
 const locations = []
-const languages = ['English', 'Chinese(Mandarin)', 'Chinese(Cantonese)', 'Spanish', 'French', 'Japanese']
-const homeType = ["Entire Place", "Private Bedroom", 'Hotel Room', 'Shared Room', 'Shelter']
-const amentities = ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Computer Access', 'Microwave', 'Self-Check in', 'Parking', 'Bike Storage', 'Private Bathroom', 'Meals', 'Voicemail']
-const needs = ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Child-Friendly', 'Near Public Transport', 'Women Only']
+
 export default withStyles(styles)(class extends React.Component {
     constructor(props) {
         super(props);
@@ -57,46 +98,45 @@ export default withStyles(styles)(class extends React.Component {
                     ID: 1,
                     name: "Stephanie Burd",
                     address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019"
+                    begin: "March 4",
+                    end: "25"
                 },
                 {
                     ID: 2,
                     name: "Min Yang",
                     address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019"
+                    begin: "March 4",
+                    end: "25"
                 },
                 {
                     ID: 3,
                     name: "Mary Huibregtse",
                     address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019"
+                    begin: "March 4",
+                    end: "April 25"
                 },
                 {
                     ID: 4,
                     name: "Abby Huang",
                     address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019"
+                    begin: "March 4",
+                    end: "April 25"
                 },
-                
             ],
         }
     }
 
     componentDidMount() {
         // const api = "http://www.zillow.com/webservice/GetRegionChildren.htm?zws-id=<ZWSID>&state=wa&city=seattle&childtype=neighborhood"
-        const api = "https://pokeapi.co/api/v2/pokemon/ditto/"
+        // const api = "https://pokeapi.co/api/v2/pokemon/ditto/"
 
-        fetch(api)
-            .then(
-                data => console.log(data.abilities)
-            )
-            .catch(
+        // fetch(api)
+        //     .then(
+        //         data => console.log(data.abilities)
+        //     )
+        //     .catch(
 
-            )
+        //     )
     }
 
 
@@ -113,6 +153,8 @@ export default withStyles(styles)(class extends React.Component {
             expanded: expanded ? panel : false,
         })
     }
+    
+
     render() {
         const { classes } = this.props;
         return (
@@ -189,70 +231,34 @@ export default withStyles(styles)(class extends React.Component {
                                                 </MenuItem>
                                             ))}
                                         </TextField>
-                                        <ExpansionPanel expanded={this.state.expanded === 'languages'} onChange={this.handleExpandChange('languages')}>
-                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                                <Typography className={classes.heading}>Languages</Typography>
-                                            </ExpansionPanelSummary>
-                                            <ExpansionPanelDetails>
-                                                {languages.map((data) => {
-                                                    return(
-                                                        <FormControlLabel
-                                                        control={
-                                                        <Checkbox
-                                                            checked={this.state.data}
-                                                            onChange={this.handleSelectChange(data)}
-                                                            value="checkedA"
-                                                        />
-                                                        }
-                                                        label={data}
-                                                    />
-                                                    )
-                                                })}
-                                            </ExpansionPanelDetails>
-                                        </ExpansionPanel>
-                                        <ExpansionPanel expanded={this.state.expanded === 'homeType'} onChange={this.handleExpandChange('homeType')}>
-                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                                <Typography className={classes.heading}>Home Type</Typography>
-                                            </ExpansionPanelSummary>
-                                            <ExpansionPanelDetails>
-                                                {homeType.map((data) => {
-                                                    return(
-                                                        <FormControlLabel
-                                                        control={
-                                                        <Checkbox
-                                                            checked={this.state.data}
-                                                            onChange={this.handleSelectChange(data)}
-                                                            value="checkedA"
-                                                        />
-                                                        }
-                                                        label={data}
-                                                        />
-                                                    )
-                                                })}
-                                            </ExpansionPanelDetails>
-                                        </ExpansionPanel>
-                                        <ExpansionPanel expanded={this.state.expanded === 'amentities'} onChange={this.handleExpandChange('amentities')}>
-                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                                <Typography className={classes.heading}>Amentities</Typography>
-                                            </ExpansionPanelSummary>
-                                            <ExpansionPanelDetails>
-                                                {amentities.map((data) => {
+                                        {
+                                            filters.map((d) => {
                                                 return(
-                                                    <FormControlLabel
-                                                    control={
-                                                    <Checkbox
-                                                        checked={this.state.data}
-                                                        onChange={this.handleSelectChange(data)}
-                                                        value="checkedA"
-                                                    />
-                                                    }
-                                                    label={data}
-                                                />
+                                                    <ExpansionPanel expanded={this.state.expanded === d.type} onChange={this.handleExpandChange(d.type)}>
+                                                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                                                            <Typography className={classes.heading}>{d.name}</Typography>
+                                                        </ExpansionPanelSummary>
+                                                        <ExpansionPanelDetails>
+                                                            {d.values.map((data) => {
+                                                                return(
+                                                                    <FormControlLabel
+                                                                    control={
+                                                                    <Checkbox
+                                                                        checked={this.state.data}
+                                                                        onChange={this.handleSelectChange(data)}
+                                                                        value="checkedA"
+                                                                    />
+                                                                    }
+                                                                    label={data}
+                                                                />
+                                                                )
+                                                            })}
+                                                        </ExpansionPanelDetails>
+                                                    </ExpansionPanel>
                                                 )
-                                                })}
-                                            </ExpansionPanelDetails>
-                                        </ExpansionPanel>
- 
+                                                
+                                            })
+                                        }
                                         <Button variant="contained" color="primary" className={classes.button}>
                                             New Booking
                                         </Button>
@@ -262,7 +268,7 @@ export default withStyles(styles)(class extends React.Component {
                             </Grid>
                         </Grid>
                         <Grid key={2} item>
-                            <Paper className={classes.bookings} >
+                            <Paper className={classes.hosts} >
                                 <Typography className="pt-5 pl-5" variant="h4" gutterBottom>
                                     CURRENT BOOKINGS
                                 </Typography>
@@ -272,21 +278,17 @@ export default withStyles(styles)(class extends React.Component {
                                             return(
                                                 <Card className={classes.card}>
                                                     <CardContent className={classes.content}>
+                                                    <img className={classes.avatar} src={person}></img>
                                                         <div>
-                                                            <Typography style={{maxWidth: 50}} variant="h5" component="h2">
+                                                            <h5>
                                                                 {booking.name}
-                                                            </Typography>
-                                                            <Typography color="textSecondary" gutterBottom>
-                                                                Guest ID: {booking.ID}
-                                                            </Typography>
+                                                            </h5>
                                                             <Typography className={classes.pos}>
                                                                 {booking.address}
                                                             </Typography>
-                                                        </div>                                                     
-                                                        <Typography className={classes.date}>
-                                                            {booking.begin} - <br/>{booking.end}
-                                                        </Typography>
+                                                        </div>                                                  
                                                     </CardContent>
+                                                    <Host booking={booking}></Host>
                                                 </Card>
                                             )
                                         }
