@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import bedroom from "./img/bedroom.jpg";
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 // For host pop-up
 import Dialog from '@material-ui/core/Dialog';
@@ -16,6 +17,9 @@ const styles = theme => ({
     },
     contact: {
         width: '600px'
+    },
+    button: {
+        margin: theme.spacing.unit,
     }
 })
 
@@ -24,6 +28,30 @@ export default withStyles(styles)(class extends React.Component {
         super(props)
         this.state = {
             open: false,
+            host: {
+                ID: 1,
+                information: {
+                    name: "Marry Potter",
+                    description: "Marry is a working professional who likes cat and yoga",
+                    languages: ["English"],
+                    religion: ["none"],
+                    ethnicity: ["White"],
+                    contact: {
+                        phone: "(306)142-2093",
+                        email: "mp@gmail.com"
+                    },
+                },
+                space:  [
+                    {
+                        ID: 1,
+                        amentities: [],
+                        checkinInfo: "",
+                        houseRules: [],
+                        // begin:,
+                        // end: ,
+                    }
+                ]
+                }
         }
     }
 
@@ -53,9 +81,10 @@ export default withStyles(styles)(class extends React.Component {
                     maxWidth='xl'
                     aria-labelledby="scroll-dialog-title"
                 >
+
                     <DialogContent>
-                        <h3>Home by {host.name}</h3>
                         <img className={classes.img} src={bedroom}></img>
+                        <h3>Home by {host.name}</h3>
                         <div class="d-flex justify-content-between">
                             <p style={{width: "700px"}}>
                                 aowjefpoi aosdjf wejoa;l ae ojagjas;oaj gaoijg wje aja;kngojgijg ;ag g aewg 
@@ -93,9 +122,20 @@ export default withStyles(styles)(class extends React.Component {
                         <h5>CHECK-IN INFORMATION</h5>
                         <hr></hr>
                         <h5>HOUSE RULES</h5>
-                        <Button variant="outlined" className={classes.filters}>
-                                ilovesharespace@sharespace.com
-                            </Button>
+                        <Button variant="outlined" className={classes.button}>
+                                No Smoking
+                        </Button>
+                        <hr></hr>
+                        <h5>BOOKING INFORMATION</h5>
+                        <TextField
+                            id="date"
+                            label="Start Date"
+                            type="date"
+                            className={classes.textField}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        /> 
                     </DialogContent>
                     <DialogActions >
                         <Button onClick={this.handleCloseHost} variant="contained" >
