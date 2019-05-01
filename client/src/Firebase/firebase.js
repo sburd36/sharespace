@@ -42,6 +42,12 @@ const config = {
 
     tags = () => this.db.ref('hosts')
 
+    events = () => this.db.ref('events');
+
+    event = uid => this.db.ref(`events/${uid}`);
+
+
+
   }
   
   export default Firebase;

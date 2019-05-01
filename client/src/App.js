@@ -15,6 +15,8 @@ import { withAuthentication } from './Sessions';
 import Dash from './Dash';
 import PasswordForgetPage from './PassForget';
 import Admin from './Admin';
+import SignUpHost from './SignUpHost';
+
 
 
 
@@ -44,6 +46,8 @@ class App extends Component {
                   <Route path="/PassForget" component={PasswordForgetPage} />
                   <Route path="/Dash" component={Dash} />
                   <Route path="/Admin" component={Admin} />
+                  <Route path="/SignUpHost" component={SignUpHost} />
+
 
 
 
