@@ -13,7 +13,7 @@ import { withFirebase } from './Firebase';
 import { compose } from 'recompose';
 import { Link, withRouter } from 'react-router-dom';
 
-
+const userObject = null
 const styles = theme => ({
   main: {
     width: 'auto',
@@ -48,6 +48,7 @@ const styles = theme => ({
 
 
 const INITIAL_STATE = {
+  userObject: null,
   firstName: '',
   lastName: '',
   email: '',
@@ -80,12 +81,16 @@ class SignUpFormBase extends Component {
     event.preventDefault();
 
     console.log("inside event")
-    const { email, password, firstName, lastName, type } = this.state;
+    const { email, password, firstName, lastName, type, userObject } = this.state;
     console.log("current state: " + this.state)
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then(authUser => {
         // Create a user in your Firebase realtime database
+        this.props.firebase.auth.currentUser.updateProfile({
+          displayName: firstName + " " + lastName
+        })
+        userObject = this.props.firebase.auth.currentUser
         return this.props.firebase
           .user(authUser.user.uid)
           .set({
@@ -97,7 +102,7 @@ class SignUpFormBase extends Component {
       })
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push('/');
+        this.props.history.push('/advocate');
       })
       .catch(error => {
         this.setState({ error });
@@ -113,6 +118,7 @@ class SignUpFormBase extends Component {
   render() {
     const { classes } = this.props;
     const {
+      userObject, 
       firstName,
       lastName,
       email,
@@ -187,4 +193,4 @@ const SignUpForm = compose(
 )(SignUpFormBase);
 
 
-export default SignUpForm;
+export default { SignUpForm, userObject };

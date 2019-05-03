@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import women from "./img/53-.jpg";
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { withFirebase } from './Firebase';
+import { compose } from 'recompose';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom';
+
 
 const styles = theme => ({
     root: {
@@ -42,11 +44,10 @@ const styles = theme => ({
         padding: "1.5rem 0 0 4rem"
     }
   });
-export default withStyles(styles)(class extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            bookings: [
+
+  const INITIAL_STATE = {
+       user: null,
+       bookings: [
                 {
                     ID: 1,
                     name: "Stephanie Burd",
@@ -77,10 +78,28 @@ export default withStyles(styles)(class extends React.Component {
                 },
                 
             ]
-        }
+  }
+class AdminDash extends Component {
+    constructor(props) {
+        super(props);    
+        this.state = { ...INITIAL_STATE };
+
+
+    }
+    componentDidMount() {
+        this.props.firebase.auth.onAuthStateChanged(function(user) {
+            if (user) {
+                console.log(user)
+            } else {
+                this.setState({
+                    user: "Patty"
+                })
+            }
+        });
     }
     render() {
         const { classes } = this.props;
+        console.log(this.state.user)
         return (
             <div class="pt-4">
                 <Grid 
@@ -94,7 +113,7 @@ export default withStyles(styles)(class extends React.Component {
                                 alignItems="center">
                                 <Paper className={classes.side} >
                                     <img src={women} className={classes.bigAvatar} />
-                                    <h3>Welcome, Advocate</h3>
+                                    <h3>Welcome,</h3>
                                     <Typography color="textSecondary">What would you like to do today</Typography>
                                     <Link to="/dash">
                                         <Button variant="contained" color="primary" className={classes.button}>
@@ -150,4 +169,12 @@ export default withStyles(styles)(class extends React.Component {
             </div>       
         )
     }
-})
+
+}
+const Dash = compose(
+    withRouter, 
+    withStyles(styles),
+    withFirebase,
+)(AdminDash);
+
+export default Dash;

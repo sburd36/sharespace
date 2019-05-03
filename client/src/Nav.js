@@ -16,10 +16,18 @@ const Navigation = () => (
     </div>
   );
 const NavigationAuth = () => (
-    <li>
-    <SignOutButton />
-</li>
-
+    <nav class="navbar navbar-expand-md" style={{height: "5.5rem"}}>
+    <div class="d-flex">
+        <Link to="/">
+            <img src={logo} class="logo" alt="logo"/>
+        </Link>
+    </div>     
+    <div id="nav-buttons">
+        <Link to="/">    
+            <SignOutButton />
+        </Link>
+    </div>
+</nav>
 );
 
 const NavigationNonAuth = () => (
@@ -53,8 +61,6 @@ const NavigationNonAuth = () => (
     </form>
     <div id="nav-buttons">
         <Link to="/signin"><button class="btn btn-yellow-empty" id="log-in">SIGN IN</button></Link>
-        <button class="btn btn-teal-empty" id="donate">DONATE</button>
-
     </div>
 </nav>
 
