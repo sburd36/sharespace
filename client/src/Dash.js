@@ -235,7 +235,7 @@ export default withStyles(styles)(class extends React.Component {
 
     handleInputChange = name => event => {
         this.setState({ [name]: event.target.value });
-      };
+    };
 
     handleSelectChange = name => event => {
         this.setState({ [name]: event.target.checked});
@@ -292,17 +292,15 @@ export default withStyles(styles)(class extends React.Component {
                                                 shrink: true,
                                             }}
                                         />
-                                        {/* <Select
-                                        value={values.name}
-                                        onChange={handleChange}
-                                        input={<Input name="name" id="name-disabled" />}
-                                        >
+                                        <Select
+                                        value="Number of Guests"
+                                        onChange={this.handleInputChange('guests')}>                                        >
                                             {guests.map(option => (
                                                 <MenuItem key={option} value={option}>
                                                     {option}
                                                 </MenuItem>
                                             ))}
-                                        </Select> */}
+                                        </Select>
                                         <TextField
                                             id="standard-select-currency"
                                             select
