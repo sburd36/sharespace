@@ -48,8 +48,8 @@ const styles = theme => ({
 
 
 const INITIAL_STATE = {
-  firstname: '',
-  lastname: '',
+  firstName: '',
+  lastName: '',
   email: '',
   password: '',
   passwordConf: '',
@@ -80,7 +80,7 @@ class SignUpFormBase extends Component {
     event.preventDefault();
 
     console.log("inside event")
-    const { email, password, firstname, lastname, type } = this.state;
+    const { email, password, firstName, lastName, type } = this.state;
     console.log("current state: " + this.state)
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, password)
@@ -89,8 +89,8 @@ class SignUpFormBase extends Component {
         return this.props.firebase
           .user(authUser.user.uid)
           .set({
-            firstname,
-            lastname,
+            firstName,
+            lastName,
             email,
             type,
           });
@@ -113,8 +113,8 @@ class SignUpFormBase extends Component {
   render() {
     const { classes } = this.props;
     const {
-      firstname,
-      lastname,
+      firstName,
+      lastName,
       email,
       password,
       passwordConf,
@@ -126,8 +126,8 @@ class SignUpFormBase extends Component {
       password !== passwordConf ||
       password === '' ||
       email === '' ||
-      firstname === '' ||
-      lastname === '';
+      firstName === '' ||
+      lastName === '';
 
     return (
       <main className={classes.main}>

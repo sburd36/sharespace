@@ -55,6 +55,8 @@ const INITIAL_STATE = {
   passwordConf: '',
   type: 'Host',
   gender: '',
+  religion: "",
+  ethnicity: '',
   error: null,
 };
 
@@ -81,12 +83,13 @@ class SignUpFormBase extends Component {
     event.preventDefault();
 
     console.log("inside event")
-    const { email, password, firstname, lastname, type, gender } = this.state;
+    const { email, password, firstname, lastname, type, gender, religion, ethnicity } = this.state;
     console.log("current state: " + this.state)
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then(authUser => {
         // Create a user in your Firebase realtime database
+        console.log(firstname + " "+ lastname)
         return this.props.firebase
           .user(authUser.user.uid)
           .set({
@@ -94,7 +97,9 @@ class SignUpFormBase extends Component {
             lastname,
             email,
             type,
-            gender
+            gender,
+            religion,
+            ethnicity
           });
       })
       .then(() => {
@@ -115,22 +120,23 @@ class SignUpFormBase extends Component {
   render() {
     const { classes } = this.props;
     const {
-      firstname,
-      lastname,
-      email,
-      password,
-      passwordConf,
-      type,
-      error,
-      gender
+      // firstname,
+      // lastname,
+      // email,
+      // password,
+      // passwordConf,
+      // type,
+      // error,
+      // gender
+      error
     } = this.state;
 
-    const isInvalid =
-      password !== passwordConf ||
-      password === '' ||
-      email === '' ||
-      firstname === '' ||
-      lastname === '';
+    // const isInvalid =
+    //   password !== passwordConf ||
+    //   password === '' ||
+    //   email === '' ||
+    //   firstname === '' ||
+    //   lastname === '';
 
     return (
       <main className={classes.main}>
@@ -165,6 +171,14 @@ class SignUpFormBase extends Component {
             <FormControl margin="normal" fullWidth>
               <InputLabel htmlFor="name">Gender</InputLabel>
               <Input id="gender" name="gender" required autoComplete="gender" onChange={this.onChange} autoFocus />
+            </FormControl>
+            <FormControl margin="normal" fullWidth>
+              <InputLabel htmlFor="religion">Religion</InputLabel>
+              <Input name="religion" required type="religion" id="religion" autoComplete="religion" onChange={this.onChange}/>
+            </FormControl>
+            <FormControl margin="normal" fullWidth>
+              <InputLabel htmlFor="ethnicity">Ethnicity</InputLabel>
+              <Input name="ethnicity" required type="ethnicity" id="ethnicity" autoComplete="ethnicity" onChange={this.onChange}/>
             </FormControl>
             <FormControlLabel
               control={<Checkbox value="remember" color="secondary" />}
