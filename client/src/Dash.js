@@ -235,7 +235,7 @@ export default withStyles(styles)(class extends React.Component {
 
     handleInputChange = name => event => {
         this.setState({ [name]: event.target.value });
-    };
+      };
 
     handleSelectChange = name => event => {
         this.setState({ [name]: event.target.checked});
