@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
     root: {
@@ -95,16 +96,18 @@ export default withStyles(styles)(class extends React.Component {
                                     <img src={women} className={classes.bigAvatar} />
                                     <h3>Welcome, Advocate</h3>
                                     <Typography color="textSecondary">What would you like to do today</Typography>
+                                    <Link to="/dash">
+                                        <Button variant="contained" color="primary" className={classes.button}>
+                                            New Booking
+                                        </Button>
+                                    </Link>
                                     <Button variant="contained" color="primary" className={classes.button}>
-                                        New Booking
-                                        </Button>
-                                        <Button variant="contained" color="primary" className={classes.button}>
                                         Refer a Host
-                                        </Button>
-                                        <Button variant="contained" color="primary" className={classes.button}>
+                                    </Button>
+                                    <Button variant="contained" color="primary" className={classes.button}>
                                         View Current Bookings
-                                        </Button>
-                                        <Button variant="contained" color="primary" className={classes.button}>
+                                    </Button>
+                                    <Button variant="contained" color="primary" className={classes.button}>
                                         View Analytics
                                     </Button>
                                 </Paper>
