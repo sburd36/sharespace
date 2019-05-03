@@ -41,15 +41,11 @@
     "not op_mini all"
   ],
   "devDependencies": {
-<<<<<<< HEAD
     "@babel/core": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
     "node-sass": "^4.11.0",
-=======
-    "node-sass": "^4.12.0",
->>>>>>> firebase
     "sass-loader": "^7.1.0"
   }
 }

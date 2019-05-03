@@ -14,6 +14,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
 
 // For filter expansion
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -65,7 +67,7 @@ const styles = theme => ({
 
 const guests = [1,2,3,4]
 const ethinicities = []
-const locations = []
+const locations = ["Northgate", "U District", "Westlake", "Ballard"]
 
 export default withStyles(styles)(class extends React.Component {
     constructor(props) {
@@ -269,6 +271,7 @@ export default withStyles(styles)(class extends React.Component {
                                 alignItems="center">
                                 <Paper className={classes.side} >
                                     <h3>FIND HOST</h3>
+                                    <form>
                                     <FormControl>
                                         <input type="search" placeholder="Search"></input>
                                         <br/>
@@ -292,35 +295,32 @@ export default withStyles(styles)(class extends React.Component {
                                                 shrink: true,
                                             }}
                                         />
-                                        <Select
-                                        value="Number of Guests"
-                                        onChange={this.handleInputChange('guests')}>                                        >
-                                            {guests.map(option => (
-                                                <MenuItem key={option} value={option}>
-                                                    {option}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                        <TextField
-                                            id="standard-select-currency"
-                                            select
-                                            label="Locations"
-                                            className={classes.textField}
-                                            value={this.state.ethnicity}
-                                            onChange={this.handleInputChange('ethnicity')}
-                                            SelectProps={{
-                                                MenuProps: {
-                                                className: classes.menu,
-                                                },
-                                            }}
-                                            margin="normal"
-                                            >
-                                            {guests.map(option => (
-                                                <MenuItem key={option} value={option}>
-                                                    {option}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
+                                        <FormControl>
+                                            <InputLabel htmlFor="select-multiple-checkbox">Number of Guests</InputLabel>
+                                            <Select
+                                            value={this.state.guests}
+                                            onChange={this.handleInputChange('guests')}
+                                            input={<Input name="age" id="age-helper" />}
+                                            >                                
+                                                {guests.map(option => (
+                                                    <MenuItem key={option} value={option}>
+                                                        {option}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
+                                        <FormControl>
+                                            <InputLabel htmlFor="select-multiple-checkbox">Locations</InputLabel>
+                                            <Select
+                                            value={this.state.locations}
+                                            onChange={this.handleInputChange('locations')}>                                        >
+                                                {locations.map(option => (
+                                                    <MenuItem key={option} value={option}>
+                                                        {option}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
                                         {
                                             filters.map((d) => {
                                                 return(
@@ -359,6 +359,8 @@ export default withStyles(styles)(class extends React.Component {
                                         </Button>
                                     </FormControl>
 
+                                    </form>
+                                    
                                 </Paper>
                             </Grid>
                         </Grid>

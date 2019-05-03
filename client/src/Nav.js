@@ -53,8 +53,6 @@ const NavigationNonAuth = () => (
     </form>
     <div id="nav-buttons">
         <Link to="/signin"><button class="btn btn-yellow-empty" id="log-in">SIGN IN</button></Link>
-        <button class="btn btn-teal-empty" id="donate">DONATE</button>
-
     </div>
 </nav>
 
