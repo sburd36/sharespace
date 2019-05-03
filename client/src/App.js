@@ -47,12 +47,6 @@ class App extends Component {
                   <Route path="/Dash" component={Dash} />
                   <Route path="/Admin" component={Admin} />
                   <Route path="/SignUpHost" component={SignUpHost} />
-
-
-
-
-
-
               </Switch>
           </div>    
         </Router>

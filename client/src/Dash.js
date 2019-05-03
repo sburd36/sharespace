@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import women from "./img/53-.jpg";
+import Calendar from './Calendar'
 import person from './img/person.svg';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -10,13 +11,17 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Select from '@material-ui/core/Select';
+
 // For filter expansion
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import Checkbox from '@material-ui/core/Checkbox';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Switch from '@material-ui/core/Switch';
 
 // confirm host view
 import Host from './HostInfo';
@@ -55,37 +60,10 @@ const styles = theme => ({
     avatar: {
         width: "100px",
         height: "100px"
-    }
+    },
   });
 
 const guests = [1,2,3,4]
-const filters = [
-                    {
-                        type: 'languages',
-                        name: 'Languages',
-                        values: ['English', 'Chinese(Mandarin)', 'Chinese(Cantonese)', 'Spanish', 'French', 'Japanese']
-                    },
-                    {
-                        type: 'homeType',
-                        name: 'Home Types',
-                        values: ["Entire Place", "Private Bedroom", 'Hotel Room', 'Shared Room', 'Shelter']
-                    },
-                    {
-                        type: 'amentities',
-                        name: 'Amentities',
-                        values: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Computer Access', 'Microwave', 'Self-Check in', 'Parking', 'Bike Storage', 'Private Bathroom', 'Meals', 'Voicemail']
-                    },
-                    {
-                        type: 'needs',
-                        name: 'Needs',
-                        values: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Child-Friendly', 'Near Public Transport', 'Women Only']
-                    },
-                    {
-                        type: 'ethnicities',
-                        name: 'Ethnicities',
-                        values: ['African Americans', 'Hispanic', 'Asian', 'White', 'Native/American Indian']
-                    },
-                ]
 const ethinicities = []
 const locations = []
 
@@ -93,34 +71,149 @@ export default withStyles(styles)(class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            view: "list",
+            filters: [
+                {
+                    type: 'languages',
+                    name: 'Languages',
+                    values: ['English', 'Chinese(Mandarin)', 'Chinese(Cantonese)', 'Spanish', 'French', 'Japanese']
+                },
+                {
+                    type: 'homeType',
+                    name: 'Home Types',
+                    values: ["Entire Place", "Private Bedroom", 'Hotel Room', 'Shared Room', 'Shelter']
+                },
+                {
+                    type: 'amentities',
+                    name: 'Amentities',
+                    values: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Computer Access', 'Microwave', 'Self-Check in', 'Parking', 'Bike Storage', 'Private Bathroom', 'Meals', 'Voicemail']
+                },
+                {
+                    type: 'needs',
+                    name: 'Needs',
+                    values: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Child-Friendly', 'Near Public Transport', 'Women Only']
+                },
+                {
+                    type: 'ethnicities',
+                    name: 'Ethnicities',
+                    values: ['African Americans', 'Hispanic', 'Asian', 'White', 'Native/American Indian']
+                },
+            ],
             bookings: [
                 {
                     ID: 1,
-                    name: "Stephanie Burd",
-                    address: "1234 24th Sunset Bld",
-                    begin: "March 4",
-                    end: "25"
+                    information: {
+                        name: "Marry Potter",
+                        description: "Marry is a working professional who likes cat and yoga.",
+                        languages: ["English"],
+                        religion: ["none"],
+                        ethnicity: ["White"],
+                        contact: {
+                            phone: "(306)142-2093",
+                            email: "mp@gmail.com"
+                        },
+                    },
+                    space:  [
+                        {
+                            ID: 1,
+                            address: "1234 24th Sunset Bld",
+                            amentities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking', 'Bike Storage', 'Meals', 'Voicemail'],
+                            checkinInfo: {
+                                time: "10am - 9pm",
+                                description: "Please text my number when arrive. Have a dog named Benly, he is very friendly but please do not pet him."
+                            },
+                            houseRules: ["No Smoking", "No Alcohol"],
+                            begin: "March 4",
+                            end: "March 25",
+                        }
+                    ]
                 },
                 {
                     ID: 2,
-                    name: "Min Yang",
-                    address: "1234 24th Sunset Bld",
-                    begin: "March 4",
-                    end: "25"
+                    information: {
+                        name: "Marry Potter",
+                        description: "Marry is a working professional who likes cat and yoga.",
+                        languages: ["English"],
+                        religion: ["none"],
+                        ethnicity: ["White"],
+                        contact: {
+                            phone: "(306)142-2093",
+                            email: "mp@gmail.com"
+                        },
+                    },
+                    space:  [
+                        {
+                            ID: 2,
+                            address: "1234 24th Sunset Bld",
+                            amentities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking', 'Bike Storage', 'Meals', 'Voicemail'],
+                            checkinInfo: {
+                                time: "10am - 9pm",
+                                description: "*Have a dog named Benly, he is very friendly but please do not pet him."
+                            },
+                            checkinInfo: "",
+                            houseRules: ["No Smoking", "No Alcohol"],
+                            begin: "March 4",
+                            end: "March 25",
+                        }
+                    ]
                 },
                 {
                     ID: 3,
-                    name: "Mary Huibregtse",
-                    address: "1234 24th Sunset Bld",
-                    begin: "March 4",
-                    end: "April 25"
+                    information: {
+                        name: "Marry Potter",
+                        description: "Marry is a working professional who likes cat and yoga.",
+                        languages: ["English"],
+                        religion: ["none"],
+                        ethnicity: ["White"],
+                        contact: {
+                            phone: "(306)142-2093",
+                            email: "mp@gmail.com"
+                        },
+                    },
+                    space:  [
+                        {
+                            ID: 3,
+                            address: "1234 24th Sunset Bld",
+                            amentities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking', 'Bike Storage', 'Meals', 'Voicemail'],
+                            checkinInfo: {
+                                time: "10am - 9pm",
+                                description: "Have a dog named Benly, he is very friendly but please do not pet him."
+                            },
+                            checkinInfo: "",
+                            houseRules: ["No Smoking", "No Alcohol"],
+                            begin: "March 4",
+                            end: "March 25",
+                        }
+                    ]
                 },
                 {
                     ID: 4,
-                    name: "Abby Huang",
-                    address: "1234 24th Sunset Bld",
-                    begin: "March 4",
-                    end: "April 25"
+                    information: {
+                        name: "Marry Potter",
+                        description: "Marry is a working professional who likes cat and yoga.",
+                        languages: ["English"],
+                        religion: ["none"],
+                        ethnicity: ["White"],
+                        contact: {
+                            phone: "(306)142-2093",
+                            email: "mp@gmail.com"
+                        },
+                    },
+                    space:  [
+                        {
+                            ID: 4,
+                            address: "1234 24th Sunset Bld",
+                            amentities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking', 'Bike Storage', 'Meals', 'Voicemail'],
+                            checkinInfo: {
+                                time: "10am - 9pm",
+                                description: "Have a dog named Benly, he is very friendly but please do not pet him."
+                            },
+                            checkinInfo: "",
+                            houseRules: ["No Smoking", "No Alcohol"],
+                            begin: "March 4",
+                            end: "March 25",
+                        }
+                    ]
                 },
             ],
         }
@@ -157,9 +250,15 @@ export default withStyles(styles)(class extends React.Component {
         })
     }
     
+    handleSwitchView = (event) => {
+        this.setState({
+            view: event.target.checked ? "calendar" : "list"
+        })
+    }
 
     render() {
         const { classes } = this.props;
+        var filters = this.state.filters
         return (
             <div class="pt-4">
                 <Grid 
@@ -173,7 +272,7 @@ export default withStyles(styles)(class extends React.Component {
                                 alignItems="center">
                                 <Paper className={classes.side} >
                                     <h3>FIND HOST</h3>
-                                    <form>
+                                    <FormControl>
                                         <input type="search" placeholder="Search"></input>
                                         <br/>
                                         <TextField
@@ -181,6 +280,7 @@ export default withStyles(styles)(class extends React.Component {
                                             label="Start Date"
                                             type="date"
                                             className={classes.textField}
+                                            onChange={this.handleInputChange('begin')}
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}
@@ -190,30 +290,22 @@ export default withStyles(styles)(class extends React.Component {
                                             label="End Date"
                                             type="date"
                                             className={classes.textField}
+                                            onChange={this.handleInputChange('begin')}
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}
                                         />
-                                        <TextField
-                                            id="standard-select-currency"
-                                            select
-                                            label="Number of guests"
-                                            className={classes.textField}
-                                            value={this.state.guest}
-                                            onChange={this.handleInputChange('guest')}
-                                            SelectProps={{
-                                                MenuProps: {
-                                                className: classes.menu,
-                                                },
-                                            }}
-                                            margin="normal"
-                                            >
+                                        {/* <Select
+                                        value={values.name}
+                                        onChange={handleChange}
+                                        input={<Input name="name" id="name-disabled" />}
+                                        >
                                             {guests.map(option => (
                                                 <MenuItem key={option} value={option}>
                                                     {option}
                                                 </MenuItem>
                                             ))}
-                                        </TextField>
+                                        </Select> */}
                                         <TextField
                                             id="standard-select-currency"
                                             select
@@ -237,25 +329,30 @@ export default withStyles(styles)(class extends React.Component {
                                         {
                                             filters.map((d) => {
                                                 return(
-                                                    <ExpansionPanel expanded={this.state.expanded === d.type} onChange={this.handleExpandChange(d.type)}>
+                                                    <ExpansionPanel  expanded={this.state.expanded === d.type} onChange={this.handleExpandChange(d.type)}>
                                                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                                             <Typography className={classes.heading}>{d.name}</Typography>
                                                         </ExpansionPanelSummary>
                                                         <ExpansionPanelDetails>
+                                                            <Grid container>
                                                             {d.values.map((data) => {
                                                                 return(
+                                                                    <Grid item>
                                                                     <FormControlLabel
-                                                                    control={
-                                                                    <Checkbox
-                                                                        checked={this.state.data}
-                                                                        onChange={this.handleSelectChange(data)}
-                                                                        value="checkedA"
+                                                                        control={
+                                                                        <Checkbox
+                                                                            checked={this.state.data}
+                                                                            onChange={this.handleSelectChange(data)}
+                                                                            value="checkedA"
+                                                                        />
+                                                                        }
+                                                                        label={data}
                                                                     />
-                                                                    }
-                                                                    label={data}
-                                                                />
+                                                                    </Grid>
+                                                                    
                                                                 )
                                                             })}
+                                                            </Grid>
                                                         </ExpansionPanelDetails>
                                                     </ExpansionPanel>
                                                 )
@@ -265,15 +362,20 @@ export default withStyles(styles)(class extends React.Component {
                                         <Button variant="contained" color="primary" className={classes.button}>
                                             New Booking
                                         </Button>
-                                    </form>
+                                    </FormControl>
 
                                 </Paper>
                             </Grid>
                         </Grid>
                         <Grid key={2} item>
-                            <Paper className={classes.hosts} >
+                            <Paper className={classes.hosts}>
+                            <Switch value="view" onChange={this.handleSwitchView}/>
+
+                            {this.state.view == "list" ? 
+                            <div>
+                                Show Calendar
                                 <Typography className="pt-5 pl-5" variant="h4" gutterBottom>
-                                    CURRENT BOOKINGS
+                                    AVAILABLE BOOKINGS
                                 </Typography>
                                 <Grid container spacing={6}>
                                     {this.state.bookings.map(
@@ -284,19 +386,21 @@ export default withStyles(styles)(class extends React.Component {
                                                     <img className={classes.avatar} src={person}></img>
                                                         <div>
                                                             <h5>
-                                                                {booking.name}
+                                                                {booking.information.name}
                                                             </h5>
                                                             <Typography className={classes.pos}>
-                                                                {booking.address}
+                                                                {booking.space[0].address}
                                                             </Typography>
                                                         </div>                                                  
                                                     </CardContent>
-                                                    <Host booking={booking}></Host>
+                                                    <Host booking={booking} filters={filters}></Host>
                                                 </Card>
                                             )
                                         }
                                     )}
-                                </Grid>
+                                </Grid> 
+                            </div>
+                            : <Calendar></Calendar>}
                             </Paper>
                         </Grid>
                 </Grid>
