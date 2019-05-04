@@ -28,6 +28,7 @@ import Switch from '@material-ui/core/Switch';
 // confirm host view
 import Host from './HostInfo';
 
+
 const styles = theme => ({
     root: {
       flexGrow: 1,
@@ -63,6 +64,9 @@ const styles = theme => ({
         width: "100px",
         height: "100px"
     },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+      },
   });
 
 const guests = [1,2,3,4]
@@ -254,10 +258,22 @@ export default withStyles(styles)(class extends React.Component {
             view: event.target.checked ? "calendar" : "list"
         })
     }
-
+  
     render() {
         const { classes } = this.props;
-        var filters = this.state.filters
+        var filters = this.state.filters;
+        function SimpleSelect() {
+            const [values, setValues] = React.useState({
+              age: '',
+              name: 'hai',
+            });
+          
+            const inputLabel = React.useRef(null);
+            const [labelWidth, setLabelWidth] = React.useState(0);
+            React.useEffect(() => { 
+              setLabelWidth(inputLabel.current.offsetWidth);
+            }, []);
+        }
         return (
             <div class="pt-4">
                 <Grid 
@@ -296,7 +312,8 @@ export default withStyles(styles)(class extends React.Component {
                                             }}
                                         />
                                         <FormControl>
-                                            <InputLabel htmlFor="select-multiple-checkbox">Number of Guests</InputLabel>
+                                            {/* <InputLabel htmlFor="select-multiple-checkbox">Number of Guests</InputLabel> */}
+                                            <p>Number of Guests</p>
                                             <Select
                                             value={this.state.guests}
                                             onChange={this.handleInputChange('guests')}
@@ -309,8 +326,10 @@ export default withStyles(styles)(class extends React.Component {
                                                 ))}
                                             </Select>
                                         </FormControl>
-                                        <FormControl>
-                                            <InputLabel htmlFor="select-multiple-checkbox">Locations</InputLabel>
+                                        <FormControl
+                                        >
+                                            {/* <InputLabel htmlFor="select-multiple-checkbox">Locations</InputLabel> */}
+                                            <p>Location</p>
                                             <Select
                                             value={this.state.locations}
                                             onChange={this.handleInputChange('locations')}>                                        >

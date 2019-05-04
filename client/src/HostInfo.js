@@ -8,13 +8,14 @@ import Select from 'react-select'
 import Animated from 'react-select/lib/animated'
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
-
+import Map from './Map'
 // For host pop-up
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+
 
 const styles = theme => ({
     img: {
@@ -37,7 +38,7 @@ const styles = theme => ({
     },
     input: {
         border: "0.5px solid "   
-    }
+    },
 })
 
 function makeOptions(filter) {
@@ -57,7 +58,7 @@ export default withStyles(styles)(class extends React.Component {
         super(props)
         this.state = {
             open: false,
-            booking: {}
+            booking: {},
         }
     }
 
@@ -70,9 +71,14 @@ export default withStyles(styles)(class extends React.Component {
     };
 
     handleCloseHost = () => {
-        this.setState({ open: false });
+        this.setState({ open: false, confirm: false });
     };
 
+    handleConfirmHost = () => {
+        this.setState({
+            confirm: true
+        })
+    }
     render() {
         const { classes } = this.props;
         const host = this.props.booking;
@@ -94,22 +100,17 @@ export default withStyles(styles)(class extends React.Component {
                 >
                     <DialogContent>
                         <img className={classes.img} src={bedroom}></img>
+                        <Map />
                         <h3>Home by {host.information.name}</h3>
-                        <div class="d-flex">
-                            <p style={{width: "700px"}}>
-                                {host.information.description}
-                            </p>
                             <DialogContentText>
                                 <b>Address</b><br/>
-                                {host.space[0].address}                        
+                                <p>{host.space[0].address}</p> 
                             </DialogContentText>
-                        </div>
                         <hr></hr>
                         <h5>HOST INFORMATION</h5>
                         <div class="d-flex">
                             <p style={{width: "700px"}}>
-                                aowjefpoi aosdjf wejoa;l ae ojagjas;oaj gaoijg wje aja;kngojgijg ;ag g aewg aowjefpoi aosdjf
-                                 wejoa;l ae ojagjas;oaj gaoijg wje aja;kngojgijg ;ag g aewg
+                                {host.information.description}
                             </p>
                             <div>
                                 <b>Languages:</b> English, Chinese<br/>
@@ -238,10 +239,27 @@ export default withStyles(styles)(class extends React.Component {
                         <Button onClick={this.handleCloseHost} variant="contained" >
                             Cancel
                         </Button>
-                        <Button onClick={this.handleCloseHost} variant="contained"  color="primary">
+                        <Button onClick={this.handleConfirmHost} variant="contained"  color="primary">
                             Confirm Host
                         </Button>
                     </DialogActions>
+                    <Dialog
+                        open={this.state.confirm}
+                        onClose={this.handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                        >
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                            Your booking is confirmed! 
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.handleCloseHost} color="primary" autoFocus>
+                            Done
+                            </Button>
+                        </DialogActions>
+                        </Dialog>
                 </Dialog>
             </div>
         )
