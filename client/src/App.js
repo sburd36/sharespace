@@ -16,7 +16,7 @@ import Dash from './Dash';
 import PasswordForgetPage from './PassForget';
 import Admin from './Admin';
 import SignUpHost from './SignUpHost';
-
+import Tags from './Tags'
 
 
 
@@ -47,6 +47,8 @@ class App extends Component {
                   <Route path="/Dash" component={Dash} />
                   <Route path="/Admin" component={Admin} />
                   <Route path="/SignUpHost" component={SignUpHost} />
+                  <Route path="/Tags" component={Tags} />
+
               </Switch>
           </div>    
         </Router>

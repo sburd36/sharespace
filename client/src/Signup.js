@@ -13,7 +13,7 @@ import { withFirebase } from './Firebase';
 import { compose } from 'recompose';
 import { Link, withRouter } from 'react-router-dom';
 
-const userObject = null
+
 const styles = theme => ({
   main: {
     width: 'auto',
@@ -90,7 +90,6 @@ class SignUpFormBase extends Component {
         this.props.firebase.auth.currentUser.updateProfile({
           displayName: firstName + " " + lastName
         })
-        userObject = this.props.firebase.auth.currentUser
         return this.props.firebase
           .user(authUser.user.uid)
           .set({
@@ -118,7 +117,6 @@ class SignUpFormBase extends Component {
   render() {
     const { classes } = this.props;
     const {
-      userObject, 
       firstName,
       lastName,
       email,
@@ -193,4 +191,4 @@ const SignUpForm = compose(
 )(SignUpFormBase);
 
 
-export default { SignUpForm, userObject };
+export default SignUpForm;

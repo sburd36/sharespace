@@ -84,22 +84,28 @@ class AdminDash extends Component {
         super(props);    
         this.state = { ...INITIAL_STATE };
 
-
     }
     componentDidMount() {
-        this.props.firebase.auth.onAuthStateChanged(function(user) {
-            if (user) {
-                console.log(user)
+        this.props.firebase.auth.onAuthStateChanged((user) => {
+            if (user.displayName) {
+                console.log(user.displayName)
+                this.setState({
+                    
+                    user: user.displayName
+                })
             } else {
                 this.setState({
-                    user: "Patty"
+                    user: "Advocate"
                 })
             }
-        });
+        })
+        
     }
     render() {
+        console.log("Inside render")
         const { classes } = this.props;
         console.log(this.state.user)
+
         return (
             <div class="pt-4">
                 <Grid 
@@ -113,7 +119,7 @@ class AdminDash extends Component {
                                 alignItems="center">
                                 <Paper className={classes.side} >
                                     <img src={women} className={classes.bigAvatar} />
-                                    <h3>Welcome,</h3>
+                                    <h3>Welcome, {this.state.user}</h3>
                                     <Typography color="textSecondary">What would you like to do today</Typography>
                                     <Link to="/dash">
                                         <Button variant="contained" color="primary" className={classes.button}>
