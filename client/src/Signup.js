@@ -97,12 +97,11 @@ class SignUpFormBase extends Component {
       })
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push('/advocate');
+        this.props.history.push('/signup');
       })
       .catch(error => {
         this.setState({ error });
       });
-
   };
 
   onChange = event => {

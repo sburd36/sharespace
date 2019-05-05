@@ -8,7 +8,8 @@ import Select from 'react-select'
 import Animated from 'react-select/lib/animated'
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
-import Map from './Map'
+import { PersonalSelect } from './Select'
+// import Map from './Map'
 // For host pop-up
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -82,7 +83,6 @@ export default withStyles(styles)(class extends React.Component {
     render() {
         const { classes } = this.props;
         const host = this.props.booking;
-        const filters = this.props.filters
         return(
             <div>
                 <div class="d-flex justify-content-center">
@@ -100,7 +100,7 @@ export default withStyles(styles)(class extends React.Component {
                 >
                     <DialogContent>
                         <img className={classes.img} src={bedroom}></img>
-                        <Map />
+                        {/* <Map /> */}
                         <h3>Home by {host.information.name}</h3>
                             <DialogContentText>
                                 <b>Address</b><br/>
@@ -212,7 +212,7 @@ export default withStyles(styles)(class extends React.Component {
                                 }}
                             /> 
                             <Grid container direction="row" justify="around" spacing={8}>
-                            { 
+                            {/* { 
                                 filters.map((data) => {
                                     return(
                                         <Grid item xs={3} className={classes.textField}>
@@ -226,7 +226,8 @@ export default withStyles(styles)(class extends React.Component {
                                         </Grid>
                                     )
                                 })
-                            }
+                            } */}
+                            <PersonalSelect></PersonalSelect>
                             </Grid>
                             <b>Note</b>
                             <textarea style={{width: "100%"}}></textarea>

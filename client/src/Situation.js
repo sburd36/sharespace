@@ -25,17 +25,17 @@ export default class Signup extends React.Component {
                     <h3 class="font-light">Which situation describes you best?</h3>
                 </header>
                 <div class="d-flex justify-content-around" >
-                    <Link to="/stay" style={{textDecoration: "none", color: "inherit"}}>
+                    <Link to="/hostdash" style={{textDecoration: "none", color: "inherit"}}>
                         <div class="card" style={{width: "25rem"}}>
                             <img class="card-img-top" src={cart} />
                             <div class="card-body">
-                                <h4>I want to donate</h4>
+                                <h4>I'm a host</h4>
                                 <p class="font-light">I am interested in helping break the cycle of domestic violence
                                 by donating resources in the form of cash or giftcards.</p>
                             </div>
                         </div>
                     </Link>
-                    <Link to="/signup" style={{textDecoration: "none", color: "inherit"}}>
+                    <Link to="/advocatedash" style={{textDecoration: "none", color: "inherit"}}>
                         <div class="card" style={{width: "25rem"}}>
                             <img class="card-img-top" src={women} />
                             <div class="card-body">

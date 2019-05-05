@@ -12,22 +12,14 @@ import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
-
-// For filter expansion
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import Checkbox from '@material-ui/core/Checkbox';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { PersonalSelect, SpaceSelect} from './Select'
 import Switch from '@material-ui/core/Switch';
+
 
 // confirm host view
 import Host from './HostInfo';
-
 
 const styles = theme => ({
     root: {
@@ -65,7 +57,7 @@ const styles = theme => ({
         height: "100px"
     },
     selectEmpty: {
-        marginTop: theme.spacing(2),
+        marginTop: theme.spacing.unit,
       },
   });
 
@@ -78,33 +70,6 @@ export default withStyles(styles)(class extends React.Component {
         super(props);
         this.state = {
             view: "list",
-            filters: [
-                {
-                    type: 'languages',
-                    name: 'Languages',
-                    values: ['English', 'Chinese(Mandarin)', 'Chinese(Cantonese)', 'Spanish', 'French', 'Japanese']
-                },
-                {
-                    type: 'homeType',
-                    name: 'Home Types',
-                    values: ["Entire Place", "Private Bedroom", 'Hotel Room', 'Shared Room', 'Shelter']
-                },
-                {
-                    type: 'amentities',
-                    name: 'Amentities',
-                    values: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Computer Access', 'Microwave', 'Self-Check in', 'Parking', 'Bike Storage', 'Private Bathroom', 'Meals', 'Voicemail']
-                },
-                {
-                    type: 'needs',
-                    name: 'Needs',
-                    values: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Child-Friendly', 'Near Public Transport', 'Women Only']
-                },
-                {
-                    type: 'ethnicities',
-                    name: 'Ethnicities',
-                    values: ['African Americans', 'Hispanic', 'Asian', 'White', 'Native/American Indian']
-                },
-            ],
             bookings: [
                 {
                     ID: 1,
@@ -243,15 +208,8 @@ export default withStyles(styles)(class extends React.Component {
         this.setState({ [name]: event.target.value });
       };
 
-    handleSelectChange = name => event => {
-        this.setState({ [name]: event.target.checked});
-    }
 
-    handleExpandChange = panel => (event, expanded) => {
-        this.setState({
-            expanded: expanded ? panel : false,
-        })
-    }
+
     
     handleSwitchView = (event) => {
         this.setState({
@@ -261,19 +219,18 @@ export default withStyles(styles)(class extends React.Component {
   
     render() {
         const { classes } = this.props;
-        var filters = this.state.filters;
-        function SimpleSelect() {
-            const [values, setValues] = React.useState({
-              age: '',
-              name: 'hai',
-            });
+        // function SimpleSelect() {
+        //     const [values, setValues] = React.useState({
+        //       age: '',
+        //       name: 'hai',
+        //     });
           
-            const inputLabel = React.useRef(null);
-            const [labelWidth, setLabelWidth] = React.useState(0);
-            React.useEffect(() => { 
-              setLabelWidth(inputLabel.current.offsetWidth);
-            }, []);
-        }
+        //     const inputLabel = React.useRef(null);
+        //     const [labelWidth, setLabelWidth] = React.useState(0);
+        //     React.useEffect(() => { 
+        //       setLabelWidth(inputLabel.current.offsetWidth);
+        //     }, []);
+        // }
         return (
             <div class="pt-4">
                 <Grid 
@@ -313,13 +270,13 @@ export default withStyles(styles)(class extends React.Component {
                                         />
                                         <FormControl>
                                             {/* <InputLabel htmlFor="select-multiple-checkbox">Number of Guests</InputLabel> */}
-                                            <p>Number of Guests</p>
+                                            Number of Guests
                                             <Select
                                             value={this.state.guests}
                                             onChange={this.handleInputChange('guests')}
                                             input={<Input name="age" id="age-helper" />}
                                             >                                
-                                                {guests.map(option => (
+                                                {[1,2,3,4].map(option => (
                                                     <MenuItem key={option} value={option}>
                                                         {option}
                                                     </MenuItem>
@@ -329,7 +286,7 @@ export default withStyles(styles)(class extends React.Component {
                                         <FormControl
                                         >
                                             {/* <InputLabel htmlFor="select-multiple-checkbox">Locations</InputLabel> */}
-                                            <p>Location</p>
+                                        Location
                                             <Select
                                             value={this.state.locations}
                                             onChange={this.handleInputChange('locations')}>                                        >
@@ -340,39 +297,13 @@ export default withStyles(styles)(class extends React.Component {
                                                 ))}
                                             </Select>
                                         </FormControl>
-                                        {
-                                            filters.map((d) => {
-                                                return(
-                                                    <ExpansionPanel  expanded={this.state.expanded === d.type} onChange={this.handleExpandChange(d.type)}>
-                                                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                                            <Typography className={classes.heading}>{d.name}</Typography>
-                                                        </ExpansionPanelSummary>
-                                                        <ExpansionPanelDetails>
-                                                            <Grid container>
-                                                            {d.values.map((data) => {
-                                                                return(
-                                                                    <Grid item>
-                                                                    <FormControlLabel
-                                                                        control={
-                                                                        <Checkbox
-                                                                            checked={this.state.data}
-                                                                            onChange={this.handleSelectChange(data)}
-                                                                            value="checkedA"
-                                                                        />
-                                                                        }
-                                                                        label={data}
-                                                                    />
-                                                                    </Grid>
-                                                                    
-                                                                )
-                                                            })}
-                                                            </Grid>
-                                                        </ExpansionPanelDetails>
-                                                    </ExpansionPanel>
-                                                )
-                                                
-                                            })
-                                        }
+                                        <Grid containter >
+                                        <Grid item xs={6}>
+                                        <PersonalSelect></PersonalSelect>
+
+                                        </Grid>
+                                        </Grid>
+                                        <SpaceSelect ></SpaceSelect>
                                         <Button variant="contained" color="primary" className={classes.button}>
                                             New Booking
                                         </Button>
@@ -409,7 +340,7 @@ export default withStyles(styles)(class extends React.Component {
                                                             </Typography>
                                                         </div>                                                  
                                                     </CardContent>
-                                                    <Host booking={booking} filters={filters}></Host>
+                                                    <Host booking={booking}></Host>
                                                 </Card>
                                             )
                                         }

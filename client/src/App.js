@@ -16,10 +16,9 @@ import Dash from './Dash';
 import PasswordForgetPage from './PassForget';
 import Admin from './Admin';
 import SignUpHost from './SignUpHost';
-
-
-
-
+import HostDash from './HostDash';
+import CreateProfile from './CreateProfile'
+import Listing from './AddListing'
 import {HashRouter as Router, Switch, Redirect, Route} from "react-router-dom";
 
 class App extends Component {
@@ -44,15 +43,11 @@ class App extends Component {
                   <Route path="/calendar" component={Calendar} />
                   <Route path="/situation" component={Situation} />
                   <Route path="/PassForget" component={PasswordForgetPage} />
-                  <Route path="/Dash" component={Dash} />
+                  <Route path="/advocatedash" component={Dash} />
                   <Route path="/Admin" component={Admin} />
-                  <Route path="/SignUpHost" component={SignUpHost} />
-
-
-
-
-
-
+                  <Route path="/profile" component={CreateProfile} />
+                  <Route path="/listing" component={Listing} />
+                  <Route path="/hostdash" component={HostDash} />
               </Switch>
           </div>    
         </Router>

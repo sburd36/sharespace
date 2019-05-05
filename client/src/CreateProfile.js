@@ -3,13 +3,13 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import { PersonalSelect } from './Select';
+import TextField from '@material-ui/core/TextField';
+
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
-import women from "./img/53-.jpg"
-import { withFirebase } from './Firebase';
 import { compose } from 'recompose';
 import { Link, withRouter } from 'react-router-dom';
 
@@ -21,7 +21,7 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-      width: 400,
+      width: 1000,
       marginLeft: 'auto',
       marginRight: 'auto',
     },
@@ -43,29 +43,9 @@ const styles = theme => ({
   },
   submit: {
     marginTop: theme.spacing.unit * 3,
-  },
+  }
 });
 
-
-const INITIAL_STATE = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-  type: 'Advocate',
-  error: null,
-};
-
-const ERROR_CODE_ACCOUNT_EXISTS = 'auth/email-already-in-use';
-
-const ERROR_MSG_ACCOUNT_EXISTS = `
-  An account with this E-Mail address already exists.
-  Try to login with this account instead. If you think the
-  account is already used from one of the social logins, try
-  to sign in with one of them. Afterward, associate your accounts
-  on your personal account page.
-`;
 // if firebase error, disable submit button
 
 
@@ -73,35 +53,11 @@ class SignUpFormBase extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...INITIAL_STATE };
+    this.state = {};
   }
 
   onSubmit = event => {
     event.preventDefault();
-
-    console.log("inside event")
-    const { email, password, firstName, lastName, type } = this.state;
-    console.log("current state: " + this.state)
-    this.props.firebase
-      .doCreateUserWithEmailAndPassword(email, password)
-      .then(authUser => {
-        // Create a user in your Firebase realtime database
-        return this.props.firebase
-          .user(authUser.user.uid)
-          .set({
-            firstName,
-            lastName,
-            email,
-            type,
-          });
-      })
-      .then(() => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push('/advocate');
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
 
   };
 
@@ -112,57 +68,29 @@ class SignUpFormBase extends Component {
   
   render() {
     const { classes } = this.props;
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword,
-      type,
-      error,
-    } = this.state;
-
-    const isInvalid =
-      password !== confirmPassword ||
-      password === '' ||
-      email === '' ||
-      firstName === '' ||
-      lastName === '';
 
     return (
       <main className={classes.main}>
         <CssBaseline />
         <Paper className={classes.paper}>
-          {/* <Avatar className={classes.avatar}>
-          </Avatar> */}
-          <h4>I'm an advocate!</h4>
-          <img class="card-img-top" src={women} style={{width: "25rem"}} />
-          <h4>Sign Up</h4>
+          <h3>Create Profile</h3>
           <form className={classes.form} onSubmit={this.onSubmit}>
             <FormControl margin="normal" fullWidth>
-              <InputLabel htmlFor="name">First Name</InputLabel>
-              <Input id="firstName" name="firstName" required autoComplete="firstName" onChange={this.onChange} autoFocus />
+              <InputLabel htmlFor="name">Phone Number</InputLabel>
+              <Input id="phone" name="phone" required autoComplete="phone" onChange={this.onChange} autoFocus />
             </FormControl>
-            <FormControl margin="normal" fullWidth>
-              <InputLabel htmlFor="name">Last Name</InputLabel>
-              <Input id="lastName" name="lastName" required autoComplete="lastName" onChange={this.onChange}/>
-            </FormControl> 
-            <FormControl margin="normal"  fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input id="email" name="email" required autoComplete="email" onChange={this.onChange}/>
-            </FormControl>
-            <FormControl margin="normal" fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input name="password" required type="password" id="password" autoComplete="current-password" onChange={this.onChange}/>
-            </FormControl>
-            <FormControl margin="normal" fullWidth>
-              <InputLabel htmlFor="password">Confirm Password</InputLabel>
-              <Input name="confirmPassword" required type="password" id="confirmPassword" autoComplete="current-password" onChange={this.onChange}/>
-            </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="secondary" />}
-              label="Remember me"
-            />
+            <PersonalSelect />
+              <InputLabel>Personal Statement</InputLabel>
+              <TextField
+                id="outlined"
+                className={classes.story}
+                multiline
+                fullWidth
+                defaultValue="Tell your story."
+                margin="normal"
+                variant="outlined"
+              />
+              <Link to="/hostdash">
             <Button 
               type="submit"
               fullWidth
@@ -170,9 +98,9 @@ class SignUpFormBase extends Component {
               color="primary"   
               className={classes.submit}
             >
-              Sign Up
+              Continue
             </Button>
-            {error && <p>{error.message}</p>}
+            </Link>
           </form>
         </Paper>
       </main>
@@ -183,7 +111,6 @@ class SignUpFormBase extends Component {
 const SignUpForm = compose(
   withRouter,
   withStyles(styles),
-  withFirebase,
 )(SignUpFormBase);
 
 
