@@ -26,25 +26,39 @@ function makeOptions(filter) {
     return options;
 }
 
-
-
-function PersonalSelect() {
-    return (
-        Personal.map((data) => {
-            return( 
-                <div class="pt-3">
-                    {data.name}
-                    <Select
-                        closeMenuOnSelect={false}
-                        components={Animated()}
-                        isMulti
-                        name={data.name}
-                        options={makeOptions(data['values'])}
-                    />
-                </div>
-            )
+class PersonalSelect extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            selected: []
+        }
+    }
+    handleChange = (option) => {
+        this.setState({
+            selected: option
         })
-    )
+    }
+
+    render() {
+        const { options } = this.state
+        return (
+            Personal.map((data) => {
+                return( 
+                    <Grid item xs={this.props.size}>
+                        {data.name}
+                        <Select
+                            closeMenuOnSelect={false}
+                            components={Animated()}
+                            isMulti
+                            name={data.name}
+                            onChange={this.props.onSelect(data.type)}
+                            options={makeOptions(data['values'])}
+                        />
+                    </Grid>
+                )
+            })
+        )
+    } 
 }
 
 

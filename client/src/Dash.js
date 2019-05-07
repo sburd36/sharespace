@@ -70,6 +70,8 @@ export default withStyles(styles)(class extends React.Component {
         super(props);
         this.state = {
             view: "list",
+            guests: "",
+            locations: "",
             bookings: [
                 {
                     ID: 1,
