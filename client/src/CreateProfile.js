@@ -66,7 +66,7 @@ const INFORMATION = {
 class SignUpFormBase extends Component {
   constructor(props) {
     super(props);
-    this.state = { ...INFORMATION}
+    this.state = { INFORMATION }
   }
 
   onSubmit = event => {
