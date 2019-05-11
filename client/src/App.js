@@ -7,18 +7,18 @@ import Landing from './landing'
 import Footer from './Footer'
 import AboutUs from './AboutUs'
 import OurTool from './OurTool'
-import Advocate from './Advocate'
+import Advocate from './Advocate/Advocate'
 import SignIn from './SignIn'
 import Calendar from './Calendar'
 import Situation from './Situation'
 import { withAuthentication } from './Sessions';
-import Dash from './Dash';
+import SearchBooking from './Advocate/SearchBooking';
 import PasswordForgetPage from './PassForget';
 import Admin from './Admin';
 import SignUpHost from './SignUpHost';
-import HostDash from './HostDash';
-import CreateProfile from './CreateProfile'
-import Listing from './AddListing'
+import HostDash from './Host/HostDash';
+import CreateProfile from './Host/CreateProfile'
+import Listing from './Host/AddSpace'
 import {HashRouter as Router, Switch, Redirect, Route} from "react-router-dom";
 
 class App extends Component {
@@ -43,7 +43,7 @@ class App extends Component {
                   <Route path="/calendar" component={Calendar} />
                   <Route path="/situation" component={Situation} />
                   <Route path="/PassForget" component={PasswordForgetPage} />
-                  <Route path="/advocatedash" component={Dash} />
+                  <Route path="/bookings" component={SearchBooking} />
                   <Route path="/Admin" component={Admin} />
                   <Route path="/profile" component={CreateProfile} />
                   <Route path="/listing" component={Listing} />

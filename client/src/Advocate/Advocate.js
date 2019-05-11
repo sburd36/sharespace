@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import women from "./img/53-.jpg";
+import women from "../img/53-.jpg";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -9,18 +9,12 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Link } from 'react-router-dom'
-import AddAvailability from './AddAvailability';
-import Listing from './AddListing'
-import Availability from './AddAvailability';
+
 const styles = theme => ({
     root: {
       flexGrow: 1,
     },
-    side: {
-      height: window.innerHeight,
-      width: window.innerWidth / 4 + 100,
-      textAlign: "center",
-    },
+
     bookings: {
         height: window.innerHeight,
         width: window.innerWidth / 2 + 230,
@@ -81,10 +75,6 @@ export default withStyles(styles)(class extends React.Component {
             ]
         }
     }
-
-    handleView = () => {
-        this.setState({listing: !this.state.listing})
-    }
     render() {
         const { classes } = this.props;
         return (
@@ -98,35 +88,65 @@ export default withStyles(styles)(class extends React.Component {
                                 container 
                                 justify="center" 
                                 alignItems="center">
-                                <Paper className={classes.side} >
+                                <Paper id="side" className={classes.side} >
                                     <img src={women} className={classes.bigAvatar} />
-                                    <h3>Welcome, Host</h3>
+                                    <h3>Welcome, Advocate</h3>
                                     <Typography color="textSecondary">What would you like to do today</Typography>
-                                    <Availability></Availability>
+                                    <Link to="/bookings">
+                                        <Button variant="contained" color="primary" className={classes.button}>
+                                            New Booking
+                                        </Button>
+                                    </Link>
+                                    <Link to="/bookings">
+                                        <Button variant="contained" color="primary" className={classes.button}>
+                                            Refer a Host
+                                        </Button>
+                                    </Link>
+                                    <Link to="/bookings">
                                     <Button variant="contained" color="primary" className={classes.button}>
-                                        Past Stays
+                                        View Current Bookings
                                     </Button>
-                                    <Button variant="contained" color="primary" className={classes.button}>
-                                        View Analytics
-                                    </Button>
-                                    <Button variant="contained" color="primary" className={classes.button}>
-                                        My Profile
-                                    </Button>
+                                    </Link>
+                                    <Link to="/bookings">
+                                        <Button variant="contained" color="primary" className={classes.button}>
+                                            View Analytics
+                                        </Button>
+                                    </Link>
                                 </Paper>
                             </Grid>
                         </Grid>
                         <Grid key={2} item>
                             <Paper className={classes.bookings} >
                                 <Typography className="pt-5 pl-5" variant="h4" gutterBottom>
+                                    CURRENT BOOKINGS
                                 </Typography>
                                 <Grid container spacing={6}>
-                                {this.state.listing  ?    
-                                <Listing view={this.handleView}></Listing>                             
-                                : 
-                                    <Button variant="contained" color="primary" className={classes.button} onClick={this.handleView}>
-                                        Add Listing
-                                    </Button>
-                                }
+                                    {this.state.bookings.map(
+                                        (booking) => {
+                                            return(
+                                                // <Grid item xs={6}>                                  
+                                                    <Card className={classes.card}>
+                                                        <CardContent className={classes.content}>
+                                                            <div>
+                                                                <Typography style={{maxWidth: 50}} variant="h5" component="h2">
+                                                                    {booking.name}
+                                                                </Typography>
+                                                                <Typography color="textSecondary" gutterBottom>
+                                                                    Guest ID: {booking.ID}
+                                                                </Typography>
+                                                                <Typography className={classes.pos}>
+                                                                    {booking.address}
+                                                                </Typography>
+                                                            </div>                                                     
+                                                            <Typography className={classes.date}>
+                                                                {booking.begin} - <br/>{booking.end}
+                                                            </Typography>
+                                                        </CardContent>
+                                                    </Card>
+                                                // </Grid>
+                                            )
+                                        }
+                                    )}
                                 </Grid>
                             </Paper>
                         </Grid>

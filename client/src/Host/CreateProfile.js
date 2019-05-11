@@ -13,7 +13,7 @@ import Select from '@material-ui/core/Select';
 import FormLabel from '@material-ui/core/FormLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { PersonalSelect } from './Select';
+import { PersonalSelect } from '../Select';
 import { compose } from 'recompose';
 import { Link, withRouter } from 'react-router-dom';
 
@@ -112,7 +112,6 @@ class SignUpFormBase extends Component {
                   <MenuItem value="female">Female</MenuItem>
                 </Select>
               </FormControl>
-
             </Grid>  
             <PersonalSelect size="6" onSelect={this.onSelect}/>
           </Grid>

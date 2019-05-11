@@ -33,14 +33,8 @@ class PersonalSelect extends React.Component {
             selected: []
         }
     }
-    handleChange = (option) => {
-        this.setState({
-            selected: option
-        })
-    }
 
     render() {
-        const { options } = this.state
         return (
             Personal.map((data) => {
                 return( 
@@ -51,7 +45,7 @@ class PersonalSelect extends React.Component {
                             components={Animated()}
                             isMulti
                             name={data.name}
-                            onChange={this.props.onSelect(data.type)}
+                            // onChange={this.props.onSelect(data.type)}
                             options={makeOptions(data['values'])}
                         />
                     </Grid>
@@ -114,15 +108,12 @@ class SpaceSelect extends React.Component {
 
 function CustomExpand(props) {
     const input = props.input;
-    const [state, setState] = React.useState({
-        checkedA: true,
-        checkedB: true,
-        checkedF: true,
-        checkedG: true,
-      });
+    const checked = props.select;
+    const [state, setState] = React.useState({});
 
     const handleChange = name => event => {
         setState({ ...state, [name]: event.target.checked });
+        console.log(state)
       };
     return (
             <ExpansionPanel>
@@ -137,8 +128,8 @@ function CustomExpand(props) {
                             <FormControlLabel
                                 control={
                                 <Checkbox
-                                    checked={state.data}
-                                    onChange={handleChange(data)}
+                                    // checked={state.data}
+                                    onChange={checked(input.type, data)}
                                     value={data}
                                 />
                                 }

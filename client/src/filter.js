@@ -47,7 +47,7 @@ const Location = {
 }
 
 const Rules = {
-    type: 'homeRules',
+    type: 'rules',
     name: "Home Rules",
     values: ['No Smoking', 'No Alcohol', 'No Pets']
 

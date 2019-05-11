@@ -886,5 +886,14 @@ input:-moz-placeholder {
 input::-webkit-input-placeholder {
 	color: #999;
 }
+
+/* for side bar (Min actually use css instead of inline sometimes... LOL) */
+#side {
+  height: 100vh;
+  width: 25vw;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
 /* end of search */
 /*# sourceMappingURL=index.css.map */

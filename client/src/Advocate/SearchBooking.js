@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import women from "./img/53-.jpg";
-import Calendar from './Calendar'
-import person from './img/person.svg';
+import Calendar from '../Calendar'
+import person from '../img/person.svg';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -14,7 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
-import { PersonalSelect, SpaceSelect} from './Select'
+import { PersonalSelect, SpaceSelect} from '../Select'
 import Switch from '@material-ui/core/Switch';
 
 
