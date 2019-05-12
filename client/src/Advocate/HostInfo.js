@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import bedroom from "./img/bedroom.jpg";
+import bedroom from "../img/bedroom.jpg";
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -8,7 +8,7 @@ import Select from 'react-select'
 import Animated from 'react-select/lib/animated'
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
-import { PersonalSelect } from './Select'
+import { PersonalSelect } from '../Select'
 // import Map from './Map'
 // For host pop-up
 import Dialog from '@material-ui/core/Dialog';
