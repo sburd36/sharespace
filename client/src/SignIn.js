@@ -11,7 +11,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { withFirebase } from './Firebase';
 import { compose } from 'recompose';
 import { Link, withRouter } from 'react-router-dom';
-import { PasswordForgetLink } from './PassForget';
+import { PasswordForgetLink, NotSignedInLink } from './PassForget';
 
 
 const styles = theme => ({
@@ -100,6 +100,7 @@ class SignInFormBase extends Component {
               label="Remember me"
             />
             <PasswordForgetLink />
+            <NotSignedInLink />
             <Button
             
               type="submit"

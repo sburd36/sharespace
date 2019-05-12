@@ -45,6 +45,8 @@ const config = {
     bookings = () => this.db.ref('events');
 
     booking = uid => this.db.ref(`events/${uid}`);
+    
+    survivors = () => this.db.ref('survivors');
 
 
 

@@ -126,6 +126,11 @@ const styles = theme => ({
       <Link to={'/PassForget'}>Forgot Password?</Link>
     </p>
   );
+  const NotSignedInLink = () => (
+    <p>
+      <Link to={'/Signup'}>Create an Account?</Link>
+    </p>
+  );
   const ForgetPassForm = compose(
     withRouter,
     withStyles(styles),
@@ -134,4 +139,4 @@ const styles = theme => ({
 
   export default PasswordForgetPage;
 
-  export { ForgetPassForm, PasswordForgetLink };
+  export { ForgetPassForm, PasswordForgetLink, NotSignedInLink };

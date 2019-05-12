@@ -9,19 +9,26 @@ import physical from './img/physical-safety.jpg'
 import mental from './img/mental-health.jpg'
 import children from './img/children.jpg'
 import finances from './img/finances.jpg'
-
-import {BrowserRouter as Router, Route, Link} from "react-router-dom"
-
-export default class Stay extends React.Component {
+import { withFirebase } from './Firebase';
+import { compose } from 'recompose';
+import {BrowserRouter as Link, withRouter} from "react-router-dom"
+const INITIAL_STATE = {
+    next: false,
+    physicalSaftey: false, 
+    mentalHealth: false, 
+    finances: false, 
+    children: false  
+}
+class Stay extends React.Component {
     constructor(props) {
         super(props) 
-        this.state = {
-            next: false
-        }
+        this.state = { INITIAL_STATE}
     }
 
     handleClick = (e) => {
-        var elem = e.target.parentNode
+        var elem = e.target.parentNode;
+        this.setState({ [e.target.name]: !this.props.state });
+        console.log(this.props.state)
         if (elem.style['background-color'] == 'rgb(233, 133, 133)') {
             elem.setAttribute("style", "background-color: none; width: 10rem; cursor: pointer;")
         } else {
@@ -30,6 +37,14 @@ export default class Stay extends React.Component {
     }
 
     handleNext = () => {
+        const { physicalSaftey, mentalSaftey,finances, children } = this.state
+        console.log(physicalSaftey)
+        this.props.firebase.survivors({
+            physicalSaftey,
+            mentalSaftey,
+            finances,
+            children
+        })
         this.setState({
             next: true
         })
@@ -74,29 +89,29 @@ export default class Stay extends React.Component {
                         </div>
                         <h4 class="font-light">I'm concerned about...</h4>
                         <div class="row d-flex justify-content-center align-items-end p-3 concerns" >
-                            <div id="type1" class="card m-3" 
-                            style={{width: "10rem", cursor: "pointer"}}
+                            <div id="type1" class="card m-3" name="physicalSaftey"
+                            style={{width: "10rem", cursor: "pointer"}} 
                             onClick={this.handleClick}>
                                 <img class="card-img-top" src={physical}></img>
-                                <div class="card-body">
+                                <div class="card-body" >
                                     Physical Safety
                                 </div>
                             </div>
-                            <div id="type2" class="card m-3" style={{width: "10rem", cursor: "pointer"}}
+                            <div id="type2" name="mentalHealth" class="card m-3" style={{width: "10rem", cursor: "pointer"}}
                                 onClick={this.handleClick}>
                                 <img class="card-img-top" src={mental}></img>
                                 <div class="card-body">
                                     Mental Health
                                 </div>
                             </div>
-                            <div id="type3" class="card m-3" style={{width: "10rem", cursor: "pointer"}}
+                            <div id="type3" name="finances" class="card m-3" style={{width: "10rem", cursor: "pointer"}}
                                 onClick={this.handleClick}>
                                 <img class="card-img-top" src={finances}></img>
                                 <div class="card-body">
                                     Finances
                                 </div>
                             </div>
-                            <div id="type4" class="card m-3" style={{width: "10rem", cursor: "pointer"}}
+                            <div id="type4" name="children" class="card m-3" style={{width: "10rem", cursor: "pointer"}}
                                 onClick={this.handleClick}>
                                 <img class="card-img-top" src={children}></img>
                                 <div class="card-body">
@@ -162,3 +177,10 @@ export default class Stay extends React.Component {
         )
     }
 }
+const StayData = compose(
+    withRouter,
+    withFirebase,
+  )(Stay);
+  
+  
+  export default StayData;

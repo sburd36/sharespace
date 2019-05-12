@@ -53,8 +53,8 @@ const INITIAL_STATE = {
   lastName: '',
   email: '',
   password: '',
-  passwordConf: '',
-  type: 'Advocate',
+  confirmPassword: '',
+  type: 'Host',
   error: null,
 };
 
@@ -101,12 +101,11 @@ class SignUpFormBase extends Component {
       })
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push('/advocate');
+        this.props.history.push('/profile');
       })
       .catch(error => {
         this.setState({ error });
       });
-
   };
 
   onChange = event => {
@@ -121,13 +120,13 @@ class SignUpFormBase extends Component {
       lastName,
       email,
       password,
-      passwordConf,
+      confirmPassword,
       type,
       error,
     } = this.state;
 
     const isInvalid =
-      password !== passwordConf ||
+      password !== confirmPassword ||
       password === '' ||
       email === '' ||
       firstName === '' ||
@@ -161,7 +160,7 @@ class SignUpFormBase extends Component {
             </FormControl>
             <FormControl margin="normal" fullWidth>
               <InputLabel htmlFor="password">Confirm Password</InputLabel>
-              <Input name="confirmPassword" required type="confirmPassword" id="confirmPassword" autoComplete="current-password" onChange={this.onChange}/>
+              <Input name="confirmPassword" required type="password" id="confirmPassword" autoComplete="current-password" onChange={this.onChange}/>
             </FormControl>
             <FormControlLabel
               control={<Checkbox value="remember" color="secondary" />}
@@ -174,7 +173,7 @@ class SignUpFormBase extends Component {
               color="primary"   
               className={classes.submit}
             >
-              Sign up Bitches
+              Sign Up
             </Button>
             {error && <p>{error.message}</p>}
           </form>

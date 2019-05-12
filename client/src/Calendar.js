@@ -23,7 +23,7 @@ export default class Calendar extends React.Component {
           {
             start: new Date(),
             end: new Date(moment().add(1, "days")),
-            title: "Some title"
+            title: "Marry Potter"
           }
         ]
       };
@@ -42,7 +42,6 @@ export default class Calendar extends React.Component {
             state.events[0].end = end;
             return { events: state.events };
         });
-        console.log(start);
     };
   render() {
       return (

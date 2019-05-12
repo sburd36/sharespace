@@ -12,16 +12,11 @@ import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
-
-// For filter expansion
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import Checkbox from '@material-ui/core/Checkbox';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Input from '@material-ui/core/Input';
+import { PersonalSelect, SpaceSelect} from './Select'
 import Switch from '@material-ui/core/Switch';
+
 
 // confirm host view
 import Host from './HostInfo';
@@ -61,44 +56,20 @@ const styles = theme => ({
         width: "100px",
         height: "100px"
     },
+    selectEmpty: {
+        marginTop: theme.spacing.unit,
+      },
   });
 
 const guests = [1,2,3,4]
 const ethinicities = []
-const locations = []
+const locations = ["Northgate", "U District", "Westlake", "Ballard"]
 
 export default withStyles(styles)(class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             view: "list",
-            filters: [
-                {
-                    type: 'languages',
-                    name: 'Languages',
-                    values: ['English', 'Chinese(Mandarin)', 'Chinese(Cantonese)', 'Spanish', 'French', 'Japanese']
-                },
-                {
-                    type: 'homeType',
-                    name: 'Home Types',
-                    values: ["Entire Place", "Private Bedroom", 'Hotel Room', 'Shared Room', 'Shelter']
-                },
-                {
-                    type: 'amentities',
-                    name: 'Amentities',
-                    values: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Computer Access', 'Microwave', 'Self-Check in', 'Parking', 'Bike Storage', 'Private Bathroom', 'Meals', 'Voicemail']
-                },
-                {
-                    type: 'needs',
-                    name: 'Needs',
-                    values: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Child-Friendly', 'Near Public Transport', 'Women Only']
-                },
-                {
-                    type: 'ethnicities',
-                    name: 'Ethnicities',
-                    values: ['African Americans', 'Hispanic', 'Asian', 'White', 'Native/American Indian']
-                },
-            ],
             bookings: [
                 {
                     ID: 1,
@@ -235,30 +206,31 @@ export default withStyles(styles)(class extends React.Component {
 
     handleInputChange = name => event => {
         this.setState({ [name]: event.target.value });
-        console.log("INPUT CHANGE: " + this .state)
       };
 
-    handleSelectChange = name => event => {
-        this.setState({ [name]: event.target.checked});
-        console.log("SELECT CHANGE: " + this .state)
 
-    }
 
-    handleExpandChange = panel => (event, expanded) => {
-        this.setState({
-            expanded: expanded ? panel : false,
-        })
-    }
     
     handleSwitchView = (event) => {
         this.setState({
             view: event.target.checked ? "calendar" : "list"
         })
     }
-
+  
     render() {
         const { classes } = this.props;
-        var filters = this.state.filters
+        // function SimpleSelect() {
+        //     const [values, setValues] = React.useState({
+        //       age: '',
+        //       name: 'hai',
+        //     });
+          
+        //     const inputLabel = React.useRef(null);
+        //     const [labelWidth, setLabelWidth] = React.useState(0);
+        //     React.useEffect(() => { 
+        //       setLabelWidth(inputLabel.current.offsetWidth);
+        //     }, []);
+        // }
         return (
             <div class="pt-4">
                 <Grid 
@@ -272,6 +244,7 @@ export default withStyles(styles)(class extends React.Component {
                                 alignItems="center">
                                 <Paper className={classes.side} >
                                     <h3>FIND HOST</h3>
+                                    <form>
                                     <FormControl>
                                         <input type="search" placeholder="Search"></input>
                                         <br/>
@@ -295,75 +268,49 @@ export default withStyles(styles)(class extends React.Component {
                                                 shrink: true,
                                             }}
                                         />
-                                        {/* <Select
-                                        value={values.name}
-                                        onChange={handleChange}
-                                        input={<Input name="name" id="name-disabled" />}
+                                        <FormControl>
+                                            {/* <InputLabel htmlFor="select-multiple-checkbox">Number of Guests</InputLabel> */}
+                                            Number of Guests
+                                            <Select
+                                            value={this.state.guests}
+                                            onChange={this.handleInputChange('guests')}
+                                            input={<Input name="age" id="age-helper" />}
+                                            >                                
+                                                {[1,2,3,4].map(option => (
+                                                    <MenuItem key={option} value={option}>
+                                                        {option}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
+                                        <FormControl
                                         >
-                                            {guests.map(option => (
-                                                <MenuItem key={option} value={option}>
-                                                    {option}
-                                                </MenuItem>
-                                            ))}
-                                        </Select> */}
-                                        <TextField
-                                            id="standard-select-currency"
-                                            select
-                                            label="Locations"
-                                            className={classes.textField}
-                                            value={this.state.ethnicity}
-                                            onChange={this.handleInputChange('ethnicity')}
-                                            SelectProps={{
-                                                MenuProps: {
-                                                className: classes.menu,
-                                                },
-                                            }}
-                                            margin="normal"
-                                            >
-                                            {guests.map(option => (
-                                                <MenuItem key={option} value={option}>
-                                                    {option}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
-                                        {
-                                            filters.map((d) => {
-                                                return(
-                                                    <ExpansionPanel  expanded={this.state.expanded === d.type} onChange={this.handleExpandChange(d.type)}>
-                                                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                                            <Typography className={classes.heading}>{d.name}</Typography>
-                                                        </ExpansionPanelSummary>
-                                                        <ExpansionPanelDetails>
-                                                            <Grid container>
-                                                            {d.values.map((data) => {
-                                                                return(
-                                                                    <Grid item>
-                                                                    <FormControlLabel
-                                                                        control={
-                                                                        <Checkbox
-                                                                            checked={this.state.data}
-                                                                            onChange={this.handleSelectChange(data)}
-                                                                            value="checkedA"
-                                                                        />
-                                                                        }
-                                                                        label={data}
-                                                                    />
-                                                                    </Grid>
-                                                                    
-                                                                )
-                                                            })}
-                                                            </Grid>
-                                                        </ExpansionPanelDetails>
-                                                    </ExpansionPanel>
-                                                )
-                                                
-                                            })
-                                        }
+                                            {/* <InputLabel htmlFor="select-multiple-checkbox">Locations</InputLabel> */}
+                                        Location
+                                            <Select
+                                            value={this.state.locations}
+                                            onChange={this.handleInputChange('locations')}>                                        >
+                                                {locations.map(option => (
+                                                    <MenuItem key={option} value={option}>
+                                                        {option}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
+                                        <Grid containter >
+                                        <Grid item xs={6}>
+                                        <PersonalSelect></PersonalSelect>
+
+                                        </Grid>
+                                        </Grid>
+                                        <SpaceSelect ></SpaceSelect>
                                         <Button variant="contained" color="primary" className={classes.button}>
                                             New Booking
                                         </Button>
                                     </FormControl>
 
+                                    </form>
+                                    
                                 </Paper>
                             </Grid>
                         </Grid>
@@ -393,7 +340,7 @@ export default withStyles(styles)(class extends React.Component {
                                                             </Typography>
                                                         </div>                                                  
                                                     </CardContent>
-                                                    <Host booking={booking} filters={filters}></Host>
+                                                    <Host booking={booking}></Host>
                                                 </Card>
                                             )
                                         }
