@@ -26,25 +26,33 @@ function makeOptions(filter) {
     return options;
 }
 
+class PersonalSelect extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            selected: []
+        }
+    }
 
-
-function PersonalSelect() {
-    return (
-        Personal.map((data) => {
-            return( 
-                <div class="pt-3">
-                    {data.name}
-                    <Select
-                        closeMenuOnSelect={false}
-                        components={Animated()}
-                        isMulti
-                        name={data.name}
-                        options={makeOptions(data['values'])}
-                    />
-                </div>
-            )
-        })
-    )
+    render() {
+        return (
+            Personal.map((data) => {
+                return( 
+                    <Grid item xs={this.props.size}>
+                        {data.name}
+                        <Select
+                            closeMenuOnSelect={false}
+                            components={Animated()}
+                            isMulti
+                            name={data.name}
+                            // onChange={this.props.onSelect(data.type)}
+                            options={makeOptions(data['values'])}
+                        />
+                    </Grid>
+                )
+            })
+        )
+    } 
 }
 
 
@@ -100,15 +108,12 @@ class SpaceSelect extends React.Component {
 
 function CustomExpand(props) {
     const input = props.input;
-    const [state, setState] = React.useState({
-        checkedA: true,
-        checkedB: true,
-        checkedF: true,
-        checkedG: true,
-      });
+    const checked = props.select;
+    const [state, setState] = React.useState({});
 
     const handleChange = name => event => {
         setState({ ...state, [name]: event.target.checked });
+        console.log(state)
       };
     return (
             <ExpansionPanel>
@@ -123,8 +128,8 @@ function CustomExpand(props) {
                             <FormControlLabel
                                 control={
                                 <Checkbox
-                                    checked={state.data}
-                                    onChange={handleChange(data)}
+                                    // checked={state.data}
+                                    onChange={checked(input.type, data)}
                                     value={data}
                                 />
                                 }

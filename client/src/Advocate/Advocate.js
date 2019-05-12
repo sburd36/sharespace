@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import women from "./img/53-.jpg";
+import women from "../img/53-.jpg";
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { withFirebase } from './Firebase';
+import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -16,11 +17,6 @@ const styles = theme => ({
     root: {
       flexGrow: 1,
     },
-    side: {
-      height: window.innerHeight,
-      width: window.innerWidth / 4 + 100,
-      textAlign: "center",
-    },
     bookings: {
         height: window.innerHeight,
         width: window.innerWidth / 2 + 230,
@@ -34,14 +30,18 @@ const styles = theme => ({
         margin: theme.spacing.unit,
     },
     card: {
-        maxWidth: 360,
+        maxWidth: 500,
         margin: "0rem 5rem 1rem 3rem"
     },
     content: {
-        display: "flex"
+        display: "flex",
+        
     },
-    date: {
-        padding: "1.5rem 0 0 4rem"
+    button: {
+        width: '220px',
+        margin: '0.3rem',
+        background: '#202e57',
+        textDecoration: 'none'
     }
   });
 
@@ -117,7 +117,7 @@ class AdminDash extends Component {
                                 container 
                                 justify="center" 
                                 alignItems="center">
-                                <Paper className={classes.side} >
+                                <Paper id="side" className={classes.side} >
                                     <img src={women} className={classes.bigAvatar} />
                                     <h3>Welcome, {this.state.user}</h3>
                                     <Typography color="textSecondary">What would you like to do today</Typography>
@@ -126,45 +126,60 @@ class AdminDash extends Component {
                                             New Booking
                                         </Button>
                                     </Link>
-                                    <Button variant="contained" color="primary" className={classes.button}>
-                                        Refer a Host
-                                    </Button>
+                                    <Link to="/bookings">
+                                        <Button variant="contained" color="primary" className={classes.button}>
+                                            Refer a Host
+                                        </Button>
+                                    </Link>
+                                    <Link to="/bookings">
                                     <Button variant="contained" color="primary" className={classes.button}>
                                         View Current Bookings
                                     </Button>
-                                    <Button variant="contained" color="primary" className={classes.button}>
-                                        View Analytics
-                                    </Button>
+                                    </Link>
+                                    <Link to="/bookings">
+                                        <Button variant="contained" color="primary" className={classes.button}>
+                                            View Analytics
+                                        </Button>
+                                    </Link>
                                 </Paper>
                             </Grid>
                         </Grid>
                         <Grid key={2} item>
                             <Paper className={classes.bookings} >
-                                <Typography className="pt-5 pl-5" variant="h4" gutterBottom>
+                                <h4 class="p-5">
                                     CURRENT BOOKINGS
-                                </Typography>
-                                <Grid container spacing={6}>
+                                </h4>
+                                <Grid container spacing={3}>
                                     {this.state.bookings.map(
                                         (booking) => {
                                             return(
-                                                <Card className={classes.card}>
-                                                    <CardContent className={classes.content}>
-                                                        <div>
-                                                            <Typography style={{maxWidth: 50}} variant="h5" component="h2">
-                                                                {booking.name}
-                                                            </Typography>
-                                                            <Typography color="textSecondary" gutterBottom>
-                                                                Guest ID: {booking.ID}
-                                                            </Typography>
-                                                            <Typography className={classes.pos}>
-                                                                {booking.address}
-                                                            </Typography>
-                                                        </div>                                                     
-                                                        <Typography className={classes.date}>
-                                                            {booking.begin} - <br/>{booking.end}
-                                                        </Typography>
-                                                    </CardContent>
-                                                </Card>
+                                                <Grid item xs={6}>                                  
+                                                    <Card className={classes.card}>
+                                                        <CardContent className={classes.content}>
+                                                            <div>
+                                                                <Typography style={{maxWidth: 50}} variant="h5" component="h2">
+                                                                    {booking.name}
+                                                                </Typography>
+                                                                <Typography color="textSecondary" gutterBottom>
+                                                                    Guest ID: {booking.ID}
+                                                                </Typography>
+                                                                <Typography className={classes.pos}>
+                                                                    {booking.address}
+                                                                </Typography>
+                                                            </div>     
+                                                            <div style={
+                                                                    {
+                                                                        background: "#202e57", 
+                                                                        borderRadius: '1rem', 
+                                                                        color: 'white', 
+                                                                        padding: "1.5rem 0 0 1.7rem"
+                                                                    }
+                                                                }>
+                                                                {booking.begin} - <br/>{booking.end}
+                                                            </div>                                                                                                           
+                                                        </CardContent>
+                                                    </Card>
+                                                </Grid>
                                             )
                                         }
                                     )}

@@ -1,25 +1,18 @@
-import React, { Component } from 'react';
-import women from "./img/53-.jpg";
-import PropTypes from 'prop-types';
+import React from 'react';
+import women from "../img/53-.jpg";
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import { Link } from 'react-router-dom'
-import AddAvailability from './AddAvailability';
-import Listing from './AddListing'
+import AddListing from './AddSpace'
 import Availability from './AddAvailability';
+import CurrentSpaces from './CurrentSpaces';
+import Home from '@material-ui/icons/Home';
+
 const styles = theme => ({
     root: {
       flexGrow: 1,
-    },
-    side: {
-      height: window.innerHeight,
-      width: window.innerWidth / 4 + 100,
-      textAlign: "center",
     },
     bookings: {
         height: window.innerHeight,
@@ -32,6 +25,8 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing.unit,
+        background: '#202e57',
+        textAlign: "center"
     },
     card: {
         maxWidth: 360,
@@ -98,7 +93,7 @@ export default withStyles(styles)(class extends React.Component {
                                 container 
                                 justify="center" 
                                 alignItems="center">
-                                <Paper className={classes.side} >
+                                <Paper id="side">
                                     <img src={women} className={classes.bigAvatar} />
                                     <h3>Welcome, Host</h3>
                                     <Typography color="textSecondary">What would you like to do today</Typography>
@@ -121,11 +116,14 @@ export default withStyles(styles)(class extends React.Component {
                                 </Typography>
                                 <Grid container spacing={6}>
                                 {this.state.listing  ?    
-                                <Listing view={this.handleView}></Listing>                             
-                                : 
+                                <AddListing view={this.handleView}></AddListing>                             
+                                :  
+                                    <>
                                     <Button variant="contained" color="primary" className={classes.button} onClick={this.handleView}>
-                                        Add Listing
+                                        <Home></Home>Add Listing
                                     </Button>
+                                    <CurrentSpaces></CurrentSpaces>
+                                    </>
                                 }
                                 </Grid>
                             </Paper>
