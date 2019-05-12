@@ -16,7 +16,8 @@ import Add from '@material-ui/icons/AddCircleOutline';
 const styles = theme => ({
     property: {
         width: '200px',
-    }
+        height: '40px'
+    },
 })
 
 class Availability extends React.Component {
@@ -30,7 +31,9 @@ class Availability extends React.Component {
         console.log(date);
         this.state = {
             property: "",
-            begin: date
+            begin: date,
+            properties: ['home1', 'home2', 'home3']
+
         }
     }
 
@@ -57,13 +60,61 @@ class Availability extends React.Component {
             open: false
         })
     }
+    timeSlot = () => {
+        const { classes } = this.props;
+
+        return (
+            <>
+                <FormControl>
+                    Property
+                    <Select
+                        id='property'
+                        value={this.state.property}
+                        className={classes.property}
+                        onChange={this.handleInputChange('property')}
+                        input={<OutlinedInput/>}
+                        required
+                    >
+                        {this.state.properties.map((data) => {
+                            return(
+                                <MenuItem value={data}>{data}</MenuItem>
+                            )
+                        })}
+                    </Select>
+                </FormControl>
+                <div style={{display: 'flex', padding: '1rem'}}>
+                    <TextField
+                        id="date"
+                        label="Start Date"
+                        type="date"
+                        value={this.state.begin}
+                        min="2019-05-09"
+                        onChange={this.handleInputChange('begin')}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                    <p style={{fontSize: '40px', padding: '10px 1rem 0 1rem'}}>-</p>
+                    <TextField
+                        id="date"
+                        label="End Date"
+                        type="date"
+                        min={this.state.begin}
+                        onChange={this.handleInputChange('end')}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                </div>
+            </>
+        )
+    }
     render() {
         const { classes } = this.props;
-        const properties = ['home1', 'home2', 'home3']
 
         return (
             <div class="d-flex justify-content-around">
-                <Button onClick={this.handleHost} variant="contained" color="primary">
+                <Button onClick={this.handleHost} variant="contained" color="primary" style={{background:"#202e57"}}>
                 <Add></Add>
                     Add Availability
                 </Button>  
@@ -74,46 +125,12 @@ class Availability extends React.Component {
                     maxWidth='xl'
                     aria-labelledby="scroll-dialog-title"
                 >
-                <form onSubmit={this.onSubmit}>
-                    <DialogContent>
-                            <FormControl>
-                                <InputLabel htmlFor="property">Property</InputLabel>
-                                <Select
-                                    id='property'
-                                    value={this.state.property}
-                                    className={classes.property}
-                                    onChange={this.handleInputChange('property')}
-                                    input={<OutlinedInput/>}
-                                    required
-                                >
-                                    {properties.map((data) => {
-                                        return(
-                                            <MenuItem value={data}>{data}</MenuItem>
-                                        )
-                                    })}
-                                </Select>
-                            </FormControl>
-                            <TextField
-                                id="date"
-                                label="Start Date"
-                                type="date"
-                                value={this.state.begin}
-                                min="2019-05-09"
-                                onChange={this.handleInputChange('begin')}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
-                            <TextField
-                                id="date"
-                                label="End Date"
-                                type="date"
-                                min={this.state.begin}
-                                onChange={this.handleInputChange('end')}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
+                    <form onSubmit={this.onSubmit}>
+                    <DialogContent className={classes.content}>
+                        <h3>Add Availability</h3>
+                            {this.timeSlot()}
+                            <hr></hr>
+                            <button style={{border: 'none', color: "#da5c48", display: "flex", align: "baseline"}}><Add></Add>Add another time slot</button>
                         </DialogContent>
                     <DialogActions >
                         <Button type="submit" variant="contained"  color="primary">

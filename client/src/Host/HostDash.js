@@ -25,6 +25,8 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing.unit,
+        background: '#202e57',
+        textAlign: "center"
     },
     card: {
         maxWidth: 360,
@@ -118,7 +120,7 @@ export default withStyles(styles)(class extends React.Component {
                                 :  
                                     <>
                                     <Button variant="contained" color="primary" className={classes.button} onClick={this.handleView}>
-                                        Add Listing
+                                        <Home></Home>Add Listing
                                     </Button>
                                     <CurrentSpaces></CurrentSpaces>
                                     </>
