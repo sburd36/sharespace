@@ -1,8 +1,8 @@
 import React from "react";
-import logo from './img/logo-new.png'
+import logo from '../img/logo-new.png'
 import { Link } from "react-router-dom";
-import SignOutButton from './SignOut';
-import { AuthUserContext } from './Sessions';
+import SignOutButton from '../SignOut';
+import { AuthUserContext } from '../Sessions';
 
 // import Nav from "./OurTool";
 

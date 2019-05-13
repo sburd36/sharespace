@@ -8,10 +8,10 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { withFirebase } from './Firebase';
+import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
 import { Link, withRouter } from 'react-router-dom';
-import { PasswordForgetLink } from './PassForget';
+import { PasswordForgetLink } from '../PassForget';
 
 
 const styles = theme => ({

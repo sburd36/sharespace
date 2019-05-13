@@ -1,10 +1,10 @@
 import React from "react";
-import logo from './img/logo-new.png'
+import logo from '../img/logo-new.png'
 import { Link } from "react-router-dom";
-import hero from "./img/dash.png"
-import monthView from "./img/month-view.png"
-import hostDisplay from "./img/host-display.png"
-import analytics from "./img/analytics.png"
+import hero from "../img/dash.png"
+import monthView from "../img/month-view.png"
+import hostDisplay from "../img/host-display.png"
+import analytics from "../img/analytics.png"
 
 export default class Nav extends React.Component {
     // constructor(props) {

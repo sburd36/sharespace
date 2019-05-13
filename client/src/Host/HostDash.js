@@ -20,7 +20,7 @@ const styles = theme => ({
     },
     main: {
         height: window.innerHeight,
-        width: window.innerWidth / 2 + 230,
+        width: window.innerWidth / 2 + 250,
     },
     bigAvatar: {
         position: "relative",
@@ -105,7 +105,7 @@ export default withStyles(styles)(class extends React.Component {
                                 alignItems="center"
                                 >
                                 <Paper id="side">
-                                    <img src={women} className={classes.bigAvatar} />
+                                    <img id="bigAvatar" src={women} className={classes.bigAvatar} />
                                     <h3>Welcome, Host</h3>
                                     <Typography color="textSecondary" className={classes.secondary}>What would you like to do today</Typography>
                                     <Availability></Availability>

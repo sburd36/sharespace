@@ -892,7 +892,7 @@ input::-webkit-input-placeholder {
 /* for side bar (Min actually use css instead of inline sometimes... LOL) */
 #side {
   height: 100vh;
-  width: 25vw;
+  width: 30vw;
   text-align: center;
   display: flex;
   flex-direction: column;

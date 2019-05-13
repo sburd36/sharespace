@@ -1,13 +1,13 @@
 import React from "react";
-import logo from './img/logo-new.png'
+import logo from '../img/logo-new.png'
 import {HashRouter as Link} from "react-router-dom";
-import logoLong from './img/logo-long.png'
-import phone from './img/mobile-phone.jpg'
-import fourLadies from './img/four-ladies.png'
-import Abby from './img/headshots/abby-huang.JPG'
-import Steph from './img/headshots/stephanie-burd.JPG'
-import Min from './img/headshots/min_yang.jpg'
-import Mary from './img/headshots/mary-huibregtse.png'
+import logoLong from '../img/logo-long.png'
+import phone from '../img/mobile-phone.jpg'
+import fourLadies from '../img/four-ladies.png'
+import Abby from '../img/headshots/abby-huang.JPG'
+import Steph from '../img/headshots/stephanie-burd.JPG'
+import Min from '../img/headshots/min_yang.jpg'
+import Mary from '../img/headshots/mary-huibregtse.png'
 
 export default class Nav extends React.Component {
     // constructor(props) {
