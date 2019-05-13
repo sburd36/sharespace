@@ -9,6 +9,8 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Link } from 'react-router-dom'
+import Add from '@material-ui/icons/AddCircleOutline';
+import People from '@material-ui/icons/People'
 
 const styles = theme => ({
     root: {
@@ -97,6 +99,7 @@ export default withStyles(styles)(class extends React.Component {
                                     <Typography class="m-2" color="textSecondary">What would you like to do today</Typography>
                                     <Link to="/bookings">
                                         <Button variant="contained" color="primary" className={classes.button}>
+                                        <Add></Add>
                                             New Booking
                                         </Button>
                                     </Link>
@@ -107,7 +110,8 @@ export default withStyles(styles)(class extends React.Component {
                                     </Link>
                                     <Link to="/bookings">
                                     <Button variant="contained" color="primary" className={classes.button}>
-                                        View Current Bookings
+                                    <People></People>
+                                        Current Bookings
                                     </Button>
                                     </Link>
                                     <Link to="/bookings">

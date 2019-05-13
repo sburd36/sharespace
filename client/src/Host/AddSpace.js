@@ -209,9 +209,6 @@ const styles = theme => ({
                     <CustomExpand input={Rules} select={this.handleChecked}></CustomExpand>         
                   </Grid>
                 </Grid>
-                <Button variant="contained" color="primary" className={classes.button}>
-                    Add
-                </Button>
             </form>
           </main>
         )
