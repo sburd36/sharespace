@@ -30,7 +30,6 @@ const styles = theme => ({
     button: {
         margin: theme.spacing.unit,
         width: "200px",
-        background: '#202e57',
         textAlign: "center",
     },
     secondary: {
@@ -58,28 +57,28 @@ export default withStyles(styles)(class extends React.Component {
                     name: "Stephanie Burd",
                     address: "1234 24th Sunset Bld",
                     begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019"
+                    end: "TUESDAY APRIL 25 2019",
                 },
                 {
                     ID: 2,
                     name: "Min Yang",
                     address: "1234 24th Sunset Bld",
                     begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019"
+                    end: "TUESDAY APRIL 25 2019",
                 },
                 {
                     ID: 3,
                     name: "Mary Huibregtse",
                     address: "1234 24th Sunset Bld",
                     begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019"
+                    end: "TUESDAY APRIL 25 2019",
                 },
                 {
                     ID: 4,
                     name: "Abby Huang",
                     address: "1234 24th Sunset Bld",
                     begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019"
+                    end: "TUESDAY APRIL 25 2019",
                 },
                 
             ]
@@ -109,18 +108,18 @@ export default withStyles(styles)(class extends React.Component {
                                     <h3>Welcome, Host</h3>
                                     <Typography color="textSecondary" className={classes.secondary}>What would you like to do today</Typography>
                                     <Availability></Availability>
-                                    <Button variant="contained" color="primary" className={classes.button}>
+                                    <Button id="button" variant="contained" color="primary" className={classes.button}>
                                     <People></People>
                                         Current Bookings
                                     </Button>
-                                    <Button variant="contained" color="primary" className={classes.button}>
+                                    <Button id="button" variant="contained" color="primary" className={classes.button}>
                                     <Clock></Clock>
                                         Past Stays
                                     </Button>
-                                    <Button variant="contained" color="primary" className={classes.button}>
+                                    <Button id="button" variant="contained" color="primary" className={classes.button}>
                                         View Analytics
                                     </Button>
-                                    <Button variant="contained" color="primary" className={classes.button} onClick={this.handleView('profile')}>
+                                    <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('profile')}>
                                     <Face></Face>
                                         My Profile
                                     </Button>

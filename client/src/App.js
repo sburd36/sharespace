@@ -26,6 +26,9 @@ class App extends Component {
     super(props);
   }
 
+  clickSituation = () => {
+    this.setState({})
+  }
   render() {
     return (
       <div>

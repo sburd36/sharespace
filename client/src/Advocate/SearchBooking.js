@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Calendar from '../Calendar'
-import person from '../img/person.svg';
+import person from '../img/icon2.png';
+import { PersonalSelect, SpaceSelect} from '../Select'
+
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -13,8 +15,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
-import { PersonalSelect, SpaceSelect} from '../Select'
 import Switch from '@material-ui/core/Switch';
+import InputLabel from '@material-ui/core/InputLabel';
 
 
 // confirm host view
@@ -43,7 +45,9 @@ const styles = theme => ({
         margin: "0rem 5rem 1rem 3rem"
     },
     content: {
-        display: "flex"
+        display: "flex",
+        margin: '20px',
+        alignItems: 'center'
     },
     date: {
         padding: "1.5rem 0 0 4rem"
@@ -53,11 +57,15 @@ const styles = theme => ({
     },
     avatar: {
         width: "100px",
-        height: "100px"
+        height: "100px",
+        margin: '10px'
     },
     selectEmpty: {
         marginTop: theme.spacing.unit,
-      },
+    },
+    select: {
+        width: "150px"
+    }
   });
 
 const guests = [1,2,3,4]
@@ -89,7 +97,7 @@ export default withStyles(styles)(class extends React.Component {
                         {
                             ID: 1,
                             address: "1234 24th Sunset Bld",
-                            amentities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking', 'Bike Storage', 'Meals', 'Voicemail'],
+                            amenities: ['Kitchen', 'Laundry', 'Refrigerator', 'Bike Storage', 'Meals', 'Voicemail'],
                             checkinInfo: {
                                 time: "10am - 9pm",
                                 description: "Please text my number when arrive. Have a dog named Benly, he is very friendly but please do not pet him."
@@ -117,7 +125,7 @@ export default withStyles(styles)(class extends React.Component {
                         {
                             ID: 2,
                             address: "1234 24th Sunset Bld",
-                            amentities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking', 'Bike Storage', 'Meals', 'Voicemail'],
+                            amenities: ['Kitchen','Wifi', 'Parking', 'Bike Storage', 'Meals', 'Voicemail'],
                             checkinInfo: {
                                 time: "10am - 9pm",
                                 description: "*Have a dog named Benly, he is very friendly but please do not pet him."
@@ -146,7 +154,7 @@ export default withStyles(styles)(class extends React.Component {
                         {
                             ID: 3,
                             address: "1234 24th Sunset Bld",
-                            amentities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking', 'Bike Storage', 'Meals', 'Voicemail'],
+                            amenities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking', 'Bike Storage', 'Meals'],
                             checkinInfo: {
                                 time: "10am - 9pm",
                                 description: "Have a dog named Benly, he is very friendly but please do not pet him."
@@ -175,7 +183,7 @@ export default withStyles(styles)(class extends React.Component {
                         {
                             ID: 4,
                             address: "1234 24th Sunset Bld",
-                            amentities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking', 'Bike Storage', 'Meals', 'Voicemail'],
+                            amenities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking'],
                             checkinInfo: {
                                 time: "10am - 9pm",
                                 description: "Have a dog named Benly, he is very friendly but please do not pet him."
@@ -239,10 +247,6 @@ export default withStyles(styles)(class extends React.Component {
                     className={classes.root} 
                     justify="space-evenly" >
                         <Grid key={1} item>
-                            <Grid 
-                                container 
-                                justify="center" 
-                                alignItems="center">
                                 <Paper className={classes.side} >
                                     <h3>FIND HOST</h3>
                                     <form>
@@ -269,40 +273,41 @@ export default withStyles(styles)(class extends React.Component {
                                                 shrink: true,
                                             }}
                                         />
-                                        <FormControl>
-                                            {/* <InputLabel htmlFor="select-multiple-checkbox">Number of Guests</InputLabel> */}
-                                            Number of Guests
-                                            <Select
-                                            value={this.state.guests}
-                                            onChange={this.handleInputChange('guests')}
-                                            input={<Input name="age" id="age-helper" />}
-                                            >                                
-                                                {[1,2,3,4].map(option => (
-                                                    <MenuItem key={option} value={option}>
-                                                        {option}
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
-                                        <FormControl
-                                        >
-                                            {/* <InputLabel htmlFor="select-multiple-checkbox">Locations</InputLabel> */}
-                                        Location
-                                            <Select
-                                            value={this.state.locations}
-                                            onChange={this.handleInputChange('locations')}>                                        >
-                                                {locations.map(option => (
-                                                    <MenuItem key={option} value={option}>
-                                                        {option}
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
-                                        <Grid containter >
-                                        <Grid item xs={6}>
-                                        <PersonalSelect></PersonalSelect>
-
-                                        </Grid>
+                                        <div class='d-flex justify-content-around'>
+                                            <FormControl className={classes.select}>
+                                                <InputLabel htmlFor="select-multiple-checkbox">Number of Guests</InputLabel>
+                                                <Select
+                                                value={this.state.guests}
+                                                onChange={this.handleInputChange('guests')}
+                                                input={<Input name="age" id="age-helper" />}
+                                                >                                
+                                                    {[1,2,3,4].map(option => (
+                                                        <MenuItem key={option} value={option}>
+                                                            {option}
+                                                        </MenuItem>
+                                                    ))}
+                                                </Select>
+                                            </FormControl>
+                                            <FormControl className={classes.select}>
+                                                <InputLabel htmlFor="select-multiple-checkbox">Locations</InputLabel>
+                                                <Select
+                                                value={this.state.locations}
+                                                onChange={this.handleInputChange('locations')}>                                        >
+                                                    {locations.map(option => (
+                                                        <MenuItem key={option} value={option}>
+                                                            {option}
+                                                        </MenuItem>
+                                                    ))}
+                                                </Select>
+                                            </FormControl>
+                                        </div>
+                                        
+                                        <Grid containter space={6}>
+                                            <Grid item xs={12}>
+                                                <div class="p-4">
+                                                    <PersonalSelect></PersonalSelect>
+                                                </div>
+                                            </Grid>
                                         </Grid>
                                         <SpaceSelect ></SpaceSelect>
                                         <Button variant="contained" color="primary" className={classes.button}>
@@ -313,41 +318,62 @@ export default withStyles(styles)(class extends React.Component {
                                     </form>
                                     
                                 </Paper>
-                            </Grid>
                         </Grid>
                         <Grid key={2} item>
                             <Paper className={classes.hosts}>
-                            <Switch value="view" onChange={this.handleSwitchView}/>
-
+                                <div style={{display: 'flex', justifyContent: 'space-between', padding: '30px'}}>
+                                    <h3 className="">
+                                        AVAILABLE BOOKINGS
+                                    </h3>
+                                    <div>
+                                        Show Calendar
+                                        <Switch value="view" onChange={this.handleSwitchView}/>
+                                    </div>
+                                </div>
                             {this.state.view == "list" ? 
-                            <div>
-                                Show Calendar
-                                <Typography className="pt-5 pl-5" variant="h4" gutterBottom>
-                                    AVAILABLE BOOKINGS
-                                </Typography>
                                 <Grid container spacing={6}>
                                     {this.state.bookings.map(
                                         (booking) => {
                                             return(
                                                 <Card className={classes.card}>
-                                                    <CardContent className={classes.content}>
-                                                    <img className={classes.avatar} src={person}></img>
-                                                        <div>
-                                                            <h5>
-                                                                {booking.information.name}
-                                                            </h5>
-                                                            <Typography className={classes.pos}>
-                                                                {booking.space[0].address}
-                                                            </Typography>
-                                                        </div>                                                  
+                                                    <CardContent>
+                                                        <div className={classes.content}>
+                                                            <img className={classes.avatar} src={person}></img>
+                                                            <div>
+                                                                <h5>
+                                                                    {booking.information.name}
+                                                                </h5>
+                                                                <Typography className={classes.pos}>
+                                                                    {booking.space[0].address}
+                                                                </Typography>
+                                                            </div>      
+                                                        </div>          
+                                                        <Host booking={booking}></Host>  
+                                                        <div style={{display: 'flex', flexWrap: 'wrap', margin: '5px'}}>
+                                                            {
+                                                                booking.space[0].amenities.map((amenity) => {
+                                                                    return(
+                                                                        <div 
+                                                                            id="tags"
+                                                                            style={{
+                                                                                border: "0.5px solid",
+                                                                                borderRadius: '0.5rem',
+                                                                                padding: '6px',
+                                                                                margin: '2px'
+                                                                            }}
+                                                                        >
+                                                                            {amenity}
+                                                                        </div>
+                                                                    )
+                                                                })
+                                                            }      
+                                                        </div>                             
                                                     </CardContent>
-                                                    <Host booking={booking}></Host>
                                                 </Card>
                                             )
                                         }
                                     )}
                                 </Grid> 
-                            </div>
                             : <Calendar></Calendar>}
                             </Paper>
                         </Grid>

@@ -93,7 +93,7 @@ export default withStyles(styles)(class extends React.Component {
                                 container 
                                 justify="center" 
                                 alignItems="center">
-                                <Paper id="side" className={classes.side} >
+                                <Paper id="side" >
                                     <img src={women} className={classes.bigAvatar} />
                                     <h3>Welcome, Advocate</h3>
                                     <Typography class="m-2" color="textSecondary">What would you like to do today</Typography>
@@ -150,7 +150,8 @@ export default withStyles(styles)(class extends React.Component {
                                                                         background: "#202e57", 
                                                                         borderRadius: '1rem', 
                                                                         color: 'white', 
-                                                                        padding: "1.5rem 0 0 1.7rem"
+                                                                        padding: "1.7rem 1rem 0 1rem",
+                                                                        margin: "7px"
                                                                     }
                                                                 }>
                                                                 {booking.begin} - <br/>{booking.end}

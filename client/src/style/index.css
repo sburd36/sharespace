@@ -899,5 +899,17 @@ input::-webkit-input-placeholder {
   align-items: center;
 }
 
+#button {
+  background: #202e57;
+}
+
+#button-outline-date {
+  color: #7e9fa8;
+}
+
+#tags {
+  color: #da5c48;
+}
+
 /* end of search */
 /*# sourceMappingURL=index.css.map */

@@ -127,14 +127,14 @@ class SignUpFormBase extends Component {
       email === '' ||
       firstName === '' ||
       lastName === '';
-
+    let prop = this.props.location.state
     return (
       <main className={classes.main}>
         <CssBaseline />
         <Paper className={classes.paper}>
           {/* <Avatar className={classes.avatar}>
           </Avatar> */}
-          <h4>I'm an advocate!</h4>
+          <h4>I'm an {prop.type}!</h4>
           <img class="card-img-top" src={women} style={{width: "25rem"}} />
           <h4>Sign Up</h4>
           <form className={classes.form} onSubmit={this.onSubmit}>
