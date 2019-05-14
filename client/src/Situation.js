@@ -25,7 +25,15 @@ export default class Signup extends React.Component {
                     <h3 class="font-light">Which situation describes you best?</h3>
                 </header>
                 <div class="d-flex justify-content-around" >
-                    <Link to="/hostdash" style={{textDecoration: "none", color: "inherit"}}>
+                    <Link 
+                        to={{
+                            pathname: "/signup",
+                            state: {
+                                type: "host"
+                            } 
+                        }}
+                        style={{textDecoration: "none", color: "inherit"}}
+                        >
                         <div class="card" style={{width: "25rem"}}>
                             <img class="card-img-top" src={cart} />
                             <div class="card-body">
@@ -35,7 +43,13 @@ export default class Signup extends React.Component {
                             </div>
                         </div>
                     </Link>
-                    <Link to="/advocatedash" style={{textDecoration: "none", color: "inherit"}}>
+                    <Link to={{
+                            pathname: "/signup",
+                            state: {
+                                type: "advocate"
+                            } 
+                        }} 
+                        style={{textDecoration: "none", color: "inherit"}}>
                         <div class="card" style={{width: "25rem"}}>
                             <img class="card-img-top" src={women} />
                             <div class="card-body">
