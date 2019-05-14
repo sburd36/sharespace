@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import women from "../img/53-.jpg";
 import PropTypes from 'prop-types';
+
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -30,10 +31,16 @@ const styles = theme => ({
     },
     card: {
         maxWidth: 500,
-        margin: "0rem 5rem 1rem 3rem"
+        margin: "0rem 5rem 1rem 3rem",
+        border: "0.5px solid #d3dbee",
+        boxShadow: "none",
+        borderRadius: "12px"
     },
     content: {
         display: "flex",
+        justifyContent:"space-between",
+        alignItems:"center",
+        color: "#202e56"
         
     },
     button: {
@@ -49,32 +56,40 @@ export default withStyles(styles)(class extends React.Component {
         this.state = {
             bookings: [
                 {
-                    ID: 1,
+                    ID: 3857,
                     name: "Stephanie Burd",
+                    advocate: "Erika Wu",
                     address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019"
+                    location: "QUEEN ANNE",
+                    begin: "MONDAY, APRIL 4",
+                    end: "FRIDAY, APRIL 25"
                 },
                 {
-                    ID: 2,
+                    ID: 7394,
                     name: "Min Yang",
+                    advocate: "Sarah Lee",
                     address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019"
+                    location: "BEACON HILL",
+                    begin: "WEDNESDAY, MAY 25",
+                    end: "TUESDAY, APRIL 30"
                 },
                 {
-                    ID: 3,
+                    ID: 3924,
                     name: "Mary Huibregtse",
+                    advocate: "Emily Liu",
                     address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019"
+                    location: "GREENLAKE",
+                    begin: "MONDAY, APRIL 4",
+                    end: "TUESDAY, APRIL 25"
                 },
                 {
-                    ID: 4,
+                    ID: 2384,
                     name: "Abby Huang",
+                    advocate: "Alice Lopez",
                     address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019"
+                    location: "FREMONT",
+                    begin: "MONDAY, APRIL 4",
+                    end: "TUESDAY, APRIL 25"
                 },
                 
             ]
@@ -96,7 +111,7 @@ export default withStyles(styles)(class extends React.Component {
                                 <Paper id="side" >
                                     <img src={women} className={classes.bigAvatar} />
                                     <h3>Welcome, Advocate</h3>
-                                    <Typography class="m-2" color="textSecondary">What would you like to do today</Typography>
+                                    <Typography class="m-2" color="textSecondary">What would you like to do today?</Typography>
                                     <Link to="/bookings">
                                         <Button variant="contained" color="primary" className={classes.button}>
                                         <Add></Add>
@@ -135,27 +150,33 @@ export default withStyles(styles)(class extends React.Component {
                                                     <Card className={classes.card}>
                                                         <CardContent className={classes.content}>
                                                             <div>
-                                                                <Typography style={{maxWidth: 50}} variant="h5" component="h2">
-                                                                    {booking.name}
+                                                                <Typography style={{maxWidth: 200, color: '#202e57', fontSize: '14pt', fontWeight: 300}}>
+                                                                    <strong style={{fontWeight: 500}}>Host:</strong> {booking.name}
                                                                 </Typography>
-                                                                <Typography color="textSecondary" gutterBottom>
-                                                                    Guest ID: {booking.ID}
-                                                                </Typography>
-                                                                <Typography className={classes.pos}>
-                                                                    {booking.address}
+                                                                <Typography style={{color: '#202e57', fontSize: '12pt', fontWeight: 300}}>
+                                                                    <strong style={{fontWeight: 500}}>Guest #:</strong> {booking.ID}
+                                                                </Typography> 
+                                                                <Typography className={classes.pos} style={{color: '#202e57', fontSize: '12pt', fontWeight: 300}}>
+                                                                    <strong style= {{fontWeight: 500}}>Advocate:</strong> {booking.advocate}
                                                                 </Typography>
                                                             </div>     
-                                                            <div style={
-                                                                    {
-                                                                        background: "#202e57", 
-                                                                        borderRadius: '1rem', 
-                                                                        color: 'white', 
-                                                                        padding: "1.7rem 1rem 0 1rem",
-                                                                        margin: "7px"
-                                                                    }
-                                                                }>
-                                                                {booking.begin} - <br/>{booking.end}
-                                                            </div>                                                                                                           
+                                                            <div>
+                                                                <div style={
+                                                                        {
+                                                                            background: "#202e57", 
+                                                                            borderRadius: '1rem', 
+                                                                            color: 'white', 
+                                                                            padding: '.5rem',
+                                                                            //margin: "7px"
+                                                                            marginBottom: '7px'
+                                                                        }
+                                                                    }>
+                                                                    {booking.begin} - <br/>{booking.end}
+                                                                </div>
+                                                                <Typography style={{color:'#da5c48', float:'right', fontSize: '12pt'}}>
+                                                                    {booking.location}
+                                                                </Typography>
+                                                            </div>                                                                                                          
                                                         </CardContent>
                                                     </Card>
                                                 </Grid>
