@@ -1,3 +1,4 @@
+    
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -48,13 +49,12 @@ const styles = theme => ({
 
 
 const INITIAL_STATE = {
-  userObject: null,
   firstName: '',
   lastName: '',
   email: '',
   password: '',
   confirmPassword: '',
-  type: 'Host',
+  type: '',
   error: null,
 };
 
@@ -73,6 +73,7 @@ const ERROR_MSG_ACCOUNT_EXISTS = `
 class SignUpFormBase extends Component {
   constructor(props) {
     super(props);
+    let prop = this.props.location.state
 
     this.state = { ...INITIAL_STATE };
   }
@@ -81,15 +82,14 @@ class SignUpFormBase extends Component {
     event.preventDefault();
 
     console.log("inside event")
-    const { email, password, firstName, lastName, type, userObject } = this.state;
+    const { email, password, firstName, lastName } = this.state;
+    let type = this.props.location.state.type
+    console.log(type)
     console.log("current state: " + this.state)
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then(authUser => {
         // Create a user in your Firebase realtime database
-        this.props.firebase.auth.currentUser.updateProfile({
-          displayName: firstName + " " + lastName
-        })
         return this.props.firebase
           .user(authUser.user.uid)
           .set({
@@ -101,7 +101,7 @@ class SignUpFormBase extends Component {
       })
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push('/profile');
+        this.props.history.push('/signup');
       })
       .catch(error => {
         this.setState({ error });
@@ -132,13 +132,15 @@ class SignUpFormBase extends Component {
       firstName === '' ||
       lastName === '';
 
+    let prop = this.props.location.state
+
     return (
       <main className={classes.main}>
         <CssBaseline />
         <Paper className={classes.paper}>
           {/* <Avatar className={classes.avatar}>
           </Avatar> */}
-          <h4>I'm an advocate!</h4>
+          <h4>I'm an {prop.type}!</h4>
           <img class="card-img-top" src={women} style={{width: "25rem"}} />
           <h4>Sign Up</h4>
           <form className={classes.form} onSubmit={this.onSubmit}>
@@ -182,12 +184,10 @@ class SignUpFormBase extends Component {
     );
   }
 }
-
 const SignUpForm = compose(
   withRouter,
   withStyles(styles),
   withFirebase,
 )(SignUpFormBase);
-
-
 export default SignUpForm;
+

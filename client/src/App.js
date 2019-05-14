@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import './style/index.css';
-import Nav from './Nav'
+import Nav from './Main/Nav'
 import SignUp from './Signup'
 import Stay from './Stay'
-import Landing from './landing'
-import Footer from './Footer'
-import AboutUs from './AboutUs'
-import OurTool from './OurTool'
+import Landing from './Main/landing'
+import Footer from './Main/Footer'
+import AboutUs from './Main/AboutUs'
+import OurTool from './Main/OurTool'
 import Advocate from './Advocate/Advocate'
-import SignIn from './SignIn'
+import SignIn from './Main/SignIn'
 import Calendar from './Calendar'
 import Situation from './Situation'
 import { withAuthentication } from './Sessions';
@@ -27,6 +27,9 @@ class App extends Component {
     super(props);
   }
 
+  clickSituation = () => {
+    this.setState({})
+  }
   render() {
     return (
       <div>

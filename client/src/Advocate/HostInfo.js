@@ -86,8 +86,8 @@ export default withStyles(styles)(class extends React.Component {
         return(
             <div>
                 <div class="d-flex justify-content-center">
-                    <Button onClick={this.handleHost} variant="outlined">
-                            {/* {host[0].begin} - {host[0].end} */}
+                    <Button id='button-outline-date' onClick={this.handleHost} variant="outlined">
+                            {host.space[0].begin} - {host.space[0].end}
                     </Button>   
                 </div>
                 <Dialog
@@ -129,7 +129,7 @@ export default withStyles(styles)(class extends React.Component {
                         <hr></hr>
                         <h5>AMENTITIES</h5>
                         {
-                            host.space[0].amentities.map((data) => {
+                            host.space[0].amenities.map((data) => {
                                 return( 
                                     <Button className={classes.button} variant="outlined">
                                         {data}

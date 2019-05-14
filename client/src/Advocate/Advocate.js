@@ -11,7 +11,8 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Link, withRouter } from 'react-router-dom';
-
+import Add from '@material-ui/icons/AddCircleOutline';
+import People from '@material-ui/icons/People'
 
 const styles = theme => ({
     root: {
@@ -117,12 +118,13 @@ class AdminDash extends Component {
                                 container 
                                 justify="center" 
                                 alignItems="center">
-                                <Paper id="side" className={classes.side} >
+                                <Paper id="side" >
                                     <img src={women} className={classes.bigAvatar} />
                                     <h3>Welcome, {this.state.user}</h3>
                                     <Typography color="textSecondary">What would you like to do today</Typography>
                                     <Link to="/dash">
                                         <Button variant="contained" color="primary" className={classes.button}>
+                                        <Add></Add>
                                             New Booking
                                         </Button>
                                     </Link>
@@ -133,7 +135,8 @@ class AdminDash extends Component {
                                     </Link>
                                     <Link to="/bookings">
                                     <Button variant="contained" color="primary" className={classes.button}>
-                                        View Current Bookings
+                                    <People></People>
+                                        Current Bookings
                                     </Button>
                                     </Link>
                                     <Link to="/bookings">
@@ -172,7 +175,8 @@ class AdminDash extends Component {
                                                                         background: "#202e57", 
                                                                         borderRadius: '1rem', 
                                                                         color: 'white', 
-                                                                        padding: "1.5rem 0 0 1.7rem"
+                                                                        padding: "1.7rem 1rem 0 1rem",
+                                                                        margin: "7px"
                                                                     }
                                                                 }>
                                                                 {booking.begin} - <br/>{booking.end}
