@@ -211,6 +211,7 @@ a:hover {
   border: 2px solid #202e57;
   text-decoration: none;
   text-transform: none;
+  box-shadow: none;
 }
 #button:hover {
   color: #202e57;
@@ -222,7 +223,7 @@ a:hover {
 }
 
 label {
-  color: #da;
+  color: #da5c48;
 }
 
 body {
@@ -438,6 +439,7 @@ a:hover {
   border: 2px solid #202e57;
   text-decoration: none;
   text-transform: none;
+  box-shadow: none;
 }
 #button:hover {
   color: #202e57;
@@ -449,7 +451,7 @@ a:hover {
 }
 
 label {
-  color: #da;
+  color: #da5c48;
 }
 
 #situation h4 {

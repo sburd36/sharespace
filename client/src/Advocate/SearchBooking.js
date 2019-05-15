@@ -322,8 +322,11 @@ export default withStyles(styles)(class extends React.Component {
                                             </Grid>
                                         </Grid>
                                         <SpaceSelect ></SpaceSelect>
-                                        <Button variant="contained" color="primary" className={classes.button}>
+                                        <Button variant="contained" color="primary" className={classes.button} id="button">
                                             New Booking
+                                        </Button>
+                                        <Button variant="contained" color="primary" className={classes.button} id="button">
+                                            Cancel
                                         </Button>
                                     </FormControl>
 
