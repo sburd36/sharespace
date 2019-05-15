@@ -1,15 +1,31 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
-import CurrentSpaces from './CurrentSpaces';
+import MyListing from './MyListing';
 import person from '../img/icon1.png';
 
 const styles = theme => ({
-    main: {
-        
+    profile: {
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center'
     },
     avatar: {
-
+        width: '20%',
+    },
+    info: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        width: '65%'
+    },
+    type: {
+        color: '#da5c48',
+        margin: 0
+    },
+    value: {
+        fontSize: '1.5em', 
+        margin: 0,
+        fontWeight: 300
     }
 })
 
@@ -53,28 +69,30 @@ export default withStyles(styles)(class extends React.Component {
         ]
     
         return (
-            <div style={{width: "100%"}}>
+            <div>
                 <h3>MY PROFILE</h3>
-                <div>
+                <div className={classes.profile}>
                     <img src={person} className={classes.avatar}></img>
-                    <div style={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                    }}>
+                    <div className={classes.info}>
                         {
                             profile.map((data) => {
                                 return (
-                                    <div>
-                                        <p>{data.type}</p>
-                                        <div>{
+                                    <div style={{
+                                        width: '25%',
+                                        margin: '5px 15px'
+                                    }}>
+                                        <p className={classes.type}>{data.type}</p>
+                                        <p className={classes.value}>
+                                        {
                                             typeof data.value == 'string' ? 
-                                                data.value :
-                                                    data.value.map((d) => {
-                                                        return(d)
-                                                    })
+                                                data.value 
+                                                :
+                                                data.value.map((d) => {
+                                                    return(d + " ")
+                                                })
                                         }
-                                        </div>
-                                        <hr/>
+                                        </p>
+                                        <hr style={{position: 'relative', bottom: '10px'}}/>
                                     </div> 
                                 )
                             })
@@ -82,7 +100,7 @@ export default withStyles(styles)(class extends React.Component {
                     </div>
                 </div>
                 
-                <CurrentSpaces></CurrentSpaces>
+                <MyListing />
             </div>
         )
     }

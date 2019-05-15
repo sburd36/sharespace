@@ -1,13 +1,13 @@
 import React from 'react';
 import { compose } from 'recompose';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Home from '@material-ui/icons/Home';
 import AddSpace from './AddSpace';
-
+import { Amenities, Rules } from '../filter';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Home from '@material-ui/icons/Home';
 
 const styles = theme => ({
     main: {
@@ -23,24 +23,41 @@ const styles = theme => ({
     }
 })
 
-class CurrentListing extends React.Component {
+class MyListing extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            Listings: [
-                {
-                    guestID: 1,
-                    begin: 'MONDAY, MARCH 6',
-                    end: 'TUESDAY, MARCH 7',
-                    tags: ['Spanish', 'Christian', 'Women Only', 'Alcohol-Free']
-                }
-            ]
         }
     }
 
     render() {
         const { classes } = this.props;
-
+        let listing = [
+            {
+                type: 'Listing Name',
+                value: 'House 1'
+            },
+            {
+                type: 'Address',
+                value: '1234 Beacon Hill'
+            },
+            {
+                type: 'Location',
+                value: 'Beacon Hill'
+            },
+            {
+                type: 'Number of Guests',
+                value: '1'
+            },
+            {
+                type: 'Zip Code',
+                value: '98002'
+            },
+            {
+                type: 'Amenities',
+                value: []
+            },
+        ]
         return (
             <div className={classes.main}>
                 <h3 class="m-3">MY LISTINGS</h3>
@@ -81,7 +98,7 @@ class CurrentListing extends React.Component {
 
 const Listing = compose(
     withStyles(styles),
-  )(CurrentListing);
+  )(MyListing);
   
   
   export default Listing;
