@@ -127,7 +127,7 @@ class SignUpFormBase extends Component {
       email === '' ||
       firstName === '' ||
       lastName === '';
-    let prop = this.props.location.state
+    let prop = this.props.location.state;
     return (
       <main className={classes.main}>
         <CssBaseline />
