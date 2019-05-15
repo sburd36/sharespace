@@ -72,7 +72,7 @@ export default withStyles(styles)(class extends React.Component {
         }
     }
 
-    handlCardClick = () => {
+    handleCardClick = () => {
         this.setState({
             open: !this.state.open
         })
