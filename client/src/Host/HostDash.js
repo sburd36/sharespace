@@ -24,7 +24,6 @@ const styles = theme => ({
     },
     bigAvatar: {
         position: "relative",
-        width: window.innerWidth / 6,
         height: window.innerHeight / 4 ,
     },
     button: {
