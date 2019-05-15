@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import { withFirebase } from '../Firebase';
 import { PersonalSelect } from '../Select';
 import { compose } from 'recompose';
 import { Link, withRouter } from 'react-router-dom';
@@ -54,14 +54,14 @@ const styles = theme => ({
 
 const INFORMATION = {
   phone: '',
-  gender: '',
+  gender: 'none',
   languages: [],
   ethnicities: [],
   religion: [],
-  story: '',
+  story: 'none',
 };
 
-class SignUpFormBase extends Component {
+class ProfileFormBase extends Component {
   constructor(props) {
     super(props);
     this.state = { INFORMATION }
@@ -70,15 +70,44 @@ class SignUpFormBase extends Component {
   onSubmit = event => {
     event.preventDefault();
     console.log(this.state);
+    const { phone, gender,languages,ethnicities,religion,story } = this.state
+    this.props.firebase.auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log(user.uid)
+        this.props.firebase.user(user.uid).update({
+          'phone': phone, 
+          'gender': gender, 
+          'languages': languages,
+          'ethnicities': ethnicities,
+          'religion': religion,
+          'story': story 
+        })
+        .then(() => {
+          this.setState({...INFORMATION});
+          this.props.history.push('/host/dash')
+        })
+        .catch(error => {
+          this.setState({ error });
+        });
+
+      } else {
+        console.log("no host signed in")
+
+      }
+  })
+
   };
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+    console.log(this.state)
   };
   onSelect = (name) => (selected) => {
     this.setState({
       [name]: selected
     })
+    console.log(this.state)
+    // console.log(this.state.ethnicities + " ON SELECT: ")
   }
   render() {
     const { classes } = this.props;
@@ -147,7 +176,8 @@ class SignUpFormBase extends Component {
 const SignUpForm = compose(
   withRouter,
   withStyles(styles),
-)(SignUpFormBase);
+  withFirebase,
+)(ProfileFormBase);
 
 
 export default SignUpForm;

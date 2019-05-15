@@ -45,7 +45,7 @@ class PersonalSelect extends React.Component {
                             components={Animated()}
                             isMulti
                             name={data.name}
-                            // onChange={this.props.onSelect(data.type)}
+                            onChange={this.props.onSelect(data.type)}
                             options={makeOptions(data['values'])}
                         />
                     </Grid>

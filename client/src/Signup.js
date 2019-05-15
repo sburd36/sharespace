@@ -89,6 +89,15 @@ class SignUpFormBase extends Component {
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then(authUser => {
+        console.log(authUser)
+        authUser.user.updateProfile({
+          displayName: firstName + " " + lastName
+        })
+        // console.log(authUser.user.displayName)
+        console.log("uid: " +  authUser.user.uid)
+
+
+
         // Create a user in your Firebase realtime database
         return this.props.firebase
           .user(authUser.user.uid)
@@ -101,7 +110,13 @@ class SignUpFormBase extends Component {
       })
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push('/signup');
+        let linkTo = '/'+type
+        if (type == 'host') {
+          linkTo = linkTo +'/profile'
+        } else {
+          linkTo = linkTo +'/currentbooking'
+        }
+        this.props.history.push(linkTo);
       })
       .catch(error => {
         this.setState({ error });

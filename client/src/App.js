@@ -42,7 +42,7 @@ class App extends Component {
                   <Route path="/stay" component={Stay} />
                   <Route path="/aboutus" component={AboutUs} />
                   <Route path="/ourtool" component={OurTool} />
-                  <Route path="/advocate" component={Advocate} />
+                  <Route path="/advocate/currentbooking" component={Advocate} />
                   <Route path="/signin" component={SignIn} />
                   <Route path="/calendar" component={Calendar} />
                   <Route path="/situation" component={Situation} />
@@ -52,9 +52,9 @@ class App extends Component {
                   <Route path="/SignUpHost" component={SignUpHost} />
                   {/* <Route path="/hostinfo" component={HostInfo} /> */}
 
-                  <Route path="/profile" component={CreateProfile} />
+                  <Route path="/host/profile" component={CreateProfile} />
                   <Route path="/listing" component={Listing} />
-                  <Route path="/hostdash" component={HostDash} />
+                  <Route path="/host/dash" component={HostDash} />
               </Switch>
           </div>    
         </Router>
