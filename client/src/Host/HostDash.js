@@ -14,6 +14,8 @@ import Clock from '@material-ui/icons/AccessTime';
 import MyProfile from './MyProfile';
 import Availability from './AddAvailability';
 
+import CurrentBooking from './CurrentBookings';
+
 const styles = theme => ({
     root: {
       flexGrow: 1,
@@ -49,7 +51,7 @@ export default withStyles(styles)(class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            view: "profile",
+            view: "booking",
             bookings: [
                 {
                     ID: 1,
@@ -107,7 +109,7 @@ export default withStyles(styles)(class extends React.Component {
                                     <h3>Welcome, Host</h3>
                                     <Typography color="textSecondary" className={classes.secondary}>What would you like to do today</Typography>
                                     <Availability></Availability>
-                                    <Button id="button" variant="contained" color="primary" className={classes.button}>
+                                    <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('booking')}>
                                     <People></People>
                                         Current Bookings
                                     </Button>
@@ -130,11 +132,11 @@ export default withStyles(styles)(class extends React.Component {
                                 <Typography className="pt-5 pl-5" variant="h4" gutterBottom>
                                 </Typography>
                                 <Grid container spacing={6}>
-                                {this.state.view == "profile"  ?    
-                                <MyProfile></MyProfile>
-                                :  
-                                    <>
-                                    </>
+                                { 
+                                    this.state.view == 'profile' && <MyProfile></MyProfile>
+                                }
+                                {
+                                    this.state.view == 'booking' && <CurrentBooking></CurrentBooking>
                                 }
                                 </Grid>
                             </Paper>

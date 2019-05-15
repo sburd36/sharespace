@@ -8,8 +8,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Home from '@material-ui/icons/Home';
-import Down from '@material-ui/icons/KeyboardArrowDown';
-import Up from '@material-ui/icons/KeyboardArrowUp';
+
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const styles = theme => ({
     head: {
@@ -56,15 +59,23 @@ class MyListing extends React.Component {
     render() {
         const { classes } = this.props;
         let types = ['Listing Name', 'Address', 'Location', 'Home Type', 'Number of Guests', 'Zip Code', 'Amenities', 'House Rules', 'Home Description']
-        let values = ['House 1', '1234 Beacon Hill','Beacon Hill','Private Bedroom','1','98002', Amenities.values, Rules.values,'This used to be my son\'s room but he is off to college so it\'s open to people who need help']
+        let values = [
+            ['House 1', '1234 Beacon Hill','Beacon Hill','Private Bedroom','1','98002', Amenities.values, Rules.values,'This used to be my son\'s room but he is off to college so it\'s open to people who need help'],
+            ['House 2', '1234 Beacon Hill','Beacon Hill','Private Bedroom','1','98002', Amenities.values, Rules.values,'This used to be my son\'s room but he is off to college so it\'s open to people who need help']
+        ]
         let listing = []
-        for (var i = 0; i < types.length; i++) {
-            var obj = {
-                type: types[i],
-                value: values[i]
+        let allListing = [];
+        for (var i = 0; i < values.length; i++) {
+            for (var j = 0; j < types.length; j++) {
+                var obj = {
+                    type: types[j],
+                    value: values[i][j]
+                }
+                listing[j] = obj;
             }
-            listing[i] = obj;
+            allListing[i] = listing;
         }
+        console.log(allListing)
         let exampleListing = [
             {
                 type: 'Listing Name',
@@ -140,35 +151,45 @@ class MyListing extends React.Component {
                     </Dialog>
                     {/* end of dialog */}
                 </div>
-                <div>
-                    <hr />
-                    <Down className={classes.arrow} />
-                </div>
-                <div className={classes.info}>
                 {
-                    listing.map((data) => {
+                    allListing.map((data) => {
                         return (
-                            <div style={{
-                                width: '25%',
-                                margin: '5px 15px'
-                            }}>
-                            <p className={classes.type}>{data.type}</p>
-                            <p className={classes.value}>
-                            {
-                                typeof data.value == 'string' ? 
-                                    data.value 
-                                    :
-                                    data.value.map((d) => {
-                                        return(d + " ")
-                                    })
-                            }
-                            </p>
-                            <hr style={{position: 'relative', bottom: '10px'}}/>
-                        </div> 
+                            <ExpansionPanel>
+                                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                                    {data[0].value}
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails>
+                                <div className={classes.info}>
+                                    {
+                                        data.map((detail) => {
+                                            return (
+                                                <div style={{
+                                                    width: '25%',
+                                                    margin: '5px 15px'
+                                                }}>
+                                                <p className={classes.type}>{detail.type}</p>
+                                                <p className={classes.value}>
+                                                {       
+                                                    typeof detail.value == 'string' ? 
+                                                    detail.value 
+                                                    :
+                                                    detail.value.map((d) => {
+                                                        return(d + " ")
+                                                    })
+                                                }
+                                                </p>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+
+                                </ExpansionPanelDetails>
+                            </ExpansionPanel>
+                            
                     )
                 })
                 }
-                </div>
             </div>
         )
     }

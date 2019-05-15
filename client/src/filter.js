@@ -182,9 +182,22 @@ export var Host =  [
                     description: "Have a dog named Benly, he is very friendly but please do not pet him."
                 },
                 houseRules: ["No Smoking", "No Alcohol"],
-                begin: "2019-05-09",
-                end: "2019-05-16",
+                availability: [
+                    {
+                        begin: "2019-05-09",
+                        end: "2019-05-16",
+                        booked: false
+                    },
+                    {
+                        begin: "2019-05-09",
+                        end: "2019-05-16",
+                        booked: false
+                    }
+                ],
+                currentBooking: [
+
+                ]
             }
-        ]
+        ],
     },
 ]
