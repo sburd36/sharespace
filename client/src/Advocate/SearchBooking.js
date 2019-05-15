@@ -76,8 +76,6 @@ const styles = theme => ({
     }
   });
 
-const guests = [1,2,3,4]
-const ethinicities = []
 const locations = ["Northgate", "U District", "Westlake", "Ballard"]
 
 export default withStyles(styles)(class extends React.Component {
@@ -225,9 +223,6 @@ export default withStyles(styles)(class extends React.Component {
         this.setState({ [name]: event.target.value });
       };
 
-
-
-    
     handleSwitchView = (event) => {
         this.setState({
             view: event.target.checked ? "calendar" : "list"
@@ -259,7 +254,7 @@ export default withStyles(styles)(class extends React.Component {
                                     <h3>FIND HOST</h3>
                                     <form>
                                     <FormControl>
-                                        <input type="search" placeholder="Search"></input>
+                                        
                                         <br/>
                                         <div>
                                         <TextField
@@ -293,7 +288,7 @@ export default withStyles(styles)(class extends React.Component {
                                                 onChange={this.handleInputChange('guests')}
                                                 input={<Input name="age" id="age-helper" />}
                                                 >                                
-                                                    {[1,2,3,4].map(option => (
+                                                    {[1,2,3,4, 5, 6].map(option => (
                                                         <MenuItem key={option} value={option}>
                                                             {option}
                                                         </MenuItem>
@@ -322,12 +317,16 @@ export default withStyles(styles)(class extends React.Component {
                                             </Grid>
                                         </Grid>
                                         <SpaceSelect ></SpaceSelect>
-                                        <Button variant="contained" color="primary" className={classes.button} id="button">
-                                            New Booking
-                                        </Button>
-                                        <Button variant="contained" color="primary" className={classes.button} id="button">
-                                            Cancel
-                                        </Button>
+                                        <input type="search" placeholder="Search" class="mt-3 mb-3"></input>
+                                        <div style={{display: "flex", justifyContent:"space-between"}}>
+                                            <Button variant="contained" color="primary" className={classes.button} id="buttonGray" style={{fontSize: "16px", padding:"0px 45px 0px 45px", height:"40px"}}>
+                                                Cancel
+                                            </Button>
+                                            <Button variant="contained" color="primary" className={classes.button} id="button" style={{fontSize: "16px", padding:"0px 22px 0px 22px", height:"40px"}}>
+                                                Search Hosts
+                                            </Button>
+                                        </div>   
+
                                     </FormControl>
 
                                     </form>
@@ -355,7 +354,7 @@ export default withStyles(styles)(class extends React.Component {
                                                         <div className={classes.content}>
                                                             <img className={classes.avatar} src={person}></img>
                                                             <div>
-                                                                <h5>
+                                                                <h5 style={{color: "#202e57"}}>
                                                                     {booking.information.name}
                                                                 </h5>
                                                                 <Typography className={classes.pos}>
@@ -364,7 +363,7 @@ export default withStyles(styles)(class extends React.Component {
                                                             </div>      
                                                         </div>          
                                                         <Host booking={booking}></Host>  
-                                                        <div style={{display: 'flex', flexWrap: 'wrap', margin: '5px'}}>
+                                                        <div style={{display: 'flex', flexWrap: 'wrap', margin: '5px', justifyContent: 'center'}}>
                                                             {
                                                                 booking.space[0].amenities.map((amenity) => {
                                                                     return(

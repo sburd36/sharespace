@@ -460,7 +460,14 @@ section {
   
   
   #button-outline-date {
-    color: #7e9fa8;
+    background-color: #202e57;
+    color: white;
+    border: 1px solid #202e57;
+
+    &:hover {
+        color: #202e57;
+        background-color: white;
+    }
   }
   
   #tags {

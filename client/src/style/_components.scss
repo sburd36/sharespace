@@ -187,6 +187,19 @@ a {
     }
 }
 
+#buttonGray {  
+    background-color: #aaaaaa;
+    border: 2px solid #aaaaaa;
+    text-decoration: none;
+    text-transform: none;
+    box-shadow: none;
+
+    &:hover {
+        color: #aaaaaa;
+        background-color: white;
+    }
+}
+
 a {
     &:hover {
         text-decoration: none;

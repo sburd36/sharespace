@@ -218,6 +218,18 @@ a:hover {
   background-color: white;
 }
 
+#buttonGray {
+  background-color: #aaaaaa;
+  border: 2px solid #aaaaaa;
+  text-decoration: none;
+  text-transform: none;
+  box-shadow: none;
+}
+#buttonGray:hover {
+  color: #aaaaaa;
+  background-color: white;
+}
+
 a:hover {
   text-decoration: none;
 }
@@ -443,6 +455,18 @@ a:hover {
 }
 #button:hover {
   color: #202e57;
+  background-color: white;
+}
+
+#buttonGray {
+  background-color: #aaaaaa;
+  border: 2px solid #aaaaaa;
+  text-decoration: none;
+  text-transform: none;
+  box-shadow: none;
+}
+#buttonGray:hover {
+  color: #aaaaaa;
   background-color: white;
 }
 
@@ -877,7 +901,13 @@ section {
 }
 
 #button-outline-date {
-  color: #7e9fa8;
+  background-color: #202e57;
+  color: white;
+  border: 1px solid #202e57;
+}
+#button-outline-date:hover {
+  color: #202e57;
+  background-color: white;
 }
 
 #tags {
