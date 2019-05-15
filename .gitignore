@@ -1,5 +1,6 @@
 # dependencies
 /client/node_modules
+/client/key.js
 /.pnp
 .pnp.js
 node_modules

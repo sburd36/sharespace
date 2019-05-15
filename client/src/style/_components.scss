@@ -173,3 +173,26 @@ a {
         text-decoration: none;
     }
 }
+
+#button {  
+    background-color: #202e57;
+    border: 2px solid #202e57;
+    text-decoration: none;
+    text-transform: none;
+    box-shadow: none;
+
+    &:hover {
+        color: #202e57;
+        background-color: white;
+    }
+}
+
+a {
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+label {
+    color: #da5c48;
+}
