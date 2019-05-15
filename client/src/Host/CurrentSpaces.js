@@ -37,7 +37,11 @@ class CurrentListing extends React.Component {
             ]
         }
     }
-
+    onClick = () => {
+        this.setState({
+            open: !this.state.open
+        })
+    }
     render() {
         const { classes } = this.props;
 
@@ -48,7 +52,7 @@ class CurrentListing extends React.Component {
                     variant="contained" 
                     color="primary" 
                     className={classes.button} 
-                    onClick={() => this.setState({ open: true})}
+                    onClick={this.onClick}
                 >
                     <Home></Home>New Listing
                 </Button>
@@ -61,17 +65,10 @@ class CurrentListing extends React.Component {
                     aria-labelledby="scroll-dialog-title"
                 >
                     <DialogContent>
-                        <AddSpace></AddSpace>
+                        <AddSpace view={this.onClick}></AddSpace>
                     </DialogContent>       
                     <DialogActions >
-                        <Button 
-                            variant="contained" 
-                            color="primary" 
-                            type="submit"
-                            onClick={() => this.setState({ open: false})} 
-                        >
-                            Add Space
-                        </Button>
+                        
                     </DialogActions>
                 </Dialog>
             </div>

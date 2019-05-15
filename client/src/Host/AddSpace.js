@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import { withFirebase } from '../Firebase';
 
 import { HomeType, Location, Rules, Amenities } from '../filter'
 import { CustomExpand } from '../Select'
@@ -61,22 +62,69 @@ const styles = theme => ({
     photos: [],
     description: '',
     information: '',
-    amenities: [],
-    rules: []
-  };
+    amenities: {},
+    rules: {},
+    amenitiesToStore: [],
+    rulesToStore: []
+    };
 
   class Listing extends React.Component {
     constructor(props) {
         super(props)
-        this.state ={
-          amenities: {},
-          rules: {}
-        }
+        this.state = {...SPACE}
     }
-    
+     
     onSubmit = event => {
       event.preventDefault();
-      console.log(this.state);
+      console.log(this.state.amenities)
+      let keepA = []
+      let keepB = []
+      for(let key in this.state.amenities) {
+        
+        if (this.state.amenities[key] == true) {
+          keepA.push(key)
+        }
+      }
+      for(let key in this.state.rules) {
+        
+        console.log(key)
+        if (this.state.rules[key] == true) {
+          keepB.push(key)
+        }
+      }
+      const {location, type, address, zip, guests, description, information} = this.state
+      this.props.firebase.auth.onAuthStateChanged((user) => {
+        if (user) {
+          console.log(user.uid)
+          console.log(this.state)
+          this.props.firebase.listings().push({
+            'hostID': user.uid, 
+            'location': location, 
+            'type': type,
+            'adddress': address,
+            'zip': zip,
+            'guestCount': guests,
+            'photos': 'no photos currently',
+            'description': description,
+            'information': information,
+            'amenities': keepA,
+            'houseRules': keepB
+
+          })
+          .then(() => {
+            this.setState({...SPACE});
+            this.props.history.push('/host/dash')
+          })
+          .catch(error => {
+            this.setState({ error });
+          });
+  
+        } else {
+          console.log("no host signed in")
+  
+        }
+    })
+      this.props.view();
     };
 
     // For Select
@@ -84,7 +132,7 @@ const styles = theme => ({
         this.setState({
             [name]: event.target.value
         })
-        console.log(this.state)
+        console.log(name + "  "+event)
     }
 
     // For Input
@@ -93,18 +141,20 @@ const styles = theme => ({
     }
 
     handleChecked = (name, selected) => (event) => {
+      let items = []
       var obj = this.state[`${name}`];
       obj[`${selected}`] = event.target.checked;
       this.setState({[name]: obj})
+      console.log(this.state)
     }
 
     handleClick = () => {
       console.log(this.state)
     }
 
-    onSubmit = (event) => {
-      event.preventDefault();
-    }
+    // onSubmit = (event) => {
+    //   event.preventDefault();
+    // }
     render() {
 
         const { classes } = this.props;
@@ -208,7 +258,16 @@ const styles = theme => ({
                     <CustomExpand input={Amenities} select={this.handleChecked}></CustomExpand>
                     <CustomExpand input={Rules} select={this.handleChecked}></CustomExpand>         
                   </Grid>
+
                 </Grid>
+                <Button 
+                            variant="contained" 
+                            color="primary" 
+                            type="submit"
+                            onClick={this.onSubmit} 
+                        >
+                            Add Space
+                        </Button>
             </form>
           </main>
         )
@@ -217,6 +276,7 @@ const styles = theme => ({
 
 const AddListing = compose(
     withStyles(styles),
+    withFirebase,
   )(Listing);
   
   

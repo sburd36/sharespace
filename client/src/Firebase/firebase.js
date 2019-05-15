@@ -42,9 +42,9 @@ const config = {
 
     tags = () => this.db.ref('hosts')
 
-    bookings = () => this.db.ref('events');
+    listings = () => this.db.ref('listings');
 
-    booking = uid => this.db.ref(`events/${uid}`);
+    listing = uid => this.db.ref(`listings/${uid}`);
     
     survivors = () => this.db.ref('survivors');
 
