@@ -15,7 +15,7 @@ import People from '@material-ui/icons/People'
 
 const styles = theme => ({
     root: {
-      flexGrow: 1,
+      flexGrow: 1
     },
     bookings: {
         height: window.innerHeight,
@@ -34,12 +34,14 @@ const styles = theme => ({
         margin: "0rem 5rem 1rem 3rem",
         border: "0.5px solid #d3dbee",
         boxShadow: "none",
+        fontFamily: 'Source Sans Pro',
         borderRadius: "12px"
     },
     content: {
         display: "flex",
         justifyContent:"space-between",
         alignItems:"center",
+        fontFamily: 'Source Sans Pro',
         color: "#202e56"
         
     },
@@ -47,7 +49,17 @@ const styles = theme => ({
         width: '220px',
         margin: '0.3rem',
         background: '#202e57',
-        textDecoration: 'none'
+        textDecoration: 'none',
+        boxShadow: "none",
+        fontWeight: 400,
+        textTransform: "none",
+        fontFamily: 'Source Sans Pro',
+        fontSize: '14pt',
+    },
+    cardContent:{
+        fontFamily: 'Source Sans Pro',
+        color: '#202e57',
+        fontWeight: 300
     }
   });
 export default withStyles(styles)(class extends React.Component {
@@ -108,29 +120,29 @@ export default withStyles(styles)(class extends React.Component {
                                 container 
                                 justify="center" 
                                 alignItems="center">
-                                <Paper id="side" >
+                                <Paper id="side" style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}} >
                                     <img src={women} className={classes.bigAvatar} />
-                                    <h3>Welcome, Advocate</h3>
-                                    <Typography class="m-2" color="textSecondary">What would you like to do today?</Typography>
+                                    <h4 style={{fontWeight: 300}}>Welcome, Advocate</h4>
+                                    <Typography class="m-2 mb-3" color="textSecondary" style={{fontWeight: 300}}>What would you like to do today?</Typography>
                                     <Link to="/bookings">
-                                        <Button variant="contained" color="primary" className={classes.button}>
+                                        <Button variant="contained" color="primary" className={classes.button} id="button">
                                         <Add></Add>
                                             New Booking
                                         </Button>
                                     </Link>
                                     <Link to="/bookings">
-                                        <Button variant="contained" color="primary" className={classes.button}>
+                                        <Button variant="contained" color="primary" className={classes.button} id="button">
                                             Refer a Host
                                         </Button>
                                     </Link>
                                     <Link to="/bookings">
-                                    <Button variant="contained" color="primary" className={classes.button}>
+                                    <Button variant="contained" color="primary" className={classes.button} id="button">
                                     <People></People>
                                         Current Bookings
                                     </Button>
                                     </Link>
                                     <Link to="/bookings">
-                                        <Button variant="contained" color="primary" className={classes.button}>
+                                        <Button variant="contained" color="primary" className={classes.button} id="button">
                                             View Analytics
                                         </Button>
                                     </Link>
@@ -138,8 +150,8 @@ export default withStyles(styles)(class extends React.Component {
                             </Grid>
                         </Grid>
                         <Grid key={2} item>
-                            <Paper className={classes.bookings} >
-                                <h4 class="p-5">
+                            <Paper className={classes.bookings} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}} >
+                                <h4 class="pl-5 pt-5 pb-2">
                                     CURRENT BOOKINGS
                                 </h4>
                                 <Grid container spacing={3}>
@@ -150,22 +162,23 @@ export default withStyles(styles)(class extends React.Component {
                                                     <Card className={classes.card}>
                                                         <CardContent className={classes.content}>
                                                             <div>
-                                                                <Typography style={{maxWidth: 200, color: '#202e57', fontSize: '14pt', fontWeight: 300}}>
+                                                                <Typography className={classes.cardContent} style={{maxWidth: 200, fontSize: '14pt'}}>
                                                                     <strong style={{fontWeight: 500}}>Host:</strong> {booking.name}
                                                                 </Typography>
-                                                                <Typography style={{color: '#202e57', fontSize: '12pt', fontWeight: 300}}>
+                                                                <Typography className={classes.cardContent} style={{fontSize: '12pt'}}>
                                                                     <strong style={{fontWeight: 500}}>Guest #:</strong> {booking.ID}
                                                                 </Typography> 
-                                                                <Typography className={classes.pos} style={{color: '#202e57', fontSize: '12pt', fontWeight: 300}}>
+                                                                <Typography className={classes.cardContent} style={{fontSize: '12pt'}}>
                                                                     <strong style= {{fontWeight: 500}}>Advocate:</strong> {booking.advocate}
                                                                 </Typography>
                                                             </div>     
                                                             <div>
                                                                 <div style={
                                                                         {
-                                                                            background: "#202e57", 
-                                                                            borderRadius: '1rem', 
-                                                                            color: 'white', 
+                                                                            //background: "#202e57", 
+                                                                            borderRadius: '10px', 
+                                                                            //border: '.5px solid #202e57',
+                                                                            color: '#202e57', 
                                                                             padding: '.5rem',
                                                                             //margin: "7px"
                                                                             marginBottom: '7px'

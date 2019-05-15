@@ -42,11 +42,15 @@ const styles = theme => ({
     },
     card: {
         maxWidth: 360,
-        margin: "0rem 5rem 1rem 3rem"
+        margin: "0rem 5rem 1rem 3rem",
+        border: "0.5px solid #d3dbee",
+        boxShadow: "none",
+        fontFamily: 'Source Sans Pro',
+        borderRadius: "12px"
     },
     content: {
         display: "flex",
-        margin: '20px',
+        //margin: '20px',
         alignItems: 'center'
     },
     date: {
@@ -54,6 +58,7 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing.unit,
+        textTransform: "none"
     },
     avatar: {
         width: "100px",
@@ -65,6 +70,9 @@ const styles = theme => ({
     },
     select: {
         width: "150px"
+    },
+    floatingLabelFocusStyle: {
+        color: "#da5c48"
     }
   });
 
@@ -247,12 +255,13 @@ export default withStyles(styles)(class extends React.Component {
                     className={classes.root} 
                     justify="space-evenly" >
                         <Grid key={1} item>
-                                <Paper className={classes.side} >
+                                <Paper className={classes.side} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}} >
                                     <h3>FIND HOST</h3>
                                     <form>
                                     <FormControl>
                                         <input type="search" placeholder="Search"></input>
                                         <br/>
+                                        <div>
                                         <TextField
                                             id="date"
                                             label="Start Date"
@@ -261,6 +270,7 @@ export default withStyles(styles)(class extends React.Component {
                                             onChange={this.handleInputChange('begin')}
                                             InputLabelProps={{
                                                 shrink: true,
+                                                className: classes.floatingLabelFocusStyle
                                             }}
                                         />
                                         <TextField
@@ -271,8 +281,10 @@ export default withStyles(styles)(class extends React.Component {
                                             onChange={this.handleInputChange('begin')}
                                             InputLabelProps={{
                                                 shrink: true,
+                                                className: classes.floatingLabelFocusStyle
                                             }}
                                         />
+                                        </div>
                                         <div class='d-flex justify-content-around'>
                                             <FormControl className={classes.select}>
                                                 <InputLabel htmlFor="select-multiple-checkbox">Number of Guests</InputLabel>
@@ -320,7 +332,7 @@ export default withStyles(styles)(class extends React.Component {
                                 </Paper>
                         </Grid>
                         <Grid key={2} item>
-                            <Paper className={classes.hosts}>
+                            <Paper className={classes.hosts} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}}>
                                 <div style={{display: 'flex', justifyContent: 'space-between', padding: '30px'}}>
                                     <h3 className="">
                                         AVAILABLE BOOKINGS
@@ -358,7 +370,7 @@ export default withStyles(styles)(class extends React.Component {
                                                                             style={{
                                                                                 border: "0.5px solid",
                                                                                 borderRadius: '0.5rem',
-                                                                                padding: '6px',
+                                                                                padding: '4px 12px 4px 12px',
                                                                                 margin: '2px'
                                                                             }}
                                                                         >
