@@ -448,6 +448,28 @@ section {
     }
 }
 
+/* for side bar (Min actually use css instead of inline sometimes... LOL) */
+#side {
+    height: 100vh;
+    width: 30vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #button {
+    background: #202e57;
+  }
+  
+  #button-outline-date {
+    color: #7e9fa8;
+  }
+  
+  #tags {
+    color: #da5c48;
+  }
+
 
 //These numbers will depend on the content in the nav bar. The buttons show up as the
 //navbar grows. This is to prevent the nav from wrapping gross.

@@ -71,9 +71,21 @@ class ProfileFormBase extends Component {
     event.preventDefault();
     console.log(this.state);
     const { phone, gender,languages,ethnicities,religion,story } = this.state
+    // let toClean = [languages, ethnicities,religion]
+    // let names = ['languages', 'ethnicities', 'religion']
+    // for (let i = 0; i < toClean.length; i++) {
+    //   let val = toClean[i];
+    //   for (let j = 0; j < val.length; j++) {
+    //     let holder = []
+    //     let name = val[j]
+
+    //     console.log('VALUE: ' + name)
+    //   }
+    // }
     this.props.firebase.auth.onAuthStateChanged((user) => {
       if (user) {
         console.log(user.uid)
+        console.log(ethnicities[0].value)
         this.props.firebase.user(user.uid).update({
           'phone': phone, 
           'gender': gender, 
@@ -103,10 +115,16 @@ class ProfileFormBase extends Component {
     console.log(this.state)
   };
   onSelect = (name) => (selected) => {
+    let clean = []
+    for (let i = 0; i < selected.length; i ++) {
+      console.log(selected[i].label)
+      clean.push(selected[i].label)
+      console.log(clean)
+    }
     this.setState({
-      [name]: selected
+      [name]: clean
     })
-    console.log(this.state)
+    console.log(this.props.state)
     // console.log(this.state.ethnicities + " ON SELECT: ")
   }
   render() {
