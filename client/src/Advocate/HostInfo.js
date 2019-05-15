@@ -67,12 +67,10 @@ export default withStyles(styles)(class extends React.Component {
         this.setState({ [name]: event.target.value });
     };
 
-    handleHost = () => {
-        this.setState({ open: true});
-    };
 
     handleCloseHost = () => {
-        this.setState({ open: false, confirm: false });
+        this.setState({ confirm: false });
+        this.props.click();
     };
 
     handleConfirmHost = () => {
@@ -80,19 +78,16 @@ export default withStyles(styles)(class extends React.Component {
             confirm: true
         })
     }
+
     render() {
         const { classes } = this.props;
         const host = this.props.booking;
         return(
             <div>
-                <div class="d-flex justify-content-center">
-                    <Button id='button-outline-date' onClick={this.handleHost} variant="outlined">
-                            {host.space[0].begin} - {host.space[0].end}
-                    </Button>   
-                </div>
+
                 <Dialog
-                    open={this.state.open}
-                    onClose={this.handleCloseHost}
+                    open={this.props.open}
+                    onClose={this.props.click}
                     scroll='paper'
                     fullWidth='true'
                     maxWidth='xl'
@@ -237,7 +232,7 @@ export default withStyles(styles)(class extends React.Component {
                         </FormControl>
                     </DialogContent>
                     <DialogActions >
-                        <Button onClick={this.handleCloseHost} variant="contained" >
+                        <Button onClick={this.props.click} variant="contained" >
                             Cancel
                         </Button>
                         <Button onClick={this.handleConfirmHost} variant="contained"  color="primary">
@@ -246,7 +241,7 @@ export default withStyles(styles)(class extends React.Component {
                     </DialogActions>
                     <Dialog
                         open={this.state.confirm}
-                        onClose={this.handleClose}
+                        onClose={this.props.click}
                         aria-labelledby="alert-dialog-title"
                         aria-describedby="alert-dialog-description"
                         >

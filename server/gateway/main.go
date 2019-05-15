@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"github.com/huibrm/capstone2019/server/gateway/handlers"
+	"capstone2019/server/gateway/handlers"
 	"gopkg.in/mgo.v2"
 )
 
