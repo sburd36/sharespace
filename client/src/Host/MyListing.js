@@ -35,6 +35,8 @@ class MyListing extends React.Component {
         })
     }
     render() {
+        let data = this.props.listing
+        console.log(data)
         const { classes } = this.props;
         let listing = [
             {

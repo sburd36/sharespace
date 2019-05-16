@@ -64,34 +64,34 @@ const styles = theme => ({
                     location: "QUEEN ANNE",
                     begin: "MONDAY, APRIL 4",
                     end: "FRIDAY, APRIL 25"
-                },
-                {
-                    ID: 7394,
-                    name: "Min Yang",
-                    advocate: "Sarah Lee",
-                    address: "1234 24th Sunset Bld",
-                    location: "BEACON HILL",
-                    begin: "WEDNESDAY, MAY 25",
-                    end: "TUESDAY, APRIL 30"
-                },
-                {
-                    ID: 3924,
-                    name: "Mary Huibregtse",
-                    advocate: "Emily Liu",
-                    address: "1234 24th Sunset Bld",
-                    location: "GREENLAKE",
-                    begin: "MONDAY, APRIL 4",
-                    end: "TUESDAY, APRIL 25"
-                },
-                {
-                    ID: 2384,
-                    name: "Abby Huang",
-                    advocate: "Alice Lopez",
-                    address: "1234 24th Sunset Bld",
-                    location: "FREMONT",
-                    begin: "MONDAY, APRIL 4",
-                    end: "TUESDAY, APRIL 25"
-                },
+                }
+                // {
+                //     ID: 7394,
+                //     name: "Min Yang",
+                //     advocate: "Sarah Lee",
+                //     address: "1234 24th Sunset Bld",
+                //     location: "BEACON HILL",
+                //     begin: "WEDNESDAY, MAY 25",
+                //     end: "TUESDAY, APRIL 30"
+                // },
+                // {
+                //     ID: 3924,
+                //     name: "Mary Huibregtse",
+                //     advocate: "Emily Liu",
+                //     address: "1234 24th Sunset Bld",
+                //     location: "GREENLAKE",
+                //     begin: "MONDAY, APRIL 4",
+                //     end: "TUESDAY, APRIL 25"
+                // },
+                // {
+                //     ID: 2384,
+                //     name: "Abby Huang",
+                //     advocate: "Alice Lopez",
+                //     address: "1234 24th Sunset Bld",
+                //     location: "FREMONT",
+                //     begin: "MONDAY, APRIL 4",
+                //     end: "TUESDAY, APRIL 25"
+                // },
                 
             ]
   }
@@ -137,13 +137,13 @@ class AdminDash extends Component {
                                     <img src={women} className={classes.bigAvatar} />
                                     <h3>Welcome, {this.state.user}</h3>
                                     <Typography class="m-2" color="textSecondary">What would you like to do today?</Typography>
-                                    <Link to="/bookings">
+                                    <Link to="bookings">
                                         <Button variant="contained" color="primary" className={classes.button}>
                                         <Add></Add>
                                             New Booking
                                         </Button>
                                     </Link>
-                                    <Link to="/bookings">
+                                    <Link to="advocate/bookings">
                                         <Button variant="contained" color="primary" className={classes.button}>
                                             Refer a Host
                                         </Button>

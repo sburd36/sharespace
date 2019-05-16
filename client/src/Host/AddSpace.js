@@ -65,7 +65,8 @@ const styles = theme => ({
     amenities: {},
     rules: {},
     amenitiesToStore: [],
-    rulesToStore: []
+    rulesToStore: [],
+    listings: [],
     };
 
   class Listing extends React.Component {
@@ -95,9 +96,10 @@ const styles = theme => ({
       const {location, type, address, zip, guests, description, information} = this.state
       this.props.firebase.auth.onAuthStateChanged((user) => {
         if (user) {
+
           console.log(user.uid)
           console.log(this.state)
-          this.props.firebase.listings().push({
+          let key = this.props.firebase.listings().push({
             'hostID': user.uid, 
             'location': location, 
             'type': type,
@@ -111,19 +113,27 @@ const styles = theme => ({
             'houseRules': keepB
 
           })
-          .then(() => {
-            this.setState({...SPACE});
-            this.props.history.push('/host/dash')
-          })
-          .catch(error => {
-            this.setState({ error });
+          // .then(() => {
+          //   this.setState({...SPACE});
+          //   // this.props.history.push('/host/dash')
+          // })
+          // .catch(error => {
+          //   this.setState({ error });
+          // })
+          // this.props.firebase.db.ref('/user/'+user.uid+'/listings').push(key.key)
+          console.log(key.key)
+          this.props.firebase.userDie(user.uid).push({'listingID': key.key}).then(()=>{
+            this.props.firebase.user(user.uid).update({'haveListing': true})
+
           });
-  
+
+
         } else {
           console.log("no host signed in")
   
         }
     })
+      console.log(this.state)
       this.props.view();
     };
 

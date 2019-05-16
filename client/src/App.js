@@ -47,7 +47,7 @@ class App extends Component {
                   <Route path="/calendar" component={Calendar} />
                   <Route path="/situation" component={Situation} />
                   <Route path="/PassForget" component={PasswordForgetPage} />
-                  <Route path="/bookings" component={SearchBooking} />
+                  <Route path="/advocate/bookings" component={SearchBooking} />
                   <Route path="/Admin" component={Admin} />
                   <Route path="/SignUpHost" component={SignUpHost} />
                   {/* <Route path="/hostinfo" component={HostInfo} /> */}

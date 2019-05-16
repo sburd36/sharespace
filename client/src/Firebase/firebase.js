@@ -35,6 +35,8 @@ const config = {
     
     // *** User API ***
     user = uid => this.db.ref(`users/${uid}`);
+    userDie = uid => this.db.ref(`users/${uid}/listings`);
+
 
     users = () => this.db.ref('users');
 

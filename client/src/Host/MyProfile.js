@@ -30,41 +30,50 @@ const styles = theme => ({
 })
 
 export default withStyles(styles)(class extends React.Component {
-
+    
     render() {
+        let data = this.props.profileInfo.HostInfo
+
+        let listing = this.props.profileInfo.space
+        if (listing === undefined) {
+            console.log("space undefined")
+        } else {
+            console.log(listing)
+
+        }
         const { classes } = this.props;
         let profile = [
             {
                 type: 'First Name',
-                value: 'Marry'
+                value: data.information.firstName
             },
             {
                 type: 'Last Name',
-                value: 'Potter'
+                value: data.information.lastName
             },
             {
                 type: 'Gender',
-                value: 'female'
+                value: data.information.gender
             },
             {
                 type: 'Email',
-                value: 'mp@gmail.com'
+                value: data.information.contact.email
             },
             {
                 type: 'Phone',
-                value: '(424)244-0123'
+                value: data.information.contact.phone
             },
             {
                 type: 'Religion',
-                value: ['Christian']
+                value: data.information.religion
             },
             {
                 type: 'Ethnicities',
-                value: ['Chinese']
+                value: data.information.ethnicity
             },
             {
                 type: 'Languages',
-                value: ['Chinese', 'English']
+                value: data.information.languages
             }
         ]
     
