@@ -252,8 +252,10 @@ label {
   border: #7e9fa8;
 }
 
-form #contact {
-  max-width: 300px;
+.navContact {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 body {
@@ -510,8 +512,10 @@ label {
   border: #7e9fa8;
 }
 
-form #contact {
-  max-width: 300px;
+.navContact {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 #situation h4 {

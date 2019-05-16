@@ -74,23 +74,11 @@ const styles = theme => ({
     }
 })
 
-function makeOptions(filter) {
-    var options = []
-    for (var i = 0; i < filter.length; i++) {
-        var option = {
-            value: filter[i],
-            label: filter[i]
-        }
-        options[i] = option;
-    }
-    return options;
-}
 
 export default withStyles(styles)(class extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            open: false,
             booking: {},
         }
     }
