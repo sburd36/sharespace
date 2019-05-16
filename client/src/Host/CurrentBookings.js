@@ -4,6 +4,25 @@ import Paper from '@material-ui/core/Paper';
 import BookingInfo from './BookingInfo';
 import { Host } from '../filter';
 const styles = theme => ({
+    cards: {
+        display: "flex",
+        flexWrap: "wrap",
+        //paddingLeft: "48px"
+        color: "#202e57"
+    },
+    card: {
+        maxWidth: 500,
+        margin: "0rem 5rem 1rem 3rem",
+        border: "0.5px solid #d3dbee",
+        boxShadow: "none",
+        fontFamily: 'Source Sans Pro',
+        borderRadius: "12px",
+        padding: "25px"
+    },
+    cardHeader: {
+        display: "flex",
+        justifyContent: "space-between"
+    }
 })
 
 export default withStyles(styles)(class extends React.Component {
@@ -91,29 +110,54 @@ export default withStyles(styles)(class extends React.Component {
     render() {
         const { classes } = this.props;
         return(
-            <div>
-                {
-                    this.state.bookings.map((data) => {
-                        return(
-                            <Paper onClick={this.handleCardClick}>
-                                <b>Guest ID</b> 
-                                {data.guestID}
-                                Number of Guest: {data.numberOfGuest}
-                                Notes: {data.notes}
-                                {
-                                    data.info.map((amenity) =>{
-                                        return (
-                                            <div>{amenity}</div>
-                                        )
-                                    })
-                                }
-                                {data.begin}
-                                {data.end}
-                                <BookingInfo booking={data} open={this.state.open} click={this.handleCardClick}></BookingInfo>
-                            </Paper>
-                        )
-                    })
-                }
+            <div style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}}>
+                <h4 class="pl-5 pb-2">CURRENT BOOKINGS</h4>
+                <div className={classes.cards}>
+                    {
+                        this.state.bookings.map((data) => {
+                            return(
+                                <Paper onClick={this.handleCardClick} className={classes.card}>
+                                    <div className={classes.cardHeader}>
+                                        <div>
+                                            <p>Guest #: {data.guestID}</p>
+                                            <p style={{fontSize: "16px", fontWeight: 300}}>{data.numberOfGuest} Guests</p>
+                                            <p style={{fontSize: "16px", fontWeight: 300, color: "#da5c48"}}>Property</p>
+                                        </div>
+                                        <div>
+                                            {data.begin} - <br/>
+                                            {data.end}
+                                        </div>
+                                    </div>
+                                    
+                                    <div style={{fontWeight: 300, paddingTop: "10px"}}><b>Notes:</b> {data.notes}</div>
+                                    
+                                    <div style={{display: 'flex', flexWrap: 'wrap', margin: '5px'}}>
+                                        {
+                                            data.info.map((amenity) =>{
+                                                return (
+                                                    <div
+                                                        id="tags"
+                                                        style={{
+                                                            border: "0.5px solid",
+                                                            borderRadius: '0.5rem',
+                                                            padding: '4px 12px 4px 12px',
+                                                            margin: '2px'
+                                                        }}
+                                                    >
+                                                        {amenity}
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                    
+                                    <BookingInfo booking={data} open={this.state.open} click={this.handleCardClick}></BookingInfo>
+                                </Paper>
+                            )
+                        })
+                    }
+                </div>
+                
             </div>
         )
     }
