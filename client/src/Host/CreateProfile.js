@@ -23,7 +23,7 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-      width: 1000,
+      width: "60%",
       marginLeft: 'auto',
       marginRight: 'auto',
     },
@@ -41,14 +41,21 @@ const styles = theme => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing.unit * 10,
   },
   submit: {
     marginTop: theme.spacing.unit * 3,
     width: 100
   },
   select: {
+    marginLeft: '40px',
     width: 100
+  },
+  phone: {
+    width: 300
+  },
+  story: {
+    height: 100,
   }
 });
 
@@ -87,20 +94,23 @@ class SignUpFormBase extends Component {
       <main className={classes.main}>
         <CssBaseline />
         <Paper className={classes.paper}>
-          <h3>Create Profile</h3>
+        <div style={{width: '50%'}}>
           <form className={classes.form} onSubmit={this.onSubmit} >
-          <Grid container spacing={16}>
-            <Grid item xs={6}>
-              <FormControl margin="normal" fullWidth>
+          <h3>Create Profile</h3>
+            <div style={{
+                display: 'flex', 
+                alignItems: 'baseline', 
+                justifyContent: 'space-between',
+                }}>
+              <FormControl className={classes.phone} margin="normal" fullWidth>
                 <InputLabel htmlFor="name">Phone Number</InputLabel>
                 <Input id="phone" name="phone" required autoComplete="phone" onChange={this.onChange} autoFocus />
               </FormControl>
-              <FormControl>
+              <FormControl className={classes.select}>
                 <InputLabel htmlFor="gender">Gender</InputLabel>
                 <Select
                   value={this.state.gender}
                   onChange={this.onChange}
-                  className={classes.select}
                   inputProps={{
                     name: 'gender',
                     id: 'gender'
@@ -110,20 +120,26 @@ class SignUpFormBase extends Component {
                   <MenuItem value="female">Female</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>  
+            </div>
+            <div style={{
+                  display: 'flex', 
+                  flexWrap: 'wrap', 
+                  justifyContent: 'space-between',
+                  paddingTop: '10px'
+                }}>
             <PersonalSelect size="6" onSelect={this.onSelect}/>
-          </Grid>
-            <TextField
+            </div>
+              <p style={{margin: 0, paddingTop: '10px'}}>Personal Statement</p>
+              <TextField
                   id="outlined"
                   className={classes.story}
                   multiline
                   fullWidth
                   name="story"
-                  label="Tell your story."
                   margin="normal"
                   variant="outlined"
                   onChange={this.onChange}
-                />
+              />
               {/* <Link to="/hostdash"> */}
               <div class="d-flex justify-content-center">
                 <Button 
@@ -138,6 +154,8 @@ class SignUpFormBase extends Component {
               </div>
             {/* </Link> */}
           </form>
+        </div>
+          
         </Paper>
       </main>
     );

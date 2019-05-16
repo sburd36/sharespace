@@ -17,10 +17,11 @@ import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import Switch from '@material-ui/core/Switch';
 import InputLabel from '@material-ui/core/InputLabel';
-
+import { Link } from 'react-router-dom';
 
 // confirm host view
-import Host from './HostInfo';
+import HostInfo from './HostInfo';
+import { Host } from '../filter';
 
 const styles = theme => ({
     root: {
@@ -42,11 +43,15 @@ const styles = theme => ({
     },
     card: {
         maxWidth: 360,
-        margin: "0rem 5rem 1rem 3rem"
+        margin: "0rem 5rem 1rem 3rem",
+        border: "0.5px solid #d3dbee",
+        boxShadow: "none",
+        fontFamily: 'Source Sans Pro',
+        borderRadius: "12px"
     },
     content: {
         display: "flex",
-        margin: '20px',
+        //margin: '20px',
         alignItems: 'center'
     },
     date: {
@@ -54,6 +59,7 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing.unit,
+        textTransform: "none"
     },
     avatar: {
         width: "100px",
@@ -65,6 +71,9 @@ const styles = theme => ({
     },
     select: {
         width: "150px"
+    },
+    floatingLabelFocusStyle: {
+        color: "#da5c48"
     }
   });
 
@@ -79,123 +88,7 @@ export default withStyles(styles)(class extends React.Component {
             view: "list",
             guests: "",
             locations: "",
-            bookings: [
-                {
-                    ID: 1,
-                    information: {
-                        name: "Marry Potter",
-                        description: "Marry is a working professional who likes cat and yoga.",
-                        languages: ["English"],
-                        religion: ["none"],
-                        ethnicity: ["White"],
-                        contact: {
-                            phone: "(306)142-2093",
-                            email: "mp@gmail.com"
-                        },
-                    },
-                    space:  [
-                        {
-                            ID: 1,
-                            address: "1234 24th Sunset Bld",
-                            amenities: ['Kitchen', 'Laundry', 'Refrigerator', 'Bike Storage', 'Meals', 'Voicemail'],
-                            checkinInfo: {
-                                time: "10am - 9pm",
-                                description: "Please text my number when arrive. Have a dog named Benly, he is very friendly but please do not pet him."
-                            },
-                            houseRules: ["No Smoking", "No Alcohol"],
-                            begin: "March 4",
-                            end: "March 25",
-                        }
-                    ]
-                },
-                {
-                    ID: 2,
-                    information: {
-                        name: "Marry Potter",
-                        description: "Marry is a working professional who likes cat and yoga.",
-                        languages: ["English"],
-                        religion: ["none"],
-                        ethnicity: ["White"],
-                        contact: {
-                            phone: "(306)142-2093",
-                            email: "mp@gmail.com"
-                        },
-                    },
-                    space:  [
-                        {
-                            ID: 2,
-                            address: "1234 24th Sunset Bld",
-                            amenities: ['Kitchen','Wifi', 'Parking', 'Bike Storage', 'Meals', 'Voicemail'],
-                            checkinInfo: {
-                                time: "10am - 9pm",
-                                description: "*Have a dog named Benly, he is very friendly but please do not pet him."
-                            },
-                            checkinInfo: "",
-                            houseRules: ["No Smoking", "No Alcohol"],
-                            begin: "March 4",
-                            end: "March 25",
-                        }
-                    ]
-                },
-                {
-                    ID: 3,
-                    information: {
-                        name: "Marry Potter",
-                        description: "Marry is a working professional who likes cat and yoga.",
-                        languages: ["English"],
-                        religion: ["none"],
-                        ethnicity: ["White"],
-                        contact: {
-                            phone: "(306)142-2093",
-                            email: "mp@gmail.com"
-                        },
-                    },
-                    space:  [
-                        {
-                            ID: 3,
-                            address: "1234 24th Sunset Bld",
-                            amenities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking', 'Bike Storage', 'Meals'],
-                            checkinInfo: {
-                                time: "10am - 9pm",
-                                description: "Have a dog named Benly, he is very friendly but please do not pet him."
-                            },
-                            checkinInfo: "",
-                            houseRules: ["No Smoking", "No Alcohol"],
-                            begin: "March 4",
-                            end: "March 25",
-                        }
-                    ]
-                },
-                {
-                    ID: 4,
-                    information: {
-                        name: "Marry Potter",
-                        description: "Marry is a working professional who likes cat and yoga.",
-                        languages: ["English"],
-                        religion: ["none"],
-                        ethnicity: ["White"],
-                        contact: {
-                            phone: "(306)142-2093",
-                            email: "mp@gmail.com"
-                        },
-                    },
-                    space:  [
-                        {
-                            ID: 4,
-                            address: "1234 24th Sunset Bld",
-                            amenities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking'],
-                            checkinInfo: {
-                                time: "10am - 9pm",
-                                description: "Have a dog named Benly, he is very friendly but please do not pet him."
-                            },
-                            checkinInfo: "",
-                            houseRules: ["No Smoking", "No Alcohol"],
-                            begin: "March 4",
-                            end: "March 25",
-                        }
-                    ]
-                },
-            ],
+           
         }
     }
 
@@ -217,7 +110,11 @@ export default withStyles(styles)(class extends React.Component {
         this.setState({ [name]: event.target.value });
       };
 
-
+    handleHost = () => {
+        this.setState({
+            open: !this.state.open
+        })
+    }
 
     
     handleSwitchView = (event) => {
@@ -247,12 +144,13 @@ export default withStyles(styles)(class extends React.Component {
                     className={classes.root} 
                     justify="space-evenly" >
                         <Grid key={1} item>
-                                <Paper className={classes.side} >
+                                <Paper className={classes.side} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}} >
                                     <h3>FIND HOST</h3>
                                     <form>
                                     <FormControl>
                                         <input type="search" placeholder="Search"></input>
                                         <br/>
+                                        <div>
                                         <TextField
                                             id="date"
                                             label="Start Date"
@@ -261,6 +159,7 @@ export default withStyles(styles)(class extends React.Component {
                                             onChange={this.handleInputChange('begin')}
                                             InputLabelProps={{
                                                 shrink: true,
+                                                className: classes.floatingLabelFocusStyle
                                             }}
                                         />
                                         <TextField
@@ -271,8 +170,10 @@ export default withStyles(styles)(class extends React.Component {
                                             onChange={this.handleInputChange('begin')}
                                             InputLabelProps={{
                                                 shrink: true,
+                                                className: classes.floatingLabelFocusStyle
                                             }}
                                         />
+                                        </div>
                                         <div class='d-flex justify-content-around'>
                                             <FormControl className={classes.select}>
                                                 <InputLabel htmlFor="select-multiple-checkbox">Number of Guests</InputLabel>
@@ -310,9 +211,14 @@ export default withStyles(styles)(class extends React.Component {
                                             </Grid>
                                         </Grid>
                                         <SpaceSelect ></SpaceSelect>
-                                        <Button variant="contained" color="primary" className={classes.button}>
+                                        <Button variant="contained" color="primary" className={classes.button} id="button">
                                             New Booking
                                         </Button>
+                                        <Link to="/currentbookings">
+                                            <Button variant="contained" color="primary" className={classes.button} id="button">
+                                                Cancel
+                                            </Button>
+                                        </Link>
                                     </FormControl>
 
                                     </form>
@@ -320,7 +226,7 @@ export default withStyles(styles)(class extends React.Component {
                                 </Paper>
                         </Grid>
                         <Grid key={2} item>
-                            <Paper className={classes.hosts}>
+                            <Paper className={classes.hosts} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}}>
                                 <div style={{display: 'flex', justifyContent: 'space-between', padding: '30px'}}>
                                     <h3 className="">
                                         AVAILABLE BOOKINGS
@@ -332,7 +238,7 @@ export default withStyles(styles)(class extends React.Component {
                                 </div>
                             {this.state.view == "list" ? 
                                 <Grid container spacing={6}>
-                                    {this.state.bookings.map(
+                                    {Host.map(
                                         (booking) => {
                                             return(
                                                 <Card className={classes.card}>
@@ -347,8 +253,15 @@ export default withStyles(styles)(class extends React.Component {
                                                                     {booking.space[0].address}
                                                                 </Typography>
                                                             </div>      
-                                                        </div>          
-                                                        <Host booking={booking}></Host>  
+                                                        </div>  
+                                                        
+                                                        {/* click on date to trigger HostInfo dialog */}
+                                                        <Button id='button-outline-date' onClick={this.handleHost} variant="outlined">
+                                                                {booking.space[0].begin} - {booking.space[0].end}
+                                                        </Button>      
+                                                        <HostInfo booking={booking} open={this.state.open} click={this.handleHost}></HostInfo>    
+
+                                                        {/* space info display */}
                                                         <div style={{display: 'flex', flexWrap: 'wrap', margin: '5px'}}>
                                                             {
                                                                 booking.space[0].amenities.map((amenity) => {
@@ -358,7 +271,7 @@ export default withStyles(styles)(class extends React.Component {
                                                                             style={{
                                                                                 border: "0.5px solid",
                                                                                 borderRadius: '0.5rem',
-                                                                                padding: '6px',
+                                                                                padding: '4px 12px 4px 12px',
                                                                                 margin: '2px'
                                                                             }}
                                                                         >

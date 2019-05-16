@@ -26,10 +26,12 @@ h2 {
 
 h3 {
   font-size: 22pt;
+  color: #202e57;
 }
 
 h4 {
   font-size: 18pt;
+  color: #202e57;
 }
 
 p {
@@ -58,12 +60,8 @@ p {
     font-size: 14pt;
   }
 }
-p {
-  margin-bottom: 3px;
-}
-
 .btn {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 12pt;
   padding: 8px 12px 8px 12px;
   border-radius: 0.25rem;
@@ -180,7 +178,7 @@ p {
 }
 
 a {
-  color: #f9c1b3;
+  color: #f6c7b6;
 }
 a:hover {
   color: #7e95cd;
@@ -214,22 +212,9 @@ a:hover {
   text-decoration: none;
   text-transform: none;
   box-shadow: none;
-  font-family: Source Sans Pro;
 }
 #button:hover {
   color: #202e57;
-  background-color: white;
-}
-
-#buttonGray {
-  background-color: #aaaaaa;
-  border: 2px solid #aaaaaa;
-  text-decoration: none;
-  text-transform: none;
-  box-shadow: none;
-}
-#buttonGray:hover {
-  color: #aaaaaa;
   background-color: white;
 }
 
@@ -239,19 +224,6 @@ a:hover {
 
 label {
   color: #da5c48;
-}
-
-#label {
-  color: #da5c48;
-  font-size: 12.5px;
-}
-
-#hoverCard:hover {
-  border: #7e9fa8;
-}
-
-form #contact {
-  max-width: 300px;
 }
 
 body {
@@ -282,10 +254,12 @@ h2 {
 
 h3 {
   font-size: 22pt;
+  color: #202e57;
 }
 
 h4 {
   font-size: 18pt;
+  color: #202e57;
 }
 
 p {
@@ -314,12 +288,8 @@ p {
     font-size: 14pt;
   }
 }
-p {
-  margin-bottom: 3px;
-}
-
 .btn {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 12pt;
   padding: 8px 12px 8px 12px;
   border-radius: 0.25rem;
@@ -436,7 +406,7 @@ p {
 }
 
 a {
-  color: #f9c1b3;
+  color: #f6c7b6;
 }
 a:hover {
   color: #7e95cd;
@@ -470,22 +440,9 @@ a:hover {
   text-decoration: none;
   text-transform: none;
   box-shadow: none;
-  font-family: Source Sans Pro;
 }
 #button:hover {
   color: #202e57;
-  background-color: white;
-}
-
-#buttonGray {
-  background-color: #aaaaaa;
-  border: 2px solid #aaaaaa;
-  text-decoration: none;
-  text-transform: none;
-  box-shadow: none;
-}
-#buttonGray:hover {
-  color: #aaaaaa;
   background-color: white;
 }
 
@@ -495,19 +452,6 @@ a:hover {
 
 label {
   color: #da5c48;
-}
-
-#label {
-  color: #da5c48;
-  font-size: 12.5px;
-}
-
-#hoverCard:hover {
-  border: #7e9fa8;
-}
-
-form #contact {
-  max-width: 300px;
 }
 
 #situation h4 {
@@ -922,6 +866,28 @@ section {
     float: right;
   }
 }
+/* for side bar (Min actually use css instead of inline sometimes... LOL) */
+#side {
+  height: 100vh;
+  width: 30vw;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#button-outline-date {
+  color: #7e9fa8;
+}
+
+#tags {
+  color: #da5c48;
+}
+
+#date {
+  color: #aaaaaa;
+}
+
 @media (min-width: 1035px) {
   .last-nav-item {
     display: inline;
@@ -936,6 +902,51 @@ section {
   #donate {
     display: inline;
   }
+}
+/* for search */
+input {
+  outline: none;
+}
+
+input[type=search] {
+  -webkit-appearance: textfield;
+  -webkit-box-sizing: content-box;
+  font-family: inherit;
+  font-size: 100%;
+}
+
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button {
+  display: none;
+}
+
+input[type=search] {
+  background: white url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+  border: solid 1px #7e9fa8;
+  padding: 5px 5px 5px 32px;
+  width: 100px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+input[type=search]:focus {
+  width: 400px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
+  -moz-box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
+  box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
+}
+
+input:-moz-placeholder {
+  color: #999;
+}
+
+input::-webkit-input-placeholder {
+  color: #999;
 }
 
 /*# sourceMappingURL=index.css.map */

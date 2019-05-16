@@ -33,6 +33,7 @@ type User struct {
 	UserName  string `json:"userName"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
+	Title     string `json: "title"`
 	PhotoURL  string `json:"photoURL"`
 }
 
@@ -50,6 +51,7 @@ type NewUser struct {
 	UserName     string `json:"userName"`
 	FirstName    string `json:"firstName"`
 	LastName     string `json:"lastName"`
+	Title     	 string `json: "title"`
 }
 
 //Updates represents allowed updates to a user profile
@@ -121,6 +123,7 @@ func (nu *NewUser) ToUser() (*User, error) {
 		nu.UserName,
 		nu.FirstName,
 		nu.LastName,
+		nu.Title,
 		"",
 	}
 	//Leave the ID field as the zero-value; your Store
