@@ -39,7 +39,7 @@ class PersonalSelect extends React.Component {
             Personal.map((data) => {
                 return( 
                     <Grid item xs={this.props.size}>
-                        {data.name}
+                        <p id="label" style={{marginBottom: "3px", marginTop: "8px"}}>{data.name}</p>
                         <Select
                             closeMenuOnSelect={false}
                             components={Animated()}

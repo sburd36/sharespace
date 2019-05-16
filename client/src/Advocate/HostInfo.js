@@ -32,14 +32,46 @@ const styles = theme => ({
         margin: theme.spacing.unit,
     },
     textField: {
-        marginTop: theme.spacing.unit * 3,
-        marginBottom: theme.spacing.unit * 3,
-        marginRight: theme.spacing.unit * 2,
+        marginTop: theme.spacing.unit,
+        marginBottom: theme.spacing.unit,
+        //marginRight: theme.spacing.unit * 2,
         width: 200,
     },
     input: {
         border: "0.5px solid "   
     },
+    insideContent: {
+        padding: "20px"
+    },
+    tag: {
+        color: "#202e57", 
+        border: ".5px solid #202e57", 
+        maxWidth: "150px",
+        borderRadius: "10px",
+        textAlign: "center",
+        padding: "6px",
+        //paddingTop: "6px"
+        marginRight: "10px",
+        marginTop: "10px",
+        marginBottom: "10px"
+    }, 
+    body: {
+        color: "#202e57",
+        fontWeight: 300,
+        fontSize: "14px"
+    },
+    title: {
+        color: "#202e57",
+        fontWeight: 400,
+        fontSize: "18px"
+    },
+    contact: {
+        border: ".5px solid #7e9fa8",
+        padding: "5px"
+    },
+    floatingLabelFocusStyle: {
+        color: "#da5c48"
+    }
 })
 
 function makeOptions(filter) {
@@ -67,12 +99,10 @@ export default withStyles(styles)(class extends React.Component {
         this.setState({ [name]: event.target.value });
     };
 
-    handleHost = () => {
-        this.setState({ open: true});
-    };
 
     handleCloseHost = () => {
-        this.setState({ open: false, confirm: false });
+        this.setState({ confirm: false });
+        this.props.click();
     };
 
     handleConfirmHost = () => {
@@ -80,183 +110,238 @@ export default withStyles(styles)(class extends React.Component {
             confirm: true
         })
     }
+
     render() {
         const { classes } = this.props;
         const host = this.props.booking;
         return(
             <div>
-                <div class="d-flex justify-content-center">
-                    <Button id='button-outline-date' onClick={this.handleHost} variant="outlined">
-                            {host.space[0].begin} - {host.space[0].end}
-                    </Button>   
-                </div>
+
                 <Dialog
-                    open={this.state.open}
-                    onClose={this.handleCloseHost}
+                    open={this.props.open}
+                    //for testing purposes:
+                    //open= 'true'
+                    onClose={this.props.click}
                     scroll='paper'
-                    fullWidth='true'
-                    maxWidth='xl'
+                    fullWidth='false'
+                    maxWidth='sm'
                     aria-labelledby="scroll-dialog-title"
                 >
-                    <DialogContent>
-                        <img className={classes.img} src={bedroom}></img>
+                    <DialogContent style={{padding: 0}}>
+                        <img className={classes.img} src={bedroom} style={{width: "100%", height: "100%"}}></img>
                         {/* <Map /> */}
+                        <div className={classes.insideContent}>
                         <h3>Home by {host.information.name}</h3>
-                            <DialogContentText>
-                                <b>Address</b><br/>
-                                <p>{host.space[0].address}</p> 
+                        <p style={{color: "#7e9fa8"}}>{host.space[0].location}</p>
+                        <div style={{display: "flex"}}>
+                                {/* Need to add here the availablity. If available, render this, else render the second one */}
+                                <p className={classes.tag} style={{backgroundColor: "#48704d", color: "white", border: "none"}}>Available</p>
+                                {/* <p className={classes.tag} style={{backgroundColor: "#da5c48", color: "white", border: "none"}}>Booked</p> */}
+                                <p className={classes.tag}>{host.space[0].homeType}</p>
+                        </div>
+                            <DialogContentText style={{display:"flex", justifyContent: "space-between", alignItems: "flex-start"}}>
+                                <p className={classes.body}>{host.space[0].description}</p>
+                                <div>
+                                    <b className={classes.body} style={{color:"#da5c48"}}>Address</b>
+                                    <p className={classes.body}>{host.space[0].address}</p>
+                                </div>
                             </DialogContentText>
                         <hr></hr>
-                        <h5>HOST INFORMATION</h5>
-                        <div class="d-flex">
-                            <p style={{width: "700px"}}>
-                                {host.information.description}
-                            </p>
+                        <h5 className={classes.title}>HOST INFORMATION</h5>
+                        <div style={{display: "flex", justifyContent: "space-between"}}>
+                            <div style={{paddingRight: "10px"}}>
+                                <p className={classes.body}>
+                                    <b>{host.information.name}</b>
+                                </p>
+                                <p className={classes.body} >{host.information.description}</p>
+                            </div>
                             <div>
-                                <b>Languages:</b> English, Chinese<br/>
-                                <b>Religion:</b> Christian<br/>
-                                <b>Ethnicity: </b> Chinese<br/>
+                                <p className={classes.body}><b style={{color:"#da5c48"}}>Languages:</b> English, Chinese</p>
+                                <p className={classes.body}><b style={{color:"#da5c48"}}>Religion:</b> Christian</p>
+                                <p className={classes.body}><b style={{color:"#da5c48"}}>Ethnicity: </b> Chinese</p>
                             </div>
                         </div>
-                        <div style={{textAlign: "center"}}>
-                            <Button variant="outlined" className={classes.contact}>
+                        <div style={{textAlign: "center", display: "flex", justifyContent: "center", marginTop: "5px"}}>
+                            {/* <Button variant="outlined" className={classes.contact}>
                                 {host.information.contact.phone}
                             </Button>
                             <Button variant="outlined" className={classes.contact}>
                                 {host.information.contact.email}
-                            </Button>
+                            </Button> */}
+                            <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.information.contact.phone}</p>
+                            <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.information.contact.email}</p>
                         </div>
                         <hr></hr>
-                        <h5>AMENTITIES</h5>
+                        <h5 className={classes.title}>AMENITIES</h5>
+                        <div style={{display: 'flex', flexWrap: 'wrap'}}>
                         {
                             host.space[0].amenities.map((data) => {
                                 return( 
-                                    <Button className={classes.button} variant="outlined">
-                                        {data}
-                                    </Button>
+                                <div 
+                                    id="tags"
+                                    style={{
+                                        border: "0.5px solid",
+                                        borderRadius: '0.5rem',
+                                        padding: '4px 12px 4px 12px',
+                                        margin: '2px'
+                                    }}
+                                >
+                                    {data}
+                                </div>
                                 )
                             })
                         }
+                        </div>
                         <hr></hr>
-                        <h5>CHECK-IN INFORMATION</h5>
-                        <div class="d-flex">
-                            <p style={{width: "700px"}}>
+                        <h5 className={classes.title}>CHECK-IN INFORMATION</h5>
+                        <div style={{display: "flex", justifyContent: "space-between"}}>
+                            <p className={classes.body} style={{paddingRight: "10px"}}>
                                 {host.space[0].checkinInfo.description}
                             </p>
                             <DialogContentText>
-                                <b>Time: </b><br/>
-                                {host.space[0].checkinInfo.time}                            
+                                <p className={classes.body}><b>Time: </b> {host.space[0].checkinInfo.time} </p>                          
                             </DialogContentText>
                         </div>
 
                         <hr></hr>
-                        <h5>HOUSE RULES</h5>
-                        {
-                            host.space[0].houseRules.map((data) => {
-                                return(
-                                    <Button className={classes.button} variant="outlined">
-                                        {data}
-                                    </Button>
-                                )
-                            })
-                        }
-                        <hr></hr>
-                        <h5>BOOKING INFORMATION</h5>
-                        <FormControl class="d-flex align-items-center p-3">
-                        <Grid container justify="center">
-                        <Grid item >
-                            <TextField
-                                id="standard-name"
-                                label="Guest ID"
-                                className={classes.textField}
-                                value={this.state.guestID}
-                                onChange={this.handleInputChange('guestID')}
-                                margin="normal"
-                            />
-                            <TextField
-                                id="standard-select-currency"
-                                select
-                                label="Number of guests"
-                                className={classes.textField}
-                                value={this.state.guest}
-                                onChange={this.handleInputChange('guest')}
-                                SelectProps={{
-                                    MenuProps: {
-                                    className: classes.menu,
-                                    },
-                                }}
-                                margin="normal"
-                                >
-                                {[1,2,3,4].map(option => (
-                                    <MenuItem key={option} value={option}>
-                                        {option}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-                            <TextField
-                                id="date"
-                                label="Start Date"
-                                type="date"
-                                className={classes.textField}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            /> 
-                            <TextField
-                                id="date"
-                                label="End Date"
-                                type="date"
-                                className={classes.textField}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            /> 
-                            <Grid container direction="row" justify="around" spacing={8}>
-                            {/* { 
-                                filters.map((data) => {
+                        <h5 className={classes.title}>HOUSE RULES</h5>
+                        <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                            {
+                                host.space[0].houseRules.map((data) => {
                                     return(
-                                        <Grid item xs={3} className={classes.textField}>
-                                        <h5>{data['name']}</h5>
-                                         <Select
-                                            closeMenuOnSelect={false}
-                                            components={Animated()}
-                                            isMulti
-                                            options={makeOptions(data['values'])}
-                                        />
-                                        </Grid>
+                                    <div 
+                                        id="tags"
+                                        style={{
+                                            border: "0.5px solid #7e9fa8",
+                                            borderRadius: '0.5rem',
+                                            padding: '4px 12px 4px 12px',
+                                            margin: '2px',
+                                            color: "#7e9fa8"
+                                        }}
+                                    >
+                                        {data}
+                                    </div>
                                     )
                                 })
-                            } */}
-                            <PersonalSelect></PersonalSelect>
+                            }
+                        </div>
+                        <hr></hr>
+                        <h5 className={classes.title}>BOOKING INFORMATION</h5>
+                        <FormControl class="">
+                            <div> 
+                                {/* Guest ID, StartEnd Date */}
+                                <p className={classes.title} style={{fontSize: "16px"}}>GUEST INFORMATION</p>
+                                <div style={{display: "flex"}}>
+                                    <TextField
+                                        id="standard-name"
+                                        label="Guest ID"
+                                        style={{marginRight: "10px"}}
+                                        className={classes.textField}
+                                        value={this.state.guestID}
+                                        onChange={this.handleInputChange('guestID')}
+                                        margin="normal"
+                                    />
+                                    <TextField
+                                        id="standard-select-currency"
+                                        select
+                                        label="# of guests"
+                                        style={{marginRight: "10px"}}
+                                        className={classes.textField}
+                                        value={this.state.guest}
+                                        onChange={this.handleInputChange('guest')}
+                                        SelectProps={{
+                                            MenuProps: {
+                                            className: classes.menu,
+                                            },
+                                        }}
+                                        margin="normal"
+                                        >
+                                        {[1,2,3,4, 5, 6].map(option => (
+                                            <MenuItem key={option} value={option}>
+                                                {option}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                    <TextField
+                                        id="date"
+                                        label="Start Date"
+                                        type="date"
+                                        className={classes.textField}
+                                        style={{marginRight: "10px"}}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                            className: classes.floatingLabelFocusStyle
+                                        }}
+                                    /> 
+                                    <TextField
+                                        id="date"
+                                        label="End Date"
+                                        type="date"
+                                        className={classes.textField}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                            className: classes.floatingLabelFocusStyle
+                                        }}
+                                    /> 
+                                </div>
+                                
+                                {/* Personal Information */}
+                                <div style={{paddingRight: "100px"}}>
+                                {/* { 
+                                    filters.map((data) => {
+                                        return(
+                                            <Grid item xs={3} className={classes.textField}>
+                                            <h5>{data['name']}</h5>
+                                            <Select
+                                                closeMenuOnSelect={false}
+                                                components={Animated()}
+                                                isMulti
+                                                options={makeOptions(data['values'])}
+                                            />
+                                            </Grid>
+                                        )
+                                    })
+                                } */}
+                                <PersonalSelect></PersonalSelect>
+                                </div>
+                                
+                                {/* NEEDS FIELD GOES HERE */}
+                                <div class="mt-3">
+                                    <p className={classes.title} style={{fontSize: "16px"}}>NEEDS</p>
+                                </div>
+                                
+                                {/* NOTES */}
+                                <Grid>
+                                    <p className={classes.title} style={{fontSize: "16px"}}>NOTES</p>
+                                    <textarea style={{width: "100%"}}></textarea>
                             </Grid>
-                            <b>Note</b>
-                            <textarea style={{width: "100%"}}></textarea>
-                        </Grid>
-                        </Grid>
+                            </div>
+                        {/* </Grid> */}
 
                         </FormControl>
+                        </div>
                     </DialogContent>
-                    <DialogActions >
-                        <Button onClick={this.handleCloseHost} variant="contained" >
+                    <DialogActions style={{display: "flex", justifyContent: "space-between", paddingRight: "20px", paddingLeft: "20px"}}>
+                        <Button onClick={this.props.click} variant="contained" id="buttonGray" style={{color: "white"}}>
                             Cancel
                         </Button>
-                        <Button onClick={this.handleConfirmHost} variant="contained"  color="primary">
+                        <Button onClick={this.handleConfirmHost} variant="contained"  color="primary" id="button">
                             Confirm Host
                         </Button>
                     </DialogActions>
                     <Dialog
                         open={this.state.confirm}
-                        onClose={this.handleClose}
+                        onClose={this.props.click}
                         aria-labelledby="alert-dialog-title"
                         aria-describedby="alert-dialog-description"
                         >
                         <DialogContent>
-                            <DialogContentText id="alert-dialog-description">
+                            <DialogContentText id="alert-dialog-description" class="pb-0">
                             Your booking is confirmed! 
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={this.handleCloseHost} color="primary" autoFocus>
+                            <Button onClick={this.handleCloseHost} color="primary" id="button" style={{color: "white"}}>
                             Done
                             </Button>
                         </DialogActions>

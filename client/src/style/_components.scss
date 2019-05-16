@@ -1,5 +1,9 @@
+p {
+    margin-bottom: 3px;
+}
+
 .btn {
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: 12pt;
     padding: 8px 12px 8px 12px;
     border-radius: .25rem;
@@ -136,6 +140,7 @@
     align-items: center;
 
     #contact { 
+
         p, #social {
             display: inline-block;
             vertical-align: middle;
@@ -144,7 +149,7 @@
 }
 
 a {
-    color: $light-pink;
+    color: $light-orange;
 
     &:hover {
         color: $teal;
@@ -180,6 +185,7 @@ a {
     text-decoration: none;
     text-transform: none;
     box-shadow: none;
+    font-family: Source Sans Pro;
 
     &:hover {
         color: #202e57;
@@ -208,4 +214,22 @@ a {
 
 label {
     color: #da5c48;
+}
+
+#label {
+    color: #da5c48;
+    font-size: 12.5px;
+}
+
+#hoverCard {
+
+    &:hover {
+        border:#7e9fa8;
+    }
+}
+
+.navContact {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }

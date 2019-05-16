@@ -24,11 +24,12 @@ section {
 
 .nav-item {
     color: $teal;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: 15pt;
+    font-weight: 300;
 
     &:hover {
-        color: $light-orange;
+        color: $medium-orange;
     }
 }
 
@@ -248,12 +249,13 @@ section {
 
         .nav-item {
             margin: 0px 25px 0px 10px;
+            flex-grow: 1;
         }
     }
 
     .navbar-nav {
         justify-content: space-between;  
-        flex-grow: 2;
+        flex-grow: 1;
         margin: 0px 40px 0px 40px;
     }
 
@@ -481,23 +483,23 @@ section {
 
 //These numbers will depend on the content in the nav bar. The buttons show up as the
 //navbar grows. This is to prevent the nav from wrapping gross.
-@media (min-width: 1035px) {
-    .last-nav-item {
-        display: inline;
-    }
-}
+// @media (min-width: 1035px) {
+//     .last-nav-item {
+//         display: inline;
+//     }
+// }
 
-@media (min-width: 1170px) {
-    #sign-up {
-        display: inline;
-    }
-}
+// @media (min-width: 1170px) {
+//     #sign-up {
+//         display: inline;
+//     }
+// }
 
-@media (min-width: 1289px) {
-        #donate {
-            display: inline;
-        }
-}
+// @media (min-width: 1289px) {
+//         #donate {
+//             display: inline;
+//         }
+// }
 
 /* for search */
 
@@ -548,3 +550,10 @@ input::-webkit-input-placeholder {
 	color: #999;
 }
 
+#back {
+    color: #aaaaaa;
+
+    &:hover {
+        color: #da5c48;
+    }
+}

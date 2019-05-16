@@ -31,7 +31,7 @@ const NavigationAuth = () => (
 );
 
 const NavigationNonAuth = () => (
-    <nav class="navbar navbar-expand-md" style={{height: "5.5rem"}}>
+    <nav class="navbar navbar-expand-md d-flex justify-content-between" style={{height: "5.5rem"}}>
     <div class="d-flex">
         <Link to="/">
             <img src={logo} class="logo" alt="logo"/>
@@ -48,19 +48,33 @@ const NavigationNonAuth = () => (
                     <b>OUR TOOL</b>
                 </li>
             </Link>
+
+            <Link to="/currentbookings">
+                <li class="nav-item">
+                    <b>ADVOCATE VIEW</b>
+                </li>
+            </Link>
+
+            <Link to="/hostdash">
+                <li class="nav-item">
+                    <b>HOST VIEW</b>
+                </li>
+            </Link>
         </ul>
     </div>     
-    <form id="contact" class="container d-flex justify-content-end" action="https://formspree.io/sharespace.app@gmail.com" method="POST">
-        <div class="p-2"><b>JOIN US</b></div>
-        <div class="form-group pt-3 pr-2">
-            <input id="emailAddress" type="email" class="form-control" placeholder="Enter email" name="_replyto" aria-label="Name" aria-describedby="basic-addon1"
-                required />
+    <div class="d-flex align-items-center">
+        <form id="contact" class="d-flex justify-content-end align-items-center" action="https://formspree.io/sharespace.app@gmail.com" method="POST">
+            <div class="p-2"><b>JOIN US</b></div>
+            <div class="form-group pt-3 pr-2">
+                <input id="emailAddress" type="email" class="form-control" placeholder="Enter email" name="_replyto" aria-label="Name" aria-describedby="basic-addon1"
+                    required />
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm" id="button">Submit</button>
+            <input type="hidden" name="_next" value="/"></input>
+        </form>
+        <div id="nav-buttons">
+            <Link to="/signin"><button class="btn btn-yellow-fill" id="log-in">Sign In</button></Link>
         </div>
-        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-        <input type="hidden" name="_next" value="/"></input>
-    </form>
-    <div id="nav-buttons">
-        <Link to="/signin"><button class="btn btn-yellow-empty" id="log-in">SIGN IN</button></Link>
     </div>
 </nav>
 

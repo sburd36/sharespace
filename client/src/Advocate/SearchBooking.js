@@ -17,14 +17,18 @@ import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import Switch from '@material-ui/core/Switch';
 import InputLabel from '@material-ui/core/InputLabel';
-
+import { Link } from 'react-router-dom';
 
 // confirm host view
-import Host from './HostInfo';
+import HostInfo from './HostInfo';
+import { Host } from '../filter';
 
 const styles = theme => ({
     root: {
       flexGrow: 1,
+    },
+    bodyText: {
+        color: '#202e57'
     },
     side: {
       height: window.outerHeight,
@@ -41,7 +45,7 @@ const styles = theme => ({
         width: 200,
     },
     card: {
-        maxWidth: 360,
+        width: 400,
         margin: "0rem 5rem 1rem 3rem",
         border: "0.5px solid #d3dbee",
         boxShadow: "none",
@@ -85,123 +89,7 @@ export default withStyles(styles)(class extends React.Component {
             view: "list",
             guests: "",
             locations: "",
-            bookings: [
-                {
-                    ID: 1,
-                    information: {
-                        name: "Marry Potter",
-                        description: "Marry is a working professional who likes cat and yoga.",
-                        languages: ["English"],
-                        religion: ["none"],
-                        ethnicity: ["White"],
-                        contact: {
-                            phone: "(306)142-2093",
-                            email: "mp@gmail.com"
-                        },
-                    },
-                    space:  [
-                        {
-                            ID: 1,
-                            address: "1234 24th Sunset Bld",
-                            amenities: ['Kitchen', 'Laundry', 'Refrigerator', 'Bike Storage', 'Meals', 'Voicemail'],
-                            checkinInfo: {
-                                time: "10am - 9pm",
-                                description: "Please text my number when arrive. Have a dog named Benly, he is very friendly but please do not pet him."
-                            },
-                            houseRules: ["No Smoking", "No Alcohol"],
-                            begin: "March 4",
-                            end: "March 25",
-                        }
-                    ]
-                },
-                {
-                    ID: 2,
-                    information: {
-                        name: "Marry Potter",
-                        description: "Marry is a working professional who likes cat and yoga.",
-                        languages: ["English"],
-                        religion: ["none"],
-                        ethnicity: ["White"],
-                        contact: {
-                            phone: "(306)142-2093",
-                            email: "mp@gmail.com"
-                        },
-                    },
-                    space:  [
-                        {
-                            ID: 2,
-                            address: "1234 24th Sunset Bld",
-                            amenities: ['Kitchen','Wifi', 'Parking', 'Bike Storage', 'Meals', 'Voicemail'],
-                            checkinInfo: {
-                                time: "10am - 9pm",
-                                description: "*Have a dog named Benly, he is very friendly but please do not pet him."
-                            },
-                            checkinInfo: "",
-                            houseRules: ["No Smoking", "No Alcohol"],
-                            begin: "March 4",
-                            end: "March 25",
-                        }
-                    ]
-                },
-                {
-                    ID: 3,
-                    information: {
-                        name: "Marry Potter",
-                        description: "Marry is a working professional who likes cat and yoga.",
-                        languages: ["English"],
-                        religion: ["none"],
-                        ethnicity: ["White"],
-                        contact: {
-                            phone: "(306)142-2093",
-                            email: "mp@gmail.com"
-                        },
-                    },
-                    space:  [
-                        {
-                            ID: 3,
-                            address: "1234 24th Sunset Bld",
-                            amenities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking', 'Bike Storage', 'Meals'],
-                            checkinInfo: {
-                                time: "10am - 9pm",
-                                description: "Have a dog named Benly, he is very friendly but please do not pet him."
-                            },
-                            checkinInfo: "",
-                            houseRules: ["No Smoking", "No Alcohol"],
-                            begin: "March 4",
-                            end: "March 25",
-                        }
-                    ]
-                },
-                {
-                    ID: 4,
-                    information: {
-                        name: "Marry Potter",
-                        description: "Marry is a working professional who likes cat and yoga.",
-                        languages: ["English"],
-                        religion: ["none"],
-                        ethnicity: ["White"],
-                        contact: {
-                            phone: "(306)142-2093",
-                            email: "mp@gmail.com"
-                        },
-                    },
-                    space:  [
-                        {
-                            ID: 4,
-                            address: "1234 24th Sunset Bld",
-                            amenities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking'],
-                            checkinInfo: {
-                                time: "10am - 9pm",
-                                description: "Have a dog named Benly, he is very friendly but please do not pet him."
-                            },
-                            checkinInfo: "",
-                            houseRules: ["No Smoking", "No Alcohol"],
-                            begin: "March 4",
-                            end: "March 25",
-                        }
-                    ]
-                },
-            ],
+           
         }
     }
 
@@ -223,6 +111,13 @@ export default withStyles(styles)(class extends React.Component {
         this.setState({ [name]: event.target.value });
       };
 
+    handleHost = () => {
+        this.setState({
+            open: !this.state.open
+        })
+    }
+
+    
     handleSwitchView = (event) => {
         this.setState({
             view: event.target.checked ? "calendar" : "list"
@@ -251,17 +146,19 @@ export default withStyles(styles)(class extends React.Component {
                     justify="space-evenly" >
                         <Grid key={1} item>
                                 <Paper className={classes.side} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}} >
-                                    <h3>FIND HOST</h3>
+                                <Link to="/currentbookings">
+                                    <p id="back"> &#60; Back</p>
+                                </Link>
+                                    <h3 class="mb-4">SEARCH BOOKINGS</h3>
                                     <form>
-                                    <FormControl>
-                                        
-                                        <br/>
-                                        <div>
+                                    <FormControl>                                      
+                                        <div style={{display: "flex"}}>
                                         <TextField
                                             id="date"
                                             label="Start Date"
                                             type="date"
                                             className={classes.textField}
+                                            style={{flexGrow: 1, marginRight: "20px"}}
                                             onChange={this.handleInputChange('begin')}
                                             InputLabelProps={{
                                                 shrink: true,
@@ -273,6 +170,7 @@ export default withStyles(styles)(class extends React.Component {
                                             label="End Date"
                                             type="date"
                                             className={classes.textField}
+                                            style={{flexGrow: 1}}
                                             onChange={this.handleInputChange('begin')}
                                             InputLabelProps={{
                                                 shrink: true,
@@ -280,9 +178,9 @@ export default withStyles(styles)(class extends React.Component {
                                             }}
                                         />
                                         </div>
-                                        <div class='d-flex justify-content-around'>
-                                            <FormControl className={classes.select}>
-                                                <InputLabel htmlFor="select-multiple-checkbox">Number of Guests</InputLabel>
+                                        <div style={{display: "flex", marginBottom: "10px"}}>
+                                            <FormControl className={classes.select} style={{flexGrow: 1, marginRight: "20px"}}>
+                                                <InputLabel  htmlFor="select-multiple-checkbox"># of Guests</InputLabel>
                                                 <Select
                                                 value={this.state.guests}
                                                 onChange={this.handleInputChange('guests')}
@@ -295,8 +193,8 @@ export default withStyles(styles)(class extends React.Component {
                                                     ))}
                                                 </Select>
                                             </FormControl>
-                                            <FormControl className={classes.select}>
-                                                <InputLabel htmlFor="select-multiple-checkbox">Locations</InputLabel>
+                                            <FormControl className={classes.select} style={{flexGrow: 1}}>
+                                                <InputLabel htmlFor="select-multiple-checkbox">Location</InputLabel>
                                                 <Select
                                                 value={this.state.locations}
                                                 onChange={this.handleInputChange('locations')}>                                        >
@@ -311,7 +209,7 @@ export default withStyles(styles)(class extends React.Component {
                                         
                                         <Grid containter space={6}>
                                             <Grid item xs={12}>
-                                                <div class="p-4">
+                                                <div>
                                                     <PersonalSelect></PersonalSelect>
                                                 </div>
                                             </Grid>
@@ -319,14 +217,15 @@ export default withStyles(styles)(class extends React.Component {
                                         <SpaceSelect ></SpaceSelect>
                                         <input type="search" placeholder="Search" class="mt-3 mb-3"></input>
                                         <div style={{display: "flex", justifyContent:"space-between"}}>
+                                        <Link to="/currentbookings">
                                             <Button variant="contained" color="primary" className={classes.button} id="buttonGray" style={{fontSize: "16px", padding:"0px 45px 0px 45px", height:"40px"}}>
                                                 Cancel
                                             </Button>
+                                        </Link>
                                             <Button variant="contained" color="primary" className={classes.button} id="button" style={{fontSize: "16px", padding:"0px 22px 0px 22px", height:"40px"}}>
                                                 Search Hosts
                                             </Button>
-                                        </div>   
-
+                                        </div>  
                                     </FormControl>
 
                                     </form>
@@ -336,7 +235,7 @@ export default withStyles(styles)(class extends React.Component {
                         <Grid key={2} item>
                             <Paper className={classes.hosts} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}}>
                                 <div style={{display: 'flex', justifyContent: 'space-between', padding: '30px'}}>
-                                    <h3 className="">
+                                    <h3 class="mt-4">
                                         AVAILABLE BOOKINGS
                                     </h3>
                                     <div>
@@ -346,7 +245,7 @@ export default withStyles(styles)(class extends React.Component {
                                 </div>
                             {this.state.view == "list" ? 
                                 <Grid container spacing={6}>
-                                    {this.state.bookings.map(
+                                    {Host.map(
                                         (booking) => {
                                             return(
                                                 <Card className={classes.card}>
@@ -354,16 +253,27 @@ export default withStyles(styles)(class extends React.Component {
                                                         <div className={classes.content}>
                                                             <img className={classes.avatar} src={person}></img>
                                                             <div>
-                                                                <h5 style={{color: "#202e57"}}>
+                                                                <h5 style={{color: "#202e57", marginBottom: 0}}>
                                                                     {booking.information.name}
                                                                 </h5>
-                                                                <Typography className={classes.pos}>
-                                                                    {booking.space[0].address}
+                                                                <Typography style={{color: "#da5c48"}} className={classes.bodyText}>
+                                                                    {booking.space[0].location}
+                                                                </Typography>
+                                                                <Typography className={classes.bodyText}>
+                                                                    {booking.space[0].homeType}
                                                                 </Typography>
                                                             </div>      
-                                                        </div>          
-                                                        <Host booking={booking}></Host>  
-                                                        <div style={{display: 'flex', flexWrap: 'wrap', margin: '5px', justifyContent: 'center'}}>
+                                                        </div>  
+                                                        
+                                                        {/* click on date to trigger HostInfo dialog */}
+                                                        <Button id='button-outline-date' onClick={this.handleHost} variant="outlined">
+                                                                {booking.space[0].begin} - {booking.space[0].end}
+                                                        </Button>      
+                                                        <HostInfo booking={booking} open={this.state.open} click={this.handleHost}></HostInfo>    
+
+                                                        {/* space info display */}
+                                                        <p style={{marginBottom: 0, marginTop: "10px", fontSize: "14px"}}>Amenities:</p>
+                                                        <div style={{display: 'flex', flexWrap: 'wrap', margin: '5px'}}>
                                                             {
                                                                 booking.space[0].amenities.map((amenity) => {
                                                                     return(
