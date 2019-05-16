@@ -7,9 +7,10 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
 // icons
-import Face from '@material-ui/icons/Face';
+import Add from '@material-ui/icons/AddCircleOutline';
 import People from '@material-ui/icons/People';
 import Clock from '@material-ui/icons/AccessTime';
+import Face from '@material-ui/icons/Face';
 
 import MyProfile from './MyProfile';
 import Availability from './AddAvailability';
@@ -90,6 +91,12 @@ export default withStyles(styles)(class extends React.Component {
         this.setState({view: name})
     }
 
+    handleAvailability = () => {
+        this.setState({
+            open: !this.state.open
+        })
+    }
+
     render() {
         const { classes } = this.props;
         return (
@@ -108,7 +115,11 @@ export default withStyles(styles)(class extends React.Component {
                                     <img id="bigAvatar" src={women} className={classes.bigAvatar} />
                                     <h3>Welcome, Host</h3>
                                     <Typography color="textSecondary" className={classes.secondary}>What would you like to do today</Typography>
-                                    <Availability></Availability>
+                                    <Button id='button' onClick={this.handleHost} variant="contained" color="primary" className={classes.button}>
+                                        <Add></Add>
+                                        Add Availability
+                                    </Button>  
+                                    <Availability open={this.state.open} click={this.handleAvailability}></Availability>
                                     <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('booking')}>
                                     <People></People>
                                         Current Bookings
