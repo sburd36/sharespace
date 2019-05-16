@@ -7,7 +7,7 @@ import Landing from './Main/landing'
 import Footer from './Main/Footer'
 import AboutUs from './Main/AboutUs'
 import OurTool from './Main/OurTool'
-import Advocate from './Advocate/Advocate'
+import CurrentBookings from './Advocate/CurrentBookings'
 import SignIn from './Main/SignIn'
 import Calendar from './Calendar'
 import Situation from './Situation'
@@ -41,7 +41,7 @@ class App extends Component {
                   <Route path="/stay" component={Stay} />
                   <Route path="/aboutus" component={AboutUs} />
                   <Route path="/ourtool" component={OurTool} />
-                  <Route path="/advocate" component={Advocate} />
+                  <Route path="/currentbookings" component={CurrentBookings} />
                   <Route path="/signin" component={SignIn} />
                   <Route path="/calendar" component={Calendar} />
                   <Route path="/situation" component={Situation} />

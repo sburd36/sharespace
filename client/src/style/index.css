@@ -206,6 +206,26 @@ a:hover {
   text-decoration: none;
 }
 
+#button {
+  background-color: #202e57;
+  border: 2px solid #202e57;
+  text-decoration: none;
+  text-transform: none;
+  box-shadow: none;
+}
+#button:hover {
+  color: #202e57;
+  background-color: white;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+label {
+  color: #da5c48;
+}
+
 body {
   font-family: "Source Sans Pro", sans-serif;
   color: #666460;
@@ -234,10 +254,12 @@ h2 {
 
 h3 {
   font-size: 22pt;
+  color: #202e57;
 }
 
 h4 {
   font-size: 18pt;
+  color: #202e57;
 }
 
 p {
@@ -410,6 +432,26 @@ a:hover {
 }
 .back-button:hover {
   text-decoration: none;
+}
+
+#button {
+  background-color: #202e57;
+  border: 2px solid #202e57;
+  text-decoration: none;
+  text-transform: none;
+  box-shadow: none;
+}
+#button:hover {
+  color: #202e57;
+  background-color: white;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+label {
+  color: #da5c48;
 }
 
 #situation h4 {
@@ -824,6 +866,28 @@ section {
     float: right;
   }
 }
+/* for side bar (Min actually use css instead of inline sometimes... LOL) */
+#side {
+  height: 100vh;
+  width: 30vw;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#button-outline-date {
+  color: #7e9fa8;
+}
+
+#tags {
+  color: #da5c48;
+}
+
+#date {
+  color: #aaaaaa;
+}
+
 @media (min-width: 1035px) {
   .last-nav-item {
     display: inline;
@@ -839,77 +903,50 @@ section {
     display: inline;
   }
 }
-
 /* for search */
-
 input {
-	outline: none;
+  outline: none;
 }
+
 input[type=search] {
-	-webkit-appearance: textfield;
-	-webkit-box-sizing: content-box;
-	font-family: inherit;
-	font-size: 100%;
+  -webkit-appearance: textfield;
+  -webkit-box-sizing: content-box;
+  font-family: inherit;
+  font-size: 100%;
 }
+
 input::-webkit-search-decoration,
 input::-webkit-search-cancel-button {
-	display: none; 
+  display: none;
 }
-
 
 input[type=search] {
-	background: #ededed url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
-	border: solid 1px #ccc;
-	padding: 9px 10px 9px 32px;
-	width: 55px;
-	
-	-webkit-border-radius: 10em;
-	-moz-border-radius: 10em;
-	border-radius: 10em;
-	
-	-webkit-transition: all .5s;
-	-moz-transition: all .5s;
-	transition: all .5s;
-}
-input[type=search]:focus {
-	width: 130px;
-	background-color: #fff;
-	border-color: #66CC75;
-	
-	-webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
-	-moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
-	box-shadow: 0 0 5px rgba(109,207,246,.5);
+  background: white url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+  border: solid 1px #7e9fa8;
+  padding: 5px 5px 5px 32px;
+  width: 100px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
 }
 
+input[type=search]:focus {
+  width: 400px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
+  -moz-box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
+  box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
+}
 
 input:-moz-placeholder {
-	color: #999;
+  color: #999;
 }
+
 input::-webkit-input-placeholder {
-	color: #999;
+  color: #999;
 }
 
-/* for side bar (Min actually use css instead of inline sometimes... LOL) */
-#side {
-  height: 100vh;
-  width: 30vw;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#button {
-  background: #202e57;
-}
-
-#button-outline-date {
-  color: #7e9fa8;
-}
-
-#tags {
-  color: #da5c48;
-}
-
-/* end of search */
 /*# sourceMappingURL=index.css.map */

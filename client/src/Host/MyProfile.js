@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
+
 import MyListing from './MyListing';
 import person from '../img/icon1.png';
 
@@ -70,7 +71,7 @@ export default withStyles(styles)(class extends React.Component {
     
         return (
             <div>
-                <h3>MY PROFILE</h3>
+                <h3 class="m-3">MY PROFILE</h3>
                 <div className={classes.profile}>
                     <img src={person} className={classes.avatar}></img>
                     <div className={classes.info}>
