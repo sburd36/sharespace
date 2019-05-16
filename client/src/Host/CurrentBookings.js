@@ -114,28 +114,6 @@ export default withStyles(styles)(class extends React.Component {
                         )
                     })
                 }
-                {/* {
-                    Host.map((data) => {
-                        return(
-                            <Paper onClick={this.handleCardClick}>
-                                <b>Guest ID</b> 
-                                {/* {data.guestID} */}
-                                {/* Number of Guest: {data.numberOfGuest}
-                                Notes: {data.notes}
-                                {
-                                    data.info.map((amenity) =>{
-                                        return (
-                                            <div>{amenity}</div>
-                                        )
-                                    })
-                                }
-                                {data.begin}
-                                {data.end} */}
-                                {/* <BookingInfo booking={data} open={this.state.open} click={this.handleCardClick}></BookingInfo>
-                            </Paper>
-                        )
-                    }) */}
-                {/* }  */}
             </div>
         )
     }
