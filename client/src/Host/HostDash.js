@@ -6,17 +6,16 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import {HostData} from '../filter';
-// icons
-import Face from '@material-ui/icons/Face';
+import Add from '@material-ui/icons/AddCircleOutline';
 import People from '@material-ui/icons/People';
 import Clock from '@material-ui/icons/AccessTime';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
-
-
-
+import Face from '@material-ui/icons/Face';
 import MyProfile from './MyProfile';
 import Availability from './AddAvailability';
+
+import CurrentBooking from './CurrentBookings';
 
 const styles = theme => ({
     root: {
@@ -67,6 +66,9 @@ class HostDash extends React.Component {
         }
 
     }
+    updateData = () => {
+        
+    }
     componentDidMount() {
         this.setState({ 
             loadingA: true,
@@ -97,6 +99,8 @@ class HostDash extends React.Component {
             return info
         }).then((obj) =>{
             let userData = obj[currentUser]
+            console.log("USER LISTINGS")
+            console.log(userData['listings'])
             this.setState({
                 checkA: obj[currentUser],
                 HostInfo:  {
@@ -164,7 +168,7 @@ class HostDash extends React.Component {
         
             } else {
                 this.setState({
-                    space: ["there are no spaces"],
+                    space: ["You have no current listings"],
                     loadingB: false,
             }); 
             }
@@ -174,6 +178,12 @@ class HostDash extends React.Component {
 
     handleView = name => event => {
         this.setState({view: name})
+    }
+
+    handleAvailability = () => {
+        this.setState({
+            open: !this.state.open
+        })
     }
 
     render() {
@@ -197,8 +207,12 @@ class HostDash extends React.Component {
                                     <img id="bigAvatar" src={women} className={classes.bigAvatar} />
                                     <h3>Welcome, Host</h3>
                                     <Typography color="textSecondary" className={classes.secondary}>What would you like to do today</Typography>
-                                    <Availability></Availability>
-                                    <Button id="button" variant="contained" color="primary" className={classes.button}>
+                                    <Button id='button' onClick={this.handleHost} variant="contained" color="primary" className={classes.button}>
+                                        <Add></Add>
+                                        Add Availability
+                                    </Button>  
+                                    <Availability open={this.state.open} click={this.handleAvailability}></Availability>
+                                    <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('booking')}>
                                     <People></People>
                                         Current Bookings
                                     </Button>
@@ -221,11 +235,11 @@ class HostDash extends React.Component {
                                 <Typography className="pt-5 pl-5" variant="h4" gutterBottom>
                                 </Typography>
                                 <Grid container spacing={6}>
-                                {this.state.view == "profile"  ?    
-                                <MyProfile profileInfo = {this.state}></MyProfile>
-                                :  
-                                    <>
-                                    </>
+                                { 
+                                    this.state.view == 'profile' && <MyProfile data={this.state}></MyProfile>
+                                }
+                                {
+                                    this.state.view == 'booking' && <CurrentBooking></CurrentBooking>
                                 }
                                 </Grid>
                             </Paper>

@@ -206,9 +206,24 @@ a:hover {
   text-decoration: none;
 }
 
-#button:hover {
+#button {
+  background-color: #202e57;
+  border: 2px solid #202e57;
   text-decoration: none;
-  color: black;
+  text-transform: none;
+  box-shadow: none;
+}
+#button:hover {
+  color: #202e57;
+  background-color: white;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+label {
+  color: #da5c48;
 }
 
 body {
@@ -419,9 +434,24 @@ a:hover {
   text-decoration: none;
 }
 
-#button:hover {
+#button {
+  background-color: #202e57;
+  border: 2px solid #202e57;
   text-decoration: none;
-  color: black;
+  text-transform: none;
+  box-shadow: none;
+}
+#button:hover {
+  color: #202e57;
+  background-color: white;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+label {
+  color: #da5c48;
 }
 
 #situation h4 {
@@ -846,16 +876,16 @@ section {
   align-items: center;
 }
 
-#button {
-  background: #202e57;
-}
-
 #button-outline-date {
   color: #7e9fa8;
 }
 
 #tags {
   color: #da5c48;
+}
+
+#date {
+  color: #aaaaaa;
 }
 
 @media (min-width: 1035px) {
@@ -872,6 +902,51 @@ section {
   #donate {
     display: inline;
   }
+}
+/* for search */
+input {
+  outline: none;
+}
+
+input[type=search] {
+  -webkit-appearance: textfield;
+  -webkit-box-sizing: content-box;
+  font-family: inherit;
+  font-size: 100%;
+}
+
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button {
+  display: none;
+}
+
+input[type=search] {
+  background: white url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+  border: solid 1px #7e9fa8;
+  padding: 5px 5px 5px 32px;
+  width: 100px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+input[type=search]:focus {
+  width: 400px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
+  -moz-box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
+  box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
+}
+
+input:-moz-placeholder {
+  color: #999;
+}
+
+input::-webkit-input-placeholder {
+  color: #999;
 }
 
 /*# sourceMappingURL=index.css.map */

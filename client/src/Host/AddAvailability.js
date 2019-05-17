@@ -39,27 +39,16 @@ class Availability extends React.Component {
 
     onSubmit = event => {
         event.preventDefault();
-        console.log(this.state);
+        this.props.click();
       };
 
-    handleHost = () => {
-        this.setState({ open: true});
-    };
-
-    handleCloseHost = () => {
-        this.setState({ open: false});
-    };
 
     handleInputChange = name => event => {
         this.setState({ [name]: event.target.value });
         // console.log(this.state)
     };
 
-    handleConfirmDate = () => {
-        this.setState({
-            open: false
-        })
-    }
+
     timeSlot = () => {
         const { classes } = this.props;
 
@@ -114,13 +103,10 @@ class Availability extends React.Component {
 
         return (
             <div class="d-flex justify-content-around">
-                <Button onClick={this.handleHost} variant="contained" color="primary" style={{background:"#202e57"}}>
-                <Add></Add>
-                    Add Availability
-                </Button>  
+
                 <Dialog
-                    open={this.state.open}
-                    onClose={this.handleCloseHost}
+                    open={this.props.open}
+                    onClose={this.props.click}
                     scroll='paper'
                     maxWidth='xl'
                     aria-labelledby="scroll-dialog-title"
