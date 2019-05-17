@@ -11,13 +11,14 @@ const styles = theme => ({
         color: "#202e57"
     },
     card: {
-        maxWidth: 500,
-        margin: "0rem 5rem 1rem 3rem",
+        maxWidth: 350,
+        margin: "0rem 1rem 1rem 3rem",
         border: "0.5px solid #d3dbee",
         boxShadow: "none",
         fontFamily: 'Source Sans Pro',
         borderRadius: "12px",
-        padding: "25px"
+        padding: "25px",
+        flex: "1 1 50%"
     },
     cardHeader: {
         display: "flex",
@@ -31,15 +32,32 @@ export default withStyles(styles)(class extends React.Component {
         this.state = {
             bookings: [
                 {
-                    guestID: 1,
-                    homeName: 'House 1',
+                    guestID: 1349,
+                    homeName: 'Jimmy\'s Bedroom',
                     numberOfGuest: 1,
+                    begin: '2019-04-10',
+                    end: '2019-04-29',
+                    notes: "Guest Notes Here",
+                    info: ['No Smoking', 'No Alcohol'],
+                    address: '1234 Mary Gates Way NE Apt. 430 Seattle, WA 98105',
+                    homeType: 'Entire Room',
+                    location: 'BEACON HILL',
+                    advocate: {
+                        name: 'Jenny Chen',
+                        phone: '(206)396-3860',
+                        email: 'jennychen@gmail.com'
+                    }
+                },
+                {
+                    guestID: 7859,
+                    homeName: 'Lakeview Apartments',
+                    numberOfGuest: 2,
                     begin: '2019-05-14',
                     end: '2019-05-20',
-                    notes: "oahgpoawn;fgl ;foiawoajgpoaw;oaw nws o; jiofaooaiwn",
-                    info: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking'],
+                    notes: "Guest Notes Here",
+                    info: ['Young Child', 'Pets', 'Women Only', 'No Alcohol'],
                     address: '1234 Mary Gates Way NE Apt. 430 Seattle, WA 98105',
-                    homeType: 'Shared Room',
+                    homeType: 'Entire Space',
                     location: 'GREEN LAKE',
                     advocate: {
                         name: 'Jenny Chen',
@@ -48,15 +66,15 @@ export default withStyles(styles)(class extends React.Component {
                     }
                 },
                 {
-                    guestID: 1,
-                    homeName: 'House 1',
+                    guestID: 8562,
+                    homeName: 'Lakeview Apartments',
                     numberOfGuest: 1,
-                    begin: '2019-05-14',
-                    end: '2019-05-20',
-                    notes: "oahgpoawn;fgl ;foiawoajgpoaw;oaw nws o; jiofaooaiwn",
-                    info: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking'],
+                    begin: '2019-06-10',
+                    end: '2019-06-30',
+                    notes: "Guest Notes Here",
+                    info: ['Physical Disability', 'Service Animal'],
                     address: '1234 Mary Gates Way NE Apt. 430 Seattle, WA 98105',
-                    homeType: 'Shared Room',
+                    homeType: 'Entire Space',
                     location: 'GREEN LAKE',
                     advocate: {
                         name: 'Jenny Chen',
@@ -65,33 +83,16 @@ export default withStyles(styles)(class extends React.Component {
                     }
                 },
                 {
-                    guestID: 1,
-                    homeName: 'House 1',
+                    guestID: 9757,
+                    homeName: 'Vacation House',
                     numberOfGuest: 1,
-                    begin: '2019-05-14',
-                    end: '2019-05-20',
-                    notes: "oahgpoawn;fgl ;foiawoajgpoaw;oaw nws o; jiofaooaiwn",
-                    info: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking'],
+                    begin: '2019-07-10',
+                    end: '2019-07-20',
+                    notes: "Guest Notes Here",
+                    info: ['Young Child', 'High Chair'],
                     address: '1234 Mary Gates Way NE Apt. 430 Seattle, WA 98105',
-                    homeType: 'Shared Room',
-                    location: 'GREEN LAKE',
-                    advocate: {
-                        name: 'Jenny Chen',
-                        phone: '(206)396-3860',
-                        email: 'jennychen@gmail.com'
-                    }
-                },
-                {
-                    guestID: 1,
-                    homeName: 'House 1',
-                    numberOfGuest: 1,
-                    begin: '2019-05-14',
-                    end: '2019-05-20',
-                    notes: "oahgpoawn;fgl ;foiawoajgpoaw;oaw nws o; jiofaooaiwn",
-                    info: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking'],
-                    address: '1234 Mary Gates Way NE Apt. 430 Seattle, WA 98105',
-                    homeType: 'Shared Room',
-                    location: 'GREEN LAKE',
+                    homeType: 'Entire Space',
+                    location: 'DOWNTOWN',
                     advocate: {
                         name: 'Jenny Chen',
                         phone: '(206)396-3860',
@@ -121,7 +122,7 @@ export default withStyles(styles)(class extends React.Component {
                                         <div>
                                             <p>Guest #: {data.guestID}</p>
                                             <p style={{fontSize: "16px", fontWeight: 300}}>{data.numberOfGuest} Guests</p>
-                                            <p style={{fontSize: "16px", fontWeight: 300, color: "#da5c48"}}>Property</p>
+                                            <p style={{fontSize: "16px", fontWeight: 300, color: "#da5c48"}}>{data.homeName}</p>
                                         </div>
                                         <div>
                                             {data.begin} - <br/>
@@ -130,7 +131,8 @@ export default withStyles(styles)(class extends React.Component {
                                     </div>
                                     
                                     <div style={{fontWeight: 300, paddingTop: "10px"}}><b>Notes:</b> {data.notes}</div>
-                                    
+
+                                    <p style={{fontSize: "16px", fontWeight: 400}}>Guest Needs:</p>
                                     <div style={{display: 'flex', flexWrap: 'wrap', margin: '5px'}}>
                                         {
                                             data.info.map((amenity) =>{

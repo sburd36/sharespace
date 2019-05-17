@@ -129,10 +129,10 @@ export default withStyles(styles)(class extends React.Component {
                                     {/* <People></People> */}
                                         Current Bookings
                                     </Button>
-                                    <Button id="button" variant="contained" color="primary" className={classes.button}>
-                                    {/* <Clock></Clock> */}
+                                    {/* <Button id="button" variant="contained" color="primary" className={classes.button}>
+                                    
                                         Past Stays
-                                    </Button>
+                                    </Button> */}   
                                     {/* <Button id="button" variant="contained" color="primary" className={classes.button}>
                                         View Analytics
                                     </Button> */}
