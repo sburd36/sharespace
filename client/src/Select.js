@@ -38,7 +38,7 @@ class PersonalSelect extends React.Component {
         return (
             Personal.map((data) => {
                 return( 
-                    <div style={{width: '50%', padding: '3px 5px'}}>
+                    <div>
                         {data.name}
                         <Select
                             closeMenuOnSelect={false}
@@ -117,9 +117,10 @@ function CustomExpand(props) {
         console.log(state)
       };
     return (
-            <ExpansionPanel>
+            <ExpansionPanel style={{boxShadow:"none", backgroundColor: "#fdfdfe", borderBottom: ".5px solid #7e9fa8", color:"#202e57", 
+            fontFamily: "Source Sans Pro", borderRadius: "0"}}>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>{input.name}</Typography>
+                    <Typography style={{fontSize: "16px", color: "#202e57"}}>{input.name}</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                     <Grid container>

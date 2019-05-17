@@ -110,13 +110,13 @@ export default withStyles(styles)(class extends React.Component {
     render() {
         const { classes } = this.props;
         return(
-            <div style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}}>
+            <div >
                 <h4 class="pl-5 pb-2">CURRENT BOOKINGS</h4>
                 <div className={classes.cards}>
                     {
                         this.state.bookings.map((data) => {
                             return(
-                                <Paper onClick={this.handleCardClick} className={classes.card}>
+                                <Paper onClick={this.handleCardClick} className={classes.card} id="hoverCard">
                                     <div className={classes.cardHeader}>
                                         <div>
                                             <p>Guest #: {data.guestID}</p>

@@ -249,7 +249,7 @@ label {
 }
 
 #hoverCard:hover {
-  border: #7e9fa8;
+  border-color: #7e9fa8;
 }
 
 .navContact {
@@ -509,7 +509,7 @@ label {
 }
 
 #hoverCard:hover {
-  border: #7e9fa8;
+  border-color: #7e9fa8;
 }
 
 .navContact {

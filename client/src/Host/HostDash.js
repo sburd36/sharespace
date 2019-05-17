@@ -120,7 +120,7 @@ export default withStyles(styles)(class extends React.Component {
                                     <img id="bigAvatar" src={women} className={classes.bigAvatar} />
                                     <h4 style={{fontWeight: 300}}>Welcome, Host</h4>
                                     <Typography color="textSecondary" style={{fontWeight: 300}}>What would you like to do today?</Typography>
-                                    <Button id='button' onClick={this.handleHost} variant="contained" color="primary" className={classes.button}>
+                                    <Button id='button' onClick={this.handleAvailability} variant="contained" color="primary" className={classes.button}>
                                         {/* <Add></Add> */}
                                         Add Availability
                                     </Button>  
@@ -144,7 +144,7 @@ export default withStyles(styles)(class extends React.Component {
                             </Grid>
                         </Grid>
                         <Grid key={2} item>
-                            <Paper className={classes.main} >
+                            <Paper className={classes.main} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}}>
                                 <Typography className="pt-5 pl-5" variant="h4" gutterBottom>
                                 </Typography>
                                 <Grid container spacing={6}>
@@ -152,7 +152,7 @@ export default withStyles(styles)(class extends React.Component {
                                     this.state.view == 'profile' && <MyProfile></MyProfile>
                                 }
                                 {
-                                    this.state.view == 'booking' && <CurrentBooking></CurrentBooking>
+                                    this.state.view == 'booking' && <CurrentBooking ></CurrentBooking>
                                 }
                                 </Grid>
                             </Paper>
