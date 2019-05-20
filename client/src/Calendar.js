@@ -21,8 +21,15 @@ export default class Calendar extends React.Component {
     state = {
         events: [
           {
+            id: 0,
             start: new Date(),
             end: new Date(moment().add(1, "days")),
+            title: "Marry Potter"
+          },
+          {
+            id: 1, 
+            start: new Date(moment().add(2, 'days')),
+            end: new Date(moment().add(3, "days")),
             title: "Marry Potter"
           }
         ]
@@ -38,11 +45,24 @@ export default class Calendar extends React.Component {
 
     onEventDrop = ({ event, start, end, allDay }) => {
         this.setState(state => {
-            state.events[0].start = start;
-            state.events[0].end = end;
+            console.log(event)
+            state.events[event.id].start = start;
+            state.events[event.id].end = end;
             return { events: state.events };
         });
+        // console.log(start)
     };
+    /* When you choose a particular slot on the calendar */
+    onSlotChange = (slotInfo) => {
+      var startDate = moment(slotInfo.start.toLocaleString()).format("YYYY-MM-DDm:ss");
+      var endDate = moment(slotInfo.end.toLocaleString()).format("YYYY-MM-DDm:ss");
+      console.log(startDate); //shows the start time chosen
+      console.log(endDate); //shows the end time chosen
+    }
+    /* When you click on an already booked slot */
+    onEventClick = (event) => {
+      console.log(event) //Shows the event details provided while booking
+    }
   render() {
       return (
         // <div style={{ height: 700 }}>
@@ -75,6 +95,9 @@ export default class Calendar extends React.Component {
             onEventDrop={this.onEventDrop}
             onEventResize={this.onEventResize}
             resizable
+            selectable
+            onSelectEvent={this.onEventClick}
+            onSelectSlot={this.onSlotChange}
             style={{ height: "100vh" }}
             />
       </div>

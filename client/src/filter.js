@@ -3,31 +3,33 @@
 const Personal = [
     {
         type: 'languages',
-        name: 'Languages',
-        values: ['English', 'Chinese(Mandarin)', 'Chinese(Cantonese)', 'Spanish', 'French', 'Japanese', 'Korean']
+        name: 'Language',
+        values: ['Amharic', 'Arabic', 'Bengali', 'Cambodian/Khmer', 'Chinese(Cantonese)', 'Chinese(Mandarin)',
+        'English', 'French', 'German', 'Hindi', 'Indonesian', 'Japanese', 'Korean', 'Lahnda', 'Laotian', 'Oromo',
+        'Portuguese', 'Russian', 'Somali', 'Spanish', 'Tagalog', 'Tamil', 'Telugu', 'Tigrinya', 'Turkish', 'Vietnamese']
     },
     {
         type: 'ethnicities',
-        name: 'Ethnicities',
+        name: 'Ethnicity',
         values: ['African Americans', 'Hispanic', 'Asian', 'White', 'Native/American Indian']
     },
     {
         type: 'religion',
         name: 'Religion',
-        values: ['none', 'Christian', 'Catholic', 'Buddism', 'Islam', 'Hinduism', 'Judaism']
+        values: ['African Traditional and Diasporic', 'Buddhism', 'Catholicism', 'Chinese Traditional Religion', 'Christianity', 'Hinduism', 'Islam', 'Juche', 'Judaism', 'Nonreligious(Secular/Agnostic/Atheist)', 'Primal-indigenous', 'Shinto', 'Sikhism', 'Taoism', 'Other']
     },
 ]
 
 const Space = [
     {
         type: 'homeType',
-        name: 'Home Types',
-        values: ["Entire Place", "Private Bedroom", 'Hotel Room', 'Shared Room', 'Shelter']
+        name: 'Home Type',
+        values: ["Entire Place", 'Entire Room', 'Hotel Room', 'Shared Room', 'Shelter', 'Living Room', 'Guest House']
     },
     {
         type: 'amenities',
         name: 'Amenities',
-        values: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Computer Access', 'Microwave', 'Self-Check in', 'Parking', 'Bike Storage', 'Private Bathroom', 'Meals', 'Voicemail']
+        values: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Computer Access', 'Microwave', 'Self-Check in', 'Free Parking', 'Bike Storage', 'Private Bathroom', 'Meals', 'Voicemail']
     },
 ]
 
@@ -37,13 +39,20 @@ const HomeType = Space[0]
 const Needs = {
     type: 'needs',
     name: 'Needs',
-    values: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Child-Friendly', 'Near Public Transport', 'Women Only']
+    values: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', 'Child-Friendly', 'Near Public Transport', 'Women Only', 'Mental Disability', 'Physical Disability', 'Sensory Disability']
 }
 
 const Location = {
     type: 'location',
     name: 'Location',
-    values: ["Northgate", "U District", "Westlake", "Ballard", 'South Lake Union', 'Fremont', 'Ravenna', 'Capital Hill', 'International District']
+    values: ['23rd & Union/Jackson', "Admiral", 'Aurora-Licton Springs', 'Ballard', 'Beacon Hill', 
+    'Belltown', 'Bitter Lake/Broadview', 'Capitol Hill', 'Chinatown-International District',
+    'Columbia City', 'Crown Hill', 'Delridge', 'Downtown', 'Eastlake', 'First Hill', 'Fremont',
+    'Georgetown', 'Green Lake', 'Greenwood-Phinney Ridge', 'Judkins Park', 'Lake City', 'Madison-Miller',
+    'Magnolia', 'Montlake', 'Morgan Junction', 'North Ranier/Mount Baker', 'Northgate', 'Othello', 
+    'Pioneer Square', 'Queen Anne', 'Rainier Beach', 'Roosevelt', 'Sand Point', 'South Lake Union',
+    'South Park', 'University District', 'Uptown', 'Wallingford', 'West Seattle Junction',
+    'Westwood Village/Roxhill-Highland Park']
 }
 
 const Rules = {
@@ -67,14 +76,14 @@ export var Host =  [
         ID: 1,
         advocate: 'Jenny Chen',
         information: {
-            name: "Marry Potter",
-            description: "Marry is a working professional who likes cat and yoga.",
-            languages: ["English"],
+            name: "Min Yang",
+            description: "I am a working professional who likes cats and yoga.",
+            languages: ["English", "Chinese(Mandarin)"],
             religion: ["none"],
-            ethnicity: ["White"],
+            ethnicity: ["White", "Chinese"],
             contact: {
                 phone: "(306)142-2093",
-                email: "mp@gmail.com"
+                email: "min@gmail.com"
             },
         },
         space:  [
@@ -83,10 +92,12 @@ export var Host =  [
                 guestID: 3857,
                 address: "1234 24th Sunset Bld",
                 location: 'FREMONT',
-                amenities: ['Kitchen', 'Laundry', 'Refrigerator', 'Bike Storage', 'Meals', 'Voicemail'],
+                homeType: 'Entire Home',
+                description:'A quiet location in fremont with good access to transit lines and delicious food. Fully furnished',
+                amenities: ['Kitchen', 'Private Bathroom', "Computer Access", 'Laundry', 'Refrigerator', 'Bike Storage', 'Microwave'],
                 checkinInfo: {
                     time: "10am - 9pm",
-                    description: "Please text my number when arrive. Have a dog named Benly, he is very friendly but please do not pet him."
+                    description: "Please use the lock box on the front door. The access code is 1234. Please return the key when you leave."
                 },
                 houseRules: ["No Smoking", "No Alcohol"],
                 begin: "2019-05-09",
@@ -98,8 +109,8 @@ export var Host =  [
         ID: 2,
         advocate: "Erika Wu",
         information: {
-            name: "Marry Potter",
-            description: "Marry is a working professional who likes cat and yoga.",
+            name: "Stephanie Burd",
+            description: "I work with the YWCA to help find housing for women in the Greater Seattle Area. Always here to help!",
             languages: ["English"],
             religion: ["none"],
             ethnicity: ["White"],
@@ -114,7 +125,8 @@ export var Host =  [
                 guestID: 2059,
                 address: "1234 24th Sunset Bld",
                 location: 'GREEN LAKE',
-                amenities: ['Kitchen','Wifi', 'Parking', 'Bike Storage', 'Meals', 'Voicemail'],
+                homeType: 'Shared Space',
+                amenities: ['Parking', 'Kitchen', 'Refrigerator', 'Microwave', 'Wifi', 'Computer Access'],
                 checkinInfo: {
                     time: "10am - 9pm",
                     description: "*Have a dog named Benly, he is very friendly but please do not pet him."
@@ -129,7 +141,7 @@ export var Host =  [
         ID: 3,
         advocate: "Alice Lopez",
         information: {
-            name: "Marry Potter",
+            name: "Abby Huang",
             description: "Marry is a working professional who likes cat and yoga.",
             languages: ["English"],
             religion: ["none"],
@@ -145,6 +157,7 @@ export var Host =  [
                 guestID: 1049,
                 address: "1234 24th Sunset Bld",
                 location: 'BEACON HILL',
+                homeType: 'Shared Space',
                 amenities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking', 'Bike Storage', 'Meals'],
                 checkinInfo: {
                     time: "10am - 9pm",
@@ -176,7 +189,8 @@ export var Host =  [
                 guestID: 1253,
                 address: "1234 24th Sunset Bld",
                 location: 'QUEEN ANNE',
-                amenities: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Parking'],
+                homeType: 'Shared Space',
+                amenities: ['Parking', 'Women Only', 'Computer Access'],
                 checkinInfo: {
                     time: "10am - 9pm",
                     description: "Have a dog named Benly, he is very friendly but please do not pet him."

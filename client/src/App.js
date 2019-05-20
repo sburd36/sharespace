@@ -41,13 +41,17 @@ class App extends Component {
                   <Route path="/stay" component={Stay} />
                   <Route path="/aboutus" component={AboutUs} />
                   <Route path="/ourtool" component={OurTool} />
-                  <Route path="/currentbookings" component={CurrentBookings} />
+                  <Route path="/Admin" component={Admin} />
                   <Route path="/signin" component={SignIn} />
-                  <Route path="/calendar" component={Calendar} />
                   <Route path="/situation" component={Situation} />
                   <Route path="/PassForget" component={PasswordForgetPage} />
+                  <Route path="/calendar" component={Calendar} />
+
+                  {/* Advocate */}
+                  <Route path="/currentbookings" component={CurrentBookings} />
                   <Route path="/bookings" component={SearchBooking} />
-                  <Route path="/Admin" component={Admin} />
+
+                  {/* Host */}
                   <Route path="/profile" component={CreateProfile} />
                   <Route path="/listing" component={Listing} />
                   <Route path="/hostdash" component={HostDash} />

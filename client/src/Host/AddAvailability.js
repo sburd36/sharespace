@@ -32,7 +32,7 @@ class Availability extends React.Component {
         this.state = {
             property: "",
             begin: date,
-            properties: ['home1', 'home2', 'home3']
+            properties: ['Lakeview Apartments', 'Vacation House', 'Jimmy\'s Bedroom']
 
         }
     }

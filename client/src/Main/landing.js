@@ -20,11 +20,11 @@ export default class Landing extends React.Component {
                         <div class="col-12 col-md-6">
                             <img class="logo-img" src={logoLong}></img>
                             <h3>Share your space for good.</h3>
-                            <p class="font-light">Sharespace is a online temporary housing platform for your community. 
+                            <p class="font-light pb-1">Sharespace is a online temporary housing platform for your community. 
                             By working directly with local nonprofits, together we can dynamically share housing resources
                             for survivors transitioning out of domestically abusive relationships.
                             </p>
-                            <p class="font-light">Our team works closely with your nonprofit to take out the bureaucracy,
+                            <p class="font-light pb-1">Our team works closely with your nonprofit to take out the bureaucracy,
                             wait time, and lack of integration, out of housing resource planning by providing this easy-to-use 
                             platform to dynamically find and book spaces for those who need it..
                             </p>
