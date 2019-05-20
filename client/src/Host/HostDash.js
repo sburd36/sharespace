@@ -115,7 +115,7 @@ export default withStyles(styles)(class extends React.Component {
                                     <img id="bigAvatar" src={women} className={classes.bigAvatar} />
                                     <h3>Welcome, Host</h3>
                                     <Typography color="textSecondary" className={classes.secondary}>What would you like to do today</Typography>
-                                    <Button id='button' onClick={this.handleHost} variant="contained" color="primary" className={classes.button}>
+                                    <Button id='button' onClick={this.handleAvailability} variant="contained" color="primary" className={classes.button}>
                                         <Add></Add>
                                         Add Availability
                                     </Button>  

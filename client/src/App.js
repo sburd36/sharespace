@@ -19,7 +19,7 @@ import SignUpHost from './SignUpHost';
 import HostDash from './Host/HostDash';
 import CreateProfile from './Host/CreateProfile'
 import Listing from './Host/AddSpace'
-import {HashRouter as Router, Switch, Redirect, Route} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Redirect, Route} from "react-router-dom";
 
 class App extends Component {
   constructor(props) {
