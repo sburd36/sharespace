@@ -21,12 +21,14 @@ const styles = theme => ({
     },
     type: {
         color: '#da5c48',
-        margin: 0
+        margin: 0,
+        fontSize: "14px"
     },
     value: {
         fontSize: '1.5em', 
         margin: 0,
-        fontWeight: 300
+        fontWeight: 300,
+        fontSize: "18px"
     }
 })
 
@@ -70,7 +72,7 @@ export default withStyles(styles)(class extends React.Component {
         ]
     
         return (
-            <div>
+            <div class="pl-5">
                 <h3 class="m-3">MY PROFILE</h3>
                 <div className={classes.profile}>
                     <img src={person} className={classes.avatar}></img>

@@ -97,7 +97,11 @@ class SignUpFormBase extends Component {
       })
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push('/signup');
+        if (this.props.type == 'host') {
+          this.props.history.push('/hostdash');
+        } else {
+          this.props.history.push('/currentbookings');
+        }
       })
       .catch(error => {
         this.setState({ error });

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import women from "../img/53-.jpg";
+import women from "../img/icon2.png";
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -24,9 +24,10 @@ const styles = theme => ({
         width: window.innerWidth / 2 + 230,
     },
     bigAvatar: {
+        marginTop: "50px",
+        marginBottom: "20px",
         position: "relative",
-        width: window.innerWidth / 4,
-        height: window.innerHeight / 4 ,
+        width: "30%"
     },
     button: {
         margin: theme.spacing.unit,
@@ -92,11 +93,11 @@ export default withStyles(styles)(class extends React.Component {
                                 alignItems="center">
                                 <Paper id="side" style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}} >
                                     <img src={women} className={classes.bigAvatar} />
-                                    <h4 style={{fontWeight: 300}}>Welcome, Advocate</h4>
+                                    <h4 style={{fontWeight: 300}}>Welcome, Sally</h4>
                                     <Typography class="m-2 mb-3" color="textSecondary" style={{fontWeight: 300}}>What would you like to do today?</Typography>
                                     <Link to="/bookings">
                                         <Button variant="contained" color="primary" className={classes.button} id="button">
-                                        <Add></Add>
+                                        {/* <Add></Add> */}
                                             New Booking
                                         </Button>
                                     </Link>
@@ -107,15 +108,15 @@ export default withStyles(styles)(class extends React.Component {
                                     </Link>
                                     <Link to="/bookings">
                                     <Button variant="contained" color="primary" className={classes.button} id="button">
-                                    <People></People>
+                                    {/* <People></People> */}
                                         Current Bookings
                                     </Button>
                                     </Link>
-                                    <Link to="/bookings">
+                                    {/* <Link to="/bookings">
                                         <Button variant="contained" color="primary" className={classes.button} id="button">
                                             View Analytics
                                         </Button>
-                                    </Link>
+                                    </Link> */}
                                 </Paper>
                             </Grid>
                         </Grid>
@@ -129,7 +130,7 @@ export default withStyles(styles)(class extends React.Component {
                                         (booking) => {
                                             return(
                                                 <Grid item xs={6}>                                  
-                                                    <Card className={classes.card} onClick={this.handleCardClick}>
+                                                    <Card className={classes.card} onClick={this.handleCardClick} id="hoverCard">
                                                         <CardContent className={classes.content}>
                                                             <div>
                                                                 <Typography className={classes.cardContent} style={{maxWidth: 200, fontSize: '14pt'}}>

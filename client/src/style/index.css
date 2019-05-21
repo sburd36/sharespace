@@ -60,8 +60,12 @@ p {
     font-size: 14pt;
   }
 }
+p {
+  margin-bottom: 3px;
+}
+
 .btn {
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 12pt;
   padding: 8px 12px 8px 12px;
   border-radius: 0.25rem;
@@ -178,7 +182,7 @@ p {
 }
 
 a {
-  color: #f6c7b6;
+  color: #f9c1b3;
 }
 a:hover {
   color: #7e95cd;
@@ -212,9 +216,22 @@ a:hover {
   text-decoration: none;
   text-transform: none;
   box-shadow: none;
+  font-family: Source Sans Pro;
 }
 #button:hover {
   color: #202e57;
+  background-color: white;
+}
+
+#buttonGray {
+  background-color: #aaaaaa;
+  border: 2px solid #aaaaaa;
+  text-decoration: none;
+  text-transform: none;
+  box-shadow: none;
+}
+#buttonGray:hover {
+  color: #aaaaaa;
   background-color: white;
 }
 
@@ -224,6 +241,21 @@ a:hover {
 
 label {
   color: #da5c48;
+}
+
+#label {
+  color: #da5c48;
+  font-size: 12.5px;
+}
+
+#hoverCard:hover {
+  border-color: #7e9fa8;
+}
+
+.navContact {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 body {
@@ -288,8 +320,12 @@ p {
     font-size: 14pt;
   }
 }
+p {
+  margin-bottom: 3px;
+}
+
 .btn {
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 12pt;
   padding: 8px 12px 8px 12px;
   border-radius: 0.25rem;
@@ -406,7 +442,7 @@ p {
 }
 
 a {
-  color: #f6c7b6;
+  color: #f9c1b3;
 }
 a:hover {
   color: #7e95cd;
@@ -440,9 +476,22 @@ a:hover {
   text-decoration: none;
   text-transform: none;
   box-shadow: none;
+  font-family: Source Sans Pro;
 }
 #button:hover {
   color: #202e57;
+  background-color: white;
+}
+
+#buttonGray {
+  background-color: #aaaaaa;
+  border: 2px solid #aaaaaa;
+  text-decoration: none;
+  text-transform: none;
+  box-shadow: none;
+}
+#buttonGray:hover {
+  color: #aaaaaa;
   background-color: white;
 }
 
@@ -452,6 +501,21 @@ a:hover {
 
 label {
   color: #da5c48;
+}
+
+#label {
+  color: #da5c48;
+  font-size: 12.5px;
+}
+
+#hoverCard:hover {
+  border-color: #7e9fa8;
+}
+
+.navContact {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 #situation h4 {
@@ -507,11 +571,12 @@ section {
 
 .nav-item {
   color: #7e95cd;
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 15pt;
+  font-weight: 300;
 }
 .nav-item:hover {
-  color: #f9c1b3;
+  color: #fe8b6b;
 }
 
 .navbar-mobile {
@@ -700,11 +765,12 @@ section {
   }
   .navbar .nav-item {
     margin: 0px 25px 0px 10px;
+    flex-grow: 1;
   }
 
   .navbar-nav {
     justify-content: space-between;
-    flex-grow: 2;
+    flex-grow: 1;
     margin: 0px 40px 0px 40px;
   }
 
@@ -877,7 +943,13 @@ section {
 }
 
 #button-outline-date {
-  color: #7e9fa8;
+  background-color: #202e57;
+  color: white;
+  border: 1px solid #202e57;
+}
+#button-outline-date:hover {
+  color: #202e57;
+  background-color: white;
 }
 
 #tags {
@@ -888,21 +960,6 @@ section {
   color: #aaaaaa;
 }
 
-@media (min-width: 1035px) {
-  .last-nav-item {
-    display: inline;
-  }
-}
-@media (min-width: 1170px) {
-  #sign-up {
-    display: inline;
-  }
-}
-@media (min-width: 1289px) {
-  #donate {
-    display: inline;
-  }
-}
 /* for search */
 input {
   outline: none;
@@ -947,6 +1004,13 @@ input:-moz-placeholder {
 
 input::-webkit-input-placeholder {
   color: #999;
+}
+
+#back {
+  color: #aaaaaa;
+}
+#back:hover {
+  color: #da5c48;
 }
 
 /*# sourceMappingURL=index.css.map */
