@@ -1,15 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import logger from 'redux-logger';
+import reducers from "./reducers";
 import './style/index.css';
 import App from './App';
-
+import store from './store';
 import * as serviceWorker from './serviceWorker';
 import Firebase, { FirebaseContext } from './Firebase';
 
 
 ReactDOM.render(
     <FirebaseContext.Provider value={new Firebase()}>
-      <App />
+       <Provider store={store}>
+        <App />
+       </Provider>
     </FirebaseContext.Provider>,
     document.getElementById('root'),
   );

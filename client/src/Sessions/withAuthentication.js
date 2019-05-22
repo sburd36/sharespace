@@ -3,6 +3,7 @@ import React from 'react';
 import AuthUserContext from './context';
 import { withFirebase } from '../Firebase';
 
+export var currentUser; 
 const withAuthentication = Component => {
   class WithAuthentication extends React.Component {
     constructor(props) {
@@ -28,6 +29,7 @@ const withAuthentication = Component => {
     }
 
     render() {
+      currentUser = this.props.authUser
       return (
         <AuthUserContext.Provider value={this.state.authUser}>
           <Component {...this.props} />

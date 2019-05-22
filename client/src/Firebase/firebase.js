@@ -28,6 +28,14 @@ const config = {
 
     doSignOut = () => this.auth.signOut();
 
+    getCurrentUser = () => this.auth.onAuthStateChanged(authUser => {
+      if(authUser) {
+        return authUser; 
+      } else {
+        return "No current user"
+      }
+    })
+
     doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
     doPasswordUpdate = password =>
@@ -38,13 +46,9 @@ const config = {
 
     users = () => this.db.ref('users');
 
-    tag = uid => this.db.ref(`hosts/${uid}`);
+    listings = () => this.db.ref('listings');
 
-    tags = () => this.db.ref('hosts')
-
-    events = () => this.db.ref('events');
-
-    event = uid => this.db.ref(`events/${uid}`);
+    listing = listID => this.db.ref(`listings/${listID}`);
 
 
 

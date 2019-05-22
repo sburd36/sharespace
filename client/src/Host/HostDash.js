@@ -17,6 +17,14 @@ import Availability from './AddAvailability';
 
 import CurrentBooking from './CurrentBookings';
 
+// redux
+import { connect } from 'react-redux';
+import { fetchUser } from '../actions'
+// firebase
+import { compose } from 'recompose';
+import { withFirebase } from '../Firebase';
+
+
 const styles = theme => ({
     root: {
       flexGrow: 1,
@@ -53,43 +61,42 @@ const styles = theme => ({
         padding: "1.5rem 0 0 4rem"
     }
   });
-export default withStyles(styles)(class extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            view: "booking",
-            bookings: [
-                {
-                    ID: 1,
-                    name: "Stephanie Burd",
-                    address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019",
-                },
-                {
-                    ID: 2,
-                    name: "Min Yang",
-                    address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019",
-                },
-                {
-                    ID: 3,
-                    name: "Mary Huibregtse",
-                    address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019",
-                },
-                {
-                    ID: 4,
-                    name: "Abby Huang",
-                    address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019",
-                },
-                
-            ]
-        }
+
+class HostDash extends React.Component {
+    state = {
+        open: false,
+        view: "booking",
+        bookings: [
+            {
+                ID: 1,
+                name: "Stephanie Burd",
+                address: "1234 24th Sunset Bld",
+                begin: "MONDAY APRIL 4 2019",
+                end: "TUESDAY APRIL 25 2019",
+            },
+            {
+                ID: 2,
+                name: "Min Yang",
+                address: "1234 24th Sunset Bld",
+                begin: "MONDAY APRIL 4 2019",
+                end: "TUESDAY APRIL 25 2019",
+            },
+            {
+                ID: 3,
+                name: "Mary Huibregtse",
+                address: "1234 24th Sunset Bld",
+                begin: "MONDAY APRIL 4 2019",
+                end: "TUESDAY APRIL 25 2019",
+            },
+            {
+                ID: 4,
+                name: "Abby Huang",
+                address: "1234 24th Sunset Bld",
+                begin: "MONDAY APRIL 4 2019",
+                end: "TUESDAY APRIL 25 2019",
+            },
+            
+        ]
     }
 
     handleView = name => event => {
@@ -104,6 +111,7 @@ export default withStyles(styles)(class extends React.Component {
 
     render() {
         const { classes } = this.props;
+        console.log(this.props)
         return (
             <div class="pt-4">
                 <Grid 
@@ -161,4 +169,19 @@ export default withStyles(styles)(class extends React.Component {
             </div>       
         )
     }
-})
+}
+
+const Dash = compose(
+    withFirebase,
+    withStyles(styles), 
+    connect((store) => {
+        return {
+          host: store.users 
+        }
+    }, {fetchUser})
+    
+  )(HostDash);
+
+  export default Dash;
+
+
