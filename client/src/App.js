@@ -24,11 +24,52 @@ import {BrowserRouter as Router, Switch, Redirect, Route} from "react-router-dom
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      currentUser: {
+        uid: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        profile: {
+          gender: "",
+          story: "",
+          listings: [],
+          religion: "",
+          languag: [],
+          ethnicity: [],
+          phone:""
+        },
+      },
+
+      listings: [{
+        id: "",
+        address: "",
+        amenities: [],
+        description: "",
+        instructions: "",
+        guestCount: "",
+        hostID: "",
+        houseRules: [],
+        location:"",
+        state: "",
+        houseType: "",
+        zip: "",
+        availability: [],
+        currentBookings: [],
+        pastBookings: []
+      }]
+    }
   }
 
   clickSituation = () => {
     this.setState({})
   }
+  userInfo = () => {
+    this.setState({
+      currentUser = this.state.currentUser
+    })
+  }
+
   render() {
     return (
       <div>
