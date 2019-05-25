@@ -63,11 +63,7 @@ class App extends Component {
   clickSituation = () => {
     this.setState({})
   }
-  userInfo = () => {
-    this.setState({
-      currentUser = this.state.currentUser
-    })
-  }
+
 
   render() {
     return (
