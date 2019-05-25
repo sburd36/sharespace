@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import { withFirebase } from '../Firebase';
 import { PersonalSelect } from '../Select';
 import { compose } from 'recompose';
 import { Link, withRouter } from 'react-router-dom';
@@ -77,15 +77,57 @@ class SignUpFormBase extends Component {
 	onSubmit = event => {
 		event.preventDefault();
 		console.log(this.state);
+		const { phone, gender,languages,ethnicities,religion,story, listings } = this.state
+		if(this.props.user.iud != "") {
+			this.props.firebase.auth.onAuthStateChanged((user) => {
+				if (user) {
+				  
+				  this.props.firebase.user(user.uid).update({
+					'phone': phone, 
+					'gender': gender, 
+					'languages': languages,
+					'ethnicities': ethnicities,
+					'religion': religion,
+					'story': story,
+					'haveListing': false
+		  
+				  })
+				  .then(() => {
+					this.setState({...INFORMATION});
+					this.props.history.push('/hostdash')
+				  })
+				  .catch(error => {
+					this.setState({ error });
+				  });
+		  
+				} else {
+				  console.log("no host signed in")
+		  
+				}
+			})
+
+		}
+
 	};
 
 	onChange = event => {
 		this.setState({ [event.target.name]: event.target.value });
+		this.props.updateProfile([event.target.name], event.target.value )
+
+		console.log(this.state)
 	};
 	onSelect = (name) => (selected) => {
+		let clean = []
+		for (let i = 0; i < selected.length; i ++) {
+		  console.log(selected[i].label)
+		  clean.push(selected[i].label)
+		  console.log(clean)
+		}
 		this.setState({
-			[name]: selected
+		  [name]: clean
 		})
+		this.props.updateProfile([name], clean)
+		console.log(this.state)
 	}
 	render() {
 		const { classes } = this.props;
@@ -169,6 +211,7 @@ class SignUpFormBase extends Component {
 const SignUpForm = compose(
 	withRouter,
 	withStyles(styles),
+	withFirebase,
 )(SignUpFormBase);
 
 

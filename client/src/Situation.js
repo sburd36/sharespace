@@ -8,7 +8,7 @@ export default class Signup extends React.Component {
     constructor(props) {
         super(props) 
         this.state = {
-            choice: "all",
+            userType: "all",
             selectedOption: null
         }
     }
@@ -45,9 +45,9 @@ export default class Signup extends React.Component {
                     </Link>
                     <Link to={{
                             pathname: "/signup",
-                            state: {
-                                type: "advocate"
-                            } 
+                            // state: {
+                            //     type: "advocate"
+                            // } 
                         }} 
                         style={{textDecoration: "none", color: "inherit"}}>
                         <div class="card" style={{width: "25rem"}}>

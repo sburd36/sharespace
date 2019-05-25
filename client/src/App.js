@@ -25,20 +25,23 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+
       currentUser: {
+        type: "",
         uid: "",
         firstName: "",
         lastName: "",
-        email: "",
-        profile: {
-          gender: "",
-          story: "",
-          listings: [],
-          religion: "",
-          languag: [],
-          ethnicity: [],
-          phone:""
-        },
+        email: ""
+
+      },
+      profile: {
+        phone: '',
+        gender: 'non given',
+        languages: [],
+        ethnicities: [],
+        religion: [],
+        story: 'none given',
+        haveListing: false      
       },
 
       listings: [{
@@ -55,7 +58,9 @@ class App extends Component {
         houseType: "",
         zip: "",
         availability: [],
-        currentBookings: [],
+        currentBookings: [
+
+        ],
         pastBookings: []
       }]
     }
@@ -64,9 +69,37 @@ class App extends Component {
   clickSituation = () => {
     this.setState({})
   }
-  userInfo = () => {
+
+  updateUser = (value) => {
     this.setState({
-      currentUser = this.state.currentUser
+      currentUser: {
+        type: value.type,
+        uid: value.uid,
+        firstName: value.firstName,
+        lastName: value.lastName,
+        email: value.email
+      }
+
+    })
+    console.log(this.state.currentUser)
+  }
+  updateListingInfo = (value) => {
+    this.setState({
+      listings: value
+    })
+  }
+
+  updateType = (value) => {
+    this.setState({
+      userType: value
+    })
+  }
+
+  updateProfile = (target, value) => {
+    this.setState({
+      porfile: {
+        target: value
+      }
     })
   }
 
@@ -78,7 +111,7 @@ class App extends Component {
             <Nav />
               <Switch>
                   <Route exact path="/" component={Landing} />
-                  <Route path="/signup" component={SignUp} />
+                  <Route path="/signup" render={(props) => <SignUp {...props} updateUser={this.updateUser}/>} />
                   <Route path="/stay" component={Stay} />
                   <Route path="/aboutus" component={AboutUs} />
                   <Route path="/ourtool" component={OurTool} />
@@ -93,9 +126,11 @@ class App extends Component {
                   <Route path="/bookings" component={SearchBooking} />
 
                   {/* Host */}
-                  <Route path="/profile" component={CreateProfile} />
+                  <Route path="/createprofile" render={(props) => <CreateProfile {...props} updateProfile={this.updateProfile} user={this.state.currentUser}/>} />
                   <Route path="/listing" component={Listing} />
-                  <Route path="/hostdash" component={HostDash} />
+                  {/* <Route path="/hostdash" component={HostDash} /> */}
+                  <Route path="/hostdash" render={(props) => <HostDash {...props} updateListing= {this.updateListingInfo} user = {this.state.currentUser} profile={this.state.profile}/>} />
+
               </Switch>
           </div>    
         </Router>
