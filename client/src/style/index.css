@@ -1013,4 +1013,21 @@ input::-webkit-input-placeholder {
   color: #da5c48;
 }
 
+/* for search booking filters */
+div[class^=DateFormatInput-input] {
+  padding: 0px !important;
+}
+
+div[class^=MuiFormControl-root] {
+  width: 100%; 
+}
+
+div[class^=MuiInputBase-root] {
+  max-width: 70%;
+}
+
+button[class^=MuiInputAdornment-root] {
+  position: relative;
+  right: 100px;
+}
 /*# sourceMappingURL=index.css.map */

@@ -14,6 +14,7 @@ import Add from '@material-ui/icons/AddCircleOutline';
 import People from '@material-ui/icons/People'
 import HostInfo from './HostInfo';
 import { Host } from '../filter';
+import moment from 'moment';
 
 const styles = theme => ({
     root: {
@@ -78,6 +79,17 @@ export default withStyles(styles)(class extends React.Component {
             open: !this.state.open
         })
     }
+
+    convertToDate = (start, end) => {
+        var start = new Date(start);
+        var end = new Date(end);
+        
+        return {
+            start: moment(start.toLocaleString()).format("ddd, MMMM").toUpperCase() + moment(start.toLocaleString()).format(" DD"),
+            end:  moment(end.toLocaleString()).format("ddd, MMMM").toUpperCase() + moment(end.toLocaleString()).format(" DD")
+        };
+    }
+
     render() {
         const { classes } = this.props;
         return (
@@ -95,7 +107,7 @@ export default withStyles(styles)(class extends React.Component {
                                     <img src={women} className={classes.bigAvatar} />
                                     <h4 style={{fontWeight: 300}}>Welcome, Sally</h4>
                                     <Typography class="m-2 mb-3" color="textSecondary" style={{fontWeight: 300}}>What would you like to do today?</Typography>
-                                    <Link to="/bookings">
+                                    <Link to="/advocate/searchbookings">
                                         <Button variant="contained" color="primary" className={classes.button} id="button">
                                         {/* <Add></Add> */}
                                             New Booking
@@ -106,7 +118,7 @@ export default withStyles(styles)(class extends React.Component {
                                             Refer a Host
                                         </Button>
                                     </Link>
-                                    <Link to="/bookings">
+                                    <Link to="/advocate/currentbookings">
                                     <Button variant="contained" color="primary" className={classes.button} id="button">
                                     {/* <People></People> */}
                                         Current Bookings
@@ -128,6 +140,8 @@ export default withStyles(styles)(class extends React.Component {
                                 <Grid container spacing={3}>
                                     {Host.map(
                                         (booking) => {
+                                            let date = this.convertToDate(booking.space[0].availability[0].start, booking.space[0].availability[0].end)
+
                                             return(
                                                 <Grid item xs={6}>                                  
                                                     <Card className={classes.card} onClick={this.handleCardClick} id="hoverCard">
@@ -155,7 +169,7 @@ export default withStyles(styles)(class extends React.Component {
                                                                             marginBottom: '7px'
                                                                         }
                                                                     }>
-                                                                    {booking.space[0].begin} - <br/>{booking.space[0].end}
+                                                                    {date.start} - <br/>{date.end}
                                                                 </div>
                                                                 <Typography style={{color:'#da5c48', float:'right', fontSize: '12pt'}}>
                                                                     {booking.space[0].location}

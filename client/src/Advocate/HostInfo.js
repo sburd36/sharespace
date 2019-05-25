@@ -80,6 +80,7 @@ export default withStyles(styles)(class extends React.Component {
         super(props)
         this.state = {
             booking: {},
+            guest: ''
         }
     }
 
@@ -107,8 +108,6 @@ export default withStyles(styles)(class extends React.Component {
 
                 <Dialog
                     open={this.props.open}
-                    //for testing purposes:
-                    //open= 'true'
                     onClose={this.props.click}
                     scroll='paper'
                     fullWidth='false'

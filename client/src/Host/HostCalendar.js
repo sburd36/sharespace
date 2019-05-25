@@ -8,9 +8,11 @@ import React from 'react'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import "./style/App.css";
+import "../style/App.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+import { Host } from '../filter';
+
 const DnDCalendar = withDragAndDrop(BigCalendar);
 
 moment.locale('en-GB');
@@ -18,23 +20,30 @@ moment.locale('en-GB');
 const localizer = BigCalendar.momentLocalizer(moment)
 
 export default class Calendar extends React.Component {
-    state = {
-        events: [
-          {
-            id: 0,
-            start: new Date(),
-            end: new Date(moment().add(1, "days")),
-            title: "Marry Potter"
-          },
-          {
-            id: 1, 
-            start: new Date(moment().add(2, 'days')),
-            end: new Date(moment().add(3, "days")),
-            title: "Marry Potter"
-          }
-        ]
-      };
-    
+    constructor(props) {
+      super(props);
+      var events = []
+      Host.map((host) => {
+        host.space[0].availability.map((available) => {
+          events.push({
+            id: events.length,
+            start: new Date(available.start),
+            end: new Date(available.end),
+            title: host.information.name, 
+            host: host
+          })
+        },
+        )
+      })
+      this.state = {
+        events: events,
+        host: events[0].host
+      }
+    }
+
+    componentDidMount = () => {
+      // console.log(this.state.events)
+    }
     onEventResize = (type, { event, start, end, allDay }) => {
         this.setState(state => {
             state.events[0].start = start;
@@ -52,40 +61,31 @@ export default class Calendar extends React.Component {
         });
         // console.log(start)
     };
+
     /* When you choose a particular slot on the calendar */
     onSlotChange = (slotInfo) => {
       var startDate = moment(slotInfo.start.toLocaleString()).format("YYYY-MM-DDm:ss");
       var endDate = moment(slotInfo.end.toLocaleString()).format("YYYY-MM-DDm:ss");
-      console.log(startDate); //shows the start time chosen
+      console.log(slotInfo.start); //shows the start time chosen
       console.log(endDate); //shows the end time chosen
     }
+
     /* When you click on an already booked slot */
     onEventClick = (event) => {
-      console.log(event) //Shows the event details provided while booking
+      if (event !== undefined) {
+        this.setState({
+          open: !this.state.open,
+          host: event.host
+        })
+      } else {
+        this.setState({
+          open: !this.state.open,
+        })
+      }
     }
+
   render() {
       return (
-        // <div style={{ height: 700 }}>
-        //     <BigCalendar
-        //     localizer={localizer}
-        //     events={[
-        //         {
-        //           'title': 'My event',
-        //           'allDay': false,
-        //           'start': new Date(2018, 0, 2, 10, 0), // 10.00 AM
-        //           'end': new Date(2018, 0, 2, 14, 0), // 2.00 PM 
-        //         }
-        //       ]}
-        //       step={60}
-        //       view='month'
-        //       views={['month']}
-        //     //   min={new Date(2008, 0, 1, 8, 0)} // 8.00 AM
-        //     //   max={new Date(2008, 0, 1, 17, 0)} // Max will be 6.00 PM!
-        //     //   date={new Date(2018, 0, 1)}
-        //     // startAccessor="start"
-        //     // endAccessor="end"
-        //     />
-        // </div>
         <div className="App">
             <DnDCalendar
             localizer={localizer}
