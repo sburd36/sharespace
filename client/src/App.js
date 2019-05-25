@@ -9,7 +9,7 @@ import AboutUs from './Main/AboutUs'
 import OurTool from './Main/OurTool'
 import CurrentBookings from './Advocate/CurrentBookings'
 import SignIn from './Main/SignIn'
-import Calendar from './Calendar'
+import Calendar from './Advocate/AdvoCalendar'
 import Situation from './Situation'
 import { withAuthentication } from './Sessions';
 import SearchBooking from './Advocate/SearchBooking';
@@ -18,7 +18,6 @@ import Admin from './Admin';
 import SignUpHost from './SignUpHost';
 import HostDash from './Host/HostDash';
 import CreateProfile from './Host/CreateProfile'
-import Listing from './Host/AddSpace'
 import {BrowserRouter as Router, Switch, Redirect, Route} from "react-router-dom";
 
 class App extends Component {
@@ -48,13 +47,12 @@ class App extends Component {
                   <Route path="/calendar" component={Calendar} />
 
                   {/* Advocate */}
-                  <Route path="/currentbookings" component={CurrentBookings} />
-                  <Route path="/bookings" component={SearchBooking} />
+                  <Route path="/advocate/currentbookings" component={CurrentBookings} />
+                  <Route path="/advocate/searchbookings" component={SearchBooking} />
 
                   {/* Host */}
-                  <Route path="/profile" component={CreateProfile} />
-                  <Route path="/listing" component={Listing} />
-                  <Route path="/hostdash" component={HostDash} />
+                  <Route path="/host/profile" component={CreateProfile} />
+                  <Route path="/host/currentbookings" component={HostDash} />
               </Switch>
           </div>    
         </Router>

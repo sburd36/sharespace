@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Calendar from '../Calendar'
+import Calendar from './AdvoCalendar'
 import person from '../img/icon2.png';
 import { PersonalSelect, SpaceSelect} from '../Select'
 
@@ -18,6 +18,8 @@ import Input from '@material-ui/core/Input';
 import Switch from '@material-ui/core/Switch';
 import InputLabel from '@material-ui/core/InputLabel';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+import { DateFormatInput } from 'material-ui-next-pickers'
 
 // confirm host view
 import HostInfo from './HostInfo';
@@ -57,9 +59,7 @@ const styles = theme => ({
         //margin: '20px',
         alignItems: 'center'
     },
-    date: {
-        padding: "1.5rem 0 0 4rem"
-    },
+
     button: {
         margin: theme.spacing.unit,
         textTransform: "none"
@@ -78,7 +78,7 @@ const styles = theme => ({
     floatingLabelFocusStyle: {
         color: "#da5c48"
     }
-  });
+});
 
 const locations = ["Northgate", "U District", "Westlake", "Ballard"]
 
@@ -86,10 +86,10 @@ export default withStyles(styles)(class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            view: "calendar",
+            view: "list",
             guests: "",
             locations: "",
-           
+            start: new Date()
         }
     }
 
@@ -117,27 +117,30 @@ export default withStyles(styles)(class extends React.Component {
         })
     }
 
-    
     handleSwitchView = (event) => {
         this.setState({
             view: event.target.checked ? "calendar" : "list"
         })
     }
-  
+    
+    onChangeDate = (date) => {
+        console.log('Date: ', date)
+        this.setState({date: date})
+    } 
+
+    convertToDate = (start, end) => {
+        var start = new Date(start);
+        var end = new Date(end);
+        return {
+            start: moment(start.toLocaleString()).format("MMMM DD"),
+            end: moment(end.toLocaleString()).format("MMMM DD")
+        };
+    }
+
     render() {
         const { classes } = this.props;
-        // function SimpleSelect() {
-        //     const [values, setValues] = React.useState({
-        //       age: '',
-        //       name: 'hai',
-        //     });
-          
-        //     const inputLabel = React.useRef(null);
-        //     const [labelWidth, setLabelWidth] = React.useState(0);
-        //     React.useEffect(() => { 
-        //       setLabelWidth(inputLabel.current.offsetWidth);
-        //     }, []);
-        // }
+        const {start, end} = this.state;
+        let date = '';
         return (
             <div class="pt-4">
                 <Grid 
@@ -146,37 +149,33 @@ export default withStyles(styles)(class extends React.Component {
                     justify="space-evenly" >
                         <Grid key={1} item>
                                 <Paper className={classes.side} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}} >
-                                <Link to="/currentbookings">
+                                <Link to="/advocate/currentbookings">
                                     <p id="back"> &#60; Back</p>
                                 </Link>
                                     <h3 class="mb-4">SEARCH BOOKINGS</h3>
                                     <form>
                                     <FormControl>                                      
                                         <div style={{display: "flex"}}>
-                                        <TextField
-                                            id="date"
-                                            label="Start Date"
-                                            type="date"
-                                            className={classes.textField}
-                                            style={{flexGrow: 1, marginRight: "20px"}}
-                                            onChange={this.handleInputChange('begin')}
-                                            InputLabelProps={{
-                                                shrink: true,
-                                                className: classes.floatingLabelFocusStyle
-                                            }}
-                                        />
-                                        <TextField
-                                            id="date"
-                                            label="End Date"
-                                            type="date"
-                                            className={classes.textField}
-                                            style={{flexGrow: 1}}
-                                            onChange={this.handleInputChange('begin')}
-                                            InputLabelProps={{
-                                                shrink: true,
-                                                className: classes.floatingLabelFocusStyle
-                                            }}
-                                        />
+                                            <div>
+                                            Start Date
+                                                <DateFormatInput 
+                                                    name='date-input' 
+                                                    value={start} 
+                                                    onChange={(date) => this.setState({start: date, end: date})}
+                                                    min={new Date()}
+                                                />
+                                            </div>
+                                            <div>
+                                                End Date
+                                            <DateFormatInput 
+                                                name='date-input' 
+                                                value={end} 
+                                                onChange={(date) => this.setState({end: date})}
+                                                min={start}
+                                            />
+                                            
+                                            </div>
+                                            
                                         </div>
                                         <div style={{display: "flex", marginBottom: "10px"}}>
                                             <FormControl className={classes.select} style={{flexGrow: 1, marginRight: "20px"}}>
@@ -247,6 +246,7 @@ export default withStyles(styles)(class extends React.Component {
                                 <Grid container spacing={6}>
                                     {Host.map(
                                         (booking) => {
+                                            date = this.convertToDate(booking.space[0].availability[0].start, booking.space[0].availability[0].end)
                                             return(
                                                 <Card className={classes.card}>
                                                     <CardContent>
@@ -266,10 +266,10 @@ export default withStyles(styles)(class extends React.Component {
                                                         </div>  
                                                         
                                                         {/* click on date to trigger HostInfo dialog */}
-                                                        <Button id='button-outline-date' onClick={this.handleHost} variant="outlined">
-                                                                {booking.space[0].begin} - {booking.space[0].end}
+                                                        <Button id='button-outline-date' onClick={this.handleHost} variant="outlined">                                                  
+                                                        {date.start} - {date.end}
                                                         </Button>      
-                                                        <HostInfo booking={booking} open={this.state.open} click={this.handleHost}></HostInfo>    
+                                                        <HostInfo host={booking} open={this.state.open} click={this.handleHost}></HostInfo>    
 
                                                         {/* space info display */}
                                                         <p style={{marginBottom: 0, marginTop: "10px", fontSize: "14px"}}>Amenities:</p>

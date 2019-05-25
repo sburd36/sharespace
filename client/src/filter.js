@@ -100,8 +100,14 @@ export var Host =  [
                     description: "Please use the lock box on the front door. The access code is 1234. Please return the key when you leave."
                 },
                 houseRules: ["No Smoking", "No Alcohol"],
-                begin: "2019-05-09",
-                end: "2019-05-16",
+                availability: [
+                    {
+                        start: "Thu May 23 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                        end: "Sat May 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                        booked: false
+                    }
+                ]
+                
             }
         ]
     },
@@ -132,8 +138,13 @@ export var Host =  [
                     description: "*Have a dog named Benly, he is very friendly but please do not pet him."
                 },
                 houseRules: ["No Smoking", "No Alcohol"],
-                begin: "2019-05-28",
-                end: "2019-06-12",
+                availability: [
+                    {
+                        start: "Thu May 30 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                        end: "Tue June 4 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                        booked: false
+                    }
+                ]
             }
         ]
     },
@@ -164,8 +175,13 @@ export var Host =  [
                     description: "Have a dog named Benly, he is very friendly but please do not pet him."
                 },
                 houseRules: ["No Smoking", "No Alcohol"],
-                begin: "2019-07-29",
-                end: "2019-08-13",
+                availability: [
+                    {
+                        start: "Thu June 6 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                        end: "Mon June 10 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                        booked: false
+                    }
+                ]
             }
         ]
     },
@@ -198,19 +214,11 @@ export var Host =  [
                 houseRules: ["No Smoking", "No Alcohol"],
                 availability: [
                     {
-                        begin: "2019-05-09",
-                        end: "2019-05-16",
-                        booked: false
-                    },
-                    {
-                        begin: "2019-05-09",
-                        end: "2019-05-16",
+                        start: "Fri June 14 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                        end: "Wed June 19 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
                         booked: false
                     }
                 ],
-                currentBooking: [
-
-                ]
             }
         ],
     },

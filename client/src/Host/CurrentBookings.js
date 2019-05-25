@@ -3,15 +3,20 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import BookingInfo from './BookingInfo';
 import { Host } from '../filter';
+import Switch from '@material-ui/core/Switch';
+import HostCalendar from './HostCalendar';
+import Availability from './AddAvailability';
+
 const styles = theme => ({
     cards: {
         display: "flex",
         flexWrap: "wrap",
         //paddingLeft: "48px"
+        width: window.innerWidth / 2 + 230,
         color: "#202e57"
     },
     card: {
-        maxWidth: 350,
+        maxWidth: 320,
         margin: "0rem 1rem 1rem 3rem",
         border: "0.5px solid #d3dbee",
         boxShadow: "none",
@@ -30,6 +35,7 @@ export default withStyles(styles)(class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            view: 'list',
             bookings: [
                 {
                     guestID: 1349,
@@ -108,13 +114,28 @@ export default withStyles(styles)(class extends React.Component {
             open: !this.state.open
         })
     }
+
+    handleSwitchView = (event) => {
+        this.setState({
+            view: event.target.checked ? "calendar" : "list"
+        })
+    }
+
     render() {
         const { classes } = this.props;
         return(
             <div >
-                <h4 class="pl-5 pb-2">CURRENT BOOKINGS</h4>
+                 <div style={{display: 'flex', justifyContent: 'space-between', padding: '30px'}}>
+                    <h4 class="pl-5 pb-2">CURRENT BOOKINGS</h4>
+                    <div>
+                        Show Calendar
+                        <Switch value="view" onChange={this.handleSwitchView}/>
+                    </div>
+                </div>
                 <div className={classes.cards}>
+
                     {
+                        this.state.view == 'list' ? 
                         this.state.bookings.map((data) => {
                             return(
                                 <Paper onClick={this.handleCardClick} className={classes.card} id="hoverCard">
@@ -125,7 +146,7 @@ export default withStyles(styles)(class extends React.Component {
                                             <p style={{fontSize: "16px", fontWeight: 300, color: "#da5c48"}}>{data.homeName}</p>
                                         </div>
                                         <div>
-                                            {data.begin} - <br/>
+                                            {data.start} - <br/>
                                             {data.end}
                                         </div>
                                     </div>
@@ -152,14 +173,14 @@ export default withStyles(styles)(class extends React.Component {
                                             })
                                         }
                                     </div>
-                                    
                                     <BookingInfo booking={data} open={this.state.open} click={this.handleCardClick}></BookingInfo>
                                 </Paper>
                             )
-                        })
+                        }) :
+                        <HostCalendar />
                     }
                 </div>
-                
+
             </div>
         )
     }

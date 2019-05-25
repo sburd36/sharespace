@@ -17,6 +17,7 @@
     "google-maps-react": "^2.0.2",
     "jquery": "^3.3.1",
     "live-server": "^1.2.1",
+    "material-ui-next-pickers": "0.0.20",
     "moment": "^2.24.0",
     "moment-range": "^4.0.2",
     "react": "^16.8.3",

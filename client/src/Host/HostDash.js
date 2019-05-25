@@ -121,12 +121,10 @@ export default withStyles(styles)(class extends React.Component {
                                     <h4 style={{fontWeight: 300}}>Welcome, Host</h4>
                                     <Typography color="textSecondary" style={{fontWeight: 300}}>What would you like to do today?</Typography>
                                     <Button id='button' onClick={this.handleAvailability} variant="contained" color="primary" className={classes.button}>
-                                        {/* <Add></Add> */}
                                         Add Availability
                                     </Button>  
                                     <Availability open={this.state.open} click={this.handleAvailability}></Availability>
                                     <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('booking')}>
-                                    {/* <People></People> */}
                                         Current Bookings
                                     </Button>
                                     {/* <Button id="button" variant="contained" color="primary" className={classes.button}>
@@ -137,7 +135,6 @@ export default withStyles(styles)(class extends React.Component {
                                         View Analytics
                                     </Button> */}
                                     <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('profile')}>
-                                    {/* <Face></Face> */}
                                         My Profile
                                     </Button>
                                 </Paper>

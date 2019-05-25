@@ -38,7 +38,7 @@ class PersonalSelect extends React.Component {
         return (
             Personal.map((data) => {
                 return( 
-                    <div>
+                    <div style={{padding: "10px 0px"}}>
                         {data.name}
                         <Select
                             closeMenuOnSelect={false}

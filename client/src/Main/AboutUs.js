@@ -98,7 +98,7 @@ export default class Nav extends React.Component {
                         <div class="col-md-6 col-12">
                             <h5 class="">Min Yang</h5>
                             <p id="position">Lead Developer</p>
-                            <p class="font-light">Min is passionate in solving real-world problems using technology. Begin a Taiwanese-American
+                            <p class="font-light">Min is passionate in solving real-world problems using technology. Being a Taiwanese-American
                                 immigrant, Min advocates for diversity and inclusion for minority groups.</p>
                         </div>
                     </div>
