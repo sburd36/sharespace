@@ -93,6 +93,7 @@ class SignUpFormBase extends Component {
 		  
 				  })
 				  .then(() => {
+					this.props.updateProfile(this.state)
 					this.setState({...INFORMATION});
 					this.props.history.push('/hostdash')
 				  })
@@ -111,9 +112,9 @@ class SignUpFormBase extends Component {
 	};
 
 	onChange = event => {
-		this.setState({ [event.target.name]: event.target.value });
-		this.props.updateProfile([event.target.name], event.target.value )
+		console.log(this.props.user)
 
+		this.setState({ [event.target.name]: event.target.value });
 		console.log(this.state)
 	};
 	onSelect = (name) => (selected) => {
@@ -126,12 +127,11 @@ class SignUpFormBase extends Component {
 		this.setState({
 		  [name]: clean
 		})
-		this.props.updateProfile([name], clean)
 		console.log(this.state)
 	}
 	render() {
 		const { classes } = this.props;
-
+		console.log(this.props.user)
 		return (
 			<main className={classes.main}>
 				<CssBaseline />

@@ -9,7 +9,7 @@ import AboutUs from './Main/AboutUs'
 import OurTool from './Main/OurTool'
 import CurrentBookings from './Advocate/CurrentBookings'
 import SignIn from './Main/SignIn'
-import Calendar from './Calendar'
+import Calendar from './Advocate/AdvoCalendar'
 import Situation from './Situation'
 import { withAuthentication } from './Sessions';
 import SearchBooking from './Advocate/SearchBooking';
@@ -18,8 +18,8 @@ import Admin from './Admin';
 import SignUpHost from './SignUpHost';
 import HostDash from './Host/HostDash';
 import CreateProfile from './Host/CreateProfile'
-import Listing from './Host/AddSpace'
 import {BrowserRouter as Router, Switch, Redirect, Route} from "react-router-dom";
+import MyListing from './Host/MyListing'
 
 class App extends Component {
   constructor(props) {
@@ -95,11 +95,17 @@ class App extends Component {
     })
   }
 
-  updateProfile = (target, value) => {
+  updateProfile = (value) => {
     this.setState({
-      porfile: {
-        target: value
-      }
+      profile: {
+        phone: value.phone,
+        gender: value.gender,
+        languages: value.languages,
+        ethnicities: value.ethnicities,
+        religion: value.religion,
+        story: value.story,
+        haveListing: value.haveListing      
+      },
     })
   }
 
@@ -122,12 +128,12 @@ class App extends Component {
                   <Route path="/calendar" component={Calendar} />
 
                   {/* Advocate */}
-                  <Route path="/currentbookings" component={CurrentBookings} />
-                  <Route path="/bookings" component={SearchBooking} />
+                  <Route path="/advocate/currentbookings" component={CurrentBookings} />
+                  <Route path="/advocate/searchbookings" component={SearchBooking} />
 
                   {/* Host */}
                   <Route path="/createprofile" render={(props) => <CreateProfile {...props} updateProfile={this.updateProfile} user={this.state.currentUser}/>} />
-                  <Route path="/listing" component={Listing} />
+                  <Route path="/listing" component={MyListing} />
                   {/* <Route path="/hostdash" component={HostDash} /> */}
                   <Route path="/hostdash" render={(props) => <HostDash {...props} updateListing= {this.updateListingInfo} user = {this.state.currentUser} profile={this.state.profile}/>} />
 

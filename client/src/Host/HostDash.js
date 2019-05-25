@@ -17,6 +17,10 @@ import Availability from './AddAvailability';
 
 import CurrentBooking from './CurrentBookings';
 
+// firebase
+import { compose } from 'recompose';
+import { withFirebase } from '../Firebase';
+
 const styles = theme => ({
     root: {
       flexGrow: 1,
@@ -53,46 +57,50 @@ const styles = theme => ({
         padding: "1.5rem 0 0 4rem"
     }
   });
-export default withStyles(styles)(class extends React.Component {
+  class HostDash extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             view: "booking",
             bookings: [
                 {
-                    ID: 1,
-                    name: "Stephanie Burd",
-                    address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019",
-                },
-                {
-                    ID: 2,
-                    name: "Min Yang",
-                    address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019",
-                },
-                {
-                    ID: 3,
-                    name: "Mary Huibregtse",
-                    address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019",
-                },
-                {
-                    ID: 4,
-                    name: "Abby Huang",
-                    address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019",
+                    ID: "",
+                    name: "",
+                    address: "",
+                    begin: "",
+                    end: "",
                 },
                 
             ]
         }
     }
 
+    componentDidMount() {
+        this.setState({ 
+            loadingA: true,
+            loadingB: true
+         });
+
+        let currentUser = "";
+        this.props.firebase.auth.onAuthStateChanged((user)=> {
+            if(user) {
+                currentUser = user.uid 
+
+            } else {
+                console.log('no valid ID')
+            }
+
+        })
+        if(currentUser == this.props.user.uid) {
+            if(this.props.user.haveListing) {
+                
+            }
+        }
+    }
+
     handleView = name => event => {
+        console.log(this.props.user)
+
         this.setState({view: name})
     }
 
@@ -103,6 +111,7 @@ export default withStyles(styles)(class extends React.Component {
     }
 
     render() {
+        console.log(this.props)
         const { classes } = this.props;
         return (
             <div class="pt-4">
@@ -121,12 +130,10 @@ export default withStyles(styles)(class extends React.Component {
                                     <h4 style={{fontWeight: 300}}>Welcome, Host</h4>
                                     <Typography color="textSecondary" style={{fontWeight: 300}}>What would you like to do today?</Typography>
                                     <Button id='button' onClick={this.handleAvailability} variant="contained" color="primary" className={classes.button}>
-                                        {/* <Add></Add> */}
                                         Add Availability
                                     </Button>  
                                     <Availability open={this.state.open} click={this.handleAvailability}></Availability>
                                     <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('booking')}>
-                                    {/* <People></People> */}
                                         Current Bookings
                                     </Button>
                                     {/* <Button id="button" variant="contained" color="primary" className={classes.button}>
@@ -137,7 +144,6 @@ export default withStyles(styles)(class extends React.Component {
                                         View Analytics
                                     </Button> */}
                                     <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('profile')}>
-                                    {/* <Face></Face> */}
                                         My Profile
                                     </Button>
                                 </Paper>
@@ -161,4 +167,12 @@ export default withStyles(styles)(class extends React.Component {
             </div>       
         )
     }
-})
+}
+
+const Dash = compose(
+    withStyles(styles),
+    withFirebase,
+  )(HostDash);
+
+  export default Dash;
+
