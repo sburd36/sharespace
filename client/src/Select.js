@@ -14,7 +14,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-function makeOptions(filter) {
+export function makeOptions(filter) {
     var options = []
     for (var i = 0; i < filter.length; i++) {
         var option = {

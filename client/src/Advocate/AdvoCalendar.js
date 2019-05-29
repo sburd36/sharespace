@@ -99,9 +99,9 @@ export default class Calendar extends React.Component {
             selectable
             onSelectEvent={this.onEventClick}
             onSelectSlot={this.onSlotChange}
-            style={{ height: "100vh" }}
+            style={{ height: "65vh" }}
             />
-            <HostInfo host={this.state.host} open={this.state.open} click={this.onEventClick}/>
+            <HostInfo booking={this.state.host} open={this.state.open} click={this.onEventClick}/>
       </div>
       )
   }

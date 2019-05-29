@@ -89,6 +89,7 @@ export var Host =  [
         space:  [
             {
                 ID: 1,
+                name: 'Mary\'s Space',
                 guestID: 3857,
                 address: "1234 24th Sunset Bld",
                 location: 'FREMONT',
@@ -108,6 +109,27 @@ export var Host =  [
                     }
                 ]
                 
+            },
+            {
+                ID: 2,
+                guestID: 2059,
+                name: 'Home 1',
+                address: "1234 24th Sunset Bld",
+                location: 'GREEN LAKE',
+                homeType: 'Shared Space',
+                amenities: ['Parking', 'Kitchen', 'Refrigerator', 'Microwave', 'Wifi', 'Computer Access'],
+                checkinInfo: {
+                    time: "10am - 9pm",
+                    description: "*Have a dog named Benly, he is very friendly but please do not pet him."
+                },
+                houseRules: ["No Smoking", "No Alcohol"],
+                availability: [
+                    {
+                        start: "Thu May 30 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                        end: "Tue June 4 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                        booked: false
+                    }
+                ]
             }
         ]
     },
@@ -129,6 +151,7 @@ export var Host =  [
             {
                 ID: 2,
                 guestID: 2059,
+                name: 'Home 1',
                 address: "1234 24th Sunset Bld",
                 location: 'GREEN LAKE',
                 homeType: 'Shared Space',
@@ -165,6 +188,7 @@ export var Host =  [
         space:  [
             {
                 ID: 3,
+                name: 'Home 1',
                 guestID: 1049,
                 address: "1234 24th Sunset Bld",
                 location: 'BEACON HILL',
@@ -187,7 +211,11 @@ export var Host =  [
     },
     {
         ID: 4,
-        advocate: "Emily Liu",
+        advocate: {
+            name: "Emily Liu",
+            phone: 0,
+            email: ''
+        },
         information: {
             name: "Marry Potter",
             description: "Marry is a working professional who likes cat and yoga.",
@@ -221,5 +249,182 @@ export var Host =  [
                 ],
             }
         ],
+    },
+]
+
+export const listings =  [
+    {
+        ID: 1,
+        name: 'Mary\'s Space',
+        guestID: 3857,
+        address: "1234 24th Sunset Bld",
+        location: 'FREMONT',
+        homeType: 'Entire Home',
+        description:'A quiet location in fremont with good access to transit lines and delicious food. Fully furnished',
+        amenities: ['Kitchen', 'Private Bathroom', "Computer Access", 'Laundry', 'Refrigerator', 'Bike Storage', 'Microwave'],
+        checkinInfo: {
+            time: "10am - 9pm",
+            description: "Please use the lock box on the front door. The access code is 1234. Please return the key when you leave."
+        },
+        houseRules: ["No Smoking", "No Alcohol"],
+        availability: [
+            {
+                start: "May 23 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "May 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            }
+        ],
+        requestBookings: [
+            {
+                start: "May 23 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "May 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                information: {
+                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+                    notes: 'This is a note',
+                    guests: 0,
+                    guestID: 0
+                }
+            },
+        ],
+        currentBookings: [
+            {
+                start: "May 23 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "May 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                information: {
+                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal'],
+                    notes: 'This is a note',
+                    guests: 0,
+                    guestID: 0
+                }
+            },
+            {
+                start: "June 2 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 14 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                information: {
+                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+                    notes: 'This is a note',
+                    guests: 0,
+                    guestID: 0
+                }
+            },
+            {
+                start: "June 20 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 25 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                information: {
+                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+                    notes: 'This is a note',
+                    guests: 0,
+                    guestID: 0
+                }
+            },
+            {
+                start: "June 27 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "July 02 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                information: {
+                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+                    notes: 'This is a note',
+                    guests: 0,
+                    guestID: 0
+                }
+            }
+        ]
+        
+    },
+    {
+        ID: 2,
+        guestID: 2059,
+        name: 'Home 1',
+        address: "1234 24th Sunset Bld",
+        location: 'GREEN LAKE',
+        homeType: 'Shared Space',
+        amenities: ['Parking', 'Kitchen', 'Refrigerator', 'Microwave', 'Wifi', 'Computer Access'],
+        checkinInfo: {
+            time: "10am - 9pm",
+            description: "*Have a dog named Benly, he is very friendly but please do not pet him."
+        },
+        houseRules: ["No Smoking", "No Alcohol"],
+        currentBookings: [
+            {
+                start: "Thu June 03 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "Tue June 8 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                information: {
+                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+                    notes: 'This is a note',
+                    guests: 0,
+                    guestID: 0
+                }
+            },
+            {
+                start: "Thu June 14 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "Tue June 20 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                information: {
+                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+                    notes: 'This is a note',
+                    guests: 0,
+                    guestID: 0
+                }
+            },
+        ]
+    },
+    {
+        ID: 3,
+        guestID: 2059,
+        name: 'Home 2',
+        address: "1234 24th Sunset Bld",
+        location: 'GREEN LAKE',
+        homeType: 'Shared Space',
+        amenities: ['Parking', 'Kitchen', 'Refrigerator', 'Microwave', 'Wifi', 'Computer Access'],
+        checkinInfo: {
+            time: "10am - 9pm",
+            description: "*Have a dog named Benly, he is very friendly but please do not pet him."
+        },
+        houseRules: ["No Smoking", "No Alcohol"],
+        currentBookings: [
+            {
+                start: "Thu May 30 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "Tue June 4 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                information: {
+                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+                    notes: 'This is a note',
+                    guests: 0,
+                    guestID: 0
+                }
+            }
+        ]
+    },
+    {
+        ID: 4,
+        guestID: 2059,
+        name: 'Home 3',
+        address: "1234 24th Sunset Bld",
+        location: 'GREEN LAKE',
+        homeType: 'Shared Space',
+        amenities: ['Parking', 'Kitchen', 'Refrigerator', 'Microwave', 'Wifi', 'Computer Access'],
+        checkinInfo: {
+            time: "10am - 9pm",
+            description: "*Have a dog named Benly, he is very friendly but please do not pet him."
+        },
+        houseRules: ["No Smoking", "No Alcohol"],
+        currentBookings: [
+            {
+                start: "Thu May 30 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "Tue June 4 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                information: {
+                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+                    notes: 'This is a note',
+                    guests: 0,
+                    guestID: 0
+                }
+            },
+            {
+                start: "Thu May 30 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "Tue June 4 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                information: {
+                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+                    notes: 'This is a note',
+                    guests: 0,
+                    guestID: 0
+                }
+            },
+        ]
     },
 ]

@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import bedroom from "../img/bedroom.jpg";
-import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from 'react-select'
-import Animated from 'react-select/lib/animated'
-import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import { PersonalSelect } from '../Select'
-// import Map from './Map'
-// For host pop-up
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import { 
+    Button, 
+    withStyles, 
+    TextField, 
+    MenuItem, 
+    Grid, 
+    FormControl, 
+    FormControlLabel, 
+    Checkbox,
+    Dialog, DialogActions, 
+    DialogContent, 
+    DialogContentText 
+} from '@material-ui/core/';
 
+import { PersonalSelect } from '../Select'
+import { Needs } from '../filter';
+// import Map from './Map'
 
 const styles = theme => ({
     img: {
@@ -35,7 +35,7 @@ const styles = theme => ({
         marginTop: theme.spacing.unit,
         marginBottom: theme.spacing.unit,
         //marginRight: theme.spacing.unit * 2,
-        width: 200,
+        width: "50%",
     },
     input: {
         border: "0.5px solid "   
@@ -149,12 +149,6 @@ export default withStyles(styles)(class extends React.Component {
                             </div>
                         </div>
                         <div style={{textAlign: "center", display: "flex", justifyContent: "center", marginTop: "5px"}}>
-                            {/* <Button variant="outlined" className={classes.contact}>
-                                {host.information.contact.phone}
-                            </Button>
-                            <Button variant="outlined" className={classes.contact}>
-                                {host.information.contact.email}
-                            </Button> */}
                             <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.information.contact.phone}</p>
                             <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.information.contact.email}</p>
                         </div>
@@ -232,7 +226,6 @@ export default withStyles(styles)(class extends React.Component {
                                         id="standard-select-currency"
                                         select
                                         label="# of guests"
-                                        style={{marginRight: "10px"}}
                                         className={classes.textField}
                                         value={this.state.guest}
                                         onChange={this.handleInputChange('guest')}
@@ -274,30 +267,23 @@ export default withStyles(styles)(class extends React.Component {
                                 
                                 {/* Personal Information */}
                                 <div style={{paddingRight: "100px"}}>
-                                {/* { 
-                                    filters.map((data) => {
-                                        return(
-                                            <Grid item xs={3} className={classes.textField}>
-                                            <h5>{data['name']}</h5>
-                                            <Select
-                                                closeMenuOnSelect={false}
-                                                components={Animated()}
-                                                isMulti
-                                                options={makeOptions(data['values'])}
-                                            />
-                                            </Grid>
-                                        )
-                                    })
-                                } */}
                                 <PersonalSelect></PersonalSelect>
                                 </div>
                                 
                                 {/* NEEDS FIELD GOES HERE */}
                                 <div class="mt-3">
                                     <p className={classes.title} style={{fontSize: "16px"}}>NEEDS</p>
+                                    {
+                                        Needs.values.map((need) => {
+                                            return(
+                                                <FormControlLabel control={<Checkbox value={need}/>} label={need}/>
+                                            )
+                                        })
+                                    }
                                 </div>
                                 
                                 {/* NOTES */}
+                        
                                 <Grid>
                                     <p className={classes.title} style={{fontSize: "16px"}}>NOTES</p>
                                     <textarea style={{width: "100%"}}></textarea>

@@ -35,7 +35,7 @@ export default withStyles(styles)(class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            view: 'list',
+            view: 'calendar',
             bookings: [
                 {
                     guestID: 1349,
@@ -125,17 +125,10 @@ export default withStyles(styles)(class extends React.Component {
         const { classes } = this.props;
         return(
             <div >
-                 <div style={{display: 'flex', justifyContent: 'space-between', padding: '30px'}}>
-                    <h4 class="pl-5 pb-2">CURRENT BOOKINGS</h4>
-                    <div>
-                        Show Calendar
-                        <Switch value="view" onChange={this.handleSwitchView}/>
-                    </div>
-                </div>
+                <h4 class="pl-5 pb-2">CURRENT BOOKINGS</h4>
                 <div className={classes.cards}>
 
                     {
-                        this.state.view == 'list' ? 
                         this.state.bookings.map((data) => {
                             return(
                                 <Paper onClick={this.handleCardClick} className={classes.card} id="hoverCard">
@@ -176,8 +169,7 @@ export default withStyles(styles)(class extends React.Component {
                                     <BookingInfo booking={data} open={this.state.open} click={this.handleCardClick}></BookingInfo>
                                 </Paper>
                             )
-                        }) :
-                        <HostCalendar />
+                        }) 
                     }
                 </div>
 

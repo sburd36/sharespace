@@ -33,12 +33,12 @@ const styles = theme => ({
         color: '#202e57'
     },
     side: {
-      height: window.outerHeight,
+      height: "85vh",
       width: window.innerWidth / 4 + 100,
       padding: '2rem'
     }, 
     hosts: {
-        height: window.outerHeight,
+        height: "85vh",
         width: window.innerWidth / 2 + 230,
     },
     textField: {
@@ -86,7 +86,7 @@ export default withStyles(styles)(class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            view: "list",
+            view: "calendar",
             guests: "",
             locations: "",
             start: new Date()
