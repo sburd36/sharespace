@@ -224,7 +224,7 @@ export var Host =  [
     },
 ]
 
-export var advocatte = [
+export var advocate = [
     {
         ID: 1,
         hosts: [],
@@ -255,4 +255,23 @@ export var advocatte = [
         ]
     }
 ]
+
+export var listing = {
+    id: "",
+    name: "",
+    address: "",
+    amenities: [],
+    description: "",
+    instructions: "",
+    guestCount: "",
+    hostID: "",
+    houseRules: [],
+    location:"",
+    houseType: "",
+    zip: "",
+    availability: [],
+    currentBookings: [],
+    pendingBookings: [],
+    pastBookings: []
+  }
 

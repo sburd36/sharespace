@@ -65,13 +65,14 @@ const INFORMATION = {
 	languages: [],
 	ethnicities: [],
 	religion: [],
+	listings: [],
 	story: '',
 };
 
 class SignUpFormBase extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { INFORMATION }
+		this.state = { INFORMATION, gender: '' }
 	}
 
 	onSubmit = event => {
@@ -89,7 +90,6 @@ class SignUpFormBase extends Component {
 					'ethnicities': ethnicities,
 					'religion': religion,
 					'story': story,
-					'haveListing': false
 		  
 				  })
 				  .then(() => {
@@ -132,6 +132,7 @@ class SignUpFormBase extends Component {
 	render() {
 		const { classes } = this.props;
 		console.log(this.props.user)
+		const { gender } = this.state;
 		return (
 			<main className={classes.main}>
 				<CssBaseline />

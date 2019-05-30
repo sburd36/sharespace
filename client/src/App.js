@@ -20,6 +20,7 @@ import HostDash from './Host/HostDash';
 import CreateProfile from './Host/CreateProfile'
 import {BrowserRouter as Router, Switch, Redirect, Route} from "react-router-dom";
 import MyListing from './Host/MyListing'
+import { listing } from './filter';
 
 class App extends Component {
   constructor(props) {
@@ -40,34 +41,26 @@ class App extends Component {
         languages: [],
         ethnicities: [],
         religion: [],
-        story: 'none given',
-        haveListing: false      
-      },
+        listings: [],
+        listingIDs: [],
+        story: 'none given',     
+      }
 
-      listings: [{
-        id: "",
-        address: "",
-        amenities: [],
-        description: "",
-        instructions: "",
-        guestCount: "",
-        hostID: "",
-        houseRules: [],
-        location:"",
-        state: "",
-        houseType: "",
-        zip: "",
-        availability: [],
-        currentBookings: [
-
-        ],
-        pastBookings: []
-      }]
+      
     }
   }
 
-  clickSituation = () => {
-    this.setState({})
+
+
+  updateAvailability = id => value => {
+    let l = this.state.profile.listings
+    for (let i = 0; i < l.length; i ++) {
+      let obj = l[i]
+      if(obj.id == id) {
+        l.availability.push(value)
+      }
+    }
+    console.log(this.state)
   }
 
   updateUser = (value) => {
@@ -83,10 +76,9 @@ class App extends Component {
     })
     console.log(this.state.currentUser)
   }
-  updateListingInfo = (value) => {
-    this.setState({
-      listings: value
-    })
+  updateListing = (value) => {
+    this.state.profile.listings.push(value)
+    this.state.profile.listingIDs.push(value.id)
   }
 
   updateType = (value) => {
@@ -94,6 +86,8 @@ class App extends Component {
       userType: value
     })
   }
+
+
 
   updateProfile = (value) => {
     this.setState({
@@ -103,6 +97,7 @@ class App extends Component {
         languages: value.languages,
         ethnicities: value.ethnicities,
         religion: value.religion,
+        listings: value.listings,
         story: value.story,
         haveListing: value.haveListing      
       },
@@ -133,9 +128,11 @@ class App extends Component {
 
                   {/* Host */}
                   <Route path="/createprofile" render={(props) => <CreateProfile {...props} updateProfile={this.updateProfile} user={this.state.currentUser}/>} />
-                  <Route path="/listing" component={MyListing} />
+                  {/* <Route path="/listing" render={(props) => <MyListing {...props} updateListing={this.updateListing} user={this.state.currentUser}/>} /> */}
+
                   {/* <Route path="/hostdash" component={HostDash} /> */}
-                  <Route path="/hostdash" render={(props) => <HostDash {...props} updateListing= {this.updateListingInfo} user = {this.state.currentUser} profile={this.state.profile}/>} />
+                  <Route path="/hostdash" render={(props) => <HostDash {...props} updateListing= {this.updateListing} user = {this.state.currentUser} profile={this.state.profile} updateAvailability = {this.updateAvailability}/>} />                  
+
 
               </Switch>
           </div>    

@@ -14,7 +14,7 @@ import Face from '@material-ui/icons/Face';
 
 import MyProfile from './MyProfile';
 import Availability from './AddAvailability';
-
+import MyListings from './MyListing';
 import CurrentBooking from './CurrentBookings';
 
 // firebase
@@ -61,6 +61,7 @@ const styles = theme => ({
     constructor(props) {
         super(props);
         this.state = {
+            listings: [],
             view: "booking",
             bookings: [
                 {
@@ -76,28 +77,81 @@ const styles = theme => ({
     }
 
     componentDidMount() {
-        this.setState({ 
-            loadingA: true,
-            loadingB: true
-         });
-
         let currentUser = "";
         this.props.firebase.auth.onAuthStateChanged((user)=> {
             if(user) {
                 currentUser = user.uid 
-
+                console.log(user.uid)
+                console.log(this.state)
             } else {
                 console.log('no valid ID')
             }
 
         })
-        if(currentUser == this.props.user.uid) {
-            if(this.props.user.haveListing) {
-                
+        console.log(this.props)
+        let foundListings = this.props.profile.listingIDs
+        console.log(foundListings)
+        if(foundListings === undefined || foundListings[1] === undefined) {
+            console.log("no updated profile")
+        } else {
+            if(this.props.profile.listingIDs.length != 0) {
+                let spacesQuery = this.props.firebase.listings();
+                spacesQuery.once('value').then((snapshot) =>{
+                    let obj = snapshot.val();                       
+                        let spaceIDs = []
+                        let spaces = []
+                        for (let i = 0; i < foundListings.length; i ++) {
+                            let current = obj[foundListings[i]];
+                            let theSpace = {
+                                id: foundListings[i],
+                                hostID: currentUser,
+                                description: current['description'],
+                                type: current['type'],
+                                guestCount: current['guestCount'],
+                                address: current['address'],
+                                location: current['location'],
+                                amenities: current['amenities'],
+                                instructions: current['information'],
+                                houseRules: current['houseRules'],
+                                zip: current['zip'],
+                                currentBookings: [],
+                                availability: [],
+                                pastBookings: []
+
+                            }
+                            if(current['currentBookings']!== undefined) {
+                                theSpace.currentBookings = current['currentBookings']
+
+                            }
+                            if(current['pastBookings'] !== undefined) {
+                                theSpace.pastBookings = current['pastBookings']
+                            }
+                            if(current['availability'] !== undefined) {
+                                theSpace.pastBookings = current['pastBookings']
+                            }
+                            spaces.push(theSpace)
+                            console.log(spaces)
+                        }
+                        this.props.updateListing(spaces)
+                        this.setState({
+                            listings: spaces
+                        })
+
+                        console.log(this.state)    
+                })   
+
             }
-        }
+        } 
+            // if(this.props.profile.listings === undefined || this.prop) {
+                
+        
+            // }
+
+
+       
     }
 
+    
     handleView = name => event => {
         console.log(this.props.user)
 
@@ -127,12 +181,12 @@ const styles = theme => ({
                                 >
                                 <Paper id="side" style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}}>
                                     <img id="bigAvatar" src={women} className={classes.bigAvatar} />
-                                    <h4 style={{fontWeight: 300}}>Welcome, Host</h4>
+                                    <h4 style={{fontWeight: 300}}>Welcome, {this.props.user.firstName}</h4>
                                     <Typography color="textSecondary" style={{fontWeight: 300}}>What would you like to do today?</Typography>
                                     <Button id='button' onClick={this.handleAvailability} variant="contained" color="primary" className={classes.button}>
                                         Add Availability
                                     </Button>  
-                                    <Availability open={this.state.open} click={this.handleAvailability}></Availability>
+                                    <Availability open={this.state.open} click={this.handleAvailability} updateAvailability={this.props.updateAvailability} profile={this.props.profile}></Availability>
                                     <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('booking')}>
                                         Current Bookings
                                     </Button>
@@ -146,19 +200,25 @@ const styles = theme => ({
                                     <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('profile')}>
                                         My Profile
                                     </Button>
+                                    <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('listings')}>
+                                        My Listings
+                                    </Button>
                                 </Paper>
                             </Grid>
                         </Grid>
                         <Grid key={2} item>
                             <Paper className={classes.main} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}}>
-                                <Typography className="pt-5 pl-5" variant="h4" gutterBottom>
+                                <Typography className="pt-5 pl-5" variant="h4" gutterBottom> 
                                 </Typography>
                                 <Grid container spacing={6}>
                                 { 
-                                    this.state.view == 'profile' && <MyProfile></MyProfile>
+                                    this.state.view == 'profile' && <MyProfile user={this.props.user} profile={this.props.profile} updateListings={this.props.updateListing}></MyProfile>
                                 }
                                 {
-                                    this.state.view == 'booking' && <CurrentBooking ></CurrentBooking>
+                                    this.state.view == 'booking' && <CurrentBooking profile={this.props.profile} updateListing={this.props.updateListing}></CurrentBooking>
+                                }
+                                { 
+                                    this.state.view == 'listings' && <MyListings user={this.props.user} profile={this.props.profile} updateListing={this.props.updateListing}></MyListings>
                                 }
                                 </Grid>
                             </Paper>
