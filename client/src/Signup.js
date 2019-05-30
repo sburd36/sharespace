@@ -107,7 +107,7 @@ class SignUpFormBase extends Component {
         if (type == 'host') {
           this.props.history.push('/createprofile');
         } else {
-          this.props.history.push('/currentbookings');
+          this.props.history.push('/advocate/currentbookings');
         }
       })
       .catch(error => {

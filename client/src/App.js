@@ -41,8 +41,22 @@ class App extends Component {
         languages: [],
         ethnicities: [],
         religion: [],
-        listings: [],
-        listingIDs: [],
+        listings: [{
+          address: "2525 minor Ave E",
+          amenities: ["Kitchen", "Parking", "Bike Storage"],
+          description: "hello",
+          guestCount: 3,
+          hostID: "zSrR3ts6r4cM9z1LG2TyW26uVR42",
+          houseRules: (2) ["No Smoking", "No Alcohol"],
+          id: "-Lg9OGG55kjo4HuwA1B9",
+          information: "world",
+          location: "Belltown",
+          name: "Listing A",
+          photos: "no photos currently",
+          type: "Hotel Room",
+          zip: "98102"
+        }],
+        listingIDs: ['-Lg9O3KPsggnprKZANFW'],
         story: 'none given',     
       }
 
@@ -77,8 +91,19 @@ class App extends Component {
     console.log(this.state.currentUser)
   }
   updateListing = (value) => {
-    this.state.profile.listings.push(value)
-    this.state.profile.listingIDs.push(value.id)
+    if (this.state.profile.listings == undefined) {
+      this.setState({
+        profile: {
+          listings: [value],
+          listingIDs: [value.id]
+        }         
+      })
+    } else {
+      this.state.profile.listings.push(value)
+      this.state.profile.listingIDs.push(value.id)
+    }
+
+    console.log(this.state)
   }
 
   updateType = (value) => {

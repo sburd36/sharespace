@@ -42,7 +42,8 @@ class Availability extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentDidUpdate() {
+        console.log("INSIDE COMPONENTT DID MOUNT")
         if(this.props.profile.listings === undefined || this.props.profile.listings.length == 0) {
             console.log("there are no current listings")
         } else {
@@ -50,33 +51,55 @@ class Availability extends React.Component {
                 if(user) {
                     this.state.userID = user.uid 
                     console.log(user.uid)
+
+                    let listingObjs = this.props.profile.listings
+                    console.log(listingObjs)
+            
+            
+                    
+                    let properties = []
+                    for (let i = 0; i < listingObjs.length; i ++) {
+                        let obj = {
+                            name: listingObjs[i].name,
+                            id: listingObjs[i].id
+                            
+                        }
+                        console.log("INSIDE FOR LOOP")
+                        properties.push(listingObjs[i].name)
+                        this.state.propertyObj.push(obj)
+                        // properties.push(listingObjs[i].name)
+                        // nameToId.push()
+                    }
+
+                    var propertiesUnique = properties.filter(function(item, index){
+                        return properties.indexOf(item) >= index;
+                    })
+                    console.log("WHAT PROPERTIES SHOULD BE")
+                    console.log(propertiesUnique)
+            
+                    // for (let i = 0; i < propertiesUnique.length; i ++) {
+                    //     console.log("HERE")
+                    //     console.log(propertiesUnique[i])
+                    //     this.state.properties.push(propertiesUnique[i])
+                    // }
+
+                    this.state.properties = propertiesUnique
+            // this.setState({
+            //    properties: propertiesUnique 
+            // })
+                    console.log(this.state)
+
     
                 } else {
                     console.log('no valid ID')
                 }
     
-            })
+            });
 
                        
-            let listingObjs = this.props.profile.listings
-            console.log(listingObjs)
-            let nameToId = []
             
-            let properties = []
-            for (let i = 0; i < listingObjs.length; i ++) {
-                let obj = {
-                    name: listingObjs[i].name,
-                    id: listingObjs[i].id
-                    
-                }
-                console.log(obj)
-                this.state.properties.push(listingObjs[i].name)
-                this.state.propertyObj.push(obj)
-                // properties.push(listingObjs[i].name)
-                // nameToId.push()
-            }
             
-            console.log(this.state)
+            
         }
 
 
@@ -91,9 +114,7 @@ class Availability extends React.Component {
         this.props.click();
         console.log(this.state)
         if (this.props.profile.listings != undefined) {
-            if (this.props.profile.listings.length != 0) {
-
-            }
+  
             if(this.state.end != this.props.date) {
                 let id = ""
                 for ( let i = 0; i < this.state.propertyObj.length; i++) {
