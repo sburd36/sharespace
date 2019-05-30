@@ -3,12 +3,12 @@ import { TextField, Button, Dialog, DialogActions, DialogContent, FormControl, S
 import moment from 'moment';
 import { compose } from 'recompose';
 import Add from '@material-ui/icons/AddCircleOutline';
-import { DateFormatInput } from 'material-ui-next-pickers'
-import DayPickerInput from 'react-day-picker/DayPickerInput';
-import Helmet from 'react-helmet';
+// import { DateFormatInput } from 'material-ui-next-pickers'
+// import DayPickerInput from 'react-day-picker/DayPickerInput';
+// import Helmet from 'react-helmet';
 
-import DayPicker, { DateUtils } from 'react-day-picker';
-import 'react-day-picker/lib/style.css';
+// import DayPicker, { DateUtils } from 'react-day-picker';
+// import 'react-day-picker/lib/style.css';
 
 const styles = theme => ({
     property: {
@@ -42,10 +42,10 @@ class Availability extends React.Component {
         this.setState({ [name]: event.target.value });
         console.log(this.state)
     };
-    handleDayClick = (day) => {
-        const range = DateUtils.addDayToRange(day, this.state);
-        this.setState(range);
-      }
+    // handleDayClick = (day) => {
+    //     const range = DateUtils.addDayToRange(day, this.state);
+    //     this.setState(range);
+    //   }
     timeSlot = () => {
         const { classes } = this.props;
         let { start, end } = this.state;
@@ -74,7 +74,7 @@ class Availability extends React.Component {
                     </Select>
                 </FormControl>
                 <div style={{display: 'flex', padding: '1rem'}}>
-                    <DayPicker />
+                    {/* <DayPicker />
                     <DayPicker
                         className="Selectable"
                         numberOfMonths="2"
@@ -108,8 +108,8 @@ class Availability extends React.Component {
                 border-bottom-right-radius: 50% !important;
             }
             `}</style>
-        </Helmet>
-                        {/* <TextField
+        </Helmet> */}
+                        <TextField
                         id="date"
                         label="Start Date"
                         type="date"
@@ -138,7 +138,7 @@ class Availability extends React.Component {
                         inputProps={{
                             min: start
                         }}
-                    /> */}
+                    />
                 </div>
             </>
         )

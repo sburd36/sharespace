@@ -9,15 +9,15 @@ import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import Add from '@material-ui/icons/AddCircleOutline';
 import TimeSlotForm from './AddAvailability';
 
-import DateRangePicker from 'react-daterange-picker'
-import 'react-dates/initialize';
+// import DateRangePicker from 'react-daterange-picker'
+// import 'react-dates/initialize';
 // import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 
 import { Button, Select, MenuItem, Input, FormControl, InputLabel, Chip, Dialog, DialogContent, DialogActions} from '@material-ui/core/';
 
 import { listings } from '../filter';
 import { Checkbox } from '@material-ui/core';
-import DayPicker from 'react-day-picker';
+// import DayPicker from 'react-day-picker';
 
 
 moment.locale('en-GB');
