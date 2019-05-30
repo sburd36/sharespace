@@ -9,11 +9,15 @@ import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import Add from '@material-ui/icons/AddCircleOutline';
 import TimeSlotForm from './AddAvailability';
 
+import DateRangePicker from 'react-daterange-picker'
+import 'react-dates/initialize';
+// import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 
 import { Button, Select, MenuItem, Input, FormControl, InputLabel, Chip, Dialog, DialogContent, DialogActions} from '@material-ui/core/';
 
 import { listings } from '../filter';
 import { Checkbox } from '@material-ui/core';
+import DayPicker from 'react-day-picker';
 
 
 moment.locale('en-GB');
@@ -54,33 +58,37 @@ function MultiSelect() {
 export default class Calendar extends React.Component {
     constructor(props) {
       super(props);
-      let spaces = {};
-      let space = '';
-      listings.map((listing) => {
-          spaces[`${listing.name}`] = {};
-          space = spaces[`${listing.name}`];
-          space['bookings'] = []
-          listing.currentBookings.map((data) => {
-            space['bookings'].push({
-                id: space['bookings'].length,
-                start: new Date(data.start),
-                end: new Date(data.end),
-                title: listing.name,
-                info: data.information
-              })
-          })
-        })
+    //   let spaces = {};
+    //   let space = '';
+    //   listings.map((listing) => {
+    //       spaces[`${listing.name}`] = {};
+    //       space = spaces[`${listing.name}`];
+    //       space['bookings'] = []
+    //       space['availability'] = []
+    //       listing.currentBookings.map((data) => {
+    //         space['bookings'].push({
+    //             id: space['bookings'].length,
+    //             start: new Date(data.start),
+    //             end: new Date(data.end),
+    //             title: listing.name,
+    //             info: data.information
+    //           })
+    //       })
+    //       listing.availability.map((data) => {
+    //           space['availability'].push({
+    //             start: new Date(data.start),
+    //             end: new Date(data.end),
+    //           })
+    //       })
+    //     })
       this.state = {
-            spaces: spaces,
             view: [],
-            space: listings[0].name,
-            info: space.bookings[0].info
+            space: 0,
+            info: ''
       }
+      console.log(this.state)
     }
 
-    componentDidMount = () => {
-      // console.log(this.state.events)
-    }
     onEventResize = (type, { event, start, end, allDay }) => {
         this.setState(state => {
             state.events[0].start = start;
@@ -122,15 +130,15 @@ export default class Calendar extends React.Component {
     onEventClick = (event) => {
         this.setState({
           guest: !this.state.guest,
-          info: event.info
+          info: event.information
         })
-      console.log(event)
     }
 
-    handleClickAdd = () => {
+    handleClickAdd = () => (event) => {
         this.setState({
-            add: !this.state.add
+            add: !this.state.add,
         })
+        console.log(event)
     }
 
     handleView = (data) => (event) => {
@@ -141,6 +149,7 @@ export default class Calendar extends React.Component {
         this.setState({
             [name]: event.target.value
         })
+        console.log(this.state)
     }
 
     // eventStyleGetter = (event, start, end, isSelected) => {
@@ -158,7 +167,32 @@ export default class Calendar extends React.Component {
     //         style: style
     //     };
     // }
+    availability = (value) => {
+        var availability = listings[0].availability;
+        var length = availability.length;
 
+        for (var i = 0; i < length; i++) {
+            var start = new Date(availability[i].start);
+            var end = new Date(availability[i].end);
+            if (value < end && value > start) {
+                return true;
+            }
+        }
+        return false;
+    }
+    onSelect = dates => this.setState({dates})
+
+    booked = (date) => {
+        var bookings = listings[0].currentBookings;
+        for (var i = 0; i < bookings.length; i++) {
+            var start = new Date(bookings[i].start);
+            var end = new Date(bookings[i].end);
+            if (date < end && date > start) {
+                return true;
+            }
+        }
+        return false;
+    }
   render() {
       var style = {
           head: {
@@ -177,27 +211,38 @@ export default class Calendar extends React.Component {
           }
       } 
 
-      const { guest, info, spaces, space, add } = this.state;
-      console.log(spaces)
-
-      const ColoredDateCellWrapper = ({children, value}) =>
+      const { guest, info, space, add } = this.state;
+      const currentBookings = listings[space].currentBookings;
+      const dateCellWrapper = ({children, value}) => 
             React.cloneElement(Children.only(children), {
-                style: {
-                    ...children.style,
-                    backgroundColor: ((value < moment().add(5, 'days') &&  value > moment().toDate()) || 
-                    (value < moment().add(15, 'days') &&  value > moment().add(8, 'days'))) ? 'white' : 'lightgray',
-                }, 
-      });
-
-      return (
+                className:  children.props.className + (this.availability(value) ? '' : ' rbc-off-range-bg'),
+                // style: {
+                //     ...children.style,
+                //     // backgroundColor: ((value < moment().add(5, 'days') &&  value > moment().toDate()) || 
+                //     // (value < moment().add(15, 'days') &&  value > moment().add(8, 'days'))) ? 'white' : 'lightgray',
+                //     backgroundColor: this.booked(value) ? 'white' : 'lightgray',
+                // }, 
+        });
+        // console.log(listings[0].availability)
+        const dayPropGetter = date => {
+            if (this.booked(date)) {
+                return {
+                    style: {
+                        backgroundColor: 'white',
+                        pointerEvents: 'none'
+                    }
+                }
+            }
+        }
+       return (
         <div className="App" style={{width: "100%"}}>
         <div style={style.head}>
-            <Button id="button" variant="contained" color="primary" onClick={this.handleClickAdd} >
+            <Button id="button" variant="contained" color="primary" onClick={this.handleClickAdd('')} >
                 <Add /> 
                 Add Availability
             </Button>
             <div style={style.controls}>
-                <MultiSelect handleView={this.handleView}/>
+                {/* <MultiSelect handleView={this.handleView}/> */}
                 <FormControl style={style.view}>
                     <InputLabel for='space'>Select Space</InputLabel>
                     <Select
@@ -207,9 +252,9 @@ export default class Calendar extends React.Component {
                         id='space'
                     >
                     {
-                        listings.map((listing) => {
+                        listings.map((listing, index) => {
                             return (
-                                <MenuItem value={`${listing.name}`}>{listing.name}</MenuItem>
+                                <MenuItem value={index}>{listing.name}</MenuItem>
                             )
                         })
                     }
@@ -217,33 +262,38 @@ export default class Calendar extends React.Component {
                 </FormControl>
             </div>
         </div>
-            <BigCalendar
+        {/* <DateRangePicker 
+        onSelect={this.onSelect}
+        value={this.state.dates}
+        /> */}
+        {/* <DayPickerRangeController />  */}
+            {/* <BigCalendar
                 localizer={localizer}
                 defaultDate={new Date()}
                 defaultView="month"
-                events={spaces[`${space}`].bookings}
+                events={currentBookings}
                 resizable
                 selectable
                 onSelectEvent={this.onEventClick}
                 onSelectSlot={(this.onSlotChange)}
-                // slotPropGetter={(this.slot)}
+                // dayPropGetter={dayPropGetter}
                 // eventPropGetter={(this.eventStyleGetter)}
+
                 components={{
                     // you have to pass your custom wrapper here
                     // so that it actually gets used
-                    dateCellWrapper: ColoredDateCellWrapper,
+                    dateCellWrapper: dateCellWrapper,
                 }}
                 style={{ height: "80vh" }}
-            />
+            />*/}
             <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
-            <TimeSlotForm open={add} click={this.handleClickAdd} listings={listings}/>
+            <TimeSlotForm open={add} bookings={currentBookings} click={this.handleClickAdd('')} listings={listings} />
       </div>
       )
   }
 }
 
 function GuestInfo(props) {
-    {console.log(props.info)}
 
     return (
         <Dialog
@@ -258,7 +308,7 @@ function GuestInfo(props) {
                 {props.info.notes}
             </DialogContent>
             <DialogActions>
-
+                <Button ></Button>
             </DialogActions>
         </Dialog>
     )

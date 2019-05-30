@@ -20,7 +20,7 @@ import MyProfile from './MyProfile';
 import Availability from './AddAvailability';
 import HostCalendar from './HostCalendar';
 
-import CurrentBooking from './CurrentBookings';
+import Bookings from './Bookings';
 
 const styles = theme => ({
     root: {
@@ -93,16 +93,21 @@ export default withStyles(styles)(class extends React.Component {
                     end: "TUESDAY APRIL 25 2019",
                 },
                 
-            ]
+            ],
+            bookingType: 'confirmed'
         }
     }
 
-    handleView = name => event => {
-        this.setState({view: name})
+    handleView = (view, type) => event => {
+        this.setState({
+            view: view,
+            bookingType: type
+        })
     }
 
     render() {
         const { classes } = this.props;
+        const { bookingType } = this.state;
         var style = {
             navigator: {
                 boxShadow: "none", 
@@ -130,10 +135,12 @@ export default withStyles(styles)(class extends React.Component {
                                     <Button id='button' variant="contained" color="primary" className={classes.button} onClick={this.handleView('calendar')}>
                                         My Calendar
                                     </Button>  
-                                    <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('bookings')}>
+                                    <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('bookings', 'confirmed')}>
                                         Current Bookings
                                     </Button>
-                                    
+                                    <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('bookings', 'pending')}>
+                                        Bookings Requests
+                                    </Button>
                                     <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('profile')}>
                                         My Profile
                                     </Button>
@@ -152,7 +159,7 @@ export default withStyles(styles)(class extends React.Component {
                                     this.state.view == 'profile' && <MyProfile></MyProfile>
                                 }
                                 {
-                                    this.state.view == 'bookings' && <CurrentBooking ></CurrentBooking>
+                                    this.state.view == 'bookings' && <Bookings type={bookingType}></Bookings>
                                 }
                                 {
                                     this.state.view == 'calendar' && <HostCalendar />

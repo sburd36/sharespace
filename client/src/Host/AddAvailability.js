@@ -1,18 +1,14 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
+import { TextField, Button, Dialog, DialogActions, DialogContent, FormControl, Select, OutlinedInput, MenuItem, InputLabel, withStyles} from '@material-ui/core/';
+import moment from 'moment';
 import { compose } from 'recompose';
-import { withStyles } from '@material-ui/core/styles';
 import Add from '@material-ui/icons/AddCircleOutline';
 import { DateFormatInput } from 'material-ui-next-pickers'
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import Helmet from 'react-helmet';
+
+import DayPicker, { DateUtils } from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 
 const styles = theme => ({
     property: {
@@ -39,20 +35,25 @@ class Availability extends React.Component {
 
     onSubmit = event => {
         event.preventDefault();
-        this.props.click();
-        console.log(this.state)
+        this.props.click(this.state);
       };
-
 
     handleInputChange = name => event => {
         this.setState({ [name]: event.target.value });
-        // console.log(this.state)
+        console.log(this.state)
     };
-
-
+    handleDayClick = (day) => {
+        const range = DateUtils.addDayToRange(day, this.state);
+        this.setState(range);
+      }
     timeSlot = () => {
         const { classes } = this.props;
-        const { start, end } = this.state;
+        let { start, end } = this.state;
+        start = moment(start.toLocaleString()).format("YYYY-MM-DD")
+        end = moment(start.toLocaleString()).format("YYYY-MM-DD")
+        const { from, to } = this.state;
+        const modifiers = { start: from, end: to };
+
         return (
             <>
                 <FormControl>
@@ -73,24 +74,71 @@ class Availability extends React.Component {
                     </Select>
                 </FormControl>
                 <div style={{display: 'flex', padding: '1rem'}}>
-                <div>
-                    <label>Start Date</label>
-                    <DateFormatInput 
-                        name='date-input' 
-                        value={start} 
-                        onChange={(date) => this.setState({start: date, end: date})}
-                        min={new Date()}
+                    <DayPicker />
+                    <DayPicker
+                        className="Selectable"
+                        numberOfMonths="2"
+                        disabledDays={[
+                            new Date(2019, 4, 12),
+                            new Date(2019, 4, 20),
+                            {
+                              after: new Date(2019, 5, 6),
+                              before: new Date(2019, 5, 12),
+                            },
+                          ]}
+                        selectedDays={[from, { from, to }]}
+                        modifiers={modifiers}
+                        onDayClick={this.handleDayClick}
+        />
+        <Helmet>
+          <style>{`
+            .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+                background-color: #f0f8ff !important;
+                color: #4a90e2;
+            }
+            .Selectable .DayPicker-Day {
+                border-radius: 0 !important;
+            }
+            .Selectable .DayPicker-Day--start {
+                border-top-left-radius: 50% !important;
+                border-bottom-left-radius: 50% !important;
+            }
+            .Selectable .DayPicker-Day--end {
+                border-top-right-radius: 50% !important;
+                border-bottom-right-radius: 50% !important;
+            }
+            `}</style>
+        </Helmet>
+                        {/* <TextField
+                        id="date"
+                        label="Start Date"
+                        type="date"
+                        value={start}
+                        className={classes.textField}
+                        onChange={this.handleInputChange('start')}
+                        InputLabelProps={{
+                            shrink: true,
+                            className: classes.floatingLabelFocusStyle,
+                        }}
+                        inputProps={{
+                            min: moment().format("YYYY-MM-DD"),
+                        }}
                     />
-                </div>
-                    <div>
-                        <label>End Date</label>
-                        <DateFormatInput 
-                            name='date-input' 
-                            value={end} 
-                            onChange={(date) => this.setState({end: date})}
-                            min={start}
-                        />
-                    </div>
+                    <TextField
+                        id="date"
+                        label="End Date"
+                        type="date"
+                        value={end}
+                        className={classes.textField}
+                        onChange={this.handleInputChange('end')}
+                        InputLabelProps={{
+                            shrink: true,
+                            className: classes.floatingLabelFocusStyle,
+                        }}
+                        inputProps={{
+                            min: start
+                        }}
+                    /> */}
                 </div>
             </>
         )
@@ -117,7 +165,7 @@ class Availability extends React.Component {
                             </DialogContent>
                         <DialogActions >
                             <Button type="submit" variant="contained"  color="primary">
-                                Done
+                                Add
                             </Button>
                         </DialogActions>
                     </form>

@@ -38,7 +38,7 @@ export default class Calendar extends React.Component {
       })
       this.state = {
         events: events,
-        host: events[0].host
+        host: Host[0]
       }
     }
 
@@ -73,21 +73,15 @@ export default class Calendar extends React.Component {
 
     /* When you click on an already booked slot */
     onEventClick = (event) => {
-      if (event !== undefined) {
         this.setState({
           open: !this.state.open,
           host: event.host
         })
-      } else {
-        this.setState({
-          open: !this.state.open,
-        })
-      }
     }
 
   render() {
       return (
-        <div className="App">
+        <div className="App" style={{width: "100%"}}>
             <DnDCalendar
             localizer={localizer}
             defaultDate={new Date()}

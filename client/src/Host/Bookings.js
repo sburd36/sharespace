@@ -122,10 +122,15 @@ export default withStyles(styles)(class extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, type } = this.props;
+        // console.log(type)
         return(
             <div >
-                <h4 class="pl-5 pb-2">CURRENT BOOKINGS</h4>
+                {
+                    type === 'confirmed' ? <h4 class="pl-5 pb-2">CURRENT BOOKINGS</h4>
+                    :    <h4 class="pl-5 pb-2">BOOKINGS REQUESTS</h4>
+
+                }
                 <div className={classes.cards}>
 
                     {
@@ -166,7 +171,7 @@ export default withStyles(styles)(class extends React.Component {
                                             })
                                         }
                                     </div>
-                                    <BookingInfo booking={data} open={this.state.open} click={this.handleCardClick}></BookingInfo>
+                                    <BookingInfo booking={data} open={this.state.open} type={type} click={this.handleCardClick}></BookingInfo>
                                 </Paper>
                             )
                         }) 

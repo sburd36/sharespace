@@ -31,6 +31,11 @@ const Space = [
         name: 'Amenities',
         values: ['Kitchen', 'Laundry', 'Refrigerator', 'Wifi', 'Computer Access', 'Microwave', 'Self-Check in', 'Free Parking', 'Bike Storage', 'Private Bathroom', 'Meals', 'Voicemail']
     },
+    {
+        type: 'needs',
+        name: 'Needs',
+        values: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', 'Child-Friendly', 'Near Public Transport', 'Women Only', 'Mental Disability', 'Physical Disability', 'Sensory Disability']
+    }
 ]
 
 
@@ -211,11 +216,7 @@ export var Host =  [
     },
     {
         ID: 4,
-        advocate: {
-            name: "Emily Liu",
-            phone: 0,
-            email: ''
-        },
+        advocate: "Emily Liu",
         information: {
             name: "Marry Potter",
             description: "Marry is a working professional who likes cat and yoga.",
@@ -269,9 +270,63 @@ export const listings =  [
         houseRules: ["No Smoking", "No Alcohol"],
         availability: [
             {
-                start: "May 23 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "May 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-            }
+                start: "June 01 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 03 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            }, 
+            {
+                start: "June 10 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 14 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            }, 
+            {
+                start: "June 22 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            }, 
+        ],
+        currentBookings: [
+            {
+                start: "June 04 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 08 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                title: 'Mary\'s Space',
+                information: {
+                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal'],
+                    notes: 'This is a note',
+                    guests: 0,
+                    guestID: 0
+                }
+            },
+            {
+                start: "June 18 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 19 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                title: 'Mary\'s Space',
+                information: {
+                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+                    notes: 'This is a note',
+                    guests: 0,
+                    guestID: 0
+                }
+            },
+            {
+                start: "June 28 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 30 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                title: 'Mary\'s Space',
+                information: {
+                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+                    notes: 'This is a note',
+                    guests: 0,
+                    guestID: 0
+                }
+            },
+            // {
+            //     start: "June 27 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            //     end: "July 02 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            //     title: 'Mary\'s Space',
+            //     information: {
+            //         needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+            //         notes: 'This is a note',
+            //         guests: 0,
+            //         guestID: 0
+            //     }
+            // }
         ],
         requestBookings: [
             {
@@ -285,48 +340,6 @@ export const listings =  [
                 }
             },
         ],
-        currentBookings: [
-            {
-                start: "May 23 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "May 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                information: {
-                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal'],
-                    notes: 'This is a note',
-                    guests: 0,
-                    guestID: 0
-                }
-            },
-            {
-                start: "June 2 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "June 14 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                information: {
-                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
-                    notes: 'This is a note',
-                    guests: 0,
-                    guestID: 0
-                }
-            },
-            {
-                start: "June 20 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "June 25 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                information: {
-                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
-                    notes: 'This is a note',
-                    guests: 0,
-                    guestID: 0
-                }
-            },
-            {
-                start: "June 27 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "July 02 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                information: {
-                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
-                    notes: 'This is a note',
-                    guests: 0,
-                    guestID: 0
-                }
-            }
-        ]
         
     },
     {
@@ -342,10 +355,25 @@ export const listings =  [
             description: "*Have a dog named Benly, he is very friendly but please do not pet him."
         },
         houseRules: ["No Smoking", "No Alcohol"],
+        availability: [
+            {
+                start: "May 23 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "May 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            }, 
+            {
+                start: "June 03 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 09 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            }, 
+            {
+                start: "June 14 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 21 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            }, 
+        ],
         currentBookings: [
             {
                 start: "Thu June 03 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
                 end: "Tue June 8 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                title: 'Home 1',
                 information: {
                     needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
                     notes: 'This is a note',
@@ -356,6 +384,7 @@ export const listings =  [
             {
                 start: "Thu June 14 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
                 end: "Tue June 20 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                title: 'Home 1',
                 information: {
                     needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
                     notes: 'This is a note',
@@ -378,10 +407,25 @@ export const listings =  [
             description: "*Have a dog named Benly, he is very friendly but please do not pet him."
         },
         houseRules: ["No Smoking", "No Alcohol"],
+        availability: [
+            {
+                start: "May 23 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "May 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            }, 
+            {
+                start: "June 03 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 09 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            }, 
+            {
+                start: "June 14 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 21 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            }, 
+        ],
         currentBookings: [
             {
                 start: "Thu May 30 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
                 end: "Tue June 4 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                title: 'Home 1',
                 information: {
                     needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
                     notes: 'This is a note',
@@ -404,10 +448,25 @@ export const listings =  [
             description: "*Have a dog named Benly, he is very friendly but please do not pet him."
         },
         houseRules: ["No Smoking", "No Alcohol"],
+        availability: [
+            {
+                start: "May 23 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "May 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            }, 
+            {
+                start: "June 03 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 09 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            }, 
+            {
+                start: "June 14 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 21 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            }, 
+        ],
         currentBookings: [
             {
                 start: "Thu May 30 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
                 end: "Tue June 4 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                title: 'Home 1',
                 information: {
                     needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
                     notes: 'This is a note',
@@ -418,6 +477,7 @@ export const listings =  [
             {
                 start: "Thu May 30 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
                 end: "Tue June 4 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                title: 'Home 1',
                 information: {
                     needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
                     notes: 'This is a note',

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import bedroom from "../img/bedroom.jpg";
+import { Host } from '../filter';
 import { 
     Button, 
     withStyles, 
@@ -80,7 +81,7 @@ export default withStyles(styles)(class extends React.Component {
         super(props)
         this.state = {
             booking: {},
-            guest: ''
+            guest: '',
         }
     }
 
@@ -101,8 +102,11 @@ export default withStyles(styles)(class extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
-        const host = this.props.booking;
+        const { classes, type } = this.props;
+        let host = this.props.booking;
+        if (host === undefined) {
+            host = Host[0]
+        }
         return(
             <div>
 
@@ -122,8 +126,13 @@ export default withStyles(styles)(class extends React.Component {
                         <p style={{color: "#7e9fa8"}}>{host.space[0].location}</p>
                         <div style={{display: "flex"}}>
                                 {/* Need to add here the availablity. If available, render this, else render the second one */}
-                                <p className={classes.tag} style={{backgroundColor: "#48704d", color: "white", border: "none"}}>Available</p>
-                                {/* <p className={classes.tag} style={{backgroundColor: "#da5c48", color: "white", border: "none"}}>Booked</p> */}
+                                {
+                                    type === 'booked' ? 
+                                    <p className={classes.tag} style={{backgroundColor: "#da5c48", color: "white", border: "none"}}>Booked</p>
+                                    :
+                                    <p className={classes.tag} style={{backgroundColor: "#48704d", color: "white", border: "none"}}>Available</p>
+                                }
+
                                 <p className={classes.tag}>{host.space[0].homeType}</p>
                         </div>
                             <DialogContentText style={{display:"flex", justifyContent: "space-between", alignItems: "flex-start"}}>
@@ -283,10 +292,10 @@ export default withStyles(styles)(class extends React.Component {
                                 </div>
                                 
                                 {/* NOTES */}
-                        
+                                <p className={classes.title} style={{fontSize: "16px"}}>NOTES</p>
+                                <textarea style={{width: "100%"}}></textarea>
                                 <Grid>
-                                    <p className={classes.title} style={{fontSize: "16px"}}>NOTES</p>
-                                    <textarea style={{width: "100%"}}></textarea>
+
                             </Grid>
                             </div>
                         {/* </Grid> */}
@@ -295,12 +304,27 @@ export default withStyles(styles)(class extends React.Component {
                         </div>
                     </DialogContent>
                     <DialogActions style={{display: "flex", justifyContent: "space-between", paddingRight: "20px", paddingLeft: "20px"}}>
-                        <Button onClick={this.props.click} variant="contained" id="buttonGray" style={{color: "white"}}>
-                            Cancel
-                        </Button>
-                        <Button onClick={this.handleConfirmHost} variant="contained"  color="primary" id="button">
-                            Confirm Host
-                        </Button>
+                        {
+                            type === 'booked' ?
+                            <>
+                            <Button onClick={this.props.click} variant="contained" id="buttonGray" id="button" color="primary">
+                                Save
+                            </Button>
+                            <Button onClick={this.handleConfirmHost} variant="contained"  color="secondary" >
+                                Cancel Booking
+                            </Button> 
+                            </>
+                            :
+                            <>
+                            <Button onClick={this.props.click} variant="contained" id="buttonGray" style={{color: "white"}}>
+                                Cancel
+                            </Button>
+                            <Button onClick={this.handleConfirmHost} variant="contained"  color="primary" id="button">
+                                Confirm Host
+                            </Button>
+                            </>
+                        }
+                        
                     </DialogActions>
                     <Dialog
                         open={this.state.confirm}
