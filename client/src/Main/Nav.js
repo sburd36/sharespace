@@ -55,7 +55,7 @@ const NavigationNonAuth = () => (
                 </li>
             </Link>
 
-            <Link to="/hostdash">
+            <Link to="/host/hostdash">
                 <li class="nav-item">
                     <b>HOST VIEW</b>
                 </li>

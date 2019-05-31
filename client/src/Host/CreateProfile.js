@@ -95,7 +95,7 @@ class SignUpFormBase extends Component {
 				  .then(() => {
 					this.props.updateProfile(this.state)
 					this.setState({...INFORMATION});
-					this.props.history.push('/hostdash')
+					this.props.history.push('/host/hostdash')
 				  })
 				  .catch(error => {
 					this.setState({ error });

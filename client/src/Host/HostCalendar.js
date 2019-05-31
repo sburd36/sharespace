@@ -9,52 +9,59 @@ import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import Add from '@material-ui/icons/AddCircleOutline';
 import TimeSlotForm from './AddAvailability';
 
-// import DateRangePicker from 'react-daterange-picker'
-// import 'react-dates/initialize';
-// import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import DateRangePicker from 'react-daterange-picker'
+import "react-daterange-picker/dist/css/react-calendar.css";
+
+import 'react-dates/initialize';
 
 import { Button, Select, MenuItem, Input, FormControl, InputLabel, Chip, Dialog, DialogContent, DialogActions} from '@material-ui/core/';
 
 import { listings } from '../filter';
 import { Checkbox } from '@material-ui/core';
-// import DayPicker from 'react-day-picker';
-
 
 moment.locale('en-GB');
 
 const localizer = BigCalendar.momentLocalizer(moment)
+const dateRanges = [
+    {
+      state: 'enquire',
+      range: moment.range(
+        moment().add(2, 'weeks').subtract(5, 'days'),
+        moment().add(2, 'weeks').add(6, 'days')
+      ),
+    },
+    {
+      state: 'unavailable',
+      range: moment.range(
+        moment().add(3, 'weeks'),
+        moment().add(3, 'weeks').add(5, 'days')
+      ),
+    },
+    {
+        state: 'unavailable',
+        range: moment.range(
+          moment().add(5, 'weeks'),
+          moment().add(5, 'weeks').add(5, 'days')
+        ),
+      },
+  ];
 
-function MultiSelect() {
-    const [view, setView] = React.useState([]);
-    function handleChange(event) {
-        setView(event.target.value);
-        console.log(view)
-    }
-    return (
-        <FormControl>
-        <InputLabel htmlFor="select-multiple-chip">Select View</InputLabel>
-        <Select
-          multiple
-          value={view}
-          onChange={handleChange}
-          input={<Input id="select-multiple-chip" />}
-          renderValue={selected => (
-            <div>
-              {selected.map(value => (
-                <Chip key={value} label={value} />
-              ))}
-            </div>
-          )}
-        >
-          {['Availability', 'Bookings'].map(name => (
-            <MenuItem key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    )
-}
+  const stateDefinitions = {
+    available: {
+      color: null,
+      label: 'Available',
+    },
+    enquire: {
+      color: '#ffd200',
+      label: 'Enquire',
+    },
+    unavailable: {
+      selectable: false,
+      color: '#78818b',
+      label: 'Unavailable',
+    },
+  };
+
 export default class Calendar extends React.Component {
     constructor(props) {
       super(props);
@@ -180,8 +187,15 @@ export default class Calendar extends React.Component {
         }
         return false;
     }
-    onSelect = dates => this.setState({dates})
-
+    // onSelect = dates => this.setState({dates})
+    handleSelect = (range, states) => {
+        // range is a moment-range object
+        this.setState({
+          value: range,
+          states: states,
+        });
+        console.log(this.state)
+      }
     booked = (date) => {
         var bookings = listings[0].currentBookings;
         for (var i = 0; i < bookings.length; i++) {
@@ -222,18 +236,8 @@ export default class Calendar extends React.Component {
                 //     // (value < moment().add(15, 'days') &&  value > moment().add(8, 'days'))) ? 'white' : 'lightgray',
                 //     backgroundColor: this.booked(value) ? 'white' : 'lightgray',
                 // }, 
-        });
-        // console.log(listings[0].availability)
-        const dayPropGetter = date => {
-            if (this.booked(date)) {
-                return {
-                    style: {
-                        backgroundColor: 'white',
-                        pointerEvents: 'none'
-                    }
-                }
-            }
-        }
+        });        
+
        return (
         <div className="App" style={{width: "100%"}}>
         <div style={style.head}>
@@ -263,17 +267,22 @@ export default class Calendar extends React.Component {
             </div>
         </div>
         {/* <DateRangePicker 
-        onSelect={this.onSelect}
-        value={this.state.dates}
+            onSelect={this.handleSelect}
+            value={this.state.value}
+            showLegend={true}
+            stateDefinitions={stateDefinitions}
+            defaultState="available"
+            selectionType='range'
+            dateStates={dateRanges}
+            singleDateRange={true}
+
         /> */}
-        {/* <DayPickerRangeController />  */}
-            {/* <BigCalendar
+            <BigCalendar
                 localizer={localizer}
                 defaultDate={new Date()}
                 defaultView="month"
                 events={currentBookings}
                 resizable
-                selectable
                 onSelectEvent={this.onEventClick}
                 onSelectSlot={(this.onSlotChange)}
                 // dayPropGetter={dayPropGetter}
@@ -285,7 +294,7 @@ export default class Calendar extends React.Component {
                     dateCellWrapper: dateCellWrapper,
                 }}
                 style={{ height: "80vh" }}
-            />*/}
+            />
             <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
             <TimeSlotForm open={add} bookings={currentBookings} click={this.handleClickAdd('')} listings={listings} />
       </div>

@@ -105,7 +105,7 @@ export default withStyles(styles)(class extends React.Component {
 
     handleHost = () => {
         this.setState({
-            open: !this.state.open
+            open: !this.state.open,
         })
     }
 
@@ -263,7 +263,7 @@ export default withStyles(styles)(class extends React.Component {
                                                         <Button id='button-outline-date' onClick={this.handleHost} variant="outlined">                                                  
                                                         {date.start} - {date.end}
                                                         </Button>      
-                                                        <HostInfo type='available' booking={booking} open={this.state.open} click={this.handleHost}></HostInfo>    
+                                                        <HostInfo booking={booking} open={this.state.open} click={this.handleHost}></HostInfo>    
 
                                                         {/* space info display */}
                                                         <p style={{marginBottom: 0, marginTop: "10px", fontSize: "14px"}}>Amenities:</p>

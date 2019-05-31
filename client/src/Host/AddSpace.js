@@ -16,9 +16,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import { compose } from 'recompose';
-//time picker
-import { TimePicker } from 'antd';
-import 'antd/dist/antd.css';
 
 
 const styles = theme => ({
