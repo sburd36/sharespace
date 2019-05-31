@@ -223,3 +223,55 @@ export var Host =  [
         ],
     },
 ]
+
+export var advocate = [
+    {
+        ID: 1,
+        hosts: [],
+        information: {
+            name: "Min Yang",
+            contact: {
+                phone: "(306)142-2093",
+                email: "min@gmail.com"
+            },
+        },
+        currentBooking:  [
+            {
+                ID: 1,
+                guestID: 3857,
+                address: "1234 24th Sunset Bld",
+                location: 'FREMONT',
+                homeType: 'Entire Home',
+                description:'A quiet location in fremont with good access to transit lines and delicious food. Fully furnished',
+                amenities: ['Kitchen', 'Private Bathroom', "Computer Access", 'Laundry', 'Refrigerator', 'Bike Storage', 'Microwave'],
+                checkinInfo: {
+                    time: "10am - 9pm",
+                    description: "Please use the lock box on the front door. The access code is 1234. Please return the key when you leave."
+                },
+                houseRules: ["No Smoking", "No Alcohol"],
+                begin: "2019-05-09",
+                end: "2019-05-16",
+            }
+        ]
+    }
+]
+
+export var listing = {
+    id: "",
+    name: "",
+    address: "",
+    amenities: [],
+    description: "",
+    instructions: "",
+    guestCount: "",
+    hostID: "",
+    houseRules: [],
+    location:"",
+    houseType: "",
+    zip: "",
+    availability: [],
+    currentBookings: [],
+    pendingBookings: [],
+    pastBookings: []
+  }
+

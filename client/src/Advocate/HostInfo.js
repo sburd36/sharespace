@@ -80,6 +80,7 @@ export default withStyles(styles)(class extends React.Component {
         super(props)
         this.state = {
             booking: {},
+            guest: ''
         }
     }
 

@@ -83,9 +83,10 @@ export default withStyles(styles)(class extends React.Component {
     convertToDate = (start, end) => {
         var start = new Date(start);
         var end = new Date(end);
+        
         return {
-            start: moment(start.toLocaleString()).format("MMMM DD"),
-            end: moment(end.toLocaleString()).format("MMMM DD")
+            start: moment(start.toLocaleString()).format("ddd, MMMM").toUpperCase() + moment(start.toLocaleString()).format(" DD"),
+            end:  moment(end.toLocaleString()).format("ddd, MMMM").toUpperCase() + moment(end.toLocaleString()).format(" DD")
         };
     }
 

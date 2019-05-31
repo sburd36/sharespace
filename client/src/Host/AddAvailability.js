@@ -9,6 +9,7 @@ import Select from '@material-ui/core/Select';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
+import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import Add from '@material-ui/icons/AddCircleOutline';
@@ -30,22 +31,119 @@ class Availability extends React.Component {
         var date = yyyy + '-' + mm + '-' + dd
         console.log(date);
         this.state = {
+            haveListings: false,
             property: "",
+            userID: "",
             begin: date,
-            properties: ['Lakeview Apartments', 'Vacation House', 'Jimmy\'s Bedroom']
+            end: date,
+            properties: [],
+            propertyObj: []
 
         }
+    }
+
+    componentDidUpdate() {
+        console.log("INSIDE COMPONENTT DID MOUNT")
+        if(this.props.profile.listings === undefined || this.props.profile.listings.length == 0) {
+            console.log("there are no current listings")
+        } else {
+            this.props.firebase.auth.onAuthStateChanged((user)=> {
+                if(user) {
+                    this.state.userID = user.uid 
+                    console.log(user.uid)
+
+                    let listingObjs = this.props.profile.listings
+                    console.log(listingObjs)
+            
+            
+                    
+                    let properties = []
+                    for (let i = 0; i < listingObjs.length; i ++) {
+                        let obj = {
+                            name: listingObjs[i].name,
+                            id: listingObjs[i].id
+                            
+                        }
+                        console.log("INSIDE FOR LOOP")
+                        properties.push(listingObjs[i].name)
+                        this.state.propertyObj.push(obj)
+                        // properties.push(listingObjs[i].name)
+                        // nameToId.push()
+                    }
+
+                    var propertiesUnique = properties.filter(function(item, index){
+                        return properties.indexOf(item) >= index;
+                    })
+                    console.log("WHAT PROPERTIES SHOULD BE")
+                    console.log(propertiesUnique)
+            
+                    // for (let i = 0; i < propertiesUnique.length; i ++) {
+                    //     console.log("HERE")
+                    //     console.log(propertiesUnique[i])
+                    //     this.state.properties.push(propertiesUnique[i])
+                    // }
+
+                    this.state.properties = propertiesUnique
+            // this.setState({
+            //    properties: propertiesUnique 
+            // })
+                    console.log(this.state)
+
+    
+                } else {
+                    console.log('no valid ID')
+                }
+    
+            });
+
+                       
+            
+            
+            
+        }
+
+
+
+
+   
+
     }
 
     onSubmit = event => {
         event.preventDefault();
         this.props.click();
+        console.log(this.state)
+        if (this.props.profile.listings != undefined) {
+  
+            if(this.state.end != this.props.date) {
+                let id = ""
+                for ( let i = 0; i < this.state.propertyObj.length; i++) {
+                    let obj = this.state.propertyObj[i] 
+                    if (obj.name  == this.state.property) {
+                        id = obj.id
+                    }
+                }
+                let key = this.props.firebase.addAvailToListing(id).push({
+                    name: this.state.property,
+                    begin: this.state.begin,
+                    end: this.state.end
+                })
+
+                let obj = {
+                    id: key,
+                    name: this.state.property,
+                    begin: this.state.begin,
+                    end: this.state.end
+                }
+                this.props.updateAvailability(id, obj)
+            }
+        }
       };
 
 
     handleInputChange = name => event => {
         this.setState({ [name]: event.target.value });
-        // console.log(this.state)
+        console.log(this.state)
     };
 
 
@@ -100,6 +198,7 @@ class Availability extends React.Component {
     }
     render() {
         const { classes } = this.props;
+        console.log(this.props)
 
         return (
             <div class="d-flex justify-content-around">
@@ -132,6 +231,7 @@ class Availability extends React.Component {
 
 const AddAvailabiliity = compose(
     withStyles(styles),
+    withFirebase,
   )(Availability);
   
   

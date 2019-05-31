@@ -35,6 +35,8 @@ const config = {
     
     // *** User API ***
     user = uid => this.db.ref(`users/${uid}`);
+    userDie = uid => this.db.ref(`users/${uid}/listings`);
+
 
     users = () => this.db.ref('users');
 
@@ -42,9 +44,12 @@ const config = {
 
     tags = () => this.db.ref('hosts')
 
-    events = () => this.db.ref('events');
+    listings = () => this.db.ref('listings');
 
-    event = uid => this.db.ref(`events/${uid}`);
+    listing = uid => this.db.ref(`listings/${uid}`);
+    addAvailToListing = id => this.db.ref(`listings/${id}/listObj/availability`)
+    
+    survivors = () => this.db.ref('survivors');
 
 
 

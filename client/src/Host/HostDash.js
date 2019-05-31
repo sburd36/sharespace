@@ -14,8 +14,12 @@ import Face from '@material-ui/icons/Face';
 
 import MyProfile from './MyProfile';
 import Availability from './AddAvailability';
-
+import MyListings from './MyListing';
 import CurrentBooking from './CurrentBookings';
+
+// firebase
+import { compose } from 'recompose';
+import { withFirebase } from '../Firebase';
 
 const styles = theme => ({
     root: {
@@ -53,46 +57,104 @@ const styles = theme => ({
         padding: "1.5rem 0 0 4rem"
     }
   });
-export default withStyles(styles)(class extends React.Component {
+  class HostDash extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            listings: [],
             view: "booking",
             bookings: [
                 {
-                    ID: 1,
-                    name: "Stephanie Burd",
-                    address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019",
-                },
-                {
-                    ID: 2,
-                    name: "Min Yang",
-                    address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019",
-                },
-                {
-                    ID: 3,
-                    name: "Mary Huibregtse",
-                    address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019",
-                },
-                {
-                    ID: 4,
-                    name: "Abby Huang",
-                    address: "1234 24th Sunset Bld",
-                    begin: "MONDAY APRIL 4 2019",
-                    end: "TUESDAY APRIL 25 2019",
+                    ID: "",
+                    name: "",
+                    address: "",
+                    begin: "",
+                    end: "",
                 },
                 
             ]
         }
     }
 
+    componentDidMount() {
+        let currentUser = "";
+        this.props.firebase.auth.onAuthStateChanged((user)=> {
+            if(user) {
+                currentUser = user.uid 
+                console.log(user.uid)
+                console.log(this.state)
+            } else {
+                console.log('no valid ID')
+            }
+
+        })
+        console.log(this.props)
+        let foundListings = this.props.profile.listingIDs
+        console.log(foundListings)
+        if(foundListings === undefined || foundListings[1] === undefined) {
+            console.log("no updated profile")
+        } else {
+            if(this.props.profile.listingIDs.length != 0) {
+                let spacesQuery = this.props.firebase.listings();
+                spacesQuery.once('value').then((snapshot) =>{
+                    let obj = snapshot.val();                       
+                        let spaceIDs = []
+                        let spaces = []
+                        for (let i = 0; i < foundListings.length; i ++) {
+                            let current = obj[foundListings[i]];
+                            let theSpace = {
+                                id: foundListings[i],
+                                hostID: currentUser,
+                                description: current['description'],
+                                type: current['type'],
+                                guestCount: current['guestCount'],
+                                address: current['address'],
+                                location: current['location'],
+                                amenities: current['amenities'],
+                                instructions: current['information'],
+                                houseRules: current['houseRules'],
+                                zip: current['zip'],
+                                currentBookings: [],
+                                availability: [],
+                                pastBookings: []
+
+                            }
+                            if(current['currentBookings']!== undefined) {
+                                theSpace.currentBookings = current['currentBookings']
+
+                            }
+                            if(current['pastBookings'] !== undefined) {
+                                theSpace.pastBookings = current['pastBookings']
+                            }
+                            if(current['availability'] !== undefined) {
+                                theSpace.pastBookings = current['pastBookings']
+                            }
+                            spaces.push(theSpace)
+                            console.log(spaces)
+                        }
+                        this.props.updateListing(spaces)
+                        this.setState({
+                            listings: spaces
+                        })
+
+                        console.log(this.state)    
+                })   
+
+            }
+        } 
+            // if(this.props.profile.listings === undefined || this.prop) {
+                
+        
+            // }
+
+
+       
+    }
+
+    
     handleView = name => event => {
+        console.log(this.props.user)
+
         this.setState({view: name})
     }
 
@@ -103,6 +165,7 @@ export default withStyles(styles)(class extends React.Component {
     }
 
     render() {
+        console.log(this.props)
         const { classes } = this.props;
         return (
             <div class="pt-4">
@@ -118,12 +181,12 @@ export default withStyles(styles)(class extends React.Component {
                                 >
                                 <Paper id="side" style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}}>
                                     <img id="bigAvatar" src={women} className={classes.bigAvatar} />
-                                    <h4 style={{fontWeight: 300}}>Welcome, Host</h4>
+                                    <h4 style={{fontWeight: 300}}>Welcome, {this.props.user.firstName}</h4>
                                     <Typography color="textSecondary" style={{fontWeight: 300}}>What would you like to do today?</Typography>
                                     <Button id='button' onClick={this.handleAvailability} variant="contained" color="primary" className={classes.button}>
                                         Add Availability
                                     </Button>  
-                                    <Availability open={this.state.open} click={this.handleAvailability}></Availability>
+                                    <Availability open={this.state.open} click={this.handleAvailability} updateAvailability={this.props.updateAvailability} profile={this.props.profile}></Availability>
                                     <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('booking')}>
                                         Current Bookings
                                     </Button>
@@ -137,19 +200,25 @@ export default withStyles(styles)(class extends React.Component {
                                     <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('profile')}>
                                         My Profile
                                     </Button>
+                                    <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('listings')}>
+                                        My Listings
+                                    </Button>
                                 </Paper>
                             </Grid>
                         </Grid>
                         <Grid key={2} item>
                             <Paper className={classes.main} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}}>
-                                <Typography className="pt-5 pl-5" variant="h4" gutterBottom>
+                                <Typography className="pt-5 pl-5" variant="h4" gutterBottom> 
                                 </Typography>
                                 <Grid container spacing={6}>
                                 { 
-                                    this.state.view == 'profile' && <MyProfile></MyProfile>
+                                    this.state.view == 'profile' && <MyProfile user={this.props.user} profile={this.props.profile} updateListings={this.props.updateListing}></MyProfile>
                                 }
                                 {
-                                    this.state.view == 'booking' && <CurrentBooking ></CurrentBooking>
+                                    this.state.view == 'booking' && <CurrentBooking profile={this.props.profile} updateListing={this.props.updateListing}></CurrentBooking>
+                                }
+                                { 
+                                    this.state.view == 'listings' && <MyListings user={this.props.user} profile={this.props.profile} updateListing={this.props.updateListing}></MyListings>
                                 }
                                 </Grid>
                             </Paper>
@@ -158,4 +227,12 @@ export default withStyles(styles)(class extends React.Component {
             </div>       
         )
     }
-})
+}
+
+const Dash = compose(
+    withStyles(styles),
+    withFirebase,
+  )(HostDash);
+
+  export default Dash;
+
