@@ -58,6 +58,7 @@ const styles = theme => ({
     }
 })
 
+
 class MyListing extends React.Component {
     constructor(props) {
         super(props)
@@ -162,7 +163,6 @@ class MyListing extends React.Component {
        // }
   
     } 
-        
 
 
 
@@ -171,7 +171,7 @@ class MyListing extends React.Component {
         console.log(this.props)
         console.log(this.props.profile)
         const { classes } = this.props;
-        let types = ['Listing Name',  'Address', 'Location', 'Zip Code', 'Home Type', 'Number of Guests',]
+        let types = ['Listing Name',  'Address', 'Location', 'Zip Code', 'Home Type', 'Number of Guests', 'description', 'Amenities', 'House Rules']
         var values =[]
         if(this.props.profile.listings === undefined || this.props.profile.listings.length == 0) {
             values = [
@@ -181,32 +181,39 @@ class MyListing extends React.Component {
 
         } else {
             /// **** MINS HELP PLZ N THNK U*********
-        //     let spaces = this.props.profile.listings
+            let spaces = this.props.profile.listings
 
-        //     console.log(spaces)
-        //     let ids = this.props.profile.listingIDs
-        //     for (let i = 0; i < spaces.length; i++) {
-        //         console.log("GETTING SPACES")
-        //         let space = spaces[i]
-        //         console.log(spaces[i])
-        //         // console.log(space[i])
-        //         let value = [space.name, space.address, space.location, space.zip, space.type, space.guestCount, space.description]
-        //         values.push(value)
-        //     }
+            console.log(spaces)
+            let ids = this.props.profile.listingIDs
+            for (let i = 0; i < spaces.length; i++) {
+                console.log("GETTING SPACES")
+                let space = spaces[i]
+                console.log(spaces[i])
+                // console.log(space[i])
+                let value = [space.name, space.address, space.location, space.zip, space.type, space.guestCount, space.description, space.amenities, space.houseRules]
+                values.push(value)
+            }
         }
-        // console.log(values)
+        console.log(values)
 
         let listing = []
         let allListing = [];
+        let test = [];
+        console.log(test)
         for (var i = 0; i < values.length; i++) {
+            console.log("first listing"+listing)
             for (var j = 0; j < types.length; j++) {
                 var obj = {
                     type: types[j],
                     value: values[i][j]
                 }
                 listing[j] = obj;
+                console.log(listing[j])
+                console.log(listing)
             }
+            console.log(i)
             allListing[i] = listing;
+            console.log(listing)
         }
         console.log(allListing)
         let exampleListing = [
@@ -238,22 +245,23 @@ class MyListing extends React.Component {
                 type: 'Number of Guests',
                 value: '1'
             },
-            // {
-            //     type: 'Amenities',
-            //     value: Amenities.values
-            // },
-            // {
-            //     type: 'House Rules',
-            //     value: Rules.values
-            // }
+            {
+                type: 'Amenities',
+                value: Amenities.values
+            },
+            {
+                type: 'House Rules',
+                value: Rules.values
+            }
         ]
 
-
+        console.log(allListing)
 
             return (
                 <div className={classes.main} style={{paddingRight: "3rem"}}>
                     <div className={classes.head}>
                         <h3 class="m-3">MY LISTINGS</h3>
+                    
                         <Button 
                             variant="contained" 
                             color="primary"
@@ -313,17 +321,15 @@ class MyListing extends React.Component {
                                                             padding: '8px 10px',
                                                             flex: "1 1 33%"
                                                         }}>
-                                                        <p className={classes.type}>{detail.type}</p>
-                                                        <p className={`${classes.value} ${classes.text}`}>
                                                         {       
-                                                            typeof detail.value == 'string' ? 
-                                                            detail.value 
-                                                            :
-                                                            detail.value.map((d) => {
-                                                                return(d + " ")
-                                                            })
+                                                            (typeof detail.value == 'string' || typeof detail.value == 'number') && 
+                                                            <>
+                                                                <p className={classes.type}>{detail.type}</p>
+                                                                <p className={`${classes.value} ${classes.text}`}>
+                                                                {detail.value }
+                                                                </p>
+                                                            </>
                                                         }
-                                                        </p>
                                                         </div>
                                                     )
                                                 })
@@ -331,31 +337,41 @@ class MyListing extends React.Component {
                                         </div>
                                     </ExpansionPanelDetails>
                                     <div>
-                                    <p className={classes.value} style={{fontWeight: 400}}>Home Description:</p>
-                                    <p className={classes.homeDesc}></p>
+                                        <p className={classes.value} style={{fontWeight: 400}}>Home Description:</p>
+                                        <p className={classes.homeDesc}>
+                                        {data[data.length - 3].value}
+                                        </p>
                                     </div>
-                                    <div>
-                                        <p className={classes.value} style={{fontWeight: 400}}>Amenities:</p>
-                                        <div style={{display: 'flex', flexWrap: 'wrap', margin: '5px', marginBottom: '20px'}}>
-                                            {
-                                                Amenities.values.map((amenity) => {
-                                                    return(
-                                                        <div 
-                                                            id="tags"
-                                                            style={{
-                                                                border: "0.5px solid",
-                                                                borderRadius: '0.5rem',
-                                                                padding: '4px 12px 4px 12px',
-                                                                margin: '2px'
-                                                            }}
-                                                        >
-                                                            {amenity}
-                                                        </div>
-                                                    )
-                                                })
-                                            }      
-                                        </div>
-                                    </div>
+                                    
+                                        {
+                                            data.slice(data.length - 2, data.length).map((value) => {
+                                                return(
+                                                <div>
+                                                    <p className={classes.value} style={{fontWeight: 400}}>{value.type}:</p>
+                                                    <div style={{display: 'flex', flexWrap: 'wrap', margin: '5px', marginBottom: '20px'}}>
+                                                    {
+                                                    value.value.map((d) => {
+                                                        return(
+                                                            <div 
+                                                                id="tags"
+                                                                style={{
+                                                                    border: "0.5px solid",
+                                                                    borderRadius: '0.5rem',
+                                                                    padding: '4px 12px 4px 12px',
+                                                                    margin: '2px'
+                                                                }}
+                                                            >
+                                                            {d}
+                                                            </div>
+                                                        )
+                                                        })
+                                                    }   
+                                                    </div>
+                                                </div>  
+                                                )
+                                            })
+                                             
+                                        }
                                 </ExpansionPanel>
                                 
                             )
