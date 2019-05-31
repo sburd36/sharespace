@@ -181,7 +181,7 @@ class MyListing extends React.Component {
                                                     <p className={classes.type}>{detail.type}</p>
                                                     <p className={`${classes.value} ${classes.text}`}>
                                                     {       
-                                                        typeof detail.value == 'string' ? 
+                                                        typeof detail.value === 'string' ? 
                                                         detail.value 
                                                         :
                                                         detail.value.map((d) => {
