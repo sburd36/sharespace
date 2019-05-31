@@ -199,12 +199,15 @@ section {
     }
 
     img {
-        max-width: 100%;
+        max-width: 75%;
+        float: right;
     }
+
 
     .row {
         display: flex;
         align-items: center;
+        justify-content: space-between;
     }
 }
 
@@ -280,14 +283,20 @@ section {
         
         h4 {
             margin-bottom: 0;
-            padding-right: 800px;
+            padding-right: 80px;
         }
         p {
-            margin-top: 10px;
-            padding-right: 750px;
+            //margin-top: 10px;
+            //padding-right: 750px;
         }
         img {
             margin: 0;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
     }
 
@@ -354,7 +363,25 @@ section {
         }
     }
 
+    #what-we-do {
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .graphic1 {
+            //max-width: 80%;
+            float: right;
+        }
+    }
+
     #what-is-sharespace {
+        .row {
+            display: flex;
+            align-items: center;
+        }
+        
         margin-top: 75px;
 
         p {
@@ -366,7 +393,12 @@ section {
         }
 
         .phone-img {
-            padding-left: 150px;
+            padding-left: 50px;
+            max-width: 600px;
+        }
+
+        button {
+            margin-top: 10px;
         }
     }
 

@@ -83,8 +83,10 @@ export default class Nav extends React.Component {
                 <div class="row">
                     <div class="col col-md-3">
                         <h3>Track your impact.</h3>
-                        <p class="font-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
-                        Aenean vel nisl justo. Mauris in ante quis sem convallis suscipit. Aenean at gravida ipsum.</p>
+                        <p class="font-light pb-2">Starting in 2017, organizations have greater responsibility to 
+                        measure impact and demonstrate their need for competitive support or grant programs 
+                        from King County. We provide a platform to view your impact and collect data to use when
+                        applying to grants.</p>
                         <Link to='/signup'>
                             <button class="btn btn-teal-fill">SIGN UP</button>
                         </Link>

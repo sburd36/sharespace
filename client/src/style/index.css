@@ -264,8 +264,8 @@ label {
   align-items: center;
 }
 
-.signUpInput {
-  border: solid 0.5px #202e57;
+.enhance-text {
+  color: #f9c1b3;
 }
 
 body {
@@ -534,8 +534,8 @@ label {
   align-items: center;
 }
 
-.signUpInput {
-  border: solid 0.5px #202e57;
+.enhance-text {
+  color: #f9c1b3;
 }
 
 #situation h4 {
@@ -740,11 +740,13 @@ section {
   color: #fe8b6b;
 }
 #who-are-we img {
-  max-width: 100%;
+  max-width: 75%;
+  float: right;
 }
 #who-are-we .row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 @media (min-width: 769px) {
@@ -812,14 +814,15 @@ section {
   }
   #section-2 h4 {
     margin-bottom: 0;
-    padding-right: 800px;
-  }
-  #section-2 p {
-    margin-top: 10px;
-    padding-right: 750px;
+    padding-right: 80px;
   }
   #section-2 img {
     margin: 0;
+  }
+  #section-2 .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   #section-3 {
@@ -874,8 +877,21 @@ section {
     margin-left: 0;
   }
 
+  #what-we-do .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #what-we-do .graphic1 {
+    float: right;
+  }
+
   #what-is-sharespace {
     margin-top: 75px;
+  }
+  #what-is-sharespace .row {
+    display: flex;
+    align-items: center;
   }
   #what-is-sharespace p {
     padding-right: 75px;
@@ -884,7 +900,11 @@ section {
     max-width: 300px;
   }
   #what-is-sharespace .phone-img {
-    padding-left: 150px;
+    padding-left: 50px;
+    max-width: 600px;
+  }
+  #what-is-sharespace button {
+    margin-top: 10px;
   }
 
   #meet-the-team .team-row {

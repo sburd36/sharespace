@@ -22,11 +22,11 @@ p {
 }
 .btn-yellow-fill {
     color: white;
-    background-color: $dark-yellow;
-    border: 1.5px solid $dark-yellow;
+    background-color: $light-orange;
+    border: 1.5px solid $light-orange;
 
     &:hover {
-        color: $dark-yellow;
+        color: $light-orange;
         background-color: transparent;
     }
 }
@@ -233,3 +233,4 @@ label {
     justify-content: flex-end;
     align-items: center;
 }
+

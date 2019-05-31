@@ -16,42 +16,48 @@ export default class Landing extends React.Component {
         return (
             <>
                 <section id="section-1">
-                    <div class="row" id="what-we-do">
-                        <div class="col-12 col-md-6">
-                            <img class="logo-img" src={logoLong}></img>
-                            <h3>Share your space for good.</h3>
-                            <p class="font-light pb-1">Sharespace is a online temporary housing platform for your community. 
-                            By working directly with local nonprofits, together we can dynamically share housing resources
-                            for survivors transitioning out of domestically abusive relationships.
-                            </p>
-                            <p class="font-light pb-1">Our team works closely with your nonprofit to take out the bureaucracy,
-                            wait time, and lack of integration, out of housing resource planning by providing this easy-to-use 
-                            platform to dynamically find and book spaces for those who need it..
-                            </p>
-                            <p class="font-light">Consider opening up your home today.
-                            </p>
-                            <Link to='/ourtool'>
-                                <button class="btn btn-yellow-empty mt-2 mr-4">LEARN MORE</button>
-                            </Link>
-                            <Link to='/situation'>
-                                <button class="btn btn-teal-empty mt-2">SIGN UP</button>
-                            </Link>
+                    <div id="what-we-do">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <img class="logo-img" src={logoLong}></img>
+                                <h3>Share your space for good.</h3>
+                                <p class="font-light pb-2">Survivors fleeing domestic violence do not have immediate access to housing, 
+                                trapping them between homelessness and returning to abuse. Many emergency shelters and transitional 
+                                houses are hard to access, have rigorous screening processes, and are simply at full capacity. Our tool builds 
+                                a community of support to provide immediate, flexible housing to survivors in urgent need.
+                                </p>
+                                <p class="font-light pb-2">Our team works closely with your nonprofit to take out the bureaucracy,
+                                wait time, and lack of integration out of housing resource planning by providing this easy-to-use 
+                                platform to dynamically find and book spaces for those who need it.
+                                </p>
+                                
+                                <Link to='/ourtool'>
+                                    <button class="btn btn-yellow-fill mt-2 mr-4">LEARN MORE</button>
+                                </Link>
+                                <Link to='/situation'>
+                                    <button class="btn btn-teal-fill mt-2">SIGN UP</button>
+                                </Link>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <img class="graphic1" src={graphic1}/>
+                            </div> 
                         </div>
-                        <div class="col-12 col-md-6">
-                            <img src={graphic1}/>
-                        </div> 
                     </div>
                 </section>
                     
                 <div class="divider mb-3"></div>
                 
                 <section id="section-2"> 
-                        <div>
-                            <h4> <span style={{color: "#7e95cd"}}>We all face unexpected situations.</span> For millions of women, it means having to leave their home.</h4>
-                            <p class="font-light">Emergency shelter and transitional housing continue to be
-                            the most urgent unmet needs for domestic violence survivors. It is becoming more
-                            necessary coordinate our resources so that more people
-                            can stay off the streets and avoid longer term consequences like debt and homelessness.</p>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <h4><span style={{color: "#f9c1b3"}}>We all face unexpected situations.</span> For millions of women, it means having to leave their home.</h4>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <p class="font-light">Emergency shelter and transitional housing continue to be
+                                the most urgent unmet needs for domestic violence survivors. It is becoming more
+                                necessary coordinate our resources so that more people
+                                can stay off the streets and avoid longer term consequences like debt and homelessness.</p>
+                            </div>
                         </div>
                         <img src={graphic2}></img>
                 </section>
