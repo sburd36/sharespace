@@ -47,7 +47,7 @@ class App extends Component {
           description: "hello",
           guestCount: 3,
           hostID: "zSrR3ts6r4cM9z1LG2TyW26uVR42",
-          houseRules: (2) ["No Smoking", "No Alcohol"],
+          houseRules: ["No Smoking", "No Alcohol"],
           id: "-Lg9OGG55kjo4HuwA1B9",
           information: "world",
           location: "Belltown",
