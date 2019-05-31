@@ -65,13 +65,13 @@ export default withStyles(styles)(class extends React.Component {
         super(props);
         this.state = {
             view: 'list',
-            request: 'confirm'
+            type: 'confirmed'
         }
     }
 
     handleRequestType = (value) => (event) => {
         this.setState({
-            request: value
+            type: value
         })
     }
 
@@ -99,9 +99,9 @@ export default withStyles(styles)(class extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { view, request } = this.state;
+        const { view, type } = this.state;
         let title = '';
-        if (request === 'confirm') {
+        if (type === 'confirmed') {
             title = 'CURRENT BOOKINGS'
         } else {
             title = 'PENDING BOOKINGS REQUESTS'
@@ -132,7 +132,7 @@ export default withStyles(styles)(class extends React.Component {
                                         </Button>
                                     </Link>
                                     <Link to="/advocate/currentbookings">
-                                        <Button variant="contained" color="primary" className={classes.button} id="button" onClick={this.handleRequestType('confirm')}>
+                                        <Button variant="contained" color="primary" className={classes.button} id="button" onClick={this.handleRequestType('confirmed')}>
                                             Current Bookings
                                         </Button>
                                     <Button variant="contained" color="primary" className={classes.button} id="button" onClick={this.handleRequestType('pending')}>
@@ -196,7 +196,7 @@ export default withStyles(styles)(class extends React.Component {
                                                                 </div>                                                                                                          
                                                             </CardContent>
                                                         </Card>
-                                                        <HostInfo type='booked' booking={booking} open={this.state.open} click={this.handleCardClick}></HostInfo>    
+                                                        <HostInfo type={type} booking={booking} open={this.state.open} click={this.handleCardClick}></HostInfo>    
                                                     </Grid>
                                                 )
                                             }

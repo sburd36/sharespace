@@ -13,13 +13,11 @@ import DateRangePicker from 'react-daterange-picker'
 import "react-daterange-picker/dist/css/react-calendar.css";
 
 import 'react-dates/initialize';
-// import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 
 import { Button, Select, MenuItem, Input, FormControl, InputLabel, Chip, Dialog, DialogContent, DialogActions} from '@material-ui/core/';
 
 import { listings } from '../filter';
 import { Checkbox } from '@material-ui/core';
-
 
 moment.locale('en-GB');
 
@@ -268,7 +266,7 @@ export default class Calendar extends React.Component {
                 </FormControl>
             </div>
         </div>
-        <DateRangePicker 
+        {/* <DateRangePicker 
             onSelect={this.handleSelect}
             value={this.state.value}
             showLegend={true}
@@ -278,8 +276,8 @@ export default class Calendar extends React.Component {
             dateStates={dateRanges}
             singleDateRange={true}
 
-        />
-            {/* <BigCalendar
+        /> */}
+            <BigCalendar
                 localizer={localizer}
                 defaultDate={new Date()}
                 defaultView="month"
@@ -296,7 +294,7 @@ export default class Calendar extends React.Component {
                     dateCellWrapper: dateCellWrapper,
                 }}
                 style={{ height: "80vh" }}
-            /> */}
+            />
             <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
             <TimeSlotForm open={add} bookings={currentBookings} click={this.handleClickAdd('')} listings={listings} />
       </div>
