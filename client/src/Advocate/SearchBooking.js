@@ -1,29 +1,18 @@
 import React, { Component } from 'react';
 import Calendar from './AdvoCalendar'
 import person from '../img/icon2.png';
-import { PersonalSelect, SpaceSelect} from '../Select'
+import { PersonalSelect, SpaceSelect, CustomSelect } from '../Select'
 
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Input from '@material-ui/core/Input';
-import Switch from '@material-ui/core/Switch';
-import InputLabel from '@material-ui/core/InputLabel';
+import {Paper, Typography, Grid, Button, Card, CardContent, TextField, MenuItem, FormControl,Select,Input,Switch,InputLabel } from '@material-ui/core';
+
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { DateFormatInput } from 'material-ui-next-pickers'
 
 // confirm host view
 import HostInfo from './HostInfo';
-import { Host } from '../filter';
+import { Host, Location } from '../filter';
 
 const styles = theme => ({
     root: {
@@ -33,12 +22,12 @@ const styles = theme => ({
         color: '#202e57'
     },
     side: {
-      height: window.outerHeight,
+      height: "85vh",
       width: window.innerWidth / 4 + 100,
       padding: '2rem'
     }, 
     hosts: {
-        height: window.outerHeight,
+        height: "85vh",
         width: window.innerWidth / 2 + 230,
     },
     textField: {
@@ -80,13 +69,12 @@ const styles = theme => ({
     }
 });
 
-const locations = ["Northgate", "U District", "Westlake", "Ballard"]
 
 export default withStyles(styles)(class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            view: "list",
+            view: "calendar",
             guests: "",
             locations: "",
             start: new Date()
@@ -108,6 +96,10 @@ export default withStyles(styles)(class extends React.Component {
 
 
     handleInputChange = name => event => {
+        // keep track of the valid dates 02/18 - 03/10
+        // if date is in range
+            // set state
+        // window.alert(...)
         this.setState({ [name]: event.target.value });
       };
 
@@ -139,8 +131,10 @@ export default withStyles(styles)(class extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const {start, end} = this.state;
+        let {start, end} = this.state;
         let date = '';
+        start = moment(start.toLocaleString()).format("YYYY-MM-DD")
+        end = moment(start.toLocaleString()).format("YYYY-MM-DD")
         return (
             <div class="pt-4">
                 <Grid 
@@ -156,25 +150,34 @@ export default withStyles(styles)(class extends React.Component {
                                     <form>
                                     <FormControl>                                      
                                         <div style={{display: "flex"}}>
-                                            <div>
-                                            Start Date
-                                                <DateFormatInput 
-                                                    name='date-input' 
-                                                    value={start} 
-                                                    onChange={(date) => this.setState({start: date, end: date})}
-                                                    min={new Date()}
-                                                />
-                                            </div>
-                                            <div>
-                                                End Date
-                                            <DateFormatInput 
-                                                name='date-input' 
-                                                value={end} 
-                                                onChange={(date) => this.setState({end: date})}
-                                                min={start}
+                                            <TextField
+                                                id="date"
+                                                label="Start Date"
+                                                type="date"
+                                                className={classes.textField}
+                                                onChange={this.handleInputChange('start')}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                    className: classes.floatingLabelFocusStyle,
+                                                }}
+                                                inputProps={{
+                                                    min: start
+                                                }}
                                             />
-                                            
-                                            </div>
+                                        <TextField
+                                            id="date"
+                                            label="End Date"
+                                            type="date"
+                                            className={classes.textField}
+                                            onChange={this.handleInputChange('end')}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                                className: classes.floatingLabelFocusStyle,
+                                            }}
+                                            inputProps={{
+                                                min: start
+                                            }}
+                                        />
                                             
                                         </div>
                                         <div style={{display: "flex", marginBottom: "10px"}}>
@@ -193,16 +196,7 @@ export default withStyles(styles)(class extends React.Component {
                                                 </Select>
                                             </FormControl>
                                             <FormControl className={classes.select} style={{flexGrow: 1}}>
-                                                <InputLabel htmlFor="select-multiple-checkbox">Location</InputLabel>
-                                                <Select
-                                                value={this.state.locations}
-                                                onChange={this.handleInputChange('locations')}>                                        >
-                                                    {locations.map(option => (
-                                                        <MenuItem key={option} value={option}>
-                                                            {option}
-                                                        </MenuItem>
-                                                    ))}
-                                                </Select>
+                                                <CustomSelect data={Location}/>
                                             </FormControl>
                                         </div>
                                         
@@ -269,7 +263,7 @@ export default withStyles(styles)(class extends React.Component {
                                                         <Button id='button-outline-date' onClick={this.handleHost} variant="outlined">                                                  
                                                         {date.start} - {date.end}
                                                         </Button>      
-                                                        <HostInfo booking={booking} open={this.state.open} click={this.handleHost}></HostInfo>    
+                                                        <HostInfo type='available' booking={booking} open={this.state.open} click={this.handleHost}></HostInfo>    
 
                                                         {/* space info display */}
                                                         <p style={{marginBottom: 0, marginTop: "10px", fontSize: "14px"}}>Amenities:</p>

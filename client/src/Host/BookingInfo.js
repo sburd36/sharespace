@@ -80,9 +80,9 @@ export default withStyles(styles)(class extends React.Component {
 
 
     render() {
-        const { classes } = this.props;
+        const { classes, type } = this.props;
         const host = this.props.booking;
-        console.log(host)
+        // console.log(host)
         return(
             <div>
                 <Dialog
@@ -101,7 +101,12 @@ export default withStyles(styles)(class extends React.Component {
                                 <div>
                                     <p style={{color:"#da5c48"}}>{host.location}</p>
                                     <div style={{display: "flex"}}>
+                                    {
+                                        type === 'confirmed' ?  
                                         <p className={classes.tag} style={{backgroundColor: "#da5c48", color: "white", border: "none"}}>Booked</p>
+                                        : 
+                                        <p className={classes.tag} style={{backgroundColor: "#48704d", color: "white", border: "none"}}>Pending</p>
+                                    }
                                         <p className={classes.tag}>{host.homeType}</p>
                                     </div> 
                                 </div>
@@ -155,10 +160,23 @@ export default withStyles(styles)(class extends React.Component {
                             <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.advocate.email}</p>
                         </div>  
                     </DialogContent>
-                    <DialogActions >
-                        <Button onClick={this.props.click} variant="contained"  color="primary" id="buttonGray">
+                    <DialogActions style={{display: 'flex', justifyContent: 'space-between'}}>
+                        {
+                            type === 'confirmed' ?
+                            <Button onClick={this.props.click} variant="contained"  color="primary" id="buttonGray">
                             Close
                         </Button>
+                        :
+                        <>
+                        <Button onClick={this.props.click} variant="contained"  color="primary" id="buttonGray">
+                            Decline Request
+                        </Button>
+                        <Button onClick={this.props.click} variant="contained"  color="primary" id="buttonGray">
+                            Accept Request
+                        </Button>
+                        </>
+                        }
+                        
                     </DialogActions>
                 </Dialog>
             </div>
