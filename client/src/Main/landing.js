@@ -65,7 +65,7 @@ export default class Landing extends React.Component {
                 <div class="divider mb-3"></div>
 
                 <section id="section-3">
-                    <h3>How can you help</h3>
+                    <h3>How you can help</h3>
                     <div class="mt-4 row row-cards ml-0">
                         <div class="card col col-12 col-md-4 d-flex">
                             <img src={shopping} class="card-img-top" alt="..."/>

@@ -90,11 +90,11 @@ p {
 
 .btn-yellow-fill {
   color: white;
-  background-color: #ea6648;
-  border: 1.5px solid #ea6648;
+  background-color: #f9c1b3;
+  border: 1.5px solid #f9c1b3;
 }
 .btn-yellow-fill:hover {
-  color: #ea6648;
+  color: #f9c1b3;
   background-color: transparent;
 }
 
@@ -262,10 +262,6 @@ label {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-}
-
-.enhance-text {
-  color: #f9c1b3;
 }
 
 body {
@@ -360,11 +356,11 @@ p {
 
 .btn-yellow-fill {
   color: white;
-  background-color: #ea6648;
-  border: 1.5px solid #ea6648;
+  background-color: #f9c1b3;
+  border: 1.5px solid #f9c1b3;
 }
 .btn-yellow-fill:hover {
-  color: #ea6648;
+  color: #f9c1b3;
   background-color: transparent;
 }
 
@@ -532,10 +528,6 @@ label {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-}
-
-.enhance-text {
-  color: #f9c1b3;
 }
 
 #situation h4 {
@@ -1007,7 +999,6 @@ input {
 
 input[type=search] {
   -webkit-appearance: textfield;
-  -webkit-box-sizing: content-box;
   font-family: inherit;
   font-size: 100%;
 }

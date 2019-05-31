@@ -285,10 +285,6 @@ section {
             margin-bottom: 0;
             padding-right: 80px;
         }
-        p {
-            //margin-top: 10px;
-            //padding-right: 750px;
-        }
         img {
             margin: 0;
         }
@@ -541,7 +537,7 @@ input {
 }
 input[type=search] {
 	-webkit-appearance: textfield;
-	-webkit-box-sizing: content-box;
+	//-webkit-box-sizing: content-box;
 	font-family: inherit;
 	font-size: 100%;
 }
