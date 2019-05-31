@@ -49,13 +49,13 @@ const NavigationNonAuth = () => (
                 </li>
             </Link>
 
-            <Link to="/currentbookings">
+            <Link to="/advocate/currentbookings">
                 <li class="nav-item">
                     <b>ADVOCATE VIEW</b>
                 </li>
             </Link>
 
-            <Link to="/hostdash">
+            <Link to="/host/hostdash">
                 <li class="nav-item">
                     <b>HOST VIEW</b>
                 </li>

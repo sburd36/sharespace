@@ -156,7 +156,7 @@ class App extends Component {
                   {/* <Route path="/listing" render={(props) => <MyListing {...props} updateListing={this.updateListing} user={this.state.currentUser}/>} /> */}
 
                   {/* <Route path="/hostdash" component={HostDash} /> */}
-                  <Route path="/hostdash" render={(props) => <HostDash {...props} updateListing= {this.updateListing} user = {this.state.currentUser} profile={this.state.profile} updateAvailability = {this.updateAvailability}/>} />                  
+                  <Route path="/host/hostdash" render={(props) => <HostDash {...props} updateListing= {this.updateListing} user = {this.state.currentUser} profile={this.state.profile} updateAvailability = {this.updateAvailability}/>} />                  
 
 
               </Switch>

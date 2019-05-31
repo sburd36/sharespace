@@ -101,12 +101,21 @@ export default withStyles(styles)(class extends React.Component {
         })
     }
 
-    render() {
+     render() {
         const { classes, type } = this.props;
         let host = this.props.booking;
         if (host === undefined) {
             host = Host[0]
         }
+        let render = '';
+        if (type === 'confirmed') {
+            render = <p className={classes.tag} style={{backgroundColor: "#da5c48", color: "white", border: "none"}}>Booked</p>
+        } else if (type === 'pending') {
+            render = <p className={classes.tag} style={{backgroundColor: "#7e9fa8", color: "white", border: "none"}}>Pending</p>
+        } else {
+            render = <p className={classes.tag} style={{backgroundColor: "#48704d", color: "white", border: "none"}}>Available</p>
+        }
+        console.log(type)
         return(
             <div>
 
@@ -126,13 +135,7 @@ export default withStyles(styles)(class extends React.Component {
                         <p style={{color: "#7e9fa8"}}>{host.space[0].location}</p>
                         <div style={{display: "flex"}}>
                                 {/* Need to add here the availablity. If available, render this, else render the second one */}
-                                {
-                                    type === 'booked' ? 
-                                    <p className={classes.tag} style={{backgroundColor: "#da5c48", color: "white", border: "none"}}>Booked</p>
-                                    :
-                                    <p className={classes.tag} style={{backgroundColor: "#48704d", color: "white", border: "none"}}>Available</p>
-                                }
-
+                                {render}
                                 <p className={classes.tag}>{host.space[0].homeType}</p>
                         </div>
                             <DialogContentText style={{display:"flex", justifyContent: "space-between", alignItems: "flex-start"}}>
@@ -305,7 +308,7 @@ export default withStyles(styles)(class extends React.Component {
                     </DialogContent>
                     <DialogActions style={{display: "flex", justifyContent: "space-between", paddingRight: "20px", paddingLeft: "20px"}}>
                         {
-                            type === 'booked' ?
+                            type === 'confirmed' || type === 'pending' ?
                             <>
                             <Button onClick={this.props.click} variant="contained" id="buttonGray" id="button" color="primary">
                                 Save
