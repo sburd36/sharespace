@@ -5,9 +5,13 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
 
 // icons
-import Add from '@material-ui/icons/AddCircleOutline';
 import People from '@material-ui/icons/People';
 import Clock from '@material-ui/icons/AccessTime';
 import Face from '@material-ui/icons/Face';
@@ -15,7 +19,9 @@ import Face from '@material-ui/icons/Face';
 import MyProfile from './MyProfile';
 import Availability from './AddAvailability';
 import MyListings from './MyListing';
-import CurrentBooking from './CurrentBookings';
+import HostCalendar from './HostCalendar';
+
+import Bookings from './Bookings';
 
 // firebase
 import { compose } from 'recompose';
@@ -26,7 +32,7 @@ const styles = theme => ({
       flexGrow: 1,
     },
     main: {
-        height: window.innerHeight,
+        height: "100vh",
         width: window.innerWidth / 2 + 250,
     },
     bigAvatar: {
@@ -62,7 +68,7 @@ const styles = theme => ({
         super(props);
         this.state = {
             listings: [],
-            view: "booking",
+            view: "bookings",
             bookings: [
                 {
                     ID: "",
@@ -72,7 +78,8 @@ const styles = theme => ({
                     end: "",
                 },
                 
-            ]
+            ],
+            bookingType: 'confirmed'
         }
     }
 
@@ -151,22 +158,30 @@ const styles = theme => ({
        
     }
 
-    
-    handleView = name => event => {
-        console.log(this.props.user)
-
-        this.setState({view: name})
-    }
-
     handleAvailability = () => {
         this.setState({
             open: !this.state.open
+        })
+    }   
+     handleView = (view, type) => event => {
+        this.setState({
+            view: view,
+            bookingType: type
         })
     }
 
     render() {
         console.log(this.props)
         const { classes } = this.props;
+        const { bookingType } = this.state;
+        var style = {
+            navigator: {
+                boxShadow: "none", 
+                border:"0.5px solid #d3dbee", 
+                backgroundColor: "#fdfdfe", 
+                borderRadius: "12px"
+            }
+        }
         return (
             <div class="pt-4">
                 <Grid 
@@ -179,30 +194,29 @@ const styles = theme => ({
                                 justify="center" 
                                 alignItems="center"
                                 >
-                                <Paper id="side" style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}}>
+                                <Paper id="side" style={style.navigator}>
                                     <img id="bigAvatar" src={women} className={classes.bigAvatar} />
                                     <h4 style={{fontWeight: 300}}>Welcome, {this.props.user.firstName}</h4>
                                     <Typography color="textSecondary" style={{fontWeight: 300}}>What would you like to do today?</Typography>
-                                    <Button id='button' onClick={this.handleAvailability} variant="contained" color="primary" className={classes.button}>
-                                        Add Availability
+                                    <Button id='button' variant="contained" color="primary" className={classes.button} onClick={this.handleView('calendar')}>
+                                        My Calendar
                                     </Button>  
                                     <Availability open={this.state.open} click={this.handleAvailability} updateAvailability={this.props.updateAvailability} profile={this.props.profile}></Availability>
-                                    <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('booking')}>
+                                    <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('bookings', 'confirmed')}>
                                         Current Bookings
                                     </Button>
-                                    {/* <Button id="button" variant="contained" color="primary" className={classes.button}>
-                                    
-                                        Past Stays
-                                    </Button> */}   
-                                    {/* <Button id="button" variant="contained" color="primary" className={classes.button}>
-                                        View Analytics
-                                    </Button> */}
+                                    <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('bookings', 'pending')}>
+                                        Bookings Requests
+                                    </Button>
                                     <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('profile')}>
                                         My Profile
                                     </Button>
                                     <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('listings')}>
                                         My Listings
                                     </Button>
+                                </Paper>
+                                <Paper style={style.navigator}>
+                                    
                                 </Paper>
                             </Grid>
                         </Grid>
@@ -214,11 +228,15 @@ const styles = theme => ({
                                 { 
                                     this.state.view == 'profile' && <MyProfile user={this.props.user} profile={this.props.profile} updateListings={this.props.updateListing}></MyProfile>
                                 }
-                                {
-                                    this.state.view == 'booking' && <CurrentBooking profile={this.props.profile} updateListing={this.props.updateListing}></CurrentBooking>
-                                }
+
                                 { 
                                     this.state.view == 'listings' && <MyListings user={this.props.user} profile={this.props.profile} updateListing={this.props.updateListing}></MyListings>
+                                }
+                                {
+                                    this.state.view == 'bookings' && <Bookings type={bookingType} profile={this.props.profile} updateListing={this.props.updateListing}></Bookings>
+                                }
+                                {
+                                    this.state.view == 'calendar' && <HostCalendar />
                                 }
                                 </Grid>
                             </Paper>

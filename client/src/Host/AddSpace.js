@@ -16,6 +16,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import { compose } from 'recompose';
+//time picker
+import { TimePicker } from 'antd';
+import 'antd/dist/antd.css';
 
 
 const styles = theme => ({
@@ -95,7 +98,9 @@ class Listing extends React.Component {
 				description: '',
 				information: '',
 				amenities: [],
-				rules: []
+				rules: [],
+				checkin: "",
+				checkout: "",
 			}
 	}
 	
@@ -117,7 +122,7 @@ class Listing extends React.Component {
 				keepB.push(key)
 			}
 		}
-		const {location, type, address, zip, guests, description, information, name} = this.state
+		const {location, type, address, zip, guests, description, information, name, checkin, checkout} = this.state
 		this.props.firebase.auth.onAuthStateChanged((user) => {
 			if (user) {
 				let listObj = {
@@ -132,7 +137,9 @@ class Listing extends React.Component {
 					'information': information,
 					'amenities': keepA,
 					'houseRules': keepB,
-					'name': name
+					'name': name,
+					'checkin': checkin,
+					'checkout': checkout
 
 				}
 				console.log(user.uid)
@@ -197,7 +204,7 @@ class Listing extends React.Component {
 						<form className={classes.form} onSubmit={this.onSubmit}>
 			<h4>Add Listing </h4>
 			<div className={classes.box}>
-				
+			
 			{/* Listing Name */}
 			<FormControl variant="outlined" className={classes.formControl}>
 				<InputLabel style={{color: this.state.labelColor, flexGrow: 1}} htmlFor="name">Listing Name</InputLabel>
@@ -283,10 +290,38 @@ class Listing extends React.Component {
 							</FormControl>
 
 			{/* Check in time range */}
-			<FormControl variant="outlined" className={classes.formControl}>
+			{/* <FormControl variant="outlined" className={classes.formControl}>
 				<InputLabel htmlFor="checkin">Check-in Time</InputLabel>
 				<Input id="checkin" name="checkin" required onChange={this.onInputChange}/>
-							</FormControl>
+							</FormControl> */}
+	     <TextField
+        id="time"
+        label="Check-In Time"
+        type="time"
+        defaultValue="07:30"
+				className={classes.textField}
+				onChange={this.handleChange('checkin')}
+        InputLabelProps={{
+          shrink: true,
+        }}
+        inputProps={{
+          step: 300, // 5 min
+				}}/>
+
+				<TextField
+        id="time"
+        label="Check-Out Time"
+        type="time"
+        defaultValue="07:30"
+				className={classes.textField}
+				onChange={this.handleChange('checkout')}
+        InputLabelProps={{
+          shrink: true,
+        }}
+        inputProps={{
+          step: 300, // 5 min
+				}}/>		
+
 			</div>
 
 			<div>
@@ -300,6 +335,7 @@ class Listing extends React.Component {
 							fullWidth
 							label="Descibe your home..."
 							margin="normal"
+							onChange={this.onChange}
 							variant="outlined"
 							onChange={this.handleChange('description')}
 							style={{marginTop: 0}}
