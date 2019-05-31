@@ -196,12 +196,10 @@ class MyListing extends React.Component {
         }
         console.log(values)
 
-        let listing = []
         let allListing = [];
-        let test = [];
-        console.log(test)
+
         for (var i = 0; i < values.length; i++) {
-            console.log("first listing"+listing)
+            let listing = []
             for (var j = 0; j < types.length; j++) {
                 var obj = {
                     type: types[j],

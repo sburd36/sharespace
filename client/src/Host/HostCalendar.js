@@ -8,6 +8,8 @@ import "../style/App.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import Add from '@material-ui/icons/AddCircleOutline';
 import TimeSlotForm from './AddAvailability';
+import { withFirebase } from '../Firebase';
+import { compose } from 'recompose';
 
 // import DateRangePicker from 'react-daterange-picker'
 // import 'react-dates/initialize';
@@ -55,7 +57,7 @@ function MultiSelect() {
       </FormControl>
     )
 }
-export default class Calendar extends React.Component {
+class Calendar extends React.Component {
     constructor(props) {
       super(props);
     //   let spaces = {};
@@ -84,9 +86,68 @@ export default class Calendar extends React.Component {
       this.state = {
             view: [],
             space: 0,
-            info: ''
+            info: '',
+            // ****** values from firebase, use to update calendar *****
+            // passed props have stored availability i.e this.props.profile.listings.availability
+            listingNames: [],
+            listingObjs: []
       }
       console.log(this.state)
+    }
+
+    // for firebase and data transfer
+    componentDidMount() {
+        console.log("INSIDE COMPONENTT DID MOUNT")
+        if(this.props.profile.listings === undefined || this.props.profile.listings.length == 0) {
+            console.log("there are no current listings")
+        } else {
+            this.props.firebase.auth.onAuthStateChanged((user)=> {
+                if(user) {
+                    this.state.userID = user.uid 
+                    console.log(user.uid)
+
+                    let listingObjs = this.props.profile.listings
+                    console.log(listingObjs)
+            
+            
+                    // getting names of each listing
+                    let listingNames = []
+                    let nameToId = []
+                    for (let i = 0; i < listingObjs.length; i ++) {
+                        let obj = {
+                            name: listingObjs[i].name,
+                            id: listingObjs[i].id
+                            
+                        }
+                        console.log("INSIDE FOR LOOP")
+                        listingNames.push(listingObjs[i].name)
+                        nameToId.push(obj)
+
+                    }
+
+                    console.log("WHAT PROPERTIES SHOULD BE")
+                    console.log(listingNames)
+            
+                    // for (let i = 0; i < propertiesUnique.length; i ++) {
+                    //     console.log("HERE")
+                    //     console.log(propertiesUnique[i])
+                    //     this.state.properties.push(propertiesUnique[i])
+                    // }
+
+                    // this.state.properties = propertiesUnique
+                    this.setState({
+                        listingNames: listingNames,
+                        listingObjs: nameToId
+                    })
+                    console.log(this.state)
+
+    
+                } else {
+                    console.log('no valid ID')
+                }
+    
+            });   
+        }
     }
 
     onEventResize = (type, { event, start, end, allDay }) => {
@@ -194,6 +255,7 @@ export default class Calendar extends React.Component {
         return false;
     }
   render() {
+      console.log(this.props)
       var style = {
           head: {
             display: 'flex',
@@ -287,7 +349,7 @@ export default class Calendar extends React.Component {
                 style={{ height: "80vh" }}
             />*/}
             <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
-            <TimeSlotForm open={add} bookings={currentBookings} click={this.handleClickAdd('')} listings={listings} />
+            <TimeSlotForm open={add} bookings={currentBookings} click={this.handleClickAdd('')} listingNames={this.state.listingNames} listingObjs={this.state.listingObjs} updateAvailability={this.props.updateAvailability} />
       </div>
       )
   }
@@ -313,3 +375,9 @@ function GuestInfo(props) {
         </Dialog>
     )
 }
+
+const hostCalendar = compose(
+    withFirebase,
+  )(Calendar);
+
+  export default hostCalendar;

@@ -54,7 +54,11 @@ class App extends Component {
           name: "Listing A",
           photos: "no photos currently",
           type: "Hotel Room",
-          zip: "98102"
+          zip: "98102",
+          availability: [],
+          currentBookings: [],
+          pendingBookings: [],
+          pastBookings: []
         }],
         listingIDs: ['-Lg9O3KPsggnprKZANFW'],
         story: 'none given',     
@@ -66,7 +70,7 @@ class App extends Component {
 
 
 
-  updateAvailability = id => value => {
+  updateAvailability = (id) => (value) => {
     let l = this.state.profile.listings
     for (let i = 0; i < l.length; i ++) {
       let obj = l[i]

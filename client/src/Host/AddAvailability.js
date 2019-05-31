@@ -34,81 +34,25 @@ class Availability extends React.Component {
             userID: "",
             begin: date,
             end: date,
-            properties: [],
-            propertyObj: [],
+            properties: props.listingNames,
+            propertyObj: props.listingObjs,
             // for new calendar, firebase uses begin and end
             start: new Date(),
             end: new Date()
         }
     }
 
+
     componentDidUpdate() {
-        console.log("INSIDE COMPONENTT DID MOUNT")
-        if(this.props.profile.listings === undefined || this.props.profile.listings.length == 0) {
-            console.log("there are no current listings")
-        } else {
-            this.props.firebase.auth.onAuthStateChanged((user)=> {
-                if(user) {
-                    this.state.userID = user.uid 
-                    console.log(user.uid)
-
-                    let listingObjs = this.props.profile.listings
-                    console.log(listingObjs)
-            
-            
-                    
-                    let properties = []
-                    for (let i = 0; i < listingObjs.length; i ++) {
-                        let obj = {
-                            name: listingObjs[i].name,
-                            id: listingObjs[i].id
-                            
-                        }
-                        console.log("INSIDE FOR LOOP")
-                        properties.push(listingObjs[i].name)
-                        this.state.propertyObj.push(obj)
-                        // properties.push(listingObjs[i].name)
-                        // nameToId.push()
-                    }
-
-                    var propertiesUnique = properties.filter(function(item, index){
-                        return properties.indexOf(item) >= index;
-                    })
-                    console.log("WHAT PROPERTIES SHOULD BE")
-                    console.log(propertiesUnique)
-            
-                    // for (let i = 0; i < propertiesUnique.length; i ++) {
-                    //     console.log("HERE")
-                    //     console.log(propertiesUnique[i])
-                    //     this.state.properties.push(propertiesUnique[i])
-                    // }
-
-                    this.state.properties = propertiesUnique
-            // this.setState({
-            //    properties: propertiesUnique 
-            // })
-                    console.log(this.state)
-
-    
-                } else {
-                    console.log('no valid ID')
-                }
-    
-            });
-
-                       
-            
-            
-            
+        if (this.props.listingNames != undefined && this.props.listingObjs != undefined) {
+            this.state.properties = this.props.listingNames
+            this.state.propertyObj = this.props.listingObjs
         }
 
-
-
-
-   
+        console.log("Inside componentDIdUpdate")
+        console.log(this.state)
 
     }
-
     onSubmit = event => {
         event.preventDefault();
         this.props.click();
@@ -155,7 +99,7 @@ class Availability extends React.Component {
         end = moment(start.toLocaleString()).format("YYYY-MM-DD")
         const { from, to } = this.state;
         const modifiers = { start: from, end: to };
-
+        
         return (
             <>
                 <FormControl>
@@ -168,7 +112,7 @@ class Availability extends React.Component {
                         input={<OutlinedInput/>}
                         required
                     >
-                        {/* {this.props.listings.map((data) => {
+                        {/* {this.props.listingNames.map((data) => {
                             return(
                                 <MenuItem value={data.name}>{data.name}</MenuItem>
                             )
@@ -248,6 +192,9 @@ class Availability extends React.Component {
     render() {
         const { classes } = this.props;
         console.log(this.props)
+        console.log(this.state)
+        const {properties, propertyObj} = this.state
+
 
         return (
             <div class="d-flex justify-content-around">
