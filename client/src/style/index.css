@@ -34,6 +34,12 @@ h4 {
   color: #202e57;
 }
 
+h5 {
+  font-size: 16pt;
+  color: #202e57;
+  font-weight: 300;
+}
+
 p {
   font-size: 12pt;
   line-height: 1.25;
@@ -256,6 +262,10 @@ label {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.signUpInput {
+  border: solid 0.5px #202e57;
 }
 
 body {
@@ -294,6 +304,12 @@ h4 {
   color: #202e57;
 }
 
+h5 {
+  font-size: 16pt;
+  color: #202e57;
+  font-weight: 300;
+}
+
 p {
   font-size: 12pt;
   line-height: 1.25;
@@ -516,6 +532,10 @@ label {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.signUpInput {
+  border: solid 0.5px #202e57;
 }
 
 #situation h4 {
@@ -1013,21 +1033,4 @@ input::-webkit-input-placeholder {
   color: #da5c48;
 }
 
-/* for search booking filters */
-div[class^=DateFormatInput-input] {
-  padding: 0px !important;
-}
-
-div[class^=MuiFormControl-root] {
-  width: 100%; 
-}
-
-div[class^=MuiInputBase-root] {
-  max-width: 70%;
-}
-
-button[class^=MuiInputAdornment-root] {
-  position: relative;
-  right: 100px;
-}
 /*# sourceMappingURL=index.css.map */

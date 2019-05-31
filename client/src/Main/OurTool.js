@@ -13,18 +13,13 @@ export default class Nav extends React.Component {
     render() {
         return (
             <>
-            <div class="d-flex justify-content-center p-3">
-                <Link to="/calendar">                            
-                    <button class="btn btn-teal-fill">GO TO CALENDAR</button>
-                </Link>
-            </div>
             <section id="dash-sample">
                 <img src={hero}></img>
-                <h3>ALL YOUR HOUSING RESOURCES IN ONE PLACE.</h3>
-                <p class="font-light">Our team works closely with your nonprofit to take out the bureaucracy, 
+                <h3>All your housing resources in one place.</h3>
+                <p class="font-light">Our team works closely with your non-profit to take out the bureaucracy, 
                 wait time, and lack of integration, out of housing resource planning by providing this easy-to-use platform.</p>
             </section>
-            <div class="container p-4 d-md-flex">
+            {/* <div class="container p-4 d-md-flex">
                 <form id="contact" class="container" action="https://formspree.io/turtlemaster0828@gmail.com" method="POST">
                     <h2 class="mt-5">Join Email List</h2>
                     <div class="form-group">
@@ -34,7 +29,7 @@ export default class Nav extends React.Component {
                     <button type="submit" class="btn btn-primary">JOIN</button>
                     <input type="hidden" name="_next" value="/"></input>
                 </form>
-            </div>
+            </div> */}
             <div class="divider mb-3"></div>
 
             <section id="calendar">
@@ -45,9 +40,18 @@ export default class Nav extends React.Component {
                         bookings. Our powerful software provides real time updates of interactions so your organization can maximize scheduling and minimize the costs of coordination.
                         </p>
                         <div>
-                            <Link to='/signup'>
+                            <form id="contact" class="container pl-0" action="https://formspree.io/turtlemaster0828@gmail.com" method="POST">
+                                <h5>Join our Mailing List</h5>
+                                <div class="form-group">
+                                    <input id="emailAddress" type="email" class="form-control" placeholder="Enter email" name="_replyto" aria-label="Name" aria-describedby="basic-addon1"
+                                        required />
+                                </div>
+                                <button type="submit" class="btn btn-yellow-fill">Join Now</button>
+                                <input type="hidden" name="_next" value="/"></input>
+                            </form>
+                            {/* <Link to='/signup'>
                                 <button class="btn btn-teal-fill">SIGN UP</button>
-                            </Link>
+                            </Link> */}
                             {/* <button class="btn btn-teal-fill">LEARN MORE</button> */}
                         </div>
                     </div>
@@ -64,8 +68,9 @@ export default class Nav extends React.Component {
                     </div>
                     <div class="col col-md-3">
                         <h3>Contact hosts efficiently.</h3>
-                        <p class="font-light">Our platform makes contacting and verifying hosts easy. Contact cards show host locations, reviews, phone, email, and receipts from past 
-                        trips. Customer management relationships for housing advocates have never been more accessible.
+                        <p class="font-light">Our platform makes contacting and verifying bookings easy. 
+                        Contact cards show booking dates, host name, host location, guest number, and advocate name. 
+                        Customer management relationships for housing advocates has never been more accessible.
                         </p>
                         <Link to='/signup'>
                             <button class="btn btn-teal-fill">SIGN UP</button>

@@ -49,13 +49,13 @@ const NavigationNonAuth = () => (
                 </li>
             </Link>
 
-            <Link to="/currentbookings">
+            <Link to="/advocate/currentbookings">
                 <li class="nav-item">
                     <b>ADVOCATE VIEW</b>
                 </li>
             </Link>
 
-            <Link to="/hostdash">
+            <Link to="/host/currentbookings">
                 <li class="nav-item">
                     <b>HOST VIEW</b>
                 </li>
@@ -69,7 +69,7 @@ const NavigationNonAuth = () => (
                 <input id="emailAddress" type="email" class="form-control" placeholder="Enter email" name="_replyto" aria-label="Name" aria-describedby="basic-addon1"
                     required />
             </div>
-            <button type="submit" class="btn btn-primary btn-sm" id="button">Submit</button>
+            <button type="submit" class="btn btn-sm btn-teal-fill">Submit</button>
             <input type="hidden" name="_next" value="/"></input>
         </form>
         <div id="nav-buttons">

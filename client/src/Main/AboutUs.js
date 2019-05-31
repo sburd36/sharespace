@@ -106,7 +106,7 @@ export default class Nav extends React.Component {
             </section>
             <div class="container p-4 d-md-flex">
                         <form id="contact" class="container" action="https://formspree.io/sharespace.app@gmail.com" method="POST">
-                            <h2 class="mt-5">Send Us a Message</h2>
+                            <h3 class="mt-5">Send Us a Message</h3>
                             <div class="form-group">
                                 <label for="email" class="mb-0">
                                     Email Address
@@ -130,7 +130,7 @@ export default class Nav extends React.Component {
                                 </label>
                                 <textarea class="form-control" placeholder="Type your message here" name="comment" rows="5" id="comment" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-teal-fill">Submit</button>
                             <input type="hidden" name="_next" value="/"></input>
                         </form>
                 </div>
