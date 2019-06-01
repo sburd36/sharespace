@@ -7,7 +7,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../style/App.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import Add from '@material-ui/icons/AddCircleOutline';
-import TimeSlotForm from './AddAvailability';
+import AddAvailabiliity from './AddAvailability';
 
 import DateRangePicker from 'react-daterange-picker'
 import "react-daterange-picker/dist/css/react-calendar.css";
@@ -296,7 +296,7 @@ export default class Calendar extends React.Component {
                 style={{ height: "80vh" }}
             />
             <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
-            <TimeSlotForm open={add} bookings={currentBookings} click={this.handleClickAdd('')} listings={listings} />
+            <AddAvailabiliity open={add} bookings={currentBookings} click={this.handleClickAdd('')} listings={listings} />
       </div>
       )
   }

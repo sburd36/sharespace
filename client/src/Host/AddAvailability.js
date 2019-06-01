@@ -69,7 +69,7 @@ class Availability extends React.Component {
             userID: "",
             begin: date,
             end: date,
-            properties: [],
+            properties: ['home 1', 'home 2'],
             propertyObj: [],
             // for new calendar, firebase uses begin and end
             start: new Date(),
@@ -177,7 +177,7 @@ class Availability extends React.Component {
 
     handleInputChange = name => event => {
         this.setState({ [name]: event.target.value });
-        console.log(this.state)
+        console.log(event.target.value)
     };
 
     handleSelect = (range, states) => {
@@ -208,11 +208,11 @@ class Availability extends React.Component {
                         input={<OutlinedInput/>}
                         required
                     >
-                        {/* {this.props.listings.map((data) => {
+                        {this.state.properties.map((data) => {
                             return(
                                 <MenuItem value={data.name}>{data.name}</MenuItem>
                             )
-                        })} */}
+                        })}
                     </Select>
                 </FormControl>
                 <div style={{display: 'flex', padding: '1rem'}}>
