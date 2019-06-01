@@ -68,7 +68,7 @@ const styles = theme => ({
         super(props);
         this.state = {
             listings: [],
-            view: "bookings",
+            view: "calendar",
             bookings: [
                 {
                     ID: "",

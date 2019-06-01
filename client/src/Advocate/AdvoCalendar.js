@@ -7,9 +7,9 @@ import React from 'react'
 // import './main.scss' // webpack must be configured to do this
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
-import 'react-big-calendar/lib/css/react-big-calendar.css';
+//import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../style/App.css";
-import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
+//import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import HostInfo from './HostInfo';
 import { Host } from '../filter';
@@ -81,7 +81,7 @@ export default class Calendar extends React.Component {
 
   render() {
       return (
-        <div className="App" style={{width: "100%"}}>
+        <div className="App advocate-calendar calendar">
             <DnDCalendar
             localizer={localizer}
             defaultDate={new Date()}
@@ -94,6 +94,7 @@ export default class Calendar extends React.Component {
             onSelectEvent={this.onEventClick}
             onSelectSlot={this.onSlotChange}
             style={{ height: "65vh" }}
+            views={['month', 'week', 'day']}
             />
             <HostInfo booking={this.state.host} open={this.state.open} click={this.onEventClick}/>
       </div>
