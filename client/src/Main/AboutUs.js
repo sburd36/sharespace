@@ -1,9 +1,9 @@
 import React from "react";
 import logo from '../img/logo-new.png'
-import {HashRouter as Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 import logoLong from '../img/logo-long.png'
-import phone from '../img/mobile-phone.jpg'
-import fourLadies from '../img/four-ladies.png'
+import whatIsSharespace from '../img/what-is-sharespace.png'
+import fourLadies from '../img/team.JPG'
 import Abby from '../img/headshots/abby-huang.JPG'
 import Steph from '../img/headshots/stephanie-burd.JPG'
 import Min from '../img/headshots/min_yang.jpg'
@@ -20,15 +20,17 @@ export default class Nav extends React.Component {
                 <div class="row">
                     <div class="col col-12 col-md-6">
                         <h2 style={{color: "#f9c1b3"}}>What is <span><img class="logo-long" src={logoLong}></img></span> ?</h2>
-                        <p class="font-light">Sharespace is a online temporary housing platform for your community.
+                        <p class="">Sharespace is a online temporary housing platform for your community.
                         </p>
                         <p class="font-light">By working directly with local nonprofits, together we can dynamically share housing 
                         resources for survivors transitioning out of domestically abusive relationships.
                         </p>
-                        <button class="btn btn-teal-fill">LEARN MORE</button>
+                        <Link to='/ourtool'>
+                            <button class="btn btn-teal-fill mt-2">LEARN MORE</button>
+                        </Link>
                     </div>
                     <div class="col col-12 col-md-6">
-                        <img src={phone} class="phone-img"></img>
+                        <img src={whatIsSharespace} class="phone-img"></img>
                     </div>
                 </div>
             </section>
@@ -39,16 +41,16 @@ export default class Nav extends React.Component {
                 <div class="row">
                     <div class="col col-12 col-md-6">
                         <h3 class="font-light">Who are we?</h3>
-                        <p class="font-light">We are a team of four women studying Informatics (Information + Technology + People) at the 
+                        <p class="font-light mb-2">We are a team of four women studying Informatics (Information + Technology + People) at the 
                         University of Washington, ready to make an impact with technology. For our culminating senior project, we were given 
                         20 weeks to design and develop a technology solution for a problem we saw in the world.
 
                         </p>
-                        <p class="font-light">Using a build-measure-learn methodology, we committed to create a product that supported our 
-                        communities to put an end to the cycle of domestic violence.
+                        <p class="font-light">Using a build-measure-learn methodology, <strong>we committed to create a product that supported our 
+                        communities to put an end to the cycle of domestic violence.</strong>
                         </p>
                     </div>
-                    <div class="col col-12 col-md-6">
+                    <div class="col col-12 col-md-6 team-img">
                         <img src={fourLadies}></img>
                     </div>
                 </div>
@@ -60,8 +62,7 @@ export default class Nav extends React.Component {
 
             <section id="meet-the-team">
                 <h3 class="font-light">Meet the Team</h3>
-                <p class="font-light team-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit ac nisi sit amet mollis.
-                            Aenean velnisl justo.
+                <p class="font-light team-desc">
                 </p>
                 <div class="row team-row">
                     <div class="row team-member col-xl-6 col-md-12 p-0 mr-0 ml-0">
@@ -78,7 +79,7 @@ export default class Nav extends React.Component {
                         <img src={Steph} class="team-img col-md-6 col-12"/>
                         <div class="col-md-6 col-12">
                             <h5 class="">Stephanie Burd</h5>
-                            <p id="position">Lead Designer</p>
+                            <p id="position">Designer</p>
                             <p class="font-light">Stephanie is interested in women’s empowerment, specifically in the technology space. 
                                 She focuses on social psychology and the impact of technology on people and society.</p>
                         </div>
@@ -87,7 +88,7 @@ export default class Nav extends React.Component {
                         <img src={Mary} class="team-img col-md-6 col-12"/>
                         <div class="col-md-6 col-12">   
                             <h5 class="">Mary Huibregtse</h5>
-                            <p id="position">Lead Data Scientist</p>
+                            <p id="position">Data Analyst & Software Developer</p>
                             <p class="font-light">After leaving an abusive relationship, Mary experienced the power having a community
                                 can have in making action possible. Since, she has been supporting young students by hosting 
                                 STEM workshops mentoring.</p>
@@ -97,8 +98,8 @@ export default class Nav extends React.Component {
                         <img src={Min} class="team-img col-md-6 col-12"/>
                         <div class="col-md-6 col-12">
                             <h5 class="">Min Yang</h5>
-                            <p id="position">Lead Developer</p>
-                            <p class="font-light">Min is passionate in solving real-world problems using technology. Begin a Taiwanese-American
+                            <p id="position">Full Stack Developer</p>
+                            <p class="font-light">Min is passionate in solving real-world problems using technology. Being a Taiwanese-American
                                 immigrant, Min advocates for diversity and inclusion for minority groups.</p>
                         </div>
                     </div>
@@ -106,7 +107,7 @@ export default class Nav extends React.Component {
             </section>
             <div class="container p-4 d-md-flex">
                         <form id="contact" class="container" action="https://formspree.io/sharespace.app@gmail.com" method="POST">
-                            <h2 class="mt-5">Send Us a Message</h2>
+                            <h3 class="mt-5">Send Us a Message</h3>
                             <div class="form-group">
                                 <label for="email" class="mb-0">
                                     Email Address
@@ -130,7 +131,7 @@ export default class Nav extends React.Component {
                                 </label>
                                 <textarea class="form-control" placeholder="Type your message here" name="comment" rows="5" id="comment" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-teal-fill">Submit</button>
                             <input type="hidden" name="_next" value="/"></input>
                         </form>
                 </div>

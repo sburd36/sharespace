@@ -53,7 +53,7 @@ const INITIAL_STATE = {
   email: '',
   password: '',
   confirmPassword: '',
-  type: 'Advocate',
+  type: '',
   error: null,
 };
 
@@ -72,19 +72,26 @@ const ERROR_MSG_ACCOUNT_EXISTS = `
 class SignUpFormBase extends Component {
   constructor(props) {
     super(props);
-
-    this.state = { ...INITIAL_STATE };
+    this.state = { ...INITIAL_STATE};
   }
 
   onSubmit = event => {
     event.preventDefault();
-
-    console.log("inside event")
-    const { email, password, firstName, lastName, type } = this.state;
-    console.log("current state: " + this.state)
+    const { email, password, firstName, lastName} = this.state;
+    const type = this.props.location.state.type
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then(authUser => {
+        let user = {
+          type: type,
+          uid: authUser.user.uid,
+          firstName: firstName,
+          lastName: lastName, 
+          email: email,
+        }
+        console.log(user)
+        // updating app state with current user data
+        this.props.updateUser(user)
         // Create a user in your Firebase realtime database
         return this.props.firebase
           .user(authUser.user.uid)
@@ -97,7 +104,11 @@ class SignUpFormBase extends Component {
       })
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push('/signup');
+        if (type == 'host') {
+          this.props.history.push('/createprofile');
+        } else {
+          this.props.history.push('/advocate/currentbookings');
+        }
       })
       .catch(error => {
         this.setState({ error });
@@ -105,7 +116,6 @@ class SignUpFormBase extends Component {
   };
 
   onChange = event => {
-    console.log(event.target.name + "   " + event.target.value)
     this.setState({ [event.target.name]: event.target.value });
   };
   

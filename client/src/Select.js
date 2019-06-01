@@ -14,7 +14,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-function makeOptions(filter) {
+export function makeOptions(filter) {
     var options = []
     for (var i = 0; i < filter.length; i++) {
         var option = {
@@ -25,7 +25,21 @@ function makeOptions(filter) {
     }
     return options;
 }
-
+export function CustomSelect(props) {
+    return (
+        <div style={{padding: "10px 0px"}}>
+            {props.data.name}
+            <Select
+                closeMenuOnSelect={false}
+                components={Animated()}
+                isMulti
+                name={props.data.name}
+                // onChange={this.props.onSelect(data.type)}
+                options={makeOptions(props.data['values'])}
+            />
+        </div>
+    )
+}
 class PersonalSelect extends React.Component {
     constructor(props) {
         super(props)
@@ -38,7 +52,7 @@ class PersonalSelect extends React.Component {
         return (
             Personal.map((data) => {
                 return( 
-                    <div>
+                    <div style={{padding: "10px 0px"}}>
                         {data.name}
                         <Select
                             closeMenuOnSelect={false}

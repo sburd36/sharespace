@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
-
+// import Edit from '@material-ui/icons/edit'
 import MyListing from './MyListing';
 import person from '../img/icon1.png';
 
@@ -35,39 +35,40 @@ const styles = theme => ({
 export default withStyles(styles)(class extends React.Component {
 
     render() {
+        console.log(this.props)
         const { classes } = this.props;
         let profile = [
             {
                 type: 'First Name',
-                value: 'Marry'
+                value: this.props.user.firstName
             },
             {
                 type: 'Last Name',
-                value: 'Potter'
+                value: this.props.user.lastName
             },
             {
                 type: 'Gender',
-                value: 'female'
+                value: this.props.profile.gender
             },
             {
                 type: 'Email',
-                value: 'mp@gmail.com'
+                value: this.props.user.email
             },
             {
                 type: 'Phone',
-                value: '(424)244-0123'
+                value: this.props.profile.phone
             },
             {
                 type: 'Religion',
-                value: ['Christian']
+                value: this.props.profile.religion
             },
             {
                 type: 'Ethnicities',
-                value: ['Chinese']
+                value: this.props.profile.ethnicities
             },
             {
                 type: 'Languages',
-                value: ['Chinese', 'English']
+                value: this.props.profile.languages
             }
         ]
     
@@ -103,7 +104,7 @@ export default withStyles(styles)(class extends React.Component {
                     </div>
                 </div>
                 
-                <MyListing />
+                {/* <MyListing user={this.props.user} profile={this.props.profile} updateListing={this.props.updateListing} ></MyListing> */}
             </div>
         )
     }

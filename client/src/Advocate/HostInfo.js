@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import bedroom from "../img/bedroom.jpg";
-import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from 'react-select'
-import Animated from 'react-select/lib/animated'
-import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import { PersonalSelect } from '../Select'
-// import Map from './Map'
-// For host pop-up
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import { Host } from '../filter';
+import { 
+    Button, 
+    withStyles, 
+    TextField, 
+    MenuItem, 
+    Grid, 
+    FormControl, 
+    FormControlLabel, 
+    Checkbox,
+    Dialog, DialogActions, 
+    DialogContent, 
+    DialogContentText 
+} from '@material-ui/core/';
 
+import { PersonalSelect } from '../Select'
+import { Needs } from '../filter';
+// import Map from './Map'
 
 const styles = theme => ({
     img: {
@@ -35,7 +36,7 @@ const styles = theme => ({
         marginTop: theme.spacing.unit,
         marginBottom: theme.spacing.unit,
         //marginRight: theme.spacing.unit * 2,
-        width: 200,
+        width: "50%",
     },
     input: {
         border: "0.5px solid "   
@@ -80,6 +81,7 @@ export default withStyles(styles)(class extends React.Component {
         super(props)
         this.state = {
             booking: {},
+            guest: '',
         }
     }
 
@@ -99,16 +101,26 @@ export default withStyles(styles)(class extends React.Component {
         })
     }
 
-    render() {
-        const { classes } = this.props;
-        const host = this.props.booking;
+     render() {
+        const { classes, type } = this.props;
+        let host = this.props.booking;
+        if (host === undefined) {
+            host = Host[0]
+        }
+        let render = '';
+        if (type === 'confirmed') {
+            render = <p className={classes.tag} style={{backgroundColor: "#da5c48", color: "white", border: "none"}}>Booked</p>
+        } else if (type === 'pending') {
+            render = <p className={classes.tag} style={{backgroundColor: "#7e9fa8", color: "white", border: "none"}}>Pending</p>
+        } else {
+            render = <p className={classes.tag} style={{backgroundColor: "#48704d", color: "white", border: "none"}}>Available</p>
+        }
+        console.log(type)
         return(
             <div>
 
                 <Dialog
                     open={this.props.open}
-                    //for testing purposes:
-                    //open= 'true'
                     onClose={this.props.click}
                     scroll='paper'
                     fullWidth='false'
@@ -123,8 +135,7 @@ export default withStyles(styles)(class extends React.Component {
                         <p style={{color: "#7e9fa8"}}>{host.space[0].location}</p>
                         <div style={{display: "flex"}}>
                                 {/* Need to add here the availablity. If available, render this, else render the second one */}
-                                <p className={classes.tag} style={{backgroundColor: "#48704d", color: "white", border: "none"}}>Available</p>
-                                {/* <p className={classes.tag} style={{backgroundColor: "#da5c48", color: "white", border: "none"}}>Booked</p> */}
+                                {render}
                                 <p className={classes.tag}>{host.space[0].homeType}</p>
                         </div>
                             <DialogContentText style={{display:"flex", justifyContent: "space-between", alignItems: "flex-start"}}>
@@ -150,12 +161,6 @@ export default withStyles(styles)(class extends React.Component {
                             </div>
                         </div>
                         <div style={{textAlign: "center", display: "flex", justifyContent: "center", marginTop: "5px"}}>
-                            {/* <Button variant="outlined" className={classes.contact}>
-                                {host.information.contact.phone}
-                            </Button>
-                            <Button variant="outlined" className={classes.contact}>
-                                {host.information.contact.email}
-                            </Button> */}
                             <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.information.contact.phone}</p>
                             <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.information.contact.email}</p>
                         </div>
@@ -233,7 +238,6 @@ export default withStyles(styles)(class extends React.Component {
                                         id="standard-select-currency"
                                         select
                                         label="# of guests"
-                                        style={{marginRight: "10px"}}
                                         className={classes.textField}
                                         value={this.state.guest}
                                         onChange={this.handleInputChange('guest')}
@@ -275,33 +279,26 @@ export default withStyles(styles)(class extends React.Component {
                                 
                                 {/* Personal Information */}
                                 <div style={{paddingRight: "100px"}}>
-                                {/* { 
-                                    filters.map((data) => {
-                                        return(
-                                            <Grid item xs={3} className={classes.textField}>
-                                            <h5>{data['name']}</h5>
-                                            <Select
-                                                closeMenuOnSelect={false}
-                                                components={Animated()}
-                                                isMulti
-                                                options={makeOptions(data['values'])}
-                                            />
-                                            </Grid>
-                                        )
-                                    })
-                                } */}
                                 <PersonalSelect></PersonalSelect>
                                 </div>
                                 
                                 {/* NEEDS FIELD GOES HERE */}
                                 <div class="mt-3">
                                     <p className={classes.title} style={{fontSize: "16px"}}>NEEDS</p>
+                                    {
+                                        Needs.values.map((need) => {
+                                            return(
+                                                <FormControlLabel control={<Checkbox value={need}/>} label={need}/>
+                                            )
+                                        })
+                                    }
                                 </div>
                                 
                                 {/* NOTES */}
+                                <p className={classes.title} style={{fontSize: "16px"}}>NOTES</p>
+                                <textarea style={{width: "100%"}}></textarea>
                                 <Grid>
-                                    <p className={classes.title} style={{fontSize: "16px"}}>NOTES</p>
-                                    <textarea style={{width: "100%"}}></textarea>
+
                             </Grid>
                             </div>
                         {/* </Grid> */}
@@ -310,12 +307,27 @@ export default withStyles(styles)(class extends React.Component {
                         </div>
                     </DialogContent>
                     <DialogActions style={{display: "flex", justifyContent: "space-between", paddingRight: "20px", paddingLeft: "20px"}}>
-                        <Button onClick={this.props.click} variant="contained" id="buttonGray" style={{color: "white"}}>
-                            Cancel
-                        </Button>
-                        <Button onClick={this.handleConfirmHost} variant="contained"  color="primary" id="button">
-                            Confirm Host
-                        </Button>
+                        {
+                            type === 'confirmed' || type === 'pending' ?
+                            <>
+                            <Button onClick={this.props.click} variant="contained" id="buttonGray" id="button" color="primary">
+                                Save
+                            </Button>
+                            <Button onClick={this.handleConfirmHost} variant="contained"  color="secondary" >
+                                Cancel Booking
+                            </Button> 
+                            </>
+                            :
+                            <>
+                            <Button onClick={this.props.click} variant="contained" id="buttonGray" style={{color: "white"}}>
+                                Cancel
+                            </Button>
+                            <Button onClick={this.handleConfirmHost} variant="contained"  color="primary" id="button">
+                                Confirm Host
+                            </Button>
+                            </>
+                        }
+                        
                     </DialogActions>
                     <Dialog
                         open={this.state.confirm}

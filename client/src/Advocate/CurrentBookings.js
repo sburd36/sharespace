@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
-import women from "../img/icon2.png";
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import purple from '@material-ui/core/colors/purple';
 
-import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import { Link } from 'react-router-dom'
-import Add from '@material-ui/icons/AddCircleOutline';
-import People from '@material-ui/icons/People'
+import women from "../img/icon2.png";
 import HostInfo from './HostInfo';
 import { Host } from '../filter';
+import Calendar from './AdvoCalendar';
+
+import {Paper, Typography,Grid, Button, Card, CardContent, withStyles, Switch } from '@material-ui/core/'
+
+import moment from 'moment';
 
 const styles = theme => ({
     root: {
@@ -65,12 +61,20 @@ const styles = theme => ({
         fontWeight: 300
     }
   });
+
 export default withStyles(styles)(class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            
+            view: 'list',
+            type: 'confirmed'
         }
+    }
+
+    handleRequestType = (value) => (event) => {
+        this.setState({
+            type: value
+        })
     }
 
     handleCardClick = () => {
@@ -78,8 +82,32 @@ export default withStyles(styles)(class extends React.Component {
             open: !this.state.open
         })
     }
+
+    handleSwitchView = (event) => {
+        this.setState({
+            view: event.target.checked ? "calendar" : "list"
+        })
+    }
+
+    convertToDate = (start, end) => {
+        var start = new Date(start);
+        var end = new Date(end);
+        
+        return {
+            start: moment(start.toLocaleString()).format("ddd, MMMM").toUpperCase() + moment(start.toLocaleString()).format(" DD"),
+            end:  moment(end.toLocaleString()).format("ddd, MMMM").toUpperCase() + moment(end.toLocaleString()).format(" DD")
+        };
+    }
+
     render() {
         const { classes } = this.props;
+        const { view, type } = this.state;
+        let title = '';
+        if (type === 'confirmed') {
+            title = 'CURRENT BOOKINGS'
+        } else {
+            title = 'PENDING BOOKINGS REQUESTS'
+        }
         return (
             <div class="pt-4">
                 <Grid 
@@ -95,9 +123,8 @@ export default withStyles(styles)(class extends React.Component {
                                     <img src={women} className={classes.bigAvatar} />
                                     <h4 style={{fontWeight: 300}}>Welcome, Sally</h4>
                                     <Typography class="m-2 mb-3" color="textSecondary" style={{fontWeight: 300}}>What would you like to do today?</Typography>
-                                    <Link to="/bookings">
+                                    <Link to="/advocate/searchbookings">
                                         <Button variant="contained" color="primary" className={classes.button} id="button">
-                                        {/* <Add></Add> */}
                                             New Booking
                                         </Button>
                                     </Link>
@@ -106,10 +133,14 @@ export default withStyles(styles)(class extends React.Component {
                                             Refer a Host
                                         </Button>
                                     </Link>
-                                    <Link to="/bookings">
-                                    <Button variant="contained" color="primary" className={classes.button} id="button">
-                                    {/* <People></People> */}
-                                        Current Bookings
+                                    <Link to="/advocate/currentbookings">
+                                        <div>
+                                            <Button variant="contained" color="primary" className={classes.button} id="button" onClick={this.handleRequestType('confirmed')}>
+                                                Current Bookings
+                                            </Button>
+                                        </div>
+                                    <Button variant="contained" color="primary" className={classes.button} style={{fontSize: "12pt"}}id="button" onClick={this.handleRequestType('pending')}>
+                                        Pending Booking Requests
                                     </Button>
                                     </Link>
                                     {/* <Link to="/bookings">
@@ -122,52 +153,68 @@ export default withStyles(styles)(class extends React.Component {
                         </Grid>
                         <Grid key={2} item>
                             <Paper className={classes.bookings} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}} >
-                                <h4 class="pl-5 pt-5 pb-2">
-                                    CURRENT BOOKINGS
-                                </h4>
+                                <div style={{display: 'flex', justifyContent: 'space-between', padding: '30px', paddingBottom: '20px'}}>
+                                    <h3 class="mt-4">
+                                    {title}
+                                    </h3>
+                                    <div>
+                                        <p style={{fontSize: "12pt", fontWeight: "300", paddingTop: "30px"}}>
+                                            Show Calendar
+                                            <Switch 
+                                                value="view"
+                                                onChange={this.handleSwitchView}/>
+                                        </p>
+                                        
+                                    </div>
+                                </div>
                                 <Grid container spacing={3}>
-                                    {Host.map(
-                                        (booking) => {
-                                            return(
-                                                <Grid item xs={6}>                                  
-                                                    <Card className={classes.card} onClick={this.handleCardClick} id="hoverCard">
-                                                        <CardContent className={classes.content}>
-                                                            <div>
-                                                                <Typography className={classes.cardContent} style={{maxWidth: 200, fontSize: '14pt'}}>
-                                                                    <strong style={{fontWeight: 500}}>Host:</strong> {booking.information.name}
-                                                                </Typography>
-                                                                <Typography className={classes.cardContent} style={{fontSize: '12pt'}}>
-                                                                    <strong style={{fontWeight: 500}}>Guest #:</strong> {booking.space[0].guestID}
-                                                                </Typography> 
-                                                                <Typography className={classes.cardContent} style={{fontSize: '12pt'}}>
-                                                                    <strong style= {{fontWeight: 500}}>Advocate:</strong> {booking.advocate}
-                                                                </Typography>
-                                                            </div>     
-                                                            <div>
-                                                                <div style={
-                                                                        {
-                                                                            //background: "#202e57", 
-                                                                            borderRadius: '10px', 
-                                                                            //border: '.5px solid #202e57',
-                                                                            color: '#202e57', 
-                                                                            padding: '.5rem',
-                                                                            //margin: "7px"
-                                                                            marginBottom: '7px'
-                                                                        }
-                                                                    }>
-                                                                    {booking.space[0].begin} - <br/>{booking.space[0].end}
-                                                                </div>
-                                                                <Typography style={{color:'#da5c48', float:'right', fontSize: '12pt'}}>
-                                                                    {booking.space[0].location}
-                                                                </Typography>
-                                                            </div>                                                                                                          
-                                                        </CardContent>
-                                                    </Card>
-                                                    <HostInfo booking={booking} open={this.state.open} click={this.handleCardClick}></HostInfo>    
-                                                </Grid>
-                                            )
-                                        }
-                                    )}
+
+                                {
+                                    view === 'list' ? 
+                                    <>
+                                        {Host.map(
+                                            (booking) => {
+                                                let date = this.convertToDate(booking.space[0].availability[0].start, booking.space[0].availability[0].end)
+                                                return(
+                                                    <Grid item xs={6}>                                  
+                                                        <Card className={classes.card} onClick={this.handleCardClick} id="hoverCard">
+                                                            <CardContent className={classes.content}>
+                                                                <div>
+                                                                    <Typography className={classes.cardContent} style={{maxWidth: 200, fontSize: '14pt'}}>
+                                                                        <strong style={{fontWeight: 500}}>Host:</strong> {booking.information.name}
+                                                                    </Typography>
+                                                                    <Typography className={classes.cardContent} style={{fontSize: '12pt'}}>
+                                                                        <strong style={{fontWeight: 500}}>Guest #:</strong> {booking.space[0].guestID}
+                                                                    </Typography> 
+                                                                    <Typography className={classes.cardContent} style={{fontSize: '12pt'}}>
+                                                                        <strong style= {{fontWeight: 500}}>Advocate:</strong> {booking.advocate}
+                                                                    </Typography>
+                                                                </div>     
+                                                                <div>
+                                                                    <div style={{
+                                                                                borderRadius: '10px', 
+                                                                                color: '#202e57', 
+                                                                                padding: '.5rem',
+                                                                                marginBottom: '7px'
+                                                                            }}>
+                                                                        {date.start} - <br/>{date.end}
+                                                                    </div>
+                                                                    <Typography style={{color:'#da5c48', float:'right', fontSize: '12pt'}}>
+                                                                        {booking.space[0].location}
+                                                                    </Typography>
+                                                                </div>                                                                                                          
+                                                            </CardContent>
+                                                        </Card>
+                                                        <HostInfo type={type} booking={booking} open={this.state.open} click={this.handleCardClick}></HostInfo>    
+                                                    </Grid>
+                                                )
+                                            }
+                                        )}
+                                    </>
+                                    :
+                                    <Calendar />
+                                }
+                                    
                                 </Grid>
                             </Paper>
                         </Grid>
