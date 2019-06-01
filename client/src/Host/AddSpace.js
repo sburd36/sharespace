@@ -16,9 +16,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import { compose } from 'recompose';
-//time picker
-import { TimePicker } from 'antd';
-import 'antd/dist/antd.css';
 
 
 const styles = theme => ({
@@ -144,7 +141,7 @@ class Listing extends React.Component {
 				}
 				console.log(user.uid)
 				console.log(this.state)
-				let key = this.props.firebase.listings().push({listObj})
+				let key = this.props.firebase.listings().push(listObj)
 				listObj['id'] = key.key
 				// .then(() => {
 				//   this.setState({...SPACE});
@@ -159,6 +156,10 @@ class Listing extends React.Component {
 					this.props.firebase.user(user.uid).update({'haveListing': true})
 
 				});
+				listObj['availability'] = []
+				listObj['currentBookings'] = []
+				listObj['pastBookings'] = []
+				listObj['pendingBookings'] = []
 				this.props.saveListingID(key.key, listObj)
 
 			} else {

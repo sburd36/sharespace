@@ -101,16 +101,17 @@ const styles = theme => ({
         if(foundListings === undefined || foundListings[1] === undefined) {
             console.log("no updated profile")
         } else {
+            console.log("inside firebase call in host dash")
             if(this.props.profile.listingIDs.length != 0) {
                 let spacesQuery = this.props.firebase.listings();
                 spacesQuery.once('value').then((snapshot) =>{
-                    let obj = snapshot.val();                       
+                    let obj = snapshot.val();                      
                         let spaceIDs = []
                         let spaces = []
                         for (let i = 0; i < foundListings.length; i ++) {
                             let current = obj[foundListings[i]];
                             let theSpace = {
-                                id: foundListings[i],
+                                id: foundListings[i].keys(),
                                 hostID: currentUser,
                                 description: current['description'],
                                 type: current['type'],
@@ -123,7 +124,8 @@ const styles = theme => ({
                                 zip: current['zip'],
                                 currentBookings: [],
                                 availability: [],
-                                pastBookings: []
+                                pastBookings: [],
+                                pendingBookings: []
 
                             }
                             if(current['currentBookings']!== undefined) {
@@ -134,7 +136,10 @@ const styles = theme => ({
                                 theSpace.pastBookings = current['pastBookings']
                             }
                             if(current['availability'] !== undefined) {
-                                theSpace.pastBookings = current['pastBookings']
+                                theSpace.pastBookings = current['availability']
+                            }
+                            if(current['pendingBookings'] !== undefined) {
+                                theSpace.pastBookings = current['pendingBookings']
                             }
                             spaces.push(theSpace)
                             console.log(spaces)

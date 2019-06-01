@@ -11,52 +11,59 @@ import TimeSlotForm from './AddAvailability';
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
 
-// import DateRangePicker from 'react-daterange-picker'
-// import 'react-dates/initialize';
-// import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import DateRangePicker from 'react-daterange-picker'
+import "react-daterange-picker/dist/css/react-calendar.css";
+
+import 'react-dates/initialize';
 
 import { Button, Select, MenuItem, Input, FormControl, InputLabel, Chip, Dialog, DialogContent, DialogActions} from '@material-ui/core/';
 
-import { listings } from '../filter';
+// import { listings } from '../filter';
 import { Checkbox } from '@material-ui/core';
-// import DayPicker from 'react-day-picker';
-
 
 moment.locale('en-GB');
 
 const localizer = BigCalendar.momentLocalizer(moment)
+const dateRanges = [
+    {
+      state: 'enquire',
+      range: moment.range(
+        moment().add(2, 'weeks').subtract(5, 'days'),
+        moment().add(2, 'weeks').add(6, 'days')
+      ),
+    },
+    {
+      state: 'unavailable',
+      range: moment.range(
+        moment().add(3, 'weeks'),
+        moment().add(3, 'weeks').add(5, 'days')
+      ),
+    },
+    {
+        state: 'unavailable',
+        range: moment.range(
+          moment().add(5, 'weeks'),
+          moment().add(5, 'weeks').add(5, 'days')
+        ),
+      },
+  ];
 
-function MultiSelect() {
-    const [view, setView] = React.useState([]);
-    function handleChange(event) {
-        setView(event.target.value);
-        console.log(view)
-    }
-    return (
-        <FormControl>
-        <InputLabel htmlFor="select-multiple-chip">Select View</InputLabel>
-        <Select
-          multiple
-          value={view}
-          onChange={handleChange}
-          input={<Input id="select-multiple-chip" />}
-          renderValue={selected => (
-            <div>
-              {selected.map(value => (
-                <Chip key={value} label={value} />
-              ))}
-            </div>
-          )}
-        >
-          {['Availability', 'Bookings'].map(name => (
-            <MenuItem key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    )
-}
+  const stateDefinitions = {
+    available: {
+      color: null,
+      label: 'Available',
+    },
+    enquire: {
+      color: '#ffd200',
+      label: 'Enquire',
+    },
+    unavailable: {
+      selectable: false,
+      color: '#78818b',
+      label: 'Unavailable',
+    },
+  };
+  var currentBookings = []
 class Calendar extends React.Component {
     constructor(props) {
       super(props);
@@ -87,10 +94,10 @@ class Calendar extends React.Component {
             view: [],
             space: 0,
             info: '',
+            // currentBookings: [],
             // ****** values from firebase, use to update calendar *****
             // passed props have stored availability i.e this.props.profile.listings.availability
-            listingNames: [],
-            listingObjs: []
+            listings: []
       }
       console.log(this.state)
     }
@@ -100,53 +107,19 @@ class Calendar extends React.Component {
         console.log("INSIDE COMPONENTT DID MOUNT")
         if(this.props.profile.listings === undefined || this.props.profile.listings.length == 0) {
             console.log("there are no current listings")
+
         } else {
             this.props.firebase.auth.onAuthStateChanged((user)=> {
                 if(user) {
                     this.state.userID = user.uid 
-                    console.log(user.uid)
-
-                    let listingObjs = this.props.profile.listings
-                    console.log(listingObjs)
-            
-            
-                    // getting names of each listing
-                    let listingNames = []
-                    let nameToId = []
-                    for (let i = 0; i < listingObjs.length; i ++) {
-                        let obj = {
-                            name: listingObjs[i].name,
-                            id: listingObjs[i].id
-                            
-                        }
-                        console.log("INSIDE FOR LOOP")
-                        listingNames.push(listingObjs[i].name)
-                        nameToId.push(obj)
-
-                    }
-
-                    console.log("WHAT PROPERTIES SHOULD BE")
-                    console.log(listingNames)
-            
-                    // for (let i = 0; i < propertiesUnique.length; i ++) {
-                    //     console.log("HERE")
-                    //     console.log(propertiesUnique[i])
-                    //     this.state.properties.push(propertiesUnique[i])
-                    // }
-
-                    // this.state.properties = propertiesUnique
-                    this.setState({
-                        listingNames: listingNames,
-                        listingObjs: nameToId
-                    })
-                    console.log(this.state)
-
-    
-                } else {
-                    console.log('no valid ID')
                 }
     
-            });   
+            }); 
+            
+            this.setState({
+                listings: this.props.profile.listings,
+                
+            })
         }
     }
 
@@ -229,7 +202,7 @@ class Calendar extends React.Component {
     //     };
     // }
     availability = (value) => {
-        var availability = listings[0].availability;
+        var availability = this.state.listings[0].availability;
         var length = availability.length;
 
         for (var i = 0; i < length; i++) {
@@ -241,18 +214,29 @@ class Calendar extends React.Component {
         }
         return false;
     }
-    onSelect = dates => this.setState({dates})
-
+    // onSelect = dates => this.setState({dates})
+    handleSelect = (range, states) => {
+        // range is a moment-range object
+        this.setState({
+          value: range,
+          states: states,
+        });
+        console.log(this.state)
+      }
     booked = (date) => {
-        var bookings = listings[0].currentBookings;
-        for (var i = 0; i < bookings.length; i++) {
-            var start = new Date(bookings[i].start);
-            var end = new Date(bookings[i].end);
-            if (date < end && date > start) {
-                return true;
+        const {listings} = this.state
+        if (listings.length != 0 && currentBookings.length != 0 ) {
+            var bookings = listings[0].currentBookings;
+            for (var i = 0; i < bookings.length; i++) {
+                var start = new Date(bookings[i].start);
+                var end = new Date(bookings[i].end);
+                if (date < end && date > start) {
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
+  
     }
   render() {
       console.log(this.props)
@@ -272,9 +256,13 @@ class Calendar extends React.Component {
               alignItems: 'center'
           }
       } 
-
-      const { guest, info, space, add } = this.state;
-      const currentBookings = listings[space].currentBookings;
+    //   const listings = this.props.profile.listings
+      const { guest, info, space, add, listings} = this.state;
+      
+      if (listings.length != 0) {
+        currentBookings = listings[space].currentBookings;  
+      }
+ 
       const dateCellWrapper = ({children, value}) => 
             React.cloneElement(Children.only(children), {
                 className:  children.props.className + (this.availability(value) ? '' : ' rbc-off-range-bg'),
@@ -284,18 +272,8 @@ class Calendar extends React.Component {
                 //     // (value < moment().add(15, 'days') &&  value > moment().add(8, 'days'))) ? 'white' : 'lightgray',
                 //     backgroundColor: this.booked(value) ? 'white' : 'lightgray',
                 // }, 
-        });
-        // console.log(listings[0].availability)
-        const dayPropGetter = date => {
-            if (this.booked(date)) {
-                return {
-                    style: {
-                        backgroundColor: 'white',
-                        pointerEvents: 'none'
-                    }
-                }
-            }
-        }
+        });        
+
        return (
         <div className="App" style={{width: "100%"}}>
         <div style={style.head}>
@@ -325,17 +303,22 @@ class Calendar extends React.Component {
             </div>
         </div>
         {/* <DateRangePicker 
-        onSelect={this.onSelect}
-        value={this.state.dates}
+            onSelect={this.handleSelect}
+            value={this.state.value}
+            showLegend={true}
+            stateDefinitions={stateDefinitions}
+            defaultState="available"
+            selectionType='range'
+            dateStates={dateRanges}
+            singleDateRange={true}
+
         /> */}
-        {/* <DayPickerRangeController />  */}
-            {/* <BigCalendar
+            <BigCalendar
                 localizer={localizer}
                 defaultDate={new Date()}
                 defaultView="month"
                 events={currentBookings}
                 resizable
-                selectable
                 onSelectEvent={this.onEventClick}
                 onSelectSlot={(this.onSlotChange)}
                 // dayPropGetter={dayPropGetter}
@@ -347,9 +330,9 @@ class Calendar extends React.Component {
                     dateCellWrapper: dateCellWrapper,
                 }}
                 style={{ height: "80vh" }}
-            />*/}
+            />
             <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
-            <TimeSlotForm open={add} bookings={currentBookings} click={this.handleClickAdd('')} listingNames={this.state.listingNames} listingObjs={this.state.listingObjs} updateAvailability={this.props.updateAvailability} />
+            <TimeSlotForm open={add} bookings={currentBookings} click={this.handleClickAdd('')} profile={this.props.profile} updateAvailability={this.props.updateAvailability} />
       </div>
       )
   }

@@ -6,6 +6,10 @@ import HostInfo from './HostInfo';
 import { Host } from '../filter';
 import Calendar from './AdvoCalendar';
 
+// firebase
+import { compose } from 'recompose';
+import { withFirebase } from '../Firebase';
+
 import {Paper, Typography,Grid, Button, Card, CardContent, withStyles, Switch } from '@material-ui/core/'
 
 import moment from 'moment';
@@ -60,18 +64,59 @@ const styles = theme => ({
         fontWeight: 300
     }
   });
-export default withStyles(styles)(class extends React.Component {
+class Bookings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             view: 'list',
-            request: 'confirm'
+            type: 'confirmed',
+            listings: [],
+            currentBookings: [],
+            pedningBookings: []
+
         }
+
+        
     }
+
+    componentDidMount() {
+        let currentUser = "";
+        this.props.firebase.auth.onAuthStateChanged((user)=> {
+            if(user) {
+                currentUser = user.uid 
+                console.log(user.uid)
+                console.log(this.state)
+
+                let spacesQuery = this.props.firebase.listings();
+                spacesQuery.once('value').then((snapshot) =>{
+                    let obj = snapshot.val();                      
+                    const listings = Object.keys(obj).map(key => ({
+                        ...obj[key],
+                      }));    
+                    
+                    this.setState({
+                        listings: listings 
+                    })
+
+                    console.log(this.state)    
+                }) 
+
+
+                
+            } else {
+                console.log('no valid ID')
+            }
+
+        })
+
+    }
+
+
+
 
     handleRequestType = (value) => (event) => {
         this.setState({
-            request: value
+            type: value
         })
     }
 
@@ -99,9 +144,9 @@ export default withStyles(styles)(class extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { view, request } = this.state;
+        const { view, type } = this.state;
         let title = '';
-        if (request === 'confirm') {
+        if (type === 'confirmed') {
             title = 'CURRENT BOOKINGS'
         } else {
             title = 'PENDING BOOKINGS REQUESTS'
@@ -132,7 +177,7 @@ export default withStyles(styles)(class extends React.Component {
                                         </Button>
                                     </Link>
                                     <Link to="/advocate/currentbookings">
-                                        <Button variant="contained" color="primary" className={classes.button} id="button" onClick={this.handleRequestType('confirm')}>
+                                        <Button variant="contained" color="primary" className={classes.button} id="button" onClick={this.handleRequestType('confirmed')}>
                                             Current Bookings
                                         </Button>
                                     <Button variant="contained" color="primary" className={classes.button} id="button" onClick={this.handleRequestType('pending')}>
@@ -196,7 +241,7 @@ export default withStyles(styles)(class extends React.Component {
                                                                 </div>                                                                                                          
                                                             </CardContent>
                                                         </Card>
-                                                        <HostInfo type='booked' booking={booking} open={this.state.open} click={this.handleCardClick}></HostInfo>    
+                                                        <HostInfo type={type} booking={booking} open={this.state.open} click={this.handleCardClick}></HostInfo>    
                                                     </Grid>
                                                 )
                                             }
@@ -213,4 +258,11 @@ export default withStyles(styles)(class extends React.Component {
             </div>       
         )
     }
-})
+}
+
+const CurrentBookings = compose(
+    withStyles(styles),
+    withFirebase,
+  )(Bookings);
+
+  export default CurrentBookings;

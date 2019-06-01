@@ -47,7 +47,7 @@ const config = {
     listings = () => this.db.ref('listings');
 
     listing = uid => this.db.ref(`listings/${uid}`);
-    addAvailToListing = id => this.db.ref(`listings/${id}/listObj/availability`)
+    addAvailToListing = id => this.db.ref(`listings/${id}/availability`)
     
     survivors = () => this.db.ref('survivors');
 

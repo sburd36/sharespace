@@ -60,19 +60,21 @@ const styles = theme => ({
 });
 
 const INFORMATION = {
-	phone: '',
-	gender: '',
-	languages: [],
-	ethnicities: [],
-	religion: [],
-	listings: [],
-	story: '',
+	
 };
 
 class SignUpFormBase extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { INFORMATION, gender: '' }
+		this.state = { 
+			phone: '',
+			gender: '',
+			languages: [],
+			ethnicities: [],
+			religion: [],
+			listings: [],
+			story: ''
+		}
 	}
 
 	onSubmit = event => {
@@ -95,7 +97,7 @@ class SignUpFormBase extends Component {
 				  .then(() => {
 					this.props.updateProfile(this.state)
 					this.setState({...INFORMATION});
-					this.props.history.push('/hostdash')
+					this.props.history.push('/host/hostdash')
 				  })
 				  .catch(error => {
 					this.setState({ error });
