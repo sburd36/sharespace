@@ -24,30 +24,7 @@ import { Checkbox } from '@material-ui/core';
 moment.locale('en-GB');
 
 const localizer = BigCalendar.momentLocalizer(moment)
-const dateRanges = [
-    {
-      state: 'enquire',
-      range: moment.range(
-        moment().add(2, 'weeks').subtract(5, 'days'),
-        moment().add(2, 'weeks').add(6, 'days')
-      ),
-    },
-    {
-      state: 'unavailable',
-      range: moment.range(
-        moment().add(3, 'weeks'),
-        moment().add(3, 'weeks').add(5, 'days')
-      ),
-    },
-    {
-        state: 'unavailable',
-        range: moment.range(
-          moment().add(5, 'weeks'),
-          moment().add(5, 'weeks').add(5, 'days')
-        ),
-      },
-  ];
-
+  
   const stateDefinitions = {
     available: {
       color: null,
@@ -62,6 +39,11 @@ const dateRanges = [
       color: '#78818b',
       label: 'Unavailable',
     },
+    unavailable: {
+        selectable: false,
+        color: '#78818b',
+        label: 'Unavailable',
+      },
   };
   var currentBookings = []
 class Calendar extends React.Component {
@@ -272,8 +254,20 @@ class Calendar extends React.Component {
                 //     // (value < moment().add(15, 'days') &&  value > moment().add(8, 'days'))) ? 'white' : 'lightgray',
                 //     backgroundColor: this.booked(value) ? 'white' : 'lightgray',
                 // }, 
-        });        
-
+        });       
+        let dateRanges = []
+        for (var i = 0; i < currentBookings.length; i+=2) {
+            var bookedDates = {
+                state: 'unavailable',
+                range: 
+                moment.range(
+                    currentBookings[i].start,
+                    currentBookings[i].end
+                )
+            }
+            dateRanges[i] = bookedDates;
+        }
+        
        return (
         <div className="App" style={{width: "100%"}}>
         <div style={style.head}>
@@ -302,7 +296,7 @@ class Calendar extends React.Component {
                 </FormControl>
             </div>
         </div>
-        {/* <DateRangePicker 
+        <DateRangePicker 
             onSelect={this.handleSelect}
             value={this.state.value}
             showLegend={true}
@@ -311,9 +305,9 @@ class Calendar extends React.Component {
             selectionType='range'
             dateStates={dateRanges}
             singleDateRange={true}
-
-        /> */}
-            <BigCalendar
+            minimumDate={new Date()}
+        />
+            {/* <BigCalendar
                 localizer={localizer}
                 defaultDate={new Date()}
                 defaultView="month"
@@ -330,7 +324,7 @@ class Calendar extends React.Component {
                     dateCellWrapper: dateCellWrapper,
                 }}
                 style={{ height: "80vh" }}
-            />
+            /> */}
             <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
             <TimeSlotForm open={add} bookings={currentBookings} click={this.handleClickAdd('')} profile={this.props.profile} updateAvailability={this.props.updateAvailability} />
       </div>

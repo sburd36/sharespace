@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Button, Dialog, DialogActions, DialogContent, FormControl, Select, OutlinedInput, MenuItem, InputLabel, withStyles} from '@material-ui/core/';
+import { Button, Dialog, DialogActions, DialogContent, FormControl, Select, OutlinedInput, withStyles, Radio, RadioGroup, FormControlLabel, MenuItem} from '@material-ui/core/';
 import moment from 'moment';
 import { withFirebase } from '../Firebase';
 
@@ -173,6 +173,7 @@ class Availability extends React.Component {
         console.log(this.state)
     };
 
+
     handleSelect = (range, states) => {
         // range is a moment-range object
         this.setState({
@@ -207,49 +208,20 @@ class Availability extends React.Component {
                             )
                         })}
                     </Select>
-                </FormControl>
-                <div style={{display: 'flex', padding: '1rem'}}>
-                        {/* <TextField
-                        id="date"
-                        label="Start Date"
-                        type="date"
-                        value={start}
-                        className={classes.textField}
-                        onChange={this.handleInputChange('start')}
-                        InputLabelProps={{
-                            shrink: true,
-                            className: classes.floatingLabelFocusStyle,
-                        }}
-                        inputProps={{
-                            min: moment().format("YYYY-MM-DD"),
-                        }}
+                </FormControl>     
+                <ToggleOption /> 
+                {/* <div style={{display: 'flex', padding: '1rem'}}> */}
+                    <DateRangePicker 
+                        onSelect={this.handleSelect}
+                        showLegend={true}
+                        singleDateRange={true}
+                        value={this.state.value}
+                        stateDefinitions={stateDefinitions}
+                        defaultState="available"
+                        selectionType='range'
+                        dateStates={dateRanges}
                     />
-                    <TextField
-                        id="date"
-                        label="End Date"
-                        type="date"
-                        value={end}
-                        className={classes.textField}
-                        onChange={this.handleInputChange('end')}
-                        InputLabelProps={{
-                            shrink: true,
-                            className: classes.floatingLabelFocusStyle,
-                        }}
-                        inputProps={{
-                            min: start
-                        }}
-                    /> */}
-                            <DateRangePicker 
-                                onSelect={this.handleSelect}
-                                showLegend={true}
-                                singleDateRange={true}
-                                value={this.state.value}
-                                stateDefinitions={stateDefinitions}
-                                defaultState="available"
-                                selectionType='range'
-                                dateStates={dateRanges}
-                            />
-                </div>
+                {/* </div> */}
             </>
         )
     }
@@ -265,9 +237,7 @@ class Availability extends React.Component {
                 <Dialog
                     open={this.props.open}
                     onClose={this.props.click}
-                    scroll='paper'
                     maxWidth='xl'
-                    aria-labelledby="scroll-dialog-title"
                 >
                     <form onSubmit={this.onSubmit}>
                         <DialogContent className={classes.content}>
@@ -287,7 +257,27 @@ class Availability extends React.Component {
         )
     }
 }
-
+function ToggleOption() {
+    const [value, setValue] = React.useState('female');
+    const style = {
+        group: {
+            flexDirection: 'row',
+            justifyContent: 'space-around'
+        }
+    }
+    return (
+            <RadioGroup
+                    aria-label="Gender"
+                    name="gender1"
+                    value={value}
+                    onChange={(event)=> setValue(event.target.value)}
+                    style={style.group}
+                >
+                <FormControlLabel value="addAvail" control={<Radio />} label="Add Availability" />
+                <FormControlLabel value="addUnavail" control={<Radio />} label="Block Dates" />
+            </RadioGroup>
+    )
+}
 const AddAvailabiliity = compose(
     withStyles(styles),
     withFirebase,
