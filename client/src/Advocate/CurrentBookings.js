@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import purple from '@material-ui/core/colors/purple';
 
 import women from "../img/icon2.png";
 import HostInfo from './HostInfo';
@@ -60,6 +61,7 @@ const styles = theme => ({
         fontWeight: 300
     }
   });
+
 export default withStyles(styles)(class extends React.Component {
     constructor(props) {
         super(props);
@@ -132,10 +134,12 @@ export default withStyles(styles)(class extends React.Component {
                                         </Button>
                                     </Link>
                                     <Link to="/advocate/currentbookings">
-                                        <Button variant="contained" color="primary" className={classes.button} id="button" onClick={this.handleRequestType('confirmed')}>
-                                            Current Bookings
-                                        </Button>
-                                    <Button variant="contained" color="primary" className={classes.button} id="button" onClick={this.handleRequestType('pending')}>
+                                        <div>
+                                            <Button variant="contained" color="primary" className={classes.button} id="button" onClick={this.handleRequestType('confirmed')}>
+                                                Current Bookings
+                                            </Button>
+                                        </div>
+                                    <Button variant="contained" color="primary" className={classes.button} style={{fontSize: "12pt"}}id="button" onClick={this.handleRequestType('pending')}>
                                         Pending Booking Requests
                                     </Button>
                                     </Link>
@@ -149,13 +153,18 @@ export default withStyles(styles)(class extends React.Component {
                         </Grid>
                         <Grid key={2} item>
                             <Paper className={classes.bookings} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}} >
-                                <div style={{display: 'flex', justifyContent: 'space-between', padding: '30px'}}>
+                                <div style={{display: 'flex', justifyContent: 'space-between', padding: '30px', paddingBottom: '20px'}}>
                                     <h3 class="mt-4">
                                     {title}
                                     </h3>
                                     <div>
-                                        Show Calendar
-                                        <Switch value="view" onChange={this.handleSwitchView}/>
+                                        <p style={{fontSize: "12pt", fontWeight: "300", paddingTop: "30px"}}>
+                                            Show Calendar
+                                            <Switch 
+                                                value="view"
+                                                onChange={this.handleSwitchView}/>
+                                        </p>
+                                        
                                     </div>
                                 </div>
                                 <Grid container spacing={3}>

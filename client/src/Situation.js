@@ -1,7 +1,7 @@
 import React from "react";
-import cart from "./img/shoppingcart.jpg"
-import women from "./img/53-.jpg"
-import connect from "./img/Connecting.jpg"
+import cart from "./img/connect.png"
+import women from "./img/group.png"
+import connect from "./img/need-help.png"
 import {BrowserRouter as Router, Route, Link} from "react-router-dom"
 
 export default class Signup extends React.Component {

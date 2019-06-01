@@ -234,3 +234,12 @@ label {
     align-items: center;
 }
 
+.card {
+    //align-content: center;
+    .card-img-top {
+        //max-height: 275px;
+        margin: 20px;
+        width: 75%;
+        //padding:20px;
+    }
+}

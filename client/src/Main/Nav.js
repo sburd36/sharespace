@@ -64,7 +64,7 @@ const NavigationNonAuth = () => (
     </div>     
     <div class="d-flex align-items-center">
         <form id="contact" class="d-flex justify-content-end align-items-center" action="https://formspree.io/sharespace.app@gmail.com" method="POST">
-            <div class="p-2"><b>JOIN US</b></div>
+            <div class="p-2">JOIN US</div>
             <div class="form-group pt-3 pr-2">
                 <input id="emailAddress" type="email" class="form-control" placeholder="Enter email" name="_replyto" aria-label="Name" aria-describedby="basic-addon1"
                     required />

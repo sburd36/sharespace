@@ -72,9 +72,9 @@ export default class Nav extends React.Component {
                         Contact cards show booking dates, host name, host location, guest number, and advocate name. 
                         Customer management relationships for housing advocates has never been more accessible.
                         </p>
-                        <Link to='/signup'>
+                        {/* <Link to='/situation'>
                             <button class="btn btn-teal-fill">SIGN UP</button>
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             </section>
@@ -87,9 +87,9 @@ export default class Nav extends React.Component {
                         measure impact and demonstrate their need for competitive support or grant programs 
                         from King County. We provide a platform to view your impact and collect data to use when
                         applying to grants.</p>
-                        <Link to='/signup'>
+                        {/* <Link to='/situation'>
                             <button class="btn btn-teal-fill">SIGN UP</button>
-                        </Link>
+                        </Link> */}
                         <div>
                         </div>
                     </div>
@@ -99,6 +99,39 @@ export default class Nav extends React.Component {
                 </div>
             </section>
 
+            <div class="divider mb-3"></div> 
+
+            <div class="container p-4 d-md-flex">
+                <form id="contact" class="container" action="https://formspree.io/sharespace.app@gmail.com" method="POST">
+                    <h3 class="mt-5">Send Us a Message</h3>
+                    <div class="form-group">
+                        <label for="email" class="mb-0">
+                            Email Address
+                            <label class="text-danger">*</label>
+                        </label>
+                        <input id="emailAddress" type="email" class="form-control" placeholder="Your email" name="_replyto" aria-label="Name" aria-describedby="basic-addon1"
+                            required />
+                    </div>
+                    <div class="form-group">
+                        <label for="subject" class="mb-0">
+                            Subject
+                            <label class="text-danger">*</label>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Title your message" name="subject" aria-label="Name" aria-describedby="basic-addon1"
+                            required></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment" class="mb-0">
+                            Message
+                            <label class="text-danger">*</label>
+                        </label>
+                        <textarea class="form-control" placeholder="Type your message here" name="comment" rows="5" id="comment" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-teal-fill">Submit</button>
+                    <input type="hidden" name="_next" value="/"></input>
+                </form>
+                </div>
+        <div class="divider mb-3"></div>  
             </>
         )
     }
