@@ -248,8 +248,10 @@ class Availability extends React.Component {
             </>
         )
     }
+
     render() {
         const { classes } = this.props;
+        const { type } = this.state;
 
         return (
             <div class="d-flex justify-content-around">
@@ -268,9 +270,15 @@ class Availability extends React.Component {
                             
                             </DialogContent>
                         <DialogActions >
-                            <Button type="submit" variant="contained"  color="primary">
-                                Add
-                            </Button>
+                            {
+                                type === 'addAvail' ?
+                                <Button type="submit" variant="contained"  color="primary">
+                                    Add
+                                </Button> :
+                                <Button type="submit" variant="contained" >
+                                    Block
+                                </Button>
+                            }
                         </DialogActions>
                     </form>
                 </Dialog>
