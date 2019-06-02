@@ -24,24 +24,20 @@ moment.locale('en-GB');
 const localizer = BigCalendar.momentLocalizer(moment)
   
   const stateDefinitions = {
-    available: {
-      color: null,
-      label: 'Available',
-    },
-    enquire: {
-      color: '#ffd200',
-      label: 'Enquire',
-    },
     unavailable: {
+      color: '#ffd200',
+      label: 'Blocked',
+    },
+    available: {
+    selectable: false,
+      color: null,
+      label: 'Available Dates',
+    },
+    booked: {
       selectable: false,
       color: '#78818b',
-      label: 'Unavailable',
+      label: 'Booked',
     },
-    unavailable: {
-        selectable: false,
-        color: '#78818b',
-        label: 'Unavailable',
-      },
   };
 
 export default class Calendar extends React.Component {
@@ -73,7 +69,7 @@ export default class Calendar extends React.Component {
       this.state = {
             view: [],
             space: 0,
-            info: ''
+            info: '',
       }
       console.log(this.state)
     }
@@ -172,11 +168,12 @@ export default class Calendar extends React.Component {
     // onSelect = dates => this.setState({dates})
     handleSelect = (range, states) => {
         // range is a moment-range object
+        console.log(states)
         this.setState({
           value: range,
           states: states,
         });
-        console.log(this.state)
+        // console.log(this.state)
       }
     booked = (date) => {
         var bookings = listings[0].currentBookings;
@@ -209,6 +206,7 @@ export default class Calendar extends React.Component {
 
       const { guest, info, space, add } = this.state;
       const currentBookings = listings[space].currentBookings;
+      const availability = listings[space].availability;
       const dateCellWrapper = ({children, value}) => 
             React.cloneElement(Children.only(children), {
                 className:  children.props.className + (this.availability(value) ? '' : ' rbc-off-range-bg'),
@@ -219,19 +217,33 @@ export default class Calendar extends React.Component {
                 //     backgroundColor: this.booked(value) ? 'white' : 'lightgray',
                 // }, 
         });       
+
         let dateRanges = []
-        for (var i = 0; i < currentBookings.length; i+=2) {
+        for (var i = 0; i < currentBookings.length; i++) {
             var bookedDates = {
-                state: 'unavailable',
-                range: 
-                moment.range(
-                    currentBookings[i].start,
-                    currentBookings[i].end
-                )
+                state: 'booked',
+                range: moment.range(
+                        currentBookings[i].start,
+                        currentBookings[i].end
+                        )
             }
             dateRanges[i] = bookedDates;
         }
-        
+        var length = dateRanges.length;
+        for (var i = 0; i < availability.length; i++) {
+            var availableDates = {
+                state: 'available',
+                range: moment.range(
+                    availability[i].start,
+                    availability[i].end
+                )
+            }
+            dateRanges[length + i] = availableDates;
+        }
+
+        dateRanges.sort((a, b) => moment(a.range.start).isBefore(moment(b.range.start)) ? -1 : 1)
+
+        console.log(dateRanges)
        return (
         <div className="App" style={{width: "100%"}}>
         <div style={style.head}>
@@ -265,7 +277,7 @@ export default class Calendar extends React.Component {
             value={this.state.value}
             showLegend={true}
             stateDefinitions={stateDefinitions}
-            defaultState="available"
+            defaultState="unavailable"
             selectionType='range'
             dateStates={dateRanges}
             singleDateRange={true}

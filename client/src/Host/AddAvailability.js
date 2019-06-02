@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Dialog, DialogActions, DialogContent, FormControl, Select, OutlinedInput, withStyles, Radio, RadioGroup, FormControlLabel} from '@material-ui/core/';
+import { Button, Dialog, DialogActions, DialogContent, FormControl, Select, OutlinedInput, withStyles, Radio, RadioGroup, FormControlLabel, MenuItem} from '@material-ui/core/';
 import moment from 'moment';
 import { withFirebase } from '../Firebase';
 
@@ -17,12 +17,12 @@ const styles = theme => ({
 })
 const dateRanges = [
     {
-      state: 'enquire',
-      range: moment.range(
-        moment().add(2, 'weeks').subtract(5, 'days'),
-        moment().add(2, 'weeks').add(6, 'days')
-      ),
-    },
+        state: 'enquire',
+        range: moment.range(
+          moment().add(1, 'weeks').subtract(3, 'days'),
+          moment().add(2, 'weeks').subtract(5, 'days')
+        ),
+      },
     {
       state: 'unavailable',
       range: moment.range(
