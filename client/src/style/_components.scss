@@ -86,6 +86,18 @@ p {
     }
 }
 
+#btn-drk-blue-fill {
+    color: white;
+    background-color: $dark-blue;
+    border: 1.5px solid $dark-blue;
+    text-transform: none;
+
+    &:hover {
+        color: $dark-blue;
+        background-color: white;
+    }
+}
+
 .divider {
     margin: 45px auto 0;
     width: 300px;
@@ -186,6 +198,7 @@ a {
     text-transform: none;
     box-shadow: none;
     font-family: Source Sans Pro;
+    color: white;
 
     &:hover {
         color: #202e57;
@@ -199,6 +212,7 @@ a {
     text-decoration: none;
     text-transform: none;
     box-shadow: none;
+    color: white;
 
     &:hover {
         color: #aaaaaa;

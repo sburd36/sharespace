@@ -52,8 +52,8 @@ class PersonalSelect extends React.Component {
         return (
             Personal.map((data) => {
                 return( 
-                    <div style={{padding: "10px 0px"}}>
-                        {data.name}
+                    <div style={{padding: "5px 0px"}}>
+                        <p style={{fontSize: "10pt", color: "#ea6648"}}>{data.name}</p>
                         <Select
                             closeMenuOnSelect={false}
                             components={Animated()}

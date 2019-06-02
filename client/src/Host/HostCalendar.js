@@ -16,36 +16,11 @@ import 'react-dates/initialize';
 import { Button, Select, MenuItem, Input, FormControl, InputLabel, Chip, Dialog, DialogContent, DialogActions} from '@material-ui/core/';
 
 import { listings } from '../filter';
+import { Grid } from '@material-ui/core';
 
 moment.locale('en-GB');
 
 const localizer = BigCalendar.momentLocalizer(moment)
-let stateDefinitions = {
-    booked: {
-      selectable: false,
-      color: '#78818b',
-      label: 'Booked',
-    },
-  };
-
-const type = 'block';
-stateDefinitions.available = {
-    color: null,
-    label: 'Available Dates',
-}
-
-stateDefinitions.unavailable = {
-    color: '#ffd200',
-    label: 'Currently Blocked',
-}
-
-if (type === 'add') {
-    stateDefinitions.available.selectable = false
-} else {
-    stateDefinitions.unavailable.selectable = false
-}
-  
-let dateRanges = []
 
 export default class Calendar extends React.Component {
     constructor(props) {
@@ -244,16 +219,17 @@ export default class Calendar extends React.Component {
           head: {
             display: 'flex',
             justifyContent: 'space-between',
-            padding: '10px'
+            padding: '20px'
           },
           view: {
             width: '10rem'
           },
           controls: {
-              width: '50%',
+              //width: '50%',
               display: 'flex',
               justifyContent: 'around',
-              alignItems: 'center'
+              alignItems: 'center',
+              marginRight: "20px"
           }
       } 
 
@@ -271,40 +247,15 @@ export default class Calendar extends React.Component {
                 // }, 
         });       
 
-        for (var i = 0; i < currentBookings.length; i++) {
-            var bookedDates = {
-                state: 'booked',
-                range: moment.range(
-                        currentBookings[i].start,
-                        currentBookings[i].end
-                        )
-                        // range : {
-                        //     start:
-                        //     end:
-                        // }
-            }
-            dateRanges[i] = bookedDates;
-        }
-        var length = dateRanges.length;
-        for (var i = 0; i < availability.length; i++) {
-            var availableDates = {
-                state: 'available',
-                range: moment.range(
-                    availability[i].start,
-                    availability[i].end
-                )
-            }
-            dateRanges[length + i] = availableDates;
-        }
-
-        dateRanges.sort((a, b) => moment(a.range.start).isBefore(moment(b.range.start)) ? -1 : 1)
-
-        console.log(dateRanges)
-       return (
+        return (
         <div className="App" style={{width: "100%"}}>
         <div style={style.head}>
-            <Button id="button" variant="contained" color="primary" onClick={this.handleClickAdd('')} >
-                <Add /> 
+            <Button 
+                id="button"
+                style={{fontSize: "14pt", padding: "0px 25px"}}
+                variant="contained"
+                onClick={this.handleClickAdd('')} >
+                <Add style={{width: "2em"}}/> 
                 Add Availability
             </Button>
             <div style={style.controls}>
@@ -328,38 +279,34 @@ export default class Calendar extends React.Component {
                 </FormControl>
             </div>
         </div>
-        <DateRangePicker 
-            onSelect={this.handleSelect}
-            value={this.state.value}
-            showLegend={true}
-            stateDefinitions={stateDefinitions}
-            defaultState="unavailable"
-            selectionType='range'
-            dateStates={dateRanges}
-            singleDateRange={true}
-            minimumDate={new Date()}
-            selectedLabel={selectedLabel}
-        />
-            {/* <BigCalendar
-                localizer={localizer}
-                defaultDate={new Date()}
-                defaultView="month"
-                events={currentBookings}
-                resizable
-                onSelectEvent={this.onEventClick}
-                // dayPropGetter={dayPropGetter}
-                // eventPropGetter={(this.eventStyleGetter)}
 
-                components={{
-                    // you have to pass your custom wrapper here
-                    // so that it actually gets used
-                    dateCellWrapper: dateCellWrapper,
-                }}
-                style={{ height: "80vh" }}
-            /> */}
+        <Grid container>
+            <div className="calendar">
+                <BigCalendar
+                    localizer={localizer}
+                    defaultDate={new Date()}
+                    defaultView="month"
+                    events={currentBookings}
+                    resizable
+                    onSelectEvent={this.onEventClick}
+                    onSelectSlot={(this.onSlotChange)}
+                    views={['month', 'week', 'day']}
+                    // dayPropGetter={dayPropGetter}
+                    // eventPropGetter={(this.eventStyleGetter)}
+
+                    components={{
+                        // you have to pass your custom wrapper here
+                        // so that it actually gets used
+                        dateCellWrapper: dateCellWrapper,
+                    }}
+                    style={{ height: "70vh" }}
+                />
+            </div>
+        </Grid>
             <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
-            <AddAvailabiliity open={add} bookings={currentBookings} click={this.handleClickAdd('')} listings={listings} />
+            <AddAvailabiliity open={add} space={space} click={this.handleClickAdd('')} listings={listings} />
       </div>
+      
       )
   }
 }

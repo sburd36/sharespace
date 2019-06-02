@@ -128,11 +128,11 @@ export default withStyles(styles)(class extends React.Component {
                                             New Booking
                                         </Button>
                                     </Link>
-                                    <Link to="/bookings">
+                                    {/* <Link to="/bookings">
                                         <Button variant="contained" color="primary" className={classes.button} id="button">
                                             Refer a Host
                                         </Button>
-                                    </Link>
+                                    </Link> */}
                                     <Link to="/advocate/currentbookings">
                                         <div>
                                             <Button variant="contained" color="primary" className={classes.button} id="button" onClick={this.handleRequestType('confirmed')}>
@@ -148,6 +148,10 @@ export default withStyles(styles)(class extends React.Component {
                                             View Analytics
                                         </Button>
                                     </Link> */}
+                                    {/* Terms and Conditions */}
+                                    <div style={{bottom: -100, position: "absolute", color: "#7e95cd"}}>
+                                        <a>Terms and Conditions</a>
+                                    </div>
                                 </Paper>
                             </Grid>
                         </Grid>
@@ -212,7 +216,7 @@ export default withStyles(styles)(class extends React.Component {
                                         )}
                                     </>
                                     :
-                                    <Calendar />
+                                    <Calendar/>
                                 }
                                     
                                 </Grid>

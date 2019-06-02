@@ -14,6 +14,7 @@ import Check from '../img/check.png'
 import Meet from '../img/meet.png'
 import Eval from '../img/evaluate.png'
 import Online from '../img/online-support.png'
+import YWCA from '../img/YWCA.png'
 
 
 export default class Landing extends React.Component {
@@ -141,6 +142,16 @@ export default class Landing extends React.Component {
                                     <h5>Mary's Place</h5>
                                     <p class="font-light">We spent time with Mary's Place speaking with housing advocates and visitors
                                     of the day shelter to receive critical feedback on the direction of our project.</p>
+                                </div>
+                            </div>
+
+                            <div class="row org">
+                                <img class="col" src={YWCA}></img>
+                                <div class="col">
+                                    <h5>YWCA</h5>
+                                    <p class="font-light">The YWCA of King County has supported us through the entire course of the project.
+                                    We have had the opportunity to volunteer with them, attend their annual luncheon and connect with their housing advocates.
+                                     </p>
                                 </div>
                             </div>
 
