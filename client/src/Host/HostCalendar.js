@@ -5,7 +5,6 @@ import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../style/App.css";
-import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import Add from '@material-ui/icons/AddCircleOutline';
 import AddAvailabiliity from './AddAvailability';
 
@@ -17,28 +16,36 @@ import 'react-dates/initialize';
 import { Button, Select, MenuItem, Input, FormControl, InputLabel, Chip, Dialog, DialogContent, DialogActions} from '@material-ui/core/';
 
 import { listings } from '../filter';
-import { Checkbox } from '@material-ui/core';
 
 moment.locale('en-GB');
 
 const localizer = BigCalendar.momentLocalizer(moment)
-  
-  const stateDefinitions = {
-    unavailable: {
-      color: '#ffd200',
-      label: 'Blocked',
-    },
-    available: {
-    selectable: false,
-      color: null,
-      label: 'Available Dates',
-    },
+let stateDefinitions = {
     booked: {
       selectable: false,
       color: '#78818b',
       label: 'Booked',
     },
   };
+
+const type = 'block';
+stateDefinitions.available = {
+    color: null,
+    label: 'Available Dates',
+}
+
+stateDefinitions.unavailable = {
+    color: '#ffd200',
+    label: 'Currently Blocked',
+}
+
+if (type === 'add') {
+    stateDefinitions.available.selectable = false
+} else {
+    stateDefinitions.unavailable.selectable = false
+}
+  
+let dateRanges = []
 
 export default class Calendar extends React.Component {
     constructor(props) {
@@ -70,46 +77,30 @@ export default class Calendar extends React.Component {
             view: [],
             space: 0,
             info: '',
+            selectedLabel: 'Block'
       }
       console.log(this.state)
     }
 
-    onEventResize = (type, { event, start, end, allDay }) => {
-        this.setState(state => {
-            state.events[0].start = start;
-            state.events[0].end = end;
-            return { events: state.events };
-        });
-    };
 
-    onEventDrop = ({ event, start, end, allDay }) => {
-        this.setState(state => {
-            console.log(event)
-            state.events[event.id].start = start;
-            state.events[event.id].end = end;
-            return { events: state.events };
-        });
-        // console.log(start)
-    };
-
-    /* When you choose a particular slot on the calendar */
-    onSlotChange = (slotInfo) => {
-      var start = moment(slotInfo.start.toLocaleString()).format("YYYY-MM-DDm:ss");
-      var end = moment(slotInfo.end.toLocaleString()).format("YYYY-MM-DDm:ss");
-    //   var newAvailability = {
-    //       id: .length,
-    //       start: start,
-    //       end: end,
-    //       title: slotInfo.host.information.name
+    // /* When you choose a particular slot on the calendar */
+    // onSlotChange = (slotInfo) => {
+    //   var start = moment(slotInfo.start.toLocaleString()).format("YYYY-MM-DDm:ss");
+    //   var end = moment(slotInfo.end.toLocaleString()).format("YYYY-MM-DDm:ss");
+    // //   var newAvailability = {
+    // //       id: .length,
+    // //       start: start,
+    // //       end: end,
+    // //       title: slotInfo.host.information.name
+    // //   }
+    //   console.log(start); //shows the start time chosen
+    //   console.log(end); //shows the end time chosen
+    //   return{
+    //       style: {
+    //           backgroundColor: '#9138fd'
+    //       }
     //   }
-      console.log(start); //shows the start time chosen
-      console.log(end); //shows the end time chosen
-      return{
-          style: {
-              backgroundColor: '#9138fd'
-          }
-      }
-    }
+    // }
 
     /* When you click on an already booked slot */
     onEventClick = (event) => {
@@ -168,7 +159,69 @@ export default class Calendar extends React.Component {
     // onSelect = dates => this.setState({dates})
     handleSelect = (range, states) => {
         // range is a moment-range object
-        console.log(states)
+
+        var availability = listings[this.state.space].availability
+
+        var rangeStart = moment(range.start['_i'].toLocaleString()).format("YYYY-MM-DD");
+        var rangeEnd = moment(range.end['_i'].toLocaleString()).format("YYYY-MM-DD");
+
+        // sort availability
+        availability.sort((a, b) => moment(a.start).isBefore(moment(b.start)) ? -1 : 1)
+        let notFound = true;
+                // START CODE FOR ADD AVAIABILITY (HERE FOR TESTING PURPOSE!!)
+                // for (var i = 0; i < availability.length; i++) {
+                //     // console.log(availability[i].end)
+                //     var availStart = moment(availability[i].start.toLocaleString()).format("YYYY-MM-DD");
+                //     var availEnd  = moment(availability[i].end.toLocaleString()).format("YYYY-MM-DD");
+                //     let nextAvailStart = '';
+
+                //     if (availEnd === rangeStart) {
+                //         if (i < availability.length - 1) {
+                //             nextAvailStart = moment(availability[i + 1].start.toLocaleString()).format("YYYYMMDD");
+                //         } 
+                //         // full range and grab/delete TWO availabilities and add ONE new availability
+                //         if (nextAvailStart === rangeEnd) {
+                //             console.log('CASE 1');
+                //             notFound = false;
+                //         } else {  // delete current availability and add new one with (availStart and rangeEnd)
+                //             console.log('CASE 2')
+                //             notFound = false;
+                //         }
+                //     } else if (notFound && availStart === rangeEnd) { // delete current availability and add new one with (rangeStart and availEnd)
+                //         console.log('CASE 3')
+                //         notFound = false;
+                //     } 
+                // }
+                // if (notFound) { // add new availability with (rangeStart and rangeEnd)
+                //     console.log('LAST CASE')
+                // }
+        // END OF CODE FOR ADD AVAILABILITY
+        for (var i = 0; i < availability.length; i++) {
+            var availStart = moment(availability[i].start.toLocaleString()).format("YYYY-MM-DD");
+            var availEnd  = moment(availability[i].end.toLocaleString()).format("YYYY-MM-DD");
+
+            if (new Date(rangeStart) >= new Date(availStart) && new Date(rangeEnd) <= new Date(availEnd)) {
+                console.log('HELLO')
+                if (rangeStart === availStart) {
+                    if (rangeEnd === availEnd) { // whole availability slot blocked so DELETE 
+                        console.log('CASE 1');
+                        notFound = false;
+                    } else { // first half of availability selected, DELETE and INSERT (rangeEnd -> availEnd)
+                        console.log('CASE 2');
+                        notFound = false;
+                    }
+                } else if (rangeEnd === availEnd) { // second half selected, DELETE and INSERT (availStart -> rangeStart)
+                    console.log('CASE 3')
+                } else {
+                    console.log('CASE 4')
+                }
+            }
+        }
+        // START CODE FOR BLOCKING 
+
+        // END CODE FOR BLOCKING
+
+        // console.log(availability)
         this.setState({
           value: range,
           states: states,
@@ -204,7 +257,7 @@ export default class Calendar extends React.Component {
           }
       } 
 
-      const { guest, info, space, add } = this.state;
+      const { guest, info, space, add, selectedLabel } = this.state;
       const currentBookings = listings[space].currentBookings;
       const availability = listings[space].availability;
       const dateCellWrapper = ({children, value}) => 
@@ -218,7 +271,6 @@ export default class Calendar extends React.Component {
                 // }, 
         });       
 
-        let dateRanges = []
         for (var i = 0; i < currentBookings.length; i++) {
             var bookedDates = {
                 state: 'booked',
@@ -226,6 +278,10 @@ export default class Calendar extends React.Component {
                         currentBookings[i].start,
                         currentBookings[i].end
                         )
+                        // range : {
+                        //     start:
+                        //     end:
+                        // }
             }
             dateRanges[i] = bookedDates;
         }
@@ -282,6 +338,7 @@ export default class Calendar extends React.Component {
             dateStates={dateRanges}
             singleDateRange={true}
             minimumDate={new Date()}
+            selectedLabel={selectedLabel}
         />
             {/* <BigCalendar
                 localizer={localizer}
@@ -290,7 +347,6 @@ export default class Calendar extends React.Component {
                 events={currentBookings}
                 resizable
                 onSelectEvent={this.onEventClick}
-                onSelectSlot={(this.onSlotChange)}
                 // dayPropGetter={dayPropGetter}
                 // eventPropGetter={(this.eventStyleGetter)}
 
