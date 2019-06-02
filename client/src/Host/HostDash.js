@@ -206,7 +206,7 @@ const styles = theme => ({
                                         Current Bookings
                                     </Button>
                                     <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('bookings', 'pending')}>
-                                        Bookings Requests
+                                        Booking Requests
                                     </Button>
                                     <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('profile')}>
                                         My Profile
@@ -214,6 +214,11 @@ const styles = theme => ({
                                     <Button id="button" variant="contained" color="primary" className={classes.button} onClick={this.handleView('listings')}>
                                         My Listings
                                     </Button>
+                                    
+                                    {/* Terms and Conditions */}
+                                    <div style={{bottom: -100, position: "absolute", color: "#7e95cd"}}>
+                                        <a>Terms and Conditions</a>
+                                    </div>
                                 </Paper>
                                 <Paper style={style.navigator}>
                                     
@@ -222,7 +227,7 @@ const styles = theme => ({
                         </Grid>
                         <Grid key={2} item>
                             <Paper className={classes.main} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}}>
-                                <Typography className="pt-5 pl-5" variant="h4" gutterBottom> 
+                                <Typography className="pt-5 pl-5" variant="h4" gutterBottom>
                                 </Typography>
                                 <Grid container spacing={6}>
                                 { 

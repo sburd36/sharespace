@@ -42,7 +42,8 @@ const styles = theme => ({
         //paddingTop: "6px"
         marginRight: "10px",
         marginTop: "10px",
-        marginBottom: "10px"
+        marginBottom: "10px",
+        fontSize: "12pt"
     },
     body: {
         color: "#202e57",
@@ -95,20 +96,23 @@ export default withStyles(styles)(class extends React.Component {
                     aria-labelledby="scroll-dialog-title"
                 >
                     <DialogContent>
-                        <h3>{host.homeName}</h3>
+                        <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                            <h3>{host.homeName}</h3>
+                            <div style={{display: "flex"}}>
+                                {
+                                    type === 'confirmed' ?  
+                                    <p className={classes.tag} style={{backgroundColor: "#da5c48", color: "white", border: "none"}}>Booked</p>
+                                    : 
+                                    <p className={classes.tag} style={{backgroundColor: "#48704d", color: "white", border: "none"}}>Pending</p>
+                                }
+                            </div> 
+                        </div>
                          <DialogContentText>
                             <div style={{display: "flex", justifyContent: "space-between"}}>
                                 <div>
                                     <p style={{color:"#da5c48"}}>{host.location}</p>
-                                    <div style={{display: "flex"}}>
-                                    {
-                                        type === 'confirmed' ?  
-                                        <p className={classes.tag} style={{backgroundColor: "#da5c48", color: "white", border: "none"}}>Booked</p>
-                                        : 
-                                        <p className={classes.tag} style={{backgroundColor: "#48704d", color: "white", border: "none"}}>Pending</p>
-                                    }
-                                        <p className={classes.tag}>{host.homeType}</p>
-                                    </div> 
+                                    <p style={{fontSize: "12pt"}}>{host.homeType}</p>
+                                    
                                 </div>
 
                                 <div>
@@ -160,18 +164,21 @@ export default withStyles(styles)(class extends React.Component {
                             <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.advocate.email}</p>
                         </div>  
                     </DialogContent>
-                    <DialogActions style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <DialogActions style={{display: 'flex', justifyContent: 'space-between', padding: "20px", paddingBottom: "10px", borderTop: "0.5px solid #d3dbee"}}>
                         {
                             type === 'confirmed' ?
-                            <Button onClick={this.props.click} variant="contained"  color="primary" id="buttonGray">
-                            Close
-                        </Button>
+                            <>
+                                <Button onClick={this.props.click} variant="contained"  color="primary" id="buttonGray">
+                                    Close
+                                </Button>
+                                <span style={{fontWeight: 300, fontSize: "12pt"}}>Need to cancel? Contact your advocate.</span>
+                            </>
                         :
                         <>
                         <Button onClick={this.props.click} variant="contained"  color="primary" id="buttonGray">
                             Decline Request
                         </Button>
-                        <Button onClick={this.props.click} variant="contained"  color="primary" id="buttonGray">
+                        <Button onClick={this.props.click} variant="contained" id="btn-drk-blue-fill">
                             Accept Request
                         </Button>
                         </>

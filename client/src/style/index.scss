@@ -328,7 +328,7 @@ section {
             display: flex;
             margin-top: 15px;
             margin-bottom: 15px;
-            align-items: center;
+            align-items: flex-start;
         }
 
         .org {
@@ -620,3 +620,4 @@ input::-webkit-input-placeholder {
 #place-to-stay {
     margin: 75px;
 }
+

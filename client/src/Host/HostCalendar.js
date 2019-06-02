@@ -17,7 +17,7 @@ import 'react-dates/initialize';
 import { Button, Select, MenuItem, Input, FormControl, InputLabel, Chip, Dialog, DialogContent, DialogActions} from '@material-ui/core/';
 
 import { listings } from '../filter';
-import { Checkbox } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 moment.locale('en-GB');
 
@@ -194,16 +194,17 @@ export default class Calendar extends React.Component {
           head: {
             display: 'flex',
             justifyContent: 'space-between',
-            padding: '10px'
+            padding: '20px'
           },
           view: {
             width: '10rem'
           },
           controls: {
-              width: '50%',
+              //width: '50%',
               display: 'flex',
               justifyContent: 'around',
-              alignItems: 'center'
+              alignItems: 'center',
+              marginRight: "20px"
           }
       } 
 
@@ -235,8 +236,12 @@ export default class Calendar extends React.Component {
        return (
         <div className="App" style={{width: "100%"}}>
         <div style={style.head}>
-            <Button id="button" variant="contained" color="primary" onClick={this.handleClickAdd('')} >
-                <Add /> 
+            <Button 
+                id="button"
+                style={{fontSize: "14pt", padding: "0px 25px"}}
+                variant="contained"
+                onClick={this.handleClickAdd('')} >
+                <Add style={{width: "2em"}}/> 
                 Add Availability
             </Button>
             <div style={style.controls}>
@@ -260,7 +265,7 @@ export default class Calendar extends React.Component {
                 </FormControl>
             </div>
         </div>
-        <DateRangePicker 
+        {/* <DateRangePicker 
             onSelect={this.handleSelect}
             value={this.state.value}
             showLegend={true}
@@ -270,28 +275,34 @@ export default class Calendar extends React.Component {
             dateStates={dateRanges}
             singleDateRange={true}
             minimumDate={new Date()}
-        />
-            {/* <BigCalendar
-                localizer={localizer}
-                defaultDate={new Date()}
-                defaultView="month"
-                events={currentBookings}
-                resizable
-                onSelectEvent={this.onEventClick}
-                onSelectSlot={(this.onSlotChange)}
-                // dayPropGetter={dayPropGetter}
-                // eventPropGetter={(this.eventStyleGetter)}
+        /> */}
+        <Grid container>
+            <div className="calendar">
+                <BigCalendar
+                    localizer={localizer}
+                    defaultDate={new Date()}
+                    defaultView="month"
+                    events={currentBookings}
+                    resizable
+                    onSelectEvent={this.onEventClick}
+                    onSelectSlot={(this.onSlotChange)}
+                    views={['month', 'week', 'day']}
+                    // dayPropGetter={dayPropGetter}
+                    // eventPropGetter={(this.eventStyleGetter)}
 
-                components={{
-                    // you have to pass your custom wrapper here
-                    // so that it actually gets used
-                    dateCellWrapper: dateCellWrapper,
-                }}
-                style={{ height: "80vh" }}
-            /> */}
+                    components={{
+                        // you have to pass your custom wrapper here
+                        // so that it actually gets used
+                        dateCellWrapper: dateCellWrapper,
+                    }}
+                    style={{ height: "70vh" }}
+                />
+            </div>
+        </Grid>
             <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
             <TimeSlotForm open={add} bookings={currentBookings} click={this.handleClickAdd('')} listings={listings} />
       </div>
+      
       )
   }
 }

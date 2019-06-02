@@ -149,6 +149,17 @@ p {
   background-color: #7e95cd;
 }
 
+#btn-drk-blue-fill {
+  color: white;
+  background-color: #202e57;
+  border: 1.5px solid #202e57;
+  text-transform: none;
+}
+#btn-drk-blue-fill:hover {
+  color: #202e57;
+  background-color: white;
+}
+
 .divider {
   margin: 45px auto 0;
   width: 300px;
@@ -224,6 +235,7 @@ a:hover {
   text-transform: none;
   box-shadow: none;
   font-family: Source Sans Pro;
+  color: white;
 }
 #button:hover {
   color: #202e57;
@@ -236,6 +248,7 @@ a:hover {
   text-decoration: none;
   text-transform: none;
   box-shadow: none;
+  color: white;
 }
 #buttonGray:hover {
   color: #aaaaaa;
@@ -420,6 +433,17 @@ p {
   background-color: #7e95cd;
 }
 
+#btn-drk-blue-fill {
+  color: white;
+  background-color: #202e57;
+  border: 1.5px solid #202e57;
+  text-transform: none;
+}
+#btn-drk-blue-fill:hover {
+  color: #202e57;
+  background-color: white;
+}
+
 .divider {
   margin: 45px auto 0;
   width: 300px;
@@ -495,6 +519,7 @@ a:hover {
   text-transform: none;
   box-shadow: none;
   font-family: Source Sans Pro;
+  color: white;
 }
 #button:hover {
   color: #202e57;
@@ -507,6 +532,7 @@ a:hover {
   text-decoration: none;
   text-transform: none;
   box-shadow: none;
+  color: white;
 }
 #buttonGray:hover {
   color: #aaaaaa;
@@ -1667,7 +1693,7 @@ section {
     display: flex;
     margin-top: 15px;
     margin-bottom: 15px;
-    align-items: center;
+    align-items: flex-start;
   }
   #section-4 .org {
     margin-top: 50px;
