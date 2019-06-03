@@ -71,6 +71,10 @@ formLabel: {
 expand: {
 	boxShadow: "none",
 	border: "0.5px solid #7e9fa8"
+},
+textField: {
+	paddingRight: "10px",
+	width: "33%"
 }
 
 });
@@ -220,23 +224,23 @@ class Listing extends React.Component {
 					//className={classes.select}
 					required
 				>
-				{Location.values.map((data) => {
-					return(
-						<MenuItem value={data}>{data}</MenuItem>
-					)
-				})}
-								</Select>
+					{Location.values.map((data) => {
+						return(
+							<MenuItem value={data}>{data}</MenuItem>
+						)
+					})}
+				</Select>
 			</FormControl>
 
 			{/* Home Type */}
 			<FormControl className={classes.formControl}>
-										<p className={classes.formLabel}>Home Type</p>
-										<Select
-					value={this.state.type}
-					onChange={this.handleChange('type')}
-					input={<OutlinedInput/>}
-					className={classes.select}
-					style={{height: "40px"}}
+				<p className={classes.formLabel}>Home Type</p>
+					<Select
+						value={this.state.type}
+						onChange={this.handleChange('type')}
+						input={<OutlinedInput/>}
+						className={classes.select}
+						style={{height: "40px"}}
 					>
 					{HomeType.values.map((data) => {
 						return(
@@ -292,32 +296,34 @@ class Listing extends React.Component {
 				<Input id="checkin" name="checkin" required onChange={this.onInputChange}/>
 							</FormControl> */}
 	     <TextField
-        id="time"
-        label="Check-In Time"
-        type="time"
-        defaultValue="07:30"
-				className={classes.textField}
-				onChange={this.handleChange('checkin')}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        inputProps={{
-          step: 300, // 5 min
-				}}/>
+					id="time"
+					label="Check-In Time"
+					type="time"
+					defaultValue="10:00"
+					className={classes.textField}
+					onChange={this.handleChange('checkin')}
+					InputLabelProps={{
+						shrink: true,
+					}}
+					inputProps={{
+						step: 300, // 5 min
+					}}
+				/>
 
 				<TextField
-        id="time"
-        label="Check-Out Time"
-        type="time"
-        defaultValue="07:30"
-				className={classes.textField}
-				onChange={this.handleChange('checkout')}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        inputProps={{
-          step: 300, // 5 min
-				}}/>		
+					id="time"
+					label="Check-Out Time"
+					type="time"
+					defaultValue="15:00"
+					className={classes.textField}
+					onChange={this.handleChange('checkout')}
+					InputLabelProps={{
+						shrink: true,
+					}}
+					inputProps={{
+						step: 300, // 5 min
+					}}
+				/>		
 
 			</div>
 
@@ -356,7 +362,7 @@ class Listing extends React.Component {
 									</div>
 			</div>
 
-			<hr></hr>
+			<hr style={{marginBottom: 0}}></hr>
 
 			<div>
 				<CustomExpand className={classes.expand} input={Amenities} select={this.handleChecked}></CustomExpand>
@@ -372,9 +378,9 @@ class Listing extends React.Component {
 									<CustomExpand input={Rules} select={this.handleChecked}></CustomExpand>         
 								</Grid>
 							</Grid> */}
-							<button type='submit' onClick={this.onSubmit}>
+							{/* <button type='submit' onClick={this.onSubmit}>
 								Submit
-							</button>
+							</button> */}
 					</form>
 				</main>
 			)

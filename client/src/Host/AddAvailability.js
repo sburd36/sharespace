@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Button, Dialog, DialogActions, DialogContent, FormControl, Select, OutlinedInput, MenuItem, InputLabel, withStyles} from '@material-ui/core/';
+import { Button, Dialog, DialogActions, DialogContent, FormControl, Select, OutlinedInput, withStyles, Radio, RadioGroup, FormControlLabel, MenuItem} from '@material-ui/core/';
 import moment from 'moment';
 import { withFirebase } from '../Firebase';
 
@@ -15,45 +15,24 @@ const styles = theme => ({
         height: '40px'
     },
 })
-const dateRanges = [
-    {
-      state: 'enquire',
-      range: moment.range(
-        moment().add(2, 'weeks').subtract(5, 'days'),
-        moment().add(2, 'weeks').add(6, 'days')
-      ),
-    },
-    {
-      state: 'unavailable',
-      range: moment.range(
-        moment().add(3, 'weeks'),
-        moment().add(3, 'weeks').add(5, 'days')
-      ),
-    },
-    {
-        state: 'unavailable',
-        range: moment.range(
-          moment().add(5, 'weeks'),
-          moment().add(5, 'weeks').add(5, 'days')
-        ),
-      },
-  ];
-
-  const stateDefinitions = {
-    available: {
-      color: null,
-      label: 'Available',
-    },
-    enquire: {
-      color: '#ffd200',
-      label: 'Enquire',
-    },
-    unavailable: {
+let stateDefinitions = {
+    booked: {
       selectable: false,
       color: '#78818b',
-      label: 'Unavailable',
+      label: 'Booked',
     },
   };
+
+stateDefinitions.available = {
+    color: null,
+    label: 'Available Dates',
+}
+
+stateDefinitions.unavailable = {
+    color: '#ffd200',
+    label: 'Currently Blocked',
+}
+
 class Availability extends React.Component {
     constructor(props) {
         super(props)        
@@ -69,11 +48,12 @@ class Availability extends React.Component {
             userID: "",
             begin: date,
             end: date,
-            properties: [],
+            properties: ['home 1', 'home 2'],
             propertyObj: [],
             // for new calendar, firebase uses begin and end
             start: new Date(),
-            end: new Date()
+            end: new Date(),
+            type: 'addAvail',
         }
     }
 
@@ -123,25 +103,11 @@ class Availability extends React.Component {
             //    properties: propertiesUnique 
             // })
                     console.log(this.state)
-
-    
                 } else {
                     console.log('no valid ID')
                 }
-    
-            });
-
-                       
-            
-            
-            
+            });           
         }
-
-
-
-
-   
-
     }
 
     onSubmit = event => {
@@ -177,25 +143,144 @@ class Availability extends React.Component {
 
     handleInputChange = name => event => {
         this.setState({ [name]: event.target.value });
-        console.log(this.state)
     };
 
+
     handleSelect = (range, states) => {
-        // range is a moment-range object
         this.setState({
-          value: range,
+          range: range,
           states: states,
         });
-        console.log(this.state)
       }
+      handleAdd = (range) => () => {
+        const { listings, space } = this.props;
+
+        let availability = []
+        if (listings !== undefined) {
+            availability = listings[space].availability.sort((a, b) => moment(a.start).isBefore(moment(b.start)) ? -1 : 1)
+        }
+        var rangeStart = moment(range.start['_i'].toLocaleString()).format("YYYY-MM-DD");
+        var rangeEnd = moment(range.end['_i'].toLocaleString()).format("YYYY-MM-DD");
+
+        // sort availability
+        // availability.sort((a, b) => moment(a.start).isBefore(moment(b.start)) ? -1 : 1)
+        let notFound = true;
+        for (var i = 0; i < availability.length; i++) {
+            // console.log(availability[i].end)
+            var availStart = moment(availability[i].start.toLocaleString()).format("YYYY-MM-DD");
+            var availEnd  = moment(availability[i].end.toLocaleString()).format("YYYY-MM-DD");
+            let nextAvailStart = '';
+
+            if (availEnd === rangeStart) {
+                if (i < availability.length - 1) {
+                    nextAvailStart = moment(availability[i + 1].start.toLocaleString()).format("YYYY-MM-DD");
+                } 
+                // full range and grab/delete TWO availabilities and add ONE new availability
+                if (nextAvailStart === rangeEnd) {
+                    console.log('CASE 1');
+                    notFound = false;
+                } else {  // delete current availability and add new one with (availStart and rangeEnd)
+                    console.log('CASE 2')
+                    notFound = false;
+                }
+            } else if (notFound && availStart === rangeEnd) { // delete current availability and add new one with (rangeStart and availEnd)
+                console.log('CASE 3')
+                notFound = false;
+            } 
+        }
+        if (notFound) { // add new availability with (rangeStart and rangeEnd)
+            console.log('CASE 4')
+        }
+      }
+
+      handleBlock = (range) => () => {
+        const { listings, space } = this.props;
+
+        let availability = [];
+        if (listings !== undefined) {
+            availability = listings[space].availability.sort((a, b) => moment(a.start).isBefore(moment(b.start)) ? -1 : 1)
+        }
+        var rangeStart = moment(range.start['_i'].toLocaleString()).format("YYYY-MM-DD");
+        var rangeEnd = moment(range.end['_i'].toLocaleString()).format("YYYY-MM-DD");
+
+        for (var i = 0; i < availability.length; i++) {
+            var availStart = moment(availability[i].start.toLocaleString()).format("YYYY-MM-DD");
+            var availEnd  = moment(availability[i].end.toLocaleString()).format("YYYY-MM-DD");
+
+            if (new Date(rangeStart) >= new Date(availStart) && new Date(rangeEnd) <= new Date(availEnd)) {
+                console.log('HELLO')
+                if (rangeStart === availStart) {
+                    if (rangeEnd === availEnd) { // whole availability slot blocked so DELETE 
+                        console.log('CASE 1');
+                    } else { // first half of availability selected, DELETE and INSERT (rangeEnd -> availEnd)
+                        console.log('CASE 2');
+                    }
+                } else if (rangeEnd === availEnd) { // second half selected, DELETE and INSERT (availStart -> rangeStart)
+                    console.log('CASE 3')
+                } else {
+                    console.log('CASE 4')
+                }
+            }
+        }
+        // END CODE FOR BLOCKING
+      }
+    makeDateRange = (dateRanges) => {
+        const { listings, space } = this.props;
+
+        if (listings !== undefined) {
+            const currentBookings = listings[space].currentBookings;
+            const availability = listings[space].availability;
+    
+            for (var i = 0; i < currentBookings.length; i++) {
+                var bookedDates = {
+                    state: 'booked',
+                    range: moment.range(
+                            currentBookings[i].start,
+                            currentBookings[i].end
+                            )
+                            // range : {
+                            //     start:
+                            //     end:
+                            // }
+                }
+                dateRanges[i] = bookedDates;
+            }
+            var length = dateRanges.length;
+            for (var i = 0; i < availability.length; i++) {
+                var availableDates = {
+                    state: 'available',
+                    range: moment.range(
+                        availability[i].start,
+                        availability[i].end
+                    )
+                }
+                 dateRanges[length + i] = availableDates;
+            }
+        }
+        dateRanges.sort((a, b) => moment(a.range.start).isBefore(moment(b.range.start)) ? -1 : 1)
+    }
+
+    selectType = (event) => {
+        this.setState({
+            type: event.target.value
+        })
+    }
     timeSlot = () => {
         const { classes } = this.props;
-        let { start, end } = this.state;
-        // start = moment(start.toLocaleString()).format("YYYY-MM-DD")
-        // end = moment(start.toLocaleString()).format("YYYY-MM-DD")
-        // const { from, to } = this.state;
-        // const modifiers = { start: from, end: to };
+        let { start, end, type, range } = this.state;
+        let dateRanges = []
+        this.makeDateRange(dateRanges)
+        let label = ''
 
+        if (type === 'addAvail') {
+            stateDefinitions.available.selectable = false
+            stateDefinitions.unavailable.selectable = true
+            label = 'Unblock Dates'
+        } else {
+            stateDefinitions.unavailable.selectable = false
+            stateDefinitions.available.selectable = true
+            label = 'Block Dates'
+        }
         return (
             <>
                 <FormControl>
@@ -208,61 +293,35 @@ class Availability extends React.Component {
                         input={<OutlinedInput/>}
                         required
                     >
-                        {/* {this.props.listings.map((data) => {
+                        {this.state.properties.map((data) => {
                             return(
                                 <MenuItem value={data.name}>{data.name}</MenuItem>
                             )
-                        })} */}
+                        })}
                     </Select>
-                </FormControl>
-                <div style={{display: 'flex', padding: '1rem'}}>
-                        {/* <TextField
-                        id="date"
-                        label="Start Date"
-                        type="date"
-                        value={start}
-                        className={classes.textField}
-                        onChange={this.handleInputChange('start')}
-                        InputLabelProps={{
-                            shrink: true,
-                            className: classes.floatingLabelFocusStyle,
-                        }}
-                        inputProps={{
-                            min: moment().format("YYYY-MM-DD"),
-                        }}
+                </FormControl>     
+                <ToggleOption handleSelect={this.selectType}/> 
+                {/* <div style={{display: 'flex', padding: '1rem'}}> */}
+                    <DateRangePicker 
+                        onSelect={this.handleSelect}
+                        value={range}
+                        showLegend={true}
+                        stateDefinitions={stateDefinitions}
+                        defaultState="unavailable"
+                        selectionType='range'
+                        dateStates={dateRanges}
+                        singleDateRange={true}
+                        minimumDate={new Date()}
+                        selectedLabel={label}
                     />
-                    <TextField
-                        id="date"
-                        label="End Date"
-                        type="date"
-                        value={end}
-                        className={classes.textField}
-                        onChange={this.handleInputChange('end')}
-                        InputLabelProps={{
-                            shrink: true,
-                            className: classes.floatingLabelFocusStyle,
-                        }}
-                        inputProps={{
-                            min: start
-                        }}
-                    /> */}
-                            <DateRangePicker 
-                                onSelect={this.handleSelect}
-                                showLegend={true}
-                                singleDateRange={true}
-                                value={this.state.value}
-                                stateDefinitions={stateDefinitions}
-                                defaultState="available"
-                                selectionType='range'
-                                dateStates={dateRanges}
-                            />
-                </div>
+                {/* </div> */}
             </>
         )
     }
+
     render() {
         const { classes } = this.props;
-        console.log(this.props)
+        const { type, range } = this.state;
 
         return (
             <div class="d-flex justify-content-around">
@@ -270,9 +329,7 @@ class Availability extends React.Component {
                 <Dialog
                     open={this.props.open}
                     onClose={this.props.click}
-                    scroll='paper'
                     maxWidth='xl'
-                    aria-labelledby="scroll-dialog-title"
                 >
                     <form onSubmit={this.onSubmit}>
                         <DialogContent className={classes.content}>
@@ -280,11 +337,18 @@ class Availability extends React.Component {
                                 {this.timeSlot()}
                                 <hr></hr>
                                 {/* <button style={{border: 'none', color: "#da5c48", display: "flex", align: "baseline"}}><Add></Add>Add another time slot</button> */}
+                            
                             </DialogContent>
                         <DialogActions >
-                            <Button type="submit" variant="contained"  color="primary">
-                                Add
-                            </Button>
+                            {
+                                type === 'addAvail' ?
+                                <Button type="submit" variant="contained"  color="primary" onCLick={this.handleAdd(range)}>
+                                    Add
+                                </Button> :
+                                <Button type="submit" variant="contained" onClick={this.handleBlock(range)}>
+                                    Block
+                                </Button>
+                            }
                         </DialogActions>
                     </form>
                 </Dialog>
@@ -292,7 +356,31 @@ class Availability extends React.Component {
         )
     }
 }
-
+function ToggleOption(props) {
+    const [value, setValue] = React.useState('addAvail');
+    const style = {
+        group: {
+            flexDirection: 'row',
+            justifyContent: 'space-around'
+        }
+    }
+    function handleSelect(event) {
+        props.handleSelect(event)
+        setValue(event.target.value)
+    }
+    return (
+            <RadioGroup
+                    aria-label="Gender"
+                    name="gender1"
+                    value={value}
+                    onChange={(event)=> handleSelect(event)}
+                    style={style.group}
+                >
+                <FormControlLabel value="addAvail" control={<Radio />} label="Add Availability" />
+                <FormControlLabel value="block" control={<Radio />} label="Block Dates" />
+            </RadioGroup>
+    )
+}
 const AddAvailabiliity = compose(
     withStyles(styles),
     withFirebase,

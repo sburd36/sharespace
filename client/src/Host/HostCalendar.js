@@ -5,9 +5,8 @@ import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../style/App.css";
-import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import Add from '@material-ui/icons/AddCircleOutline';
-import TimeSlotForm from './AddAvailability';
+import AddAvailabiliity from './AddAvailability';
 
 import DateRangePicker from 'react-daterange-picker'
 import "react-daterange-picker/dist/css/react-calendar.css";
@@ -17,50 +16,11 @@ import 'react-dates/initialize';
 import { Button, Select, MenuItem, Input, FormControl, InputLabel, Chip, Dialog, DialogContent, DialogActions} from '@material-ui/core/';
 
 import { listings } from '../filter';
-import { Checkbox } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 moment.locale('en-GB');
 
 const localizer = BigCalendar.momentLocalizer(moment)
-const dateRanges = [
-    {
-      state: 'enquire',
-      range: moment.range(
-        moment().add(2, 'weeks').subtract(5, 'days'),
-        moment().add(2, 'weeks').add(6, 'days')
-      ),
-    },
-    {
-      state: 'unavailable',
-      range: moment.range(
-        moment().add(3, 'weeks'),
-        moment().add(3, 'weeks').add(5, 'days')
-      ),
-    },
-    {
-        state: 'unavailable',
-        range: moment.range(
-          moment().add(5, 'weeks'),
-          moment().add(5, 'weeks').add(5, 'days')
-        ),
-      },
-  ];
-
-  const stateDefinitions = {
-    available: {
-      color: null,
-      label: 'Available',
-    },
-    enquire: {
-      color: '#ffd200',
-      label: 'Enquire',
-    },
-    unavailable: {
-      selectable: false,
-      color: '#78818b',
-      label: 'Unavailable',
-    },
-  };
 
 export default class Calendar extends React.Component {
     constructor(props) {
@@ -91,47 +51,31 @@ export default class Calendar extends React.Component {
       this.state = {
             view: [],
             space: 0,
-            info: ''
+            info: '',
+            selectedLabel: 'Block'
       }
       console.log(this.state)
     }
 
-    onEventResize = (type, { event, start, end, allDay }) => {
-        this.setState(state => {
-            state.events[0].start = start;
-            state.events[0].end = end;
-            return { events: state.events };
-        });
-    };
 
-    onEventDrop = ({ event, start, end, allDay }) => {
-        this.setState(state => {
-            console.log(event)
-            state.events[event.id].start = start;
-            state.events[event.id].end = end;
-            return { events: state.events };
-        });
-        // console.log(start)
-    };
-
-    /* When you choose a particular slot on the calendar */
-    onSlotChange = (slotInfo) => {
-      var start = moment(slotInfo.start.toLocaleString()).format("YYYY-MM-DDm:ss");
-      var end = moment(slotInfo.end.toLocaleString()).format("YYYY-MM-DDm:ss");
-    //   var newAvailability = {
-    //       id: .length,
-    //       start: start,
-    //       end: end,
-    //       title: slotInfo.host.information.name
+    // /* When you choose a particular slot on the calendar */
+    // onSlotChange = (slotInfo) => {
+    //   var start = moment(slotInfo.start.toLocaleString()).format("YYYY-MM-DDm:ss");
+    //   var end = moment(slotInfo.end.toLocaleString()).format("YYYY-MM-DDm:ss");
+    // //   var newAvailability = {
+    // //       id: .length,
+    // //       start: start,
+    // //       end: end,
+    // //       title: slotInfo.host.information.name
+    // //   }
+    //   console.log(start); //shows the start time chosen
+    //   console.log(end); //shows the end time chosen
+    //   return{
+    //       style: {
+    //           backgroundColor: '#9138fd'
+    //       }
     //   }
-      console.log(start); //shows the start time chosen
-      console.log(end); //shows the end time chosen
-      return{
-          style: {
-              backgroundColor: '#9138fd'
-          }
-      }
-    }
+    // }
 
     /* When you click on an already booked slot */
     onEventClick = (event) => {
@@ -187,15 +131,7 @@ export default class Calendar extends React.Component {
         }
         return false;
     }
-    // onSelect = dates => this.setState({dates})
-    handleSelect = (range, states) => {
-        // range is a moment-range object
-        this.setState({
-          value: range,
-          states: states,
-        });
-        console.log(this.state)
-      }
+
     booked = (date) => {
         var bookings = listings[0].currentBookings;
         for (var i = 0; i < bookings.length; i++) {
@@ -212,21 +148,23 @@ export default class Calendar extends React.Component {
           head: {
             display: 'flex',
             justifyContent: 'space-between',
-            padding: '10px'
+            padding: '20px'
           },
           view: {
             width: '10rem'
           },
           controls: {
-              width: '50%',
+              //width: '50%',
               display: 'flex',
               justifyContent: 'around',
-              alignItems: 'center'
+              alignItems: 'center',
+              marginRight: "20px"
           }
       } 
 
-      const { guest, info, space, add } = this.state;
+      const { guest, info, space, add, selectedLabel } = this.state;
       const currentBookings = listings[space].currentBookings;
+      const availability = listings[space].availability;
       const dateCellWrapper = ({children, value}) => 
             React.cloneElement(Children.only(children), {
                 className:  children.props.className + (this.availability(value) ? '' : ' rbc-off-range-bg'),
@@ -236,13 +174,17 @@ export default class Calendar extends React.Component {
                 //     // (value < moment().add(15, 'days') &&  value > moment().add(8, 'days'))) ? 'white' : 'lightgray',
                 //     backgroundColor: this.booked(value) ? 'white' : 'lightgray',
                 // }, 
-        });        
+        });       
 
-       return (
+        return (
         <div className="App" style={{width: "100%"}}>
         <div style={style.head}>
-            <Button id="button" variant="contained" color="primary" onClick={this.handleClickAdd('')} >
-                <Add /> 
+            <Button 
+                id="button"
+                style={{fontSize: "14pt", padding: "0px 25px"}}
+                variant="contained"
+                onClick={this.handleClickAdd('')} >
+                <Add style={{width: "2em"}}/> 
                 Add Availability
             </Button>
             <div style={style.controls}>
@@ -266,38 +208,34 @@ export default class Calendar extends React.Component {
                 </FormControl>
             </div>
         </div>
-        {/* <DateRangePicker 
-            onSelect={this.handleSelect}
-            value={this.state.value}
-            showLegend={true}
-            stateDefinitions={stateDefinitions}
-            defaultState="available"
-            selectionType='range'
-            dateStates={dateRanges}
-            singleDateRange={true}
 
-        /> */}
-            <BigCalendar
-                localizer={localizer}
-                defaultDate={new Date()}
-                defaultView="month"
-                events={currentBookings}
-                resizable
-                onSelectEvent={this.onEventClick}
-                onSelectSlot={(this.onSlotChange)}
-                // dayPropGetter={dayPropGetter}
-                // eventPropGetter={(this.eventStyleGetter)}
+        <Grid container>
+            <div className="calendar">
+                <BigCalendar
+                    localizer={localizer}
+                    defaultDate={new Date()}
+                    defaultView="month"
+                    events={currentBookings}
+                    resizable
+                    onSelectEvent={this.onEventClick}
+                    onSelectSlot={(this.onSlotChange)}
+                    views={['month', 'week', 'day']}
+                    // dayPropGetter={dayPropGetter}
+                    // eventPropGetter={(this.eventStyleGetter)}
 
-                components={{
-                    // you have to pass your custom wrapper here
-                    // so that it actually gets used
-                    dateCellWrapper: dateCellWrapper,
-                }}
-                style={{ height: "80vh" }}
-            />
+                    components={{
+                        // you have to pass your custom wrapper here
+                        // so that it actually gets used
+                        dateCellWrapper: dateCellWrapper,
+                    }}
+                    style={{ height: "70vh" }}
+                />
+            </div>
+        </Grid>
             <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
-            <TimeSlotForm open={add} bookings={currentBookings} click={this.handleClickAdd('')} listings={listings} />
+            <AddAvailabiliity open={add} space={space} click={this.handleClickAdd('')} listings={listings} />
       </div>
+      
       )
   }
 }

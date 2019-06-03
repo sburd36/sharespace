@@ -22,11 +22,11 @@ p {
 }
 .btn-yellow-fill {
     color: white;
-    background-color: $dark-yellow;
-    border: 1.5px solid $dark-yellow;
+    background-color: $light-orange;
+    border: 1.5px solid $light-orange;
 
     &:hover {
-        color: $dark-yellow;
+        color: $light-orange;
         background-color: transparent;
     }
 }
@@ -83,6 +83,18 @@ p {
     &:hover {
         color: white;
         background-color: $teal
+    }
+}
+
+#btn-drk-blue-fill {
+    color: white;
+    background-color: $dark-blue;
+    border: 1.5px solid $dark-blue;
+    text-transform: none;
+
+    &:hover {
+        color: $dark-blue;
+        background-color: white;
     }
 }
 
@@ -186,6 +198,7 @@ a {
     text-transform: none;
     box-shadow: none;
     font-family: Source Sans Pro;
+    color: white;
 
     &:hover {
         color: #202e57;
@@ -199,6 +212,7 @@ a {
     text-decoration: none;
     text-transform: none;
     box-shadow: none;
+    color: white;
 
     &:hover {
         color: #aaaaaa;
@@ -232,4 +246,14 @@ label {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+}
+
+.card {
+    //align-content: center;
+    .card-img-top {
+        //max-height: 275px;
+        margin: 20px;
+        width: 75%;
+        //padding:20px;
+    }
 }
