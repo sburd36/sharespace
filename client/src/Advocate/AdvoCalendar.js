@@ -13,28 +13,39 @@ import "../style/App.css";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import HostInfo from './HostInfo';
 import { Host } from '../filter';
-
+import { withFirebase } from '../Firebase';
+import { compose } from 'recompose';
 const DnDCalendar = withDragAndDrop(BigCalendar);
 
 moment.locale('en-GB');
 
 const localizer = BigCalendar.momentLocalizer(moment)
 
-export default class Calendar extends React.Component {
+class Calendar extends React.Component {
     constructor(props) {
       super(props); 
       console.log(this.props)     
       this.state = {
         events: [],
         avail: [],
+        userID: "",
         host: ""
       }
     }
 
     componentDidMount() {
       console.log(this.props)
+
+      this.props.firebase.auth.onAuthStateChanged((user)=> {
+        if(user) {
+            this.setState({
+              userID: user.uid
+            });
+        }
+
+    }); 
       if(this.props.allAvail != undefined && this.props.allAvail.length != 0) {
-        
+      
         var events = []    
         this.props.allAvail.map((a) => {
           console.log(a)
@@ -124,10 +135,17 @@ export default class Calendar extends React.Component {
             views={['month', 'week', 'day']}
             />
             {this.state.events !== undefined && this.state.events != 0  ?
-              <HostInfo booking={this.state.host} open={this.state.open} click={this.onEventClick}/>
+              <HostInfo booking={this.state.host} open={this.state.open} click={this.onEventClick} uid={this.state.userID}/>
             : <h3>No Current Availabilities</h3>}
             
       </div>
       )
   }
 }
+
+const AdvoCalendar = compose(
+  withFirebase,
+)(Calendar);
+
+export default AdvoCalendar;
+

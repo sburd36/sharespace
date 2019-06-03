@@ -95,9 +95,10 @@ class Search extends React.Component {
                     console.log(obj)
                     if (obj != null) {
                         let listings = Object.keys(obj).map(key => ({
-                            ...obj[key],
+                            ...obj[key], 
+                            id: key,
                           })); 
-                        
+                          console.log(listings)
                           this.setState({
                             allAvail: listings.slice(14,20)   
                         })

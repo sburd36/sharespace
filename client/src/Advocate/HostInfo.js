@@ -85,7 +85,10 @@ class BookingForm extends React.Component {
         super(props)
         this.state = {
             booking: {},
-            guest: '',
+            bookingID: "",
+            guest: 0,
+            start: new Date(),
+            end: new Date()
         }
     }
 
@@ -94,6 +97,29 @@ class BookingForm extends React.Component {
         console.log(this.state)
     };
 
+    onSelect = (name) => (selected) => {
+		let clean = []
+		for (let i = 0; i < selected.length; i ++) {
+		  console.log(selected[i].label)
+		  clean.push(selected[i].label)
+		  console.log(clean)
+		}
+		this.setState({
+		  [name]: clean
+		})
+		console.log(this.state)
+	}
+
+
+    handleChecked = (name, selected) => (event) => {
+        console.log(name + '   ' + selected)
+		var obj = this.state[`${name}`];
+		obj[`${selected}`] = event.target.checked;
+        this.setState({[name]: obj})
+        console.log(this.state)
+	}
+
+
 
     handleCloseHost = () => {
         this.setState({ confirm: false });
@@ -101,14 +127,31 @@ class BookingForm extends React.Component {
     };
 
     handleConfirmHost = () => {
+        const { start, end, booking } = this.state
         this.setState({
             confirm: true
         })
+        let uid = this.props.uid
+        let availID = booking.id
+        let startSelected = new Date(start) * 1
+        let endSelected = new Date(end) * 1
+        let newAvailStart = booking.start
+        let newAvailEnd = booking.end
+        // let startCurrent = new Date(booking.start)
+        // let endCurrent = new Date(booking.end)
+        if(startSelected === booking.start && endSelected === booking.end) {
+        }
+  
+
+         
+        
+   
+
     }
 
      render() {
-        const { classes, type } = this.props;
-        let host = this.props.booking;
+        const { classes, type, booking} = this.props;
+        let host = booking;
         console.log(host)
         if (host === undefined || host == "") {
             host = {
@@ -142,7 +185,10 @@ class BookingForm extends React.Component {
                 state: "available",
                 story: "none given",
             }
+        } else {
+            this.state.booking = host
         }
+        console.log(this.state)
         let render = '';
         if (type === 'confirmed') {
             render = <p className={classes.tag} style={{backgroundColor: "#da5c48", color: "white", border: "none"}}>Booked</p>
@@ -151,7 +197,7 @@ class BookingForm extends React.Component {
         } else {
             render = <p className={classes.tag} style={{backgroundColor: "#48704d", color: "white", border: "none"}}>Available</p>
         }
-        console.log(type)
+
         return(
             <div>
 
@@ -294,6 +340,7 @@ class BookingForm extends React.Component {
                                         id="date"
                                         label="Start Date"
                                         type="date"
+                                        onChange={this.handleInputChange('start')}
                                         className={classes.textField}
                                         style={{marginRight: "10px"}}
                                         InputLabelProps={{
@@ -306,6 +353,7 @@ class BookingForm extends React.Component {
                                         label="End Date"
                                         type="date"
                                         className={classes.textField}
+                                        onChange={this.handleInputChange('end')}
                                         InputLabelProps={{
                                             shrink: true,
                                             className: classes.floatingLabelFocusStyle
@@ -315,7 +363,7 @@ class BookingForm extends React.Component {
                                 
                                 {/* Personal Information */}
                                 <div style={{paddingRight: "100px"}}>
-                                <PersonalSelect onSelect={() => console.log('')}></PersonalSelect>
+                                <PersonalSelect onSelect={this.onSelect}></PersonalSelect>
                                 </div>
                                 
                                 {/* NEEDS FIELD GOES HERE */}
@@ -324,7 +372,7 @@ class BookingForm extends React.Component {
                                     {
                                         Needs.values.map((need) => {
                                             return(
-                                                <FormControlLabel control={<Checkbox value={need}/>} label={need}/>
+                                                <FormControlLabel control={<Checkbox value={need} select={this.handleChecked}/>} label={need}  />
                                             )
                                         })
                                     }
@@ -332,7 +380,7 @@ class BookingForm extends React.Component {
                                 
                                 {/* NOTES */}
                                 <p className={classes.title} style={{fontSize: "16px"}}>NOTES</p>
-                                <textarea style={{width: "100%"}}></textarea>
+                                <textarea style={{width: "100%"}} onChange={this.handleInputChange('notes')}></textarea>
                                 <Grid>
 
                             </Grid>
