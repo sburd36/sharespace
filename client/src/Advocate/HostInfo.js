@@ -36,7 +36,12 @@ const styles = theme => ({
         marginTop: theme.spacing.unit,
         marginBottom: theme.spacing.unit,
         //marginRight: theme.spacing.unit * 2,
-        width: "50%",
+        width: "40%",
+    },
+    guests: {
+        marginTop: theme.spacing.unit,
+        marginBottom: theme.spacing.unit,
+        width: "30%"
     },
     input: {
         border: "0.5px solid "   
@@ -265,7 +270,7 @@ export default withStyles(styles)(class extends React.Component {
                                         id="standard-select-currency"
                                         select
                                         label="# of guests"
-                                        className={classes.textField}
+                                        className={classes.guests}
                                         value={this.state.guest}
                                         onChange={this.handleInputChange('guest')}
                                         SelectProps={{
@@ -281,7 +286,8 @@ export default withStyles(styles)(class extends React.Component {
                                             </MenuItem>
                                         ))}
                                     </TextField>
-                                    <TextField
+                                </div>
+                                <TextField
                                         id="date"
                                         label="Start Date"
                                         type="date"
@@ -312,13 +318,12 @@ export default withStyles(styles)(class extends React.Component {
                                             max: "2019-06-20"
                                         }}
                                     /> 
-                                </div>
-                                
+
                                 {/* Personal Information */}
                                 <div style={{paddingRight: "100px"}}>
-                                <PersonalSelect onSelect={this.handleInputChange}></PersonalSelect>
+                                    <PersonalSelect onSelect={this.handleInputChange}></PersonalSelect>
                                 </div>
-                                
+
                                 {/* NEEDS FIELD GOES HERE */}
                                 <div class="mt-3">
                                     <p className={classes.title} style={{fontSize: "16px"}}>NEEDS</p>

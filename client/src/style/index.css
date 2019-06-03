@@ -632,8 +632,8 @@ label {
   border: none;
 }
 
-.rbc-off-range-bg {
-  background-color: lightgray;
+.rbc-off-range {
+  color: white;
 }
 
 .rbc-row-content {
@@ -710,8 +710,8 @@ button.rbc-input::-moz-focus-inner {
   direction: rtl;
 }
 
-.rbc-off-range {
-  color: #919FBC;
+.rbc-off-range-bg {
+  background-color: lightgray;
 }
 
 .rbc-header {

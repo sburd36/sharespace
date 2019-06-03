@@ -386,23 +386,23 @@ class Availability extends React.Component {
         if (range !== undefined && listingIndex !== null) {
             if (type === 'addAvail') {
                 button = 
-                <Button type="submit" variant="contained"  color="primary"  >
+                <Button type="submit" variant="contained"  id="button" >
                     Add
                 </Button>
             } else {
                 button = 
-                <Button type="submit" variant="contained" >
+                <Button type="submit" variant="contained" id="button"  >
                     Block
                 </Button>
             }
         } else {
             if (type === 'addAvail') {
                 button = 
-                <Button type="submit" variant="contained"  color="primary" disabled>
+                <Button type="submit" variant="contained"  disabled>
                 Add
                 </Button>
             } else {
-                button = <Button type="submit" variant="contained"  disabled>
+                button = <Button type="submit" variant="contained" disabled>
                     Block
                 </Button>
             }
