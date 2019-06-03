@@ -3,7 +3,7 @@ import React, {Children} from 'react'
 // import './main.scss' // webpack must be configured to do this
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
-import 'react-big-calendar/lib/css/react-big-calendar.css';
+//import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../style/App.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import Add from '@material-ui/icons/AddCircleOutline';

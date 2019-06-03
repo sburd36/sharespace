@@ -7,7 +7,7 @@ import { compose } from 'recompose';
 import Add from '@material-ui/icons/AddCircleOutline';
 
 import DateRangePicker from 'react-daterange-picker'
-import "react-daterange-picker/dist/css/react-calendar.css";
+//import "react-daterange-picker/dist/css/react-calendar.css";
 
 const styles = theme => ({
     property: {
@@ -200,7 +200,7 @@ class Availability extends React.Component {
         return (
             <>
                 <FormControl>
-                    <label>Choose Listing</label>
+                    <label style={{fontWeight: 300, fontSize: "12pt"}}>Choose Listing</label>
                     <Select
                         id='property'
                         value={this.state.property}
@@ -248,12 +248,12 @@ class Availability extends React.Component {
                         <DialogContent className={classes.content}>
                             <h3>Add Availability</h3>
                                 {this.timeSlot()}
-                                <hr></hr>
+                                {/* <hr></hr> */}
                                 {/* <button style={{border: 'none', color: "#da5c48", display: "flex", align: "baseline"}}><Add></Add>Add another time slot</button> */}
                             </DialogContent>
-                        <DialogActions >
-                            <Button type="submit" variant="contained"  color="primary">
-                                Add
+                        <DialogActions style={{borderTop: "1px solid #d4dbee", paddingTop: "15px", display: "flex", justifyContent: "center"}}>
+                            <Button variant="contained" id="button">
+                                Add Availability
                             </Button>
                         </DialogActions>
                     </form>
@@ -278,8 +278,9 @@ function ToggleOption() {
                     onChange={(event)=> setValue(event.target.value)}
                     style={style.group}
                 >
-                <FormControlLabel value="addAvail" control={<Radio />} label="Add Availability" />
-                <FormControlLabel value="addUnavail" control={<Radio />} label="Block Dates" />
+                <FormControlLabel value="addAvail" control={<Radio />} label="Add Availability" 
+                />
+                <FormControlLabel value="addUnavail" control={<Radio />} label="Mark Unavailable" />
             </RadioGroup>
     )
 }
