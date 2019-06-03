@@ -26,7 +26,7 @@
       width: 14px;
       border: 1px solid rgba(0, 0, 0, 0.25); }
       .DateRangePicker__LegendItemColor--selection {
-        background-color: #ed5434; }
+        background-color: #7e95cd; }
     .DateRangePicker__PaginationArrow {
       border: 0;
       cursor: pointer;
@@ -58,14 +58,14 @@
         opacity: .25; }
       .DateRangePicker__PaginationArrowIcon--previous {
         border-left: 8px solid transparent;
-        border-right: 8px solid #aaa;
+        border-right: 8px solid #202e57;
         right: 11px; }
       .DateRangePicker__PaginationArrowIcon--next {
-        border-left: 8px solid #aaa;
+        border-left: 8px solid #202e57;
         border-right: 8px solid transparent;
         left: 11px; }
     .DateRangePicker__Month {
-      color: #333;
+      color: #202e57;
       display: inline-block;
       margin: 0 20px;
       position: relative;
@@ -73,7 +73,7 @@
          -moz-user-select: none;
           -ms-user-select: none;
               user-select: none;
-      width: 275px; }
+      width: 360px; }
     .DateRangePicker__MonthHeader {
       color: #202e57;
       font-size: 14px;
@@ -133,7 +133,7 @@
       .DateRangePicker__Date--otherMonth {
         opacity: .25; }
       .DateRangePicker__Date--is-disabled {
-        color: #cdcdd1;
+        //color: #cdcdd1;
         cursor: default; }
       .DateRangePicker__Date--is-selected {
         color: #fff; }
@@ -150,8 +150,8 @@
         left: 50%;
         right: 0; }
     .DateRangePicker__CalendarSelection {
-      background-color: #ed5434;
-      border: 1px solid #eb401d;
+      background-color: #7e95cd;
+      border: 1px solid #7e95cd;
       bottom: 5px;
       left: 0;
       position: absolute;
@@ -177,7 +177,7 @@
         left: 5px;
         right: 5px; }
       .DateRangePicker__CalendarSelection--is-pending {
-        background-color: rgba(237, 84, 52, 0.75);
+        background-color:#7e95cd;
         border-width: 0; }
     .DateRangePicker__CalendarHighlight {
       background-color: rgba(255, 255, 255, 0.25);
@@ -204,7 +204,7 @@
         border-right-width: 0; }
       .DateRangePicker__CalendarHighlight--single {
         background-color: #fff;
-        border: 1px solid #eb401d;
+        border: 1px solid #7e95cd;
         border-radius: 5px;
         left: 5px;
         right: 5px; }
@@ -220,7 +220,8 @@
       left: 0;
       position: absolute;
       right: 0;
-      top: 0; }
+      top: 0;
+      background-color: white; }
     .DateRangePicker__DateLabel {
       display: block;
       position: relative;

@@ -1449,7 +1449,7 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .DateRangePicker__LegendItemColor--selection {
-  background-color: #ed5434;
+  background-color: #7e95cd;
 }
 
 .DateRangePicker__PaginationArrow {
@@ -1495,18 +1495,18 @@ button.rbc-input::-moz-focus-inner {
 
 .DateRangePicker__PaginationArrowIcon--previous {
   border-left: 8px solid transparent;
-  border-right: 8px solid #aaa;
+  border-right: 8px solid #202e57;
   right: 11px;
 }
 
 .DateRangePicker__PaginationArrowIcon--next {
-  border-left: 8px solid #aaa;
+  border-left: 8px solid #202e57;
   border-right: 8px solid transparent;
   left: 11px;
 }
 
 .DateRangePicker__Month {
-  color: #333;
+  color: #202e57;
   display: inline-block;
   margin: 0 20px;
   position: relative;
@@ -1514,7 +1514,7 @@ button.rbc-input::-moz-focus-inner {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  width: 275px;
+  width: 360px;
 }
 
 .DateRangePicker__MonthHeader {
@@ -1564,7 +1564,6 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .DateRangePicker__WeekdayHeading {
-  border-bottom: 1px solid #f4f5f6;
   color: #202e57;
   font-weight: 400;
 }
@@ -1578,7 +1577,6 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .DateRangePicker__Date {
-  border: 0 solid #f4f5f6;
   border-right-width: 1px;
   cursor: pointer;
   overflow: hidden;
@@ -1594,7 +1592,6 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .DateRangePicker__Date--is-disabled {
-  color: #cdcdd1;
   cursor: default;
 }
 
@@ -1623,8 +1620,8 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .DateRangePicker__CalendarSelection {
-  background-color: #ed5434;
-  border: 1px solid #eb401d;
+  background-color: #7e95cd;
+  border: 1px solid #7e95cd;
   bottom: 5px;
   left: 0;
   position: absolute;
@@ -1662,7 +1659,7 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .DateRangePicker__CalendarSelection--is-pending {
-  background-color: rgba(237, 84, 52, 0.75);
+  background-color: #7e95cd;
   border-width: 0;
 }
 
@@ -1701,7 +1698,7 @@ button.rbc-input::-moz-focus-inner {
 
 .DateRangePicker__CalendarHighlight--single {
   background-color: #fff;
-  border: 1px solid #eb401d;
+  border: 1px solid #7e95cd;
   border-radius: 5px;
   left: 5px;
   right: 5px;
@@ -1722,6 +1719,7 @@ button.rbc-input::-moz-focus-inner {
   position: absolute;
   right: 0;
   top: 0;
+  background-color: white;
 }
 
 .DateRangePicker__DateLabel {

@@ -29,8 +29,8 @@ stateDefinitions.available = {
 }
 
 stateDefinitions.unavailable = {
-    color: '#ffd200',
-    label: 'Currently Blocked',
+    color: '#fe8b6b',
+    label: 'Marked Unavailable',
 }
 
 class Availability extends React.Component {
@@ -275,11 +275,11 @@ class Availability extends React.Component {
         if (type === 'addAvail') {
             stateDefinitions.available.selectable = false
             stateDefinitions.unavailable.selectable = true
-            label = 'Unblock Dates'
+            label = 'Mark Available'
         } else {
             stateDefinitions.unavailable.selectable = false
             stateDefinitions.available.selectable = true
-            label = 'Block Dates'
+            label = 'Mark Unavailable'
         }
         return (
             <>
@@ -342,10 +342,10 @@ class Availability extends React.Component {
                         <DialogActions  style={{borderTop: "1px solid #d4dbee", paddingTop: "15px", display: "flex", justifyContent: "center"}} >
                             {
                                 type === 'addAvail' ?
-                                <Button type="submit" variant="contained"  color="primary" onCLick={this.handleAdd(range)}>
+                                <Button type="submit" variant="contained"  id="button" onCLick={this.handleAdd(range)}>
                                     Add
                                 </Button> :
-                                <Button type="submit" variant="contained" onClick={this.handleBlock(range)}>
+                                <Button type="submit" variant="contained" id="button" onClick={this.handleBlock(range)}>
                                     Block
                                 </Button>
                             }
