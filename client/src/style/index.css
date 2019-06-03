@@ -1697,6 +1697,7 @@ section {
   }
   #section-4 .org {
     margin-top: 50px;
+    align-items: center;
   }
   #section-4 .support-cards {
     display: flex;
@@ -1708,6 +1709,7 @@ section {
   }
   #section-4 .support-cards .card {
     border: none;
+    margin-bottom: 20px;
   }
   #section-4 .support-cards .card .card-img-top {
     max-width: 100px;

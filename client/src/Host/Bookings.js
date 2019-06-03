@@ -152,7 +152,7 @@ export default withStyles(styles)(class extends React.Component {
                                     <div style={{fontWeight: 300, paddingTop: "10px"}}><b>Notes:</b> {data.notes}</div>
 
                                     <p style={{fontSize: "16px", fontWeight: 400}}>Guest Needs:</p>
-                                    <div style={{display: 'flex', flexWrap: 'wrap', margin: '5px'}}>
+                                    <div style={{display: 'flex', flexWrap: 'wrap'}}>
                                         {
                                             data.info.map((amenity) =>{
                                                 return (
