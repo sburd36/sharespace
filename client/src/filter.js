@@ -558,3 +558,12 @@ export const listings =  [
     //     ]
     // },
 ]
+
+export var availability = {
+    hostID: "",
+    advocateID: "",
+    listingPushID: "",
+    state: "",
+    range: "",
+
+}

@@ -145,7 +145,7 @@ class Listing extends React.Component {
 				}
 				console.log(user.uid)
 				console.log(this.state)
-				let key = this.props.firebase.listings().push({listObj})
+				let key = this.props.firebase.listings().push(listObj)
 				listObj['id'] = key.key
 				// .then(() => {
 				//   this.setState({...SPACE});
@@ -160,6 +160,10 @@ class Listing extends React.Component {
 					this.props.firebase.user(user.uid).update({'haveListing': true})
 
 				});
+				listObj['availability'] = []
+				listObj['currentBookings'] = []
+				listObj['pastBookings'] = []
+				listObj['pendingBookings'] = []
 				this.props.saveListingID(key.key, listObj)
 
 			} else {
@@ -198,7 +202,7 @@ class Listing extends React.Component {
 	render() {
 			console.log(this.props)
 			const { classes } = this.props;
-
+			console.log(this.state)
 			return (
 					<main className={classes.main}>
 						<CssBaseline />
@@ -378,9 +382,9 @@ class Listing extends React.Component {
 									<CustomExpand input={Rules} select={this.handleChecked}></CustomExpand>         
 								</Grid>
 							</Grid> */}
-							{/* <button type='submit' onClick={this.onSubmit}>
+							<button type='submit' onClick={this.onSubmit}>
 								Submit
-							</button> */}
+							</button>
 					</form>
 				</main>
 			)

@@ -101,16 +101,17 @@ const styles = theme => ({
         if(foundListings === undefined || foundListings[1] === undefined) {
             console.log("no updated profile")
         } else {
+            console.log("inside firebase call in host dash")
             if(this.props.profile.listingIDs.length != 0) {
                 let spacesQuery = this.props.firebase.listings();
-                spacesQuery.once('value').then((snapshot) =>{
-                    let obj = snapshot.val();                       
+                spacesQuery.on('value').then((snapshot) =>{
+                    let obj = snapshot.val();                      
                         let spaceIDs = []
                         let spaces = []
                         for (let i = 0; i < foundListings.length; i ++) {
                             let current = obj[foundListings[i]];
                             let theSpace = {
-                                id: foundListings[i],
+                                id: foundListings[i].keys(),
                                 hostID: currentUser,
                                 description: current['description'],
                                 type: current['type'],
@@ -123,7 +124,8 @@ const styles = theme => ({
                                 zip: current['zip'],
                                 currentBookings: [],
                                 availability: [],
-                                pastBookings: []
+                                pastBookings: [],
+                                pendingBookings: []
 
                             }
                             if(current['currentBookings']!== undefined) {
@@ -134,7 +136,10 @@ const styles = theme => ({
                                 theSpace.pastBookings = current['pastBookings']
                             }
                             if(current['availability'] !== undefined) {
-                                theSpace.pastBookings = current['pastBookings']
+                                theSpace.availability = current['availability']
+                            }
+                            if(current['pendingBookings'] !== undefined) {
+                                theSpace.pendingBookings = current['pendingBookings']
                             }
                             spaces.push(theSpace)
                             console.log(spaces)
@@ -196,7 +201,7 @@ const styles = theme => ({
                                 >
                                 <Paper id="side" style={style.navigator}>
                                     <img id="bigAvatar" src={women} className={classes.bigAvatar} />
-                                    <h4 style={{fontWeight: 300}}>Welcome, {this.props.user.firstName}</h4>
+                                    <h4 style={{fontWeight: 300}}>Welcome, {this.props.currentUser.firstName}</h4>
                                     <Typography color="textSecondary" style={{fontWeight: 300}}>What would you like to do today?</Typography>
                                     <Button id='button' variant="contained" color="primary" className={classes.button} onClick={this.handleView('calendar')}>
                                         My Calendar
@@ -231,17 +236,17 @@ const styles = theme => ({
                                 </Typography>
                                 <Grid container spacing={6}>
                                 { 
-                                    this.state.view == 'profile' && <MyProfile user={this.props.user} profile={this.props.profile} updateListings={this.props.updateListing}></MyProfile>
+                                    this.state.view == 'profile' && <MyProfile user={this.props.currentUser} profile={this.props.profile} updateListings={this.props.updateListing}></MyProfile>
                                 }
 
                                 { 
-                                    this.state.view == 'listings' && <MyListings user={this.props.user} profile={this.props.profile} updateListing={this.props.updateListing}></MyListings>
+                                    this.state.view == 'listings' && <MyListings user={this.props.currentUser} profile={this.props.profile} updateListing={this.props.updateListing}></MyListings>
                                 }
                                 {
                                     this.state.view == 'bookings' && <Bookings type={bookingType} profile={this.props.profile} updateListing={this.props.updateListing}></Bookings>
                                 }
                                 {
-                                    this.state.view == 'calendar' && <HostCalendar />
+                                    this.state.view == 'calendar' && <HostCalendar profile={this.props.profile} currentUser={this.props.currentUser} updateAvailability = {this.props.updateAvailability}/>
                                 }
                                 </Grid>
                             </Paper>

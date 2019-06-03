@@ -59,7 +59,8 @@ class PersonalSelect extends React.Component {
                             components={Animated()}
                             isMulti
                             name={data.name}
-                            // onChange={this.props.onSelect(data.type)}
+                            // DO NOT COMMENT THIS OUT
+                            onChange={this.props.onSelect(data.type)}
                             options={makeOptions(data['values'])}
                         />
                     </div>

@@ -287,9 +287,14 @@ export default withStyles(styles)(class extends React.Component {
                                         type="date"
                                         className={classes.textField}
                                         style={{marginRight: "10px"}}
+                                        onChange={this.handleInputChange('start')}
                                         InputLabelProps={{
                                             shrink: true,
                                             className: classes.floatingLabelFocusStyle
+                                        }}
+                                        inputProps={{
+                                            min: "2019-06-10",
+                                            max: "2019-06-20"
                                         }}
                                     /> 
                                     <TextField
@@ -297,16 +302,21 @@ export default withStyles(styles)(class extends React.Component {
                                         label="End Date"
                                         type="date"
                                         className={classes.textField}
+                                        onChange={this.handleInputChange('end')}
                                         InputLabelProps={{
                                             shrink: true,
                                             className: classes.floatingLabelFocusStyle
+                                        }}
+                                        inputProps={{
+                                            min: "2019-06-10",
+                                            max: "2019-06-20"
                                         }}
                                     /> 
                                 </div>
                                 
                                 {/* Personal Information */}
                                 <div style={{paddingRight: "100px"}}>
-                                <PersonalSelect></PersonalSelect>
+                                <PersonalSelect onSelect={this.handleInputChange}></PersonalSelect>
                                 </div>
                                 
                                 {/* NEEDS FIELD GOES HERE */}
@@ -331,7 +341,7 @@ export default withStyles(styles)(class extends React.Component {
                                 
                                 {/* NOTES */}
                                 <p className={classes.title} style={{fontSize: "16px"}}>NOTES</p>
-                                <textarea style={{width: "100%"}}></textarea>
+                                <textarea style={{width: "100%"}} onChange={this.handleInputChange('notes')}></textarea>
                                 <Grid>
 
                             </Grid>

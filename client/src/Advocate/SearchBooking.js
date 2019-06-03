@@ -208,8 +208,8 @@ export default withStyles(styles)(class extends React.Component {
                                         
                                         <Grid container space={6}>
                                             <Grid item xs={12}>
-                                                <div style={{marginBottom: "20px"}}>
-                                                    <PersonalSelect></PersonalSelect>
+                                                <div>
+                                                    <PersonalSelect onSelect={()=> console.log("")}></PersonalSelect>
                                                 </div>
                                             </Grid>
                                         </Grid>

@@ -7,6 +7,10 @@ import HostInfo from './HostInfo';
 import { Host } from '../filter';
 import Calendar from './AdvoCalendar';
 
+// firebase
+import { compose } from 'recompose';
+import { withFirebase } from '../Firebase';
+
 import {Paper, Typography,Grid, Button, Card, CardContent, withStyles, Switch } from '@material-ui/core/'
 
 import moment from 'moment';
@@ -61,15 +65,74 @@ const styles = theme => ({
         fontWeight: 300
     }
   });
-
-export default withStyles(styles)(class extends React.Component {
+class Bookings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             view: 'list',
-            type: 'confirmed'
+            type: 'confirmed',
+            listings: [],
+            currentBookings: [],
+            pedningBookings: []
+
         }
+
+        
     }
+
+    componentDidMount() {
+        let currentUser = "";
+        console.log(this.props)
+        this.props.firebase.auth.onAuthStateChanged((user)=> {
+            if(user) {
+                currentUser = user.uid 
+                console.log(user.uid)
+                console.log(this.state)
+
+                let spacesQuery = this.props.firebase.availabilities().orderByChild('hostID').equalTo("xztbdMuXQQMHtaVTBFoW4OYzo9E2");
+                spacesQuery.on('value', snapshot =>{
+                    let obj = snapshot.val(); 
+                    console.log(obj)
+                     
+                    const listings = Object.keys(obj).map(key => ({
+                        ...obj[key],
+                      })); 
+                      
+                    let availListings = []
+                    let currentBookings = []
+                    let pendingBookings = []
+                    for (let i = 0; i < listings.length; i ++) {
+                        if (listings[i].availability != undefined) {
+                            availListings.push(listings[i])
+                            if(listings[i].currentBookings != undefined) {
+                                currentBookings.push(listings[i].currentBookings)
+                            }
+                            if(listings[i].pendingBookings != undefined) {
+
+                            }
+                        }
+                    }
+                    availListings = availListings.slice(2,3)
+
+                    this.setState({
+                        listings: availListings
+                    })
+
+                    console.log(this.state)    
+                }) 
+
+
+                
+            } else {
+                console.log('no valid ID')
+            }
+
+        })
+
+    }
+
+
+
 
     handleRequestType = (value) => (event) => {
         this.setState({
@@ -103,11 +166,16 @@ export default withStyles(styles)(class extends React.Component {
         const { classes } = this.props;
         const { view, type } = this.state;
         let title = '';
+        let bookings = '';
         if (type === 'confirmed') {
             title = 'CURRENT BOOKINGS'
+            bookings = this.state.currentBookings;
         } else {
             title = 'PENDING BOOKINGS REQUESTS'
+            bookings = this.state.pedningBookings;
         }
+
+        // {(this.state.current)}
         return (
             <div class="pt-4">
                 <Grid 
@@ -172,11 +240,14 @@ export default withStyles(styles)(class extends React.Component {
                                     </div>
                                 </div>
                                 <Grid container spacing={3}>
-
+                                {
+                                    bookings.length === 0 && <p>No bookings</p>
+                                }
                                 {
                                     view === 'list' ? 
+                                    
                                     <>
-                                        {Host.map(
+                                        {bookings.map(
                                             (booking) => {
                                                 let date = this.convertToDate(booking.space[0].availability[0].start, booking.space[0].availability[0].end)
                                                 return(
@@ -209,7 +280,7 @@ export default withStyles(styles)(class extends React.Component {
                                                                 </div>                                                                                                          
                                                             </CardContent>
                                                         </Card>
-                                                        <HostInfo type={type} booking={booking} open={this.state.open} click={this.handleCardClick}></HostInfo>    
+                                                        <HostInfo type={type} booking={bookings} open={this.state.open} click={this.handleCardClick}></HostInfo>    
                                                     </Grid>
                                                 )
                                             }
@@ -226,4 +297,11 @@ export default withStyles(styles)(class extends React.Component {
             </div>       
         )
     }
-})
+}
+
+const CurrentBookings = compose(
+    withStyles(styles),
+    withFirebase,
+  )(Bookings);
+
+  export default CurrentBookings;

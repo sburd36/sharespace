@@ -7,22 +7,20 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../style/App.css";
 import Add from '@material-ui/icons/AddCircleOutline';
 import AddAvailabiliity from './AddAvailability';
-
-import DateRangePicker from 'react-daterange-picker'
-import "react-daterange-picker/dist/css/react-calendar.css";
-
-import 'react-dates/initialize';
+import { withFirebase } from '../Firebase';
+import { compose } from 'recompose';
 
 import { Button, Select, MenuItem, Input, FormControl, InputLabel, Chip, Dialog, DialogContent, DialogActions} from '@material-ui/core/';
 
-import { listings } from '../filter';
+// import { listings } from '../filter';
 import { Grid } from '@material-ui/core';
 
 moment.locale('en-GB');
 
 const localizer = BigCalendar.momentLocalizer(moment)
 
-export default class Calendar extends React.Component {
+var currentBookings = []
+class Calendar extends React.Component {
     constructor(props) {
       super(props);
     //   let spaces = {};
@@ -52,11 +50,36 @@ export default class Calendar extends React.Component {
             view: [],
             space: 0,
             info: '',
-            selectedLabel: 'Block'
+            selectedLabel: 'Block',
+            // currentBookings: [],
+            // ****** values from firebase, use to update calendar *****
+            // passed props have stored availability i.e this.props.profile.listings.availability
+            listings: [],
+            userID: ""
       }
       console.log(this.state)
     }
 
+    // for firebase and data transfer
+    componentDidMount() {
+        console.log("INSIDE COMPONENTT DID MOUNT")
+        if(this.props.profile.listings === undefined || this.props.profile.listings.length == 0) {
+            console.log("there are no current listings")
+
+        } else {
+            this.props.firebase.auth.onAuthStateChanged((user)=> {
+                if(user) {
+                    this.state.userID = user.uid 
+                }
+    
+            }); 
+            
+            this.setState({
+                listings: this.props.profile.listings,
+                
+            })
+        }
+    }
 
     // /* When you choose a particular slot on the calendar */
     // onSlotChange = (slotInfo) => {
@@ -119,7 +142,12 @@ export default class Calendar extends React.Component {
     //     };
     // }
     availability = (value) => {
-        var availability = listings[0].availability;
+        const { listings } = this.state;
+        let availability = []
+        if (listings !== undefined) {
+            availability = listings[0].availability;
+
+        }
         var length = availability.length;
 
         for (var i = 0; i < length; i++) {
@@ -133,17 +161,22 @@ export default class Calendar extends React.Component {
     }
 
     booked = (date) => {
-        var bookings = listings[0].currentBookings;
-        for (var i = 0; i < bookings.length; i++) {
-            var start = new Date(bookings[i].start);
-            var end = new Date(bookings[i].end);
-            if (date < end && date > start) {
-                return true;
+        const {listings} = this.state
+        if (listings.length != 0 && currentBookings.length != 0 ) {
+            var bookings = listings[0].currentBookings;
+            for (var i = 0; i < bookings.length; i++) {
+                var start = new Date(bookings[i].start);
+                var end = new Date(bookings[i].end);
+                if (date < end && date > start) {
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
+  
     }
   render() {
+      console.log(this.props)
       var style = {
           head: {
             display: 'flex',
@@ -162,9 +195,24 @@ export default class Calendar extends React.Component {
           }
       } 
 
-      const { guest, info, space, add, selectedLabel } = this.state;
-      const currentBookings = listings[space].currentBookings;
-      const availability = listings[space].availability;
+      const { guest, info, space, add, listings } = this.state;
+      let currentBookings = []
+      let availability = []
+      if (listings !== undefined && listings.length > 0) {
+          console.log(listings)
+        currentBookings = listings[space].currentBookings;
+        availability = listings[space].availability;
+      }
+      // !!!use firebase listings not imported listings
+
+
+    //   const listings = this.props.profile.listings
+        let check = false;
+      if (listings.length != 0) {
+        currentBookings = listings[space].currentBookings;  
+        check = true
+      }
+    
       const dateCellWrapper = ({children, value}) => 
             React.cloneElement(Children.only(children), {
                 className:  children.props.className + (this.availability(value) ? '' : ' rbc-off-range-bg'),
@@ -175,18 +223,31 @@ export default class Calendar extends React.Component {
                 //     backgroundColor: this.booked(value) ? 'white' : 'lightgray',
                 // }, 
         });       
-
         return (
         <div className="App" style={{width: "100%"}}>
         <div style={style.head}>
+        {
+            check ? 
             <Button 
                 id="button"
                 style={{fontSize: "14pt", padding: "0px 25px"}}
                 variant="contained"
-                onClick={this.handleClickAdd('')} >
+                onClick={this.handleClickAdd('')} 
+                >
                 <Add style={{width: "2em"}}/> 
                 Add Availability
-            </Button>
+            </Button> : 
+            <Button 
+            id="button"
+            style={{fontSize: "14pt", padding: "0px 25px", color: "gray", backgroundColor: 'lightgray'}}
+            variant="contained"
+            onClick={this.handleClickAdd('')} 
+            disabled>
+            <Add style={{width: "2em"}}/> 
+            Add Availability
+        </Button>
+        }
+            
             <div style={style.controls}>
                 {/* <MultiSelect handleView={this.handleView}/> */}
                 <FormControl style={style.view}>
@@ -233,7 +294,7 @@ export default class Calendar extends React.Component {
             </div>
         </Grid>
             <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
-            <AddAvailabiliity open={add} space={space} click={this.handleClickAdd('')} listings={listings} />
+            <AddAvailabiliity open={add} currentUser={this.props.currentUser} listings={listings} click={this.handleClickAdd('')} profile={this.props.profile} updateAvailability={this.props.updateAvailability} userID={this.state.userID}  />
       </div>
       
       )
@@ -260,3 +321,9 @@ function GuestInfo(props) {
         </Dialog>
     )
 }
+
+const hostCalendar = compose(
+    withFirebase,
+  )(Calendar);
+
+  export default hostCalendar;
