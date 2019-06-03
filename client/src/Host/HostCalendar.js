@@ -79,7 +79,8 @@ class Calendar extends React.Component {
             // currentBookings: [],
             // ****** values from firebase, use to update calendar *****
             // passed props have stored availability i.e this.props.profile.listings.availability
-            listings: []
+            listings: [],
+            userID: ""
       }
       console.log(this.state)
     }
@@ -326,7 +327,7 @@ class Calendar extends React.Component {
                 style={{ height: "80vh" }}
             /> */}
             <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
-            <TimeSlotForm open={add} bookings={currentBookings} click={this.handleClickAdd('')} profile={this.props.profile} updateAvailability={this.props.updateAvailability} />
+            <TimeSlotForm open={add} currentUser={this.props.currentUser} bookings={currentBookings} click={this.handleClickAdd('')} profile={this.props.profile} updateAvailability={this.props.updateAvailability} userID={this.state.userID} />
       </div>
       )
   }

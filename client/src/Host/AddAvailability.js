@@ -133,34 +133,76 @@ class Availability extends React.Component {
         this.props.click();
         console.log(this.state)
         const {start, end, properties, property} = this.state
+        // for testing delete
+        let test = false
+        var rangeStart = moment(start.toLocaleString()).format("YYYYMMDD");
+        var rangeEnd = moment(end.toLocaleString()).format("YYYYMMDD");
+        // let check = this.props.firebase.listings().Timestamp.fromDate()
+        // console.log(check)
+        // let check2 = this.props.firebase.listings().Timestamp.now()
+
         if (properties.length != 0) {
-            if(end != new Date()) {
+            if(test == false) {
                 let id = ""
+                console.log(properties)
+                let listingData = {}
                 for ( let i = 0; i < properties.length; i++) {
                     let l = properties[i] 
+                    console.log(l)
                     if (l.name  == property) {
-                        id = l[key]
-                        console.log(l[key])
+                        id = l.id
+                        listingData = l
+                        
                     }
                 }
-                let time = new Date()
-                let key = this.props.firebase.addAvailToListing(id).push({
-                    start: start,
-                    end: end,
-                    availabilityAdded: time
-                })
+                let hostData = this.props.profile
+                let longStart = start * 1
+                console.log("date: " + start)
+                console.log("new date long: " + longStart)
+                let backStart = new Date(longStart).toString()
+                console.log("back to date: " + backStart)
+                let longEnd = end * 1
+                let dateRange = moment.range(start, end)
+                
+                let obj1 = {
+                    "state": "available",
+                    "start": longStart,
+                    "end": longEnd,
+                    "hostID": this.props.userID,
+                    "firstName": this.props.currentUser.firstName,
+                    "lastName": this.props.currentUser.lastName, 
+                    "gender": hostData.gender,
+                    "phone": hostData.phone,
+                    "email": this.props.currentUser.email,
+                    "ethnicities": hostData.ethnicities,
+                    "religion": hostData.religion,
+                    "story": hostData.story,
+                    "listingData": listingData
+
+                }
+
+                let obj2 = {
+                    "state": "available",
+                    "start": longStart,
+                    "end": longEnd,
+
+                }
+                let availID = this.props.firebase.availabilities().push(obj1)
+                obj2["pushKey"] = availID.key
+                // this.props.firebase.availability(availID.key).set({"start": "h", "end": check2})
+                // adding avail to firebase
+                let key = this.props.firebase.addAvailToListing(id).push(obj2)
                 console.log("LISTING KEY AVAIL WAS PUSHED TOO: " + id)
                 console.log("AVAILABILITY PUSH KEY: " + key.key)
 
-                let obj = {
-                    id: key.key,
-                    name: property,
-                    start: start,
-                    end: end
-                }
-                this.props.updateAvailability(id, obj)
+                
+                // for updating app
+                this.props.updateAvailability(id, obj2)
             } else { 
-                console.log("listing was not saved, please enter a time")
+                console.log("insiede delete line 161")
+
+                // this deletes availablities, give Listing[id], availability[id]
+                this.props.firebase.deleteAvail("-Lg9OGG55kjo4HuwA1B9", "-LgKeD704IjsUDq-QZdK")
             }
         } else {
             console.log("no listing was selected")

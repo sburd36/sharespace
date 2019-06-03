@@ -279,7 +279,7 @@ export default withStyles(styles)(class extends React.Component {
                                 
                                 {/* Personal Information */}
                                 <div style={{paddingRight: "100px"}}>
-                                <PersonalSelect></PersonalSelect>
+                                <PersonalSelect onSelect={() => console.log('')}></PersonalSelect>
                                 </div>
                                 
                                 {/* NEEDS FIELD GOES HERE */}

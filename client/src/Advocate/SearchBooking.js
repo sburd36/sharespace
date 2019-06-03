@@ -203,7 +203,7 @@ export default withStyles(styles)(class extends React.Component {
                                         <Grid containter space={6}>
                                             <Grid item xs={12}>
                                                 <div>
-                                                    <PersonalSelect></PersonalSelect>
+                                                    <PersonalSelect onSelect={()=> console.log("")}></PersonalSelect>
                                                 </div>
                                             </Grid>
                                         </Grid>

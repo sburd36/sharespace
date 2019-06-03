@@ -18,6 +18,8 @@ const config = {
       this.db = app.database();
 
     }
+
+    
     
     // *** Auth API ***
     doCreateUserWithEmailAndPassword = (email, password) =>
@@ -46,8 +48,15 @@ const config = {
 
     listings = () => this.db.ref('listings');
 
-    listing = uid => this.db.ref(`listings/${uid}`);
-    addAvailToListing = id => this.db.ref(`listings/${id}/availability`)
+    listing = id => this.db.ref(`listings/${id}`);
+    
+    addAvailToListing = id => this.db.ref(`listings/${id}/availability`);
+    
+    availabilities = () => this.db.ref('availabilities')
+    
+    availability = (id) => this.db.ref(`availabilities/${id}`)
+
+    deleteAvail = (lid, aid) => this.db.ref(`listings/${lid}/availability/${aid}`).remove();
     
     survivors = () => this.db.ref('survivors');
 

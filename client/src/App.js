@@ -30,55 +30,54 @@ class App extends Component {
       currentUser: {
         type: "",
         uid: "",
-        firstName: "",
-        lastName: "",
-        email: ""
+        firstName: "Mary",
+        lastName: "Huibregtse",
+        email: "mary@gmail.com"
 
       },
+      profile: {
+        phone: '1234567890',
+        gender: 'Female',
+        languages: ["english"],
+        ethnicities: ["White"],
+        religion: ["None"],
+        listings: [{
+          address: "2525 minor Ave E",
+          amenities: ["Kitchen", "Parking", "Bike Storage"],
+          description: "hello",
+          guestCount: 3,
+          hostID: "zSrR3ts6r4cM9z1LG2TyW26uVR42",
+          houseRules: ["No Smoking", "No Alcohol"],
+          id: "-Lg9OGG55kjo4HuwA1B9",
+          information: "world",
+          location: "Belltown",
+          name: "Listing A",
+          photos: "no photos currently",
+          type: "Hotel Room",
+          zip: "98102",
+          availability: [],
+          currentBookings: [],
+          pendingBookings: [],
+        }],
+        listingIDs: ['-Lg9O3KPsggnprKZANFW'],
+        story: 'none given',     
+      }
       // profile: {
       //   phone: '',
       //   gender: 'non given',
       //   languages: [],
       //   ethnicities: [],
       //   religion: [],
-      //   listings: [{
-      //     address: "2525 minor Ave E",
-      //     amenities: ["Kitchen", "Parking", "Bike Storage"],
-      //     description: "hello",
-      //     guestCount: 3,
-      //     hostID: "zSrR3ts6r4cM9z1LG2TyW26uVR42",
-      //     houseRules: ["No Smoking", "No Alcohol"],
-      //     id: "-Lg9OGG55kjo4HuwA1B9",
-      //     information: "world",
-      //     location: "Belltown",
-      //     name: "Listing A",
-      //     photos: "no photos currently",
-      //     type: "Hotel Room",
-      //     zip: "98102",
-      //     availability: [],
-      //     currentBookings: [],
-      //     pendingBookings: [],
-      //     pastBookings: []
-      //   }],
-      //   listingIDs: ['-Lg9O3KPsggnprKZANFW'],
+      //   listings: [],
+      //   listingIDs: [],
       //   story: 'none given',     
       // }
-      profile: {
-        phone: '',
-        gender: 'non given',
-        languages: [],
-        ethnicities: [],
-        religion: [],
-        listings: [],
-        listingIDs: [],
-        story: 'none given',     
-      }
 
       
     }
   }
 
-
+ 
 
   updateAvailability = (id, value) => {
     console.log("inside availability")
@@ -171,7 +170,7 @@ class App extends Component {
                   {/* <Route path="/listing" render={(props) => <MyListing {...props} updateListing={this.updateListing} user={this.state.currentUser}/>} /> */}
 
                   {/* <Route path="/hostdash" component={HostDash} /> */}
-                  <Route path="/host/hostdash" render={(props) => <HostDash {...props} updateListing= {this.updateListing} user = {this.state.currentUser} profile={this.state.profile} updateAvailability = {this.updateAvailability}/>} />                  
+                  <Route path="/host/hostdash" render={(props) => <HostDash {...props} updateListing= {this.updateListing} currentUser = {this.state.currentUser} profile={this.state.profile} updateAvailability = {this.updateAvailability}/>} />                  
 
 
               </Switch>
