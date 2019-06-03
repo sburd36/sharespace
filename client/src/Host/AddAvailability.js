@@ -358,7 +358,7 @@ class Availability extends React.Component {
                         })}
                     </Select>
                 </FormControl>    
-                <ToggleOption handleSelect={this.selectType}/> 
+                <ToggleOption handleSelect={this.selectType} type={type}/> 
                 {/* <div style={{display: 'flex', padding: '1rem'}}> */}
                     <DateRangePicker 
                         onSelect={this.handleSelect}
@@ -434,7 +434,7 @@ class Availability extends React.Component {
     }
 }
 function ToggleOption(props) {
-    const [value, setValue] = React.useState('addAvail');
+    const [value, setValue] = React.useState(props.type);
     const style = {
         group: {
             flexDirection: 'row',

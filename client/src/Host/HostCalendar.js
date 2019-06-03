@@ -5,7 +5,7 @@ import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../style/App.css";
-import Add from '@material-ui/icons/AddCircleOutline';
+import Edit from '@material-ui/icons/Edit';
 import AddAvailabiliity from './AddAvailability';
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
@@ -235,17 +235,17 @@ class Calendar extends React.Component {
                 variant="contained"
                 onClick={this.handleClickAdd('')} 
                 >
-                <Add style={{width: "2em"}}/> 
-                Add Availability
+                <Edit style={{width: "2em"}}/> 
+                Edit Availability
             </Button> : 
             <Button 
             id="button"
-            style={{fontSize: "14pt", padding: "0px 25px", color: "gray", backgroundColor: 'lightgray'}}
+            style={{fontSize: "14pt", padding: "0px 25px", color: "gray", backgroundColor: 'lightgray', borderColor: 'gray'}}
             variant="contained"
             onClick={this.handleClickAdd('')} 
             disabled>
-            <Add style={{width: "2em"}}/> 
-            Add Availability
+            <Edit style={{width: "2em"}}/> 
+            Edit Availability
         </Button>
         }
             
