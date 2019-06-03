@@ -4,6 +4,7 @@
 @import "signup";
 @import "calendar";
 @import "bigCalendar";
+@import "dateRangePicker";
 
 body {
     text-align: left; 
@@ -333,6 +334,7 @@ section {
 
         .org {
             margin-top: 50px;
+            align-items: center;
         }
 
         .support-cards {
@@ -346,6 +348,7 @@ section {
 
             .card {
                 border: none;
+                margin-bottom: 20px;
 
                 .card-img-top {
                     max-width: 100px;

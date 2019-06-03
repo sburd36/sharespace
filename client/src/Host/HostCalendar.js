@@ -3,7 +3,7 @@ import React, {Children} from 'react'
 // import './main.scss' // webpack must be configured to do this
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
-import 'react-big-calendar/lib/css/react-big-calendar.css';
+//import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../style/App.css";
 import Edit from '@material-ui/icons/Edit';
 import AddAvailabiliity from './AddAvailability';
@@ -149,6 +149,8 @@ class Calendar extends React.Component {
             availability = listings[0].availability;
 
         }
+        console.log('hello')
+
         var length = availability.length;
         for (var i = 0; i < length; i++) {
             var start = new Date(availability[i].start).setHours(0,0,0,0);
@@ -224,7 +226,7 @@ class Calendar extends React.Component {
                 //     backgroundColor: this.booked(value) ? 'white' : 'lightgray',
                 // }, 
         });       
-        return (
+    return (
         <div className="App" style={{width: "100%"}}>
         <div style={style.head}>
         {
@@ -284,7 +286,6 @@ class Calendar extends React.Component {
                     views={['month', 'week', 'day']}
                     // dayPropGetter={dayPropGetter}
                     // eventPropGetter={(this.eventStyleGetter)}
-
                     components={{
                         // you have to pass your custom wrapper here
                         // so that it actually gets used
