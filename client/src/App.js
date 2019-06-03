@@ -57,7 +57,7 @@ class App extends Component {
           zip: "98102",
           availability: [],
           currentBookings: [],
-          pendingBookings: [],
+          pendingBookings: [],    
         }],
         listingIDs: ['-Lg9O3KPsggnprKZANFW'],
         story: 'none given',     

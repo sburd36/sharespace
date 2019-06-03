@@ -71,10 +71,10 @@ class Bookings extends React.Component {
         this.state = {
             view: 'list',
             type: 'confirmed',
-            listings: [],
+            user: {},
+            name: "",
             currentBookings: [],
-            pedningBookings: []
-
+            pendingBookings: [],
         }
 
         
@@ -86,42 +86,46 @@ class Bookings extends React.Component {
         this.props.firebase.auth.onAuthStateChanged((user)=> {
             if(user) {
                 currentUser = user.uid 
-                console.log(user.uid)
-                console.log(this.state)
-
-                let spacesQuery = this.props.firebase.availabilities().orderByChild('hostID').equalTo("xztbdMuXQQMHtaVTBFoW4OYzo9E2");
-                spacesQuery.on('value', snapshot =>{
+                this.props.firebase.user(user.uid).on('value', snapshot=>{
                     let obj = snapshot.val(); 
                     console.log(obj)
-                     
-                    const listings = Object.keys(obj).map(key => ({
-                        ...obj[key],
-                      })); 
-                      
-                    let availListings = []
-                    let currentBookings = []
-                    let pendingBookings = []
-                    for (let i = 0; i < listings.length; i ++) {
-                        if (listings[i].availability != undefined) {
-                            availListings.push(listings[i])
-                            if(listings[i].currentBookings != undefined) {
-                                currentBookings.push(listings[i].currentBookings)
-                            }
-                            if(listings[i].pendingBookings != undefined) {
-
-                            }
-                        }
-                    }
-                    availListings = availListings.slice(2,3)
-
                     this.setState({
-                        listings: availListings
-                    })
+                        user: obj,
+                        name: obj.firstName
+                    });
+                })
+                console.log(user.uid)
+                console.log(this.state)
+                let listingQuery = this.props.firebase.availabilities();
 
-                    console.log(this.state)    
-                }) 
 
-
+                listingQuery.orderByChild("state").equalTo("booked").on('value', snapshot=>{
+                    let obj = snapshot.val();
+                    console.log(obj);
+                    if (obj != null) {
+                        let book = Object.keys(obj).map(key => ({
+                            ...obj[key],
+                          })); 
+                        
+                          this.setState({
+                            currentBookings: book  
+                        })
+                    }
+                })
+                
+                listingQuery.orderByChild("state").equalTo("pending").on('value', snapshot=>{
+                    let obj = snapshot.val();
+                    console.log(obj);
+                    if (obj != null) {
+                        let book = Object.keys(obj).map(key => ({
+                            ...obj[key],
+                          })); 
+                        
+                          this.setState({
+                            pendingBookings: book  
+                        })
+                    }
+                })
                 
             } else {
                 console.log('no valid ID')
@@ -189,7 +193,7 @@ class Bookings extends React.Component {
                                 alignItems="center">
                                 <Paper id="side" style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}} >
                                     <img src={women} className={classes.bigAvatar} />
-                                    <h4 style={{fontWeight: 300}}>Welcome, Sally</h4>
+                                    <h4 style={{fontWeight: 300}}>Welcome, {this.state.name}</h4>
                                     <Typography class="m-2 mb-3" color="textSecondary" style={{fontWeight: 300}}>What would you like to do today?</Typography>
                                     <Link to="/advocate/searchbookings">
                                         <Button variant="contained" color="primary" className={classes.button} id="button">
@@ -245,7 +249,7 @@ class Bookings extends React.Component {
                                     <>
                                         {bookings.map(
                                             (booking) => {
-                                                let date = this.convertToDate(booking.space[0].availability[0].start, booking.space[0].availability[0].end)
+                                                let date = this.convertToDate(booking.start, booking.end)
                                                 return(
                                                     <Grid item xs={6}>                                  
                                                         <Card className={classes.card} onClick={this.handleCardClick} id="hoverCard">

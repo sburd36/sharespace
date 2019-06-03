@@ -22,28 +22,36 @@ const localizer = BigCalendar.momentLocalizer(moment)
 
 export default class Calendar extends React.Component {
     constructor(props) {
-      super(props);
-      var events = []
-      Host.map((host) => {
-        host.space[0].availability.map((available) => {
-          events.push({
-            id: events.length,
-            start: new Date(available.start),
-            end: new Date(available.end),
-            title: host.information.name, 
-            host: host
-          })
-        },
-        )
-      })
+      super(props); 
+      console.log(this.props)     
       this.state = {
-        events: events,
-        host: Host[0]
+        events: [],
+        avail: [],
+        host: ""
       }
     }
 
-    componentDidMount = () => {
-      // console.log(this.state.events)
+    componentDidMount() {
+      console.log(this.props)
+      if(this.props.allAvail != undefined && this.props.allAvail.length != 0) {
+        
+        var events = []    
+        this.props.allAvail.map((a) => {
+          console.log(a)
+            events.push({
+              id: a.key,
+              start: new Date(a.start),
+              end: new Date(a.end),
+              title: a.firstName + " " + a.lastName, 
+              host: a
+            })
+
+        })
+        this.setState({
+          events: events
+        })
+      }
+      console.log(this.state)
     }
     onEventResize = (type, { event, start, end, allDay }) => {
         this.setState(state => {
@@ -80,6 +88,25 @@ export default class Calendar extends React.Component {
     }
 
   render() {
+    console.log(this.props.allAvail)
+    if(this.props.allAvail !== undefined && this.props.allAvail.length != 0) {
+      var events = []    
+      this.props.allAvail.map((a) => {
+
+          events.push({
+            id: a.key,
+            start: new Date(a.start),
+            end: new Date(a.end),
+            title: a.firstName + " " + a.lastName, 
+            host: a
+          })
+
+          
+
+      })
+      this.state.events = events
+      console.log(this.state)
+    }
       return (
         <div className="App advocate-calendar calendar">
             <DnDCalendar
@@ -96,7 +123,10 @@ export default class Calendar extends React.Component {
             style={{ height: "65vh" }}
             views={['month', 'week', 'day']}
             />
-            <HostInfo booking={this.state.host} open={this.state.open} click={this.onEventClick}/>
+            {this.state.events !== undefined && this.state.events != 0  ?
+              <HostInfo booking={this.state.host} open={this.state.open} click={this.onEventClick}/>
+            : <h3>No Current Availabilities</h3>}
+            
       </div>
       )
   }

@@ -145,6 +145,7 @@ class Availability extends React.Component {
             if(test == false) {
                 let id = ""
                 console.log(properties)
+
                 let listingData = {}
                 for ( let i = 0; i < properties.length; i++) {
                     let l = properties[i] 
@@ -185,6 +186,7 @@ class Availability extends React.Component {
                     "state": "available",
                     "start": longStart,
                     "end": longEnd,
+                    "listingID": id
 
                 }
                 let availID = this.props.firebase.availabilities().push(obj1)
@@ -192,6 +194,8 @@ class Availability extends React.Component {
                 // this.props.firebase.availability(availID.key).set({"start": "h", "end": check2})
                 // adding avail to firebase
                 let key = this.props.firebase.addAvailToListing(id).push(obj2)
+                obj2["id"] = key.key
+
                 console.log("LISTING KEY AVAIL WAS PUSHED TOO: " + id)
                 console.log("AVAILABILITY PUSH KEY: " + key.key)
 
@@ -231,7 +235,7 @@ class Availability extends React.Component {
         // end = moment(start.toLocaleString()).format("YYYY-MM-DD")
         // const { from, to } = this.state;
         // const modifiers = { start: from, end: to };
-
+        console.log(this.state.property)
         return (
             <>
                 <FormControl>

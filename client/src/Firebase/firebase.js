@@ -19,7 +19,7 @@ const config = {
 
     }
 
-    
+
     
     // *** Auth API ***
     doCreateUserWithEmailAndPassword = (email, password) =>
@@ -56,7 +56,13 @@ const config = {
     
     availability = (id) => this.db.ref(`availabilities/${id}`)
 
-    deleteAvail = (lid, aid) => this.db.ref(`listings/${lid}/availability/${aid}`).remove();
+    deleteAvailInHost = (aid, obj) => {
+      let lid = obj.listingID
+      let pushKey = obj.pushKey
+      this.db.ref(`listings/${lid}/availability/${aid}`).remove();
+      this.db.ref(`availabilities/${pushKey}`).remove()
+
+    }
     
     survivors = () => this.db.ref('survivors');
 

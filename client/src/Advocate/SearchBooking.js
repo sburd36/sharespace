@@ -14,6 +14,10 @@ import { DateFormatInput } from 'material-ui-next-pickers'
 import HostInfo from './HostInfo';
 import { Host, Location } from '../filter';
 
+// firebase
+import { compose } from 'recompose';
+import { withFirebase } from '../Firebase';
+
 const styles = theme => ({
     root: {
       flexGrow: 1,
@@ -70,29 +74,44 @@ const styles = theme => ({
 });
 
 
-export default withStyles(styles)(class extends React.Component {
+class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             view: "calendar",
             guests: "",
             locations: "",
-            start: new Date()
+            start: new Date(),
+            allAvail: []
         }
     }
 
     componentDidMount() {
-        // const api = "http://www.zillow.com/webservice/GetRegionChildren.htm?zws-id=<ZWSID>&state=wa&city=seattle&childtype=neighborhood"
-        // const api = "https://pokeapi.co/api/v2/pokemon/ditto/"
+        this.props.firebase.auth.onAuthStateChanged((user)=> {
+            if(user) {
+                let listingQuery = this.props.firebase.availabilities().orderByChild("state").equalTo("available");
+                listingQuery.on('value', snapshot =>{
+                    let obj = snapshot.val(); 
+                    console.log(obj)
+                    if (obj != null) {
+                        let listings = Object.keys(obj).map(key => ({
+                            ...obj[key],
+                          })); 
+                        
+                          this.setState({
+                            allAvail: listings.slice(14,20)   
+                        })
+        
+                    } 
+                    console.log(this.state)    
+                }) 
 
-        // fetch(api)
-        //     .then(
-        //         data => console.log(data.abilities)
-        //     )
-        //     .catch(
-
-        //     )
+            } else {
+                console.log("no current user present")
+            }
+        });     
     }
+
 
 
     handleInputChange = name => event => {
@@ -292,11 +311,18 @@ export default withStyles(styles)(class extends React.Component {
                                         }
                                     )}
                                 </Grid> 
-                            : <Calendar></Calendar>}
+                            : <Calendar allAvail={this.state.allAvail}></Calendar>}
                             </Paper>
                         </Grid>
                 </Grid>
             </div>       
         )
     }
-})
+}
+
+const SearchBookings = compose(
+    withStyles(styles),
+    withFirebase,
+  )(Search);
+
+  export default SearchBookings;

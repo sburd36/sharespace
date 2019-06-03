@@ -19,6 +19,10 @@ import { PersonalSelect } from '../Select'
 import { Needs } from '../filter';
 // import Map from './Map'
 
+// firebase
+import { compose } from 'recompose';
+import { withFirebase } from '../Firebase';
+
 const styles = theme => ({
     img: {
         height: '700px',
@@ -76,7 +80,7 @@ const styles = theme => ({
 })
 
 
-export default withStyles(styles)(class extends React.Component {
+class BookingForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -87,6 +91,7 @@ export default withStyles(styles)(class extends React.Component {
 
     handleInputChange = name => event => {
         this.setState({ [name]: event.target.value });
+        console.log(this.state)
     };
 
 
@@ -104,8 +109,39 @@ export default withStyles(styles)(class extends React.Component {
      render() {
         const { classes, type } = this.props;
         let host = this.props.booking;
-        if (host === undefined) {
-            host = Host[0]
+        console.log(host)
+        if (host === undefined || host == "") {
+            host = {
+                email: "mary@gmail.com",
+                end: 1559520143997,
+                ethnicities: ["White"],
+                firstName: "Mary",
+                gender: "Female",
+                hostID: "61TAiL7K1vXy254SB1iekWo1KWk2",
+                lastName: "Huibregtse",
+                listingData: {
+                    address: "2525 minor Ave E",
+                    amenities: ["Kitchen", "Parking", "Bike Storage"],
+                    description: "hello",
+                    guest: 3,
+                    hostID: "zSrR3ts6r4cM9z1LG2TyW26uVR42",
+                    houseRules: ["No Smoking", "No Alcohol"],
+                    id: "-Lg9OGG55kjo4HuwA1B9",
+                    checkIn: "",
+                    checkOut: "",
+                    information: "world",
+                    location: "Belltown",
+                    name: "Listing A",
+                    photos: "no photos currently",
+                    type: "Hotel Room",
+                    zip: "98102"
+                },
+                phone: "1234567890",
+                religion: ["None"],
+                start: 1559520143997,
+                state: "available",
+                story: "none given",
+            }
         }
         let render = '';
         if (type === 'confirmed') {
@@ -131,18 +167,18 @@ export default withStyles(styles)(class extends React.Component {
                         <img className={classes.img} src={bedroom} style={{width: "100%", height: "100%"}}></img>
                         {/* <Map /> */}
                         <div className={classes.insideContent}>
-                        <h3>Home by {host.information.name}</h3>
-                        <p style={{color: "#7e9fa8"}}>{host.space[0].location}</p>
+                        <h3>Home by {host.listingData.name}</h3>
+                        <p style={{color: "#7e9fa8"}}>{host.location}</p>
                         <div style={{display: "flex"}}>
                                 {/* Need to add here the availablity. If available, render this, else render the second one */}
                                 {render}
-                                <p className={classes.tag}>{host.space[0].homeType}</p>
+                                <p className={classes.tag}>{host.listingData.type}</p>
                         </div>
                             <DialogContentText style={{display:"flex", justifyContent: "space-between", alignItems: "flex-start"}}>
-                                <p className={classes.body}>{host.space[0].description}</p>
+                                <p className={classes.body}>{host.listingData.description}</p>
                                 <div>
                                     <b className={classes.body} style={{color:"#da5c48"}}>Address</b>
-                                    <p className={classes.body}>{host.space[0].address}</p>
+                                    <p className={classes.body}>{host.listingData.address}</p>
                                 </div>
                             </DialogContentText>
                         <hr></hr>
@@ -150,9 +186,9 @@ export default withStyles(styles)(class extends React.Component {
                         <div style={{display: "flex", justifyContent: "space-between"}}>
                             <div style={{paddingRight: "10px"}}>
                                 <p className={classes.body}>
-                                    <b>{host.information.name}</b>
+                                    <b>{host.firstName  + " " + host.lastName}</b>
                                 </p>
-                                <p className={classes.body} >{host.information.description}</p>
+                                <p className={classes.body} >{host.story}</p>
                             </div>
                             <div>
                                 <p className={classes.body}><b style={{color:"#da5c48"}}>Languages:</b> English, Chinese</p>
@@ -161,14 +197,14 @@ export default withStyles(styles)(class extends React.Component {
                             </div>
                         </div>
                         <div style={{textAlign: "center", display: "flex", justifyContent: "center", marginTop: "5px"}}>
-                            <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.information.contact.phone}</p>
-                            <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.information.contact.email}</p>
+                            <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.phone}</p>
+                            <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.email}</p>
                         </div>
                         <hr></hr>
                         <h5 className={classes.title}>AMENITIES</h5>
                         <div style={{display: 'flex', flexWrap: 'wrap'}}>
                         {
-                            host.space[0].amenities.map((data) => {
+                            host.listingData.amenities.map((data) => {
                                 return( 
                                 <div 
                                     id="tags"
@@ -189,10 +225,10 @@ export default withStyles(styles)(class extends React.Component {
                         <h5 className={classes.title}>CHECK-IN INFORMATION</h5>
                         <div style={{display: "flex", justifyContent: "space-between"}}>
                             <p className={classes.body} style={{paddingRight: "10px"}}>
-                                {host.space[0].checkinInfo.description}
+                                {host.listingData.description}
                             </p>
                             <DialogContentText>
-                                <p className={classes.body}><b>Time: </b> {host.space[0].checkinInfo.time} </p>                          
+                                <p className={classes.body}><b>Time: </b> {host.listingData.checkIn} </p>                          
                             </DialogContentText>
                         </div>
 
@@ -200,7 +236,7 @@ export default withStyles(styles)(class extends React.Component {
                         <h5 className={classes.title}>HOUSE RULES</h5>
                         <div style={{display: 'flex', flexWrap: 'wrap'}}>
                             {
-                                host.space[0].houseRules.map((data) => {
+                                host.listingData.houseRules.map((data) => {
                                     return(
                                     <div 
                                         id="tags"
@@ -350,4 +386,11 @@ export default withStyles(styles)(class extends React.Component {
             </div>
         )
     }
-})
+}
+
+const Bookings = compose(
+    withStyles(styles),
+    withFirebase,
+  )(BookingForm);
+
+  export default Bookings;
