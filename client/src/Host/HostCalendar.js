@@ -11,8 +11,6 @@ import AddAvailabiliity from './AddAvailability';
 import DateRangePicker from 'react-daterange-picker'
 import "react-daterange-picker/dist/css/react-calendar.css";
 
-import 'react-dates/initialize';
-
 import { Button, Select, MenuItem, Input, FormControl, InputLabel, Chip, Dialog, DialogContent, DialogActions} from '@material-ui/core/';
 
 import { listings } from '../filter';
