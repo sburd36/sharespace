@@ -5,9 +5,8 @@ import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 //import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../style/App.css";
-import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import Add from '@material-ui/icons/AddCircleOutline';
-import TimeSlotForm from './AddAvailability';
+import AddAvailabiliity from './AddAvailability';
 
 import DateRangePicker from 'react-daterange-picker'
 import "react-daterange-picker/dist/css/react-calendar.css";
@@ -22,27 +21,6 @@ import { Grid } from '@material-ui/core';
 moment.locale('en-GB');
 
 const localizer = BigCalendar.momentLocalizer(moment)
-  
-  const stateDefinitions = {
-    available: {
-      color: null,
-      label: 'Available',
-    },
-    enquire: {
-      color: '#ffd200',
-      label: 'Enquire',
-    },
-    unavailable: {
-      selectable: false,
-      color: '#78818b',
-      label: 'Unavailable',
-    },
-    unavailable: {
-        selectable: false,
-        color: '#78818b',
-        label: 'Unavailable',
-      },
-  };
 
 export default class Calendar extends React.Component {
     constructor(props) {
@@ -73,47 +51,31 @@ export default class Calendar extends React.Component {
       this.state = {
             view: [],
             space: 0,
-            info: ''
+            info: '',
+            selectedLabel: 'Block'
       }
       console.log(this.state)
     }
 
-    onEventResize = (type, { event, start, end, allDay }) => {
-        this.setState(state => {
-            state.events[0].start = start;
-            state.events[0].end = end;
-            return { events: state.events };
-        });
-    };
 
-    onEventDrop = ({ event, start, end, allDay }) => {
-        this.setState(state => {
-            console.log(event)
-            state.events[event.id].start = start;
-            state.events[event.id].end = end;
-            return { events: state.events };
-        });
-        // console.log(start)
-    };
-
-    /* When you choose a particular slot on the calendar */
-    onSlotChange = (slotInfo) => {
-      var start = moment(slotInfo.start.toLocaleString()).format("YYYY-MM-DDm:ss");
-      var end = moment(slotInfo.end.toLocaleString()).format("YYYY-MM-DDm:ss");
-    //   var newAvailability = {
-    //       id: .length,
-    //       start: start,
-    //       end: end,
-    //       title: slotInfo.host.information.name
+    // /* When you choose a particular slot on the calendar */
+    // onSlotChange = (slotInfo) => {
+    //   var start = moment(slotInfo.start.toLocaleString()).format("YYYY-MM-DDm:ss");
+    //   var end = moment(slotInfo.end.toLocaleString()).format("YYYY-MM-DDm:ss");
+    // //   var newAvailability = {
+    // //       id: .length,
+    // //       start: start,
+    // //       end: end,
+    // //       title: slotInfo.host.information.name
+    // //   }
+    //   console.log(start); //shows the start time chosen
+    //   console.log(end); //shows the end time chosen
+    //   return{
+    //       style: {
+    //           backgroundColor: '#9138fd'
+    //       }
     //   }
-      console.log(start); //shows the start time chosen
-      console.log(end); //shows the end time chosen
-      return{
-          style: {
-              backgroundColor: '#9138fd'
-          }
-      }
-    }
+    // }
 
     /* When you click on an already booked slot */
     onEventClick = (event) => {
@@ -169,15 +131,7 @@ export default class Calendar extends React.Component {
         }
         return false;
     }
-    // onSelect = dates => this.setState({dates})
-    handleSelect = (range, states) => {
-        // range is a moment-range object
-        this.setState({
-          value: range,
-          states: states,
-        });
-        console.log(this.state)
-      }
+
     booked = (date) => {
         var bookings = listings[0].currentBookings;
         for (var i = 0; i < bookings.length; i++) {
@@ -208,8 +162,9 @@ export default class Calendar extends React.Component {
           }
       } 
 
-      const { guest, info, space, add } = this.state;
+      const { guest, info, space, add, selectedLabel } = this.state;
       const currentBookings = listings[space].currentBookings;
+      const availability = listings[space].availability;
       const dateCellWrapper = ({children, value}) => 
             React.cloneElement(Children.only(children), {
                 className:  children.props.className + (this.availability(value) ? '' : ' rbc-off-range-bg'),
@@ -220,20 +175,8 @@ export default class Calendar extends React.Component {
                 //     backgroundColor: this.booked(value) ? 'white' : 'lightgray',
                 // }, 
         });       
-        let dateRanges = []
-        for (var i = 0; i < currentBookings.length; i+=2) {
-            var bookedDates = {
-                state: 'unavailable',
-                range: 
-                moment.range(
-                    currentBookings[i].start,
-                    currentBookings[i].end
-                )
-            }
-            dateRanges[i] = bookedDates;
-        }
-        
-       return (
+
+        return (
         <div className="App" style={{width: "100%"}}>
         <div style={style.head}>
             <Button 
@@ -265,17 +208,7 @@ export default class Calendar extends React.Component {
                 </FormControl>
             </div>
         </div>
-        {/* <DateRangePicker 
-            onSelect={this.handleSelect}
-            value={this.state.value}
-            showLegend={true}
-            stateDefinitions={stateDefinitions}
-            defaultState="available"
-            selectionType='range'
-            dateStates={dateRanges}
-            singleDateRange={true}
-            minimumDate={new Date()}
-        /> */}
+
         <Grid container>
             <div className="calendar">
                 <BigCalendar
@@ -300,7 +233,7 @@ export default class Calendar extends React.Component {
             </div>
         </Grid>
             <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
-            <TimeSlotForm open={add} bookings={currentBookings} click={this.handleClickAdd('')} listings={listings} />
+            <AddAvailabiliity open={add} space={space} click={this.handleClickAdd('')} listings={listings} />
       </div>
       
       )
