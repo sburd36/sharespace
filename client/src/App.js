@@ -77,8 +77,16 @@ class App extends Component {
     }
   }
 
- 
-
+  deleteAvailability = (id, index) => {
+    let l = this.state.profile.listings
+    for (let i = 0; i < l.length; i ++) {
+      let obj = l[i]
+      if(obj.id == id) {
+        l[i].availability.splice(index, 1)
+        console.log(l[i].availability)
+      }
+    }
+  }
   updateAvailability = (id, value) => {
     let l = this.state.profile.listings
     for (let i = 0; i < l.length; i ++) {
@@ -170,8 +178,7 @@ class App extends Component {
                   {/* <Route path="/listing" render={(props) => <MyListing {...props} updateListing={this.updateListing} user={this.state.currentUser}/>} /> */}
 
                   {/* <Route path="/hostdash" component={HostDash} /> */}
-                  <Route path="/host/hostdash" render={(props) => <HostDash {...props} updateListing= {this.updateListing} currentUser = {this.state.currentUser} profile={this.state.profile} updateAvailability = {this.updateAvailability}/>} />                  
-
+                  <Route path="/host/hostdash" render={(props) => <HostDash {...props} updateListing= {this.updateListing} currentUser = {this.state.currentUser} profile={this.state.profile} updateAvailability={this.updateAvailability} deleteAvailability={this.deleteAvailability}/> }/>    
 
               </Switch>
           </div>    

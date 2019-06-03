@@ -144,16 +144,17 @@ class Calendar extends React.Component {
     availability = (value) => {
         const { listings } = this.state;
         let availability = []
+        
         if (listings !== undefined) {
             availability = listings[0].availability;
 
         }
         var length = availability.length;
-
         for (var i = 0; i < length; i++) {
-            var start = new Date(availability[i].start);
-            var end = new Date(availability[i].end);
-            if (value < end && value > start) {
+            var start = new Date(availability[i].start).setHours(0,0,0,0);
+            var end = new Date(availability[i].end).setHours(0,0,0,0);
+            
+            if (value <= end && value >= start) {
                 return true;
             }
         }
@@ -294,7 +295,7 @@ class Calendar extends React.Component {
             </div>
         </Grid>
             <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
-            <AddAvailabiliity open={add} currentUser={this.props.currentUser} listings={listings} click={this.handleClickAdd('')} profile={this.props.profile} updateAvailability={this.props.updateAvailability} userID={this.state.userID}  />
+            <AddAvailabiliity open={add} currentUser={this.props.currentUser} listings={listings} click={this.handleClickAdd('')} profile={this.props.profile} updateAvailability={this.props.updateAvailability} deleteAvailability={this.props.deleteAvailability} userID={this.state.userID}  />
       </div>
       
       )

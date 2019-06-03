@@ -66,8 +66,6 @@ const config = {
     }
     survivors = () => this.db.ref('survivors');
 
-
-
   }
   
   export default Firebase;

@@ -246,7 +246,7 @@ const styles = theme => ({
                                     this.state.view == 'bookings' && <Bookings type={bookingType} profile={this.props.profile} updateListing={this.props.updateListing}></Bookings>
                                 }
                                 {
-                                    this.state.view == 'calendar' && <HostCalendar profile={this.props.profile} currentUser={this.props.currentUser} updateAvailability = {this.props.updateAvailability}/>
+                                    this.state.view == 'calendar' && <HostCalendar profile={this.props.profile} currentUser={this.props.currentUser} updateAvailability={this.props.updateAvailability} deleteAvailability={this.props.deleteAvailability}/>
                                 }
                                 </Grid>
                             </Paper>

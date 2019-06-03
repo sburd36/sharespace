@@ -105,8 +105,12 @@ class Availability extends React.Component {
 
     }
 
-    deleteAvail = (avail) => {
-        this.props.firebase.deleteAvailInHost(avail)
+    deleteAvail = (avail, availIndex) => {
+        const { listings, listingIndex } = this.state;
+        let listingID = listings[listingIndex].id;
+        console.log(availIndex)
+        this.props.firebase.deleteAvailInHost(avail);
+        this.props.deleteAvailability(listingID, availIndex);
     }
 
     insertAvail = (rangeStart, rangeEnd) => {
@@ -158,10 +162,8 @@ class Availability extends React.Component {
     onSubmit = event => {
         event.preventDefault();
         this.props.click();
-        console.log(this.state)
         const {type, range, listings, listingIndex} = this.state
         // for testing delete
-        let test = false
         let availability = []
         if (listings !== undefined) {
             availability = listings[listingIndex].availability.sort((a, b) => moment(a.start).isBefore(moment(b.start)) ? -1 : 1)
@@ -170,29 +172,46 @@ class Availability extends React.Component {
         var rangeEnd = moment(range.end['_i'].toLocaleString()).format("YYYY-MM-DD");
         if (type === 'addAvail') {
             // START CODE FOR ADD AVAILABILITY 
-
-
             let notFound = true;
+            console.log(availability)
+            // console.log(new Date(rangeStart));
+            // console.log(new Date(rangeEnd));
+            console.log(rangeStart)
+            console.log(rangeEnd)
             for (var i = 0; i < availability.length; i++) {
-                var availStart = moment(availability[i].start.toLocaleString()).format("YYYY-MM-DD");
-                var availEnd  = moment(availability[i].end.toLocaleString()).format("YYYY-MM-DD");
-                let nextAvailStart = '';
+                let currentAvail = availability[i];
+                console.log('HELLO')
 
+                var availStart = moment(new Date(availability[i].start).toLocaleString()).format("YYYY-MM-DD");
+                var availEnd  = moment(new Date(availability[i].end).toLocaleString()).format("YYYY-MM-DD");
+                console.log(availStart);
+                console.log(availEnd)
+                let nextAvailStart = '';
+                let nextAvailEnd = '';
                 if (availEnd === rangeStart) {
                     if (i < availability.length - 1) {
-                        nextAvailStart = moment(availability[i + 1].start.toLocaleString()).format("YYYY-MM-DD");
+                        nextAvailStart = moment(new Date(availability[i + 1].start).toLocaleString()).format("YYYY-MM-DD");
+                        nextAvailEnd = moment(new Date(availability[i + 1].end).toLocaleString()).format("YYYY-MM-DD");
                     } 
+                    console.log(nextAvailStart)
                     // full range and grab/delete TWO availabilities and add ONE new availability
                     if (nextAvailStart === rangeEnd) {
                         console.log('CASE 1');
                         notFound = false;
+                        this.deleteAvail(currentAvail, i);
+                        this.deleteAvail(availability[i + 1], i + 1)
+                        this.insertAvail(availStart, nextAvailEnd);
                     } else {  // delete current availability and add new one with (availStart and rangeEnd)
                         console.log('CASE 2')
                         notFound = false;
+                        this.deleteAvail(currentAvail, i);
+                        this.insertAvail(availStart, rangeEnd);
                     }
                 } else if (notFound && availStart === rangeEnd) { // delete current availability and add new one with (rangeStart and availEnd)
                     console.log('CASE 3')
                     notFound = false;
+                    this.deleteAvail(currentAvail, i);
+                    this.insertAvail(rangeStart, availEnd);
                 } 
             }
 
@@ -202,28 +221,36 @@ class Availability extends React.Component {
                 this.insertAvail(rangeStart, rangeEnd);
             }
         } else { // START CODE FOR BLOCK DATES
-
+            console.log(availability)
             for (var i = 0; i < availability.length; i++) {
+                let currentAvail = availability[i];
+
                 var availStart = moment(new Date(availability[i].start).toLocaleString()).format("YYYY-MM-DD");
                 var availEnd  = moment(new Date(availability[i].end).toLocaleString()).format("YYYY-MM-DD");
-                console.log(availability[i].start)
-                console.log(availEnd)
+
                 if (new Date(rangeStart) >= new Date(availStart) && new Date(rangeEnd) <= new Date(availEnd)) {
                     console.log('HELLO');
 
                     if (rangeStart === availStart) {
+                        console.log(rangeEnd);
+                        console.log(availEnd);
+                        this.deleteAvail(currentAvail, i);
+
                         if (rangeEnd === availEnd) { // whole availability slot blocked so DELETE 
-                            console.log('CASE 1');
+                            console.log('BLOCK CASE 1');
                         } else { // first half of availability selected, DELETE and INSERT (rangeEnd -> availEnd)
-                            console.log('CASE 2');
+                            console.log('BLOCK CASE 2');
+                            this.insertAvail(rangeEnd, availEnd);
                         }
                     } else if (rangeEnd === availEnd) { // second half selected, DELETE and INSERT (availStart -> rangeStart)
-                        console.log('CASE 3')
+                        console.log('BLOCK CASE 3')
+                        this.deleteAvail(currentAvail, i);
+                        this.insertAvail(availStart, rangeStart);
                     } else { // DELETE current avail and split to two (availStart -> rangeStart, rangeEnd -> availEnd)
-                        console.log('CASE 4')
+                        console.log('BLOCK CASE 4')
                         console.log("DELETED AVAIL: " + availability[i].pushKey)
                         console.log("DELETED LISTINGID: " +listings[listingIndex].id + "    " + availability[i].id )
-                        this.deleteAvail(availability[i]);
+                        this.deleteAvail(currentAvail, i);
                         // first half
                         this.insertAvail(availStart, rangeStart);
                         // second half
@@ -254,17 +281,17 @@ class Availability extends React.Component {
     }
 
     handleBlock = (range) => () => {
-        const { listings, space } = this.props;
-
-        
+        const { listings, space } = this.props; 
     // END CODE FOR BLOCKING
     }
+
     makeDateRange = (dateRanges, listings, listingIndex) => {
         // const { listings } = this.props;
         if (listings !== undefined && listings.length > 0 && listingIndex !== null) {
             const currentBookings = listings[listingIndex].currentBookings;
             const availability = listings[listingIndex].availability;
-    
+            console.log(availability)
+
             for (var i = 0; i < currentBookings.length; i++) {
                 var bookedDates = {
                     state: 'booked',
@@ -302,7 +329,7 @@ class Availability extends React.Component {
         let dateRanges = []
         this.makeDateRange(dateRanges, listings, listingIndex)
         let label = ''
-
+        console.log(stateDefinitions)
         if (type === 'addAvail') {
             stateDefinitions.available.selectable = false
             stateDefinitions.unavailable.selectable = true
@@ -325,7 +352,6 @@ class Availability extends React.Component {
                         required
                     >
                         {listings.map((data, index) => {
-                            console.log(index)
                             return(
                                 <MenuItem value={index}>{data.name}</MenuItem>
                             )
