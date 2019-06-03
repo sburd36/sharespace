@@ -53,7 +53,7 @@ class Availability extends React.Component {
             // for new calendar, firebase uses begin and end
             start: new Date(),
             end: new Date(),
-            type: 'addAvail'
+            type: 'addAvail',
         }
     }
 
@@ -147,13 +147,83 @@ class Availability extends React.Component {
 
 
     handleSelect = (range, states) => {
-        // range is a moment-range object
         this.setState({
           range: range,
           states: states,
         });
       }
+      handleAdd = (range) => () => {
+        const { listings, space } = this.props;
 
+        let availability = []
+        if (listings !== undefined) {
+            availability = listings[space].availability.sort((a, b) => moment(a.start).isBefore(moment(b.start)) ? -1 : 1)
+        }
+        var rangeStart = moment(range.start['_i'].toLocaleString()).format("YYYY-MM-DD");
+        var rangeEnd = moment(range.end['_i'].toLocaleString()).format("YYYY-MM-DD");
+
+        // sort availability
+        // availability.sort((a, b) => moment(a.start).isBefore(moment(b.start)) ? -1 : 1)
+        let notFound = true;
+        for (var i = 0; i < availability.length; i++) {
+            // console.log(availability[i].end)
+            var availStart = moment(availability[i].start.toLocaleString()).format("YYYY-MM-DD");
+            var availEnd  = moment(availability[i].end.toLocaleString()).format("YYYY-MM-DD");
+            let nextAvailStart = '';
+
+            if (availEnd === rangeStart) {
+                if (i < availability.length - 1) {
+                    nextAvailStart = moment(availability[i + 1].start.toLocaleString()).format("YYYY-MM-DD");
+                } 
+                // full range and grab/delete TWO availabilities and add ONE new availability
+                if (nextAvailStart === rangeEnd) {
+                    console.log('CASE 1');
+                    notFound = false;
+                } else {  // delete current availability and add new one with (availStart and rangeEnd)
+                    console.log('CASE 2')
+                    notFound = false;
+                }
+            } else if (notFound && availStart === rangeEnd) { // delete current availability and add new one with (rangeStart and availEnd)
+                console.log('CASE 3')
+                notFound = false;
+            } 
+        }
+        if (notFound) { // add new availability with (rangeStart and rangeEnd)
+            console.log('CASE 4')
+        }
+      }
+
+      handleBlock = (range) => () => {
+        const { listings, space } = this.props;
+
+        let availability = [];
+        if (listings !== undefined) {
+            availability = listings[space].availability.sort((a, b) => moment(a.start).isBefore(moment(b.start)) ? -1 : 1)
+        }
+        var rangeStart = moment(range.start['_i'].toLocaleString()).format("YYYY-MM-DD");
+        var rangeEnd = moment(range.end['_i'].toLocaleString()).format("YYYY-MM-DD");
+
+        for (var i = 0; i < availability.length; i++) {
+            var availStart = moment(availability[i].start.toLocaleString()).format("YYYY-MM-DD");
+            var availEnd  = moment(availability[i].end.toLocaleString()).format("YYYY-MM-DD");
+
+            if (new Date(rangeStart) >= new Date(availStart) && new Date(rangeEnd) <= new Date(availEnd)) {
+                console.log('HELLO')
+                if (rangeStart === availStart) {
+                    if (rangeEnd === availEnd) { // whole availability slot blocked so DELETE 
+                        console.log('CASE 1');
+                    } else { // first half of availability selected, DELETE and INSERT (rangeEnd -> availEnd)
+                        console.log('CASE 2');
+                    }
+                } else if (rangeEnd === availEnd) { // second half selected, DELETE and INSERT (availStart -> rangeStart)
+                    console.log('CASE 3')
+                } else {
+                    console.log('CASE 4')
+                }
+            }
+        }
+        // END CODE FOR BLOCKING
+      }
     makeDateRange = (dateRanges) => {
         const { listings, space } = this.props;
 
@@ -251,7 +321,7 @@ class Availability extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { type } = this.state;
+        const { type, range } = this.state;
 
         return (
             <div class="d-flex justify-content-around">
@@ -272,10 +342,10 @@ class Availability extends React.Component {
                         <DialogActions >
                             {
                                 type === 'addAvail' ?
-                                <Button type="submit" variant="contained"  color="primary">
+                                <Button type="submit" variant="contained"  color="primary" onCLick={this.handleAdd(range)}>
                                     Add
                                 </Button> :
-                                <Button type="submit" variant="contained" >
+                                <Button type="submit" variant="contained" onClick={this.handleBlock(range)}>
                                     Block
                                 </Button>
                             }

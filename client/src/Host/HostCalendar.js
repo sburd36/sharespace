@@ -131,78 +131,7 @@ export default class Calendar extends React.Component {
         }
         return false;
     }
-    // onSelect = dates => this.setState({dates})
-    handleSelect = (range, states) => {
-        // range is a moment-range object
 
-        var availability = listings[this.state.space].availability
-
-        var rangeStart = moment(range.start['_i'].toLocaleString()).format("YYYY-MM-DD");
-        var rangeEnd = moment(range.end['_i'].toLocaleString()).format("YYYY-MM-DD");
-
-        // sort availability
-        availability.sort((a, b) => moment(a.start).isBefore(moment(b.start)) ? -1 : 1)
-        let notFound = true;
-                // START CODE FOR ADD AVAIABILITY (HERE FOR TESTING PURPOSE!!)
-                // for (var i = 0; i < availability.length; i++) {
-                //     // console.log(availability[i].end)
-                //     var availStart = moment(availability[i].start.toLocaleString()).format("YYYY-MM-DD");
-                //     var availEnd  = moment(availability[i].end.toLocaleString()).format("YYYY-MM-DD");
-                //     let nextAvailStart = '';
-
-                //     if (availEnd === rangeStart) {
-                //         if (i < availability.length - 1) {
-                //             nextAvailStart = moment(availability[i + 1].start.toLocaleString()).format("YYYYMMDD");
-                //         } 
-                //         // full range and grab/delete TWO availabilities and add ONE new availability
-                //         if (nextAvailStart === rangeEnd) {
-                //             console.log('CASE 1');
-                //             notFound = false;
-                //         } else {  // delete current availability and add new one with (availStart and rangeEnd)
-                //             console.log('CASE 2')
-                //             notFound = false;
-                //         }
-                //     } else if (notFound && availStart === rangeEnd) { // delete current availability and add new one with (rangeStart and availEnd)
-                //         console.log('CASE 3')
-                //         notFound = false;
-                //     } 
-                // }
-                // if (notFound) { // add new availability with (rangeStart and rangeEnd)
-                //     console.log('LAST CASE')
-                // }
-        // END OF CODE FOR ADD AVAILABILITY
-        for (var i = 0; i < availability.length; i++) {
-            var availStart = moment(availability[i].start.toLocaleString()).format("YYYY-MM-DD");
-            var availEnd  = moment(availability[i].end.toLocaleString()).format("YYYY-MM-DD");
-
-            if (new Date(rangeStart) >= new Date(availStart) && new Date(rangeEnd) <= new Date(availEnd)) {
-                console.log('HELLO')
-                if (rangeStart === availStart) {
-                    if (rangeEnd === availEnd) { // whole availability slot blocked so DELETE 
-                        console.log('CASE 1');
-                        notFound = false;
-                    } else { // first half of availability selected, DELETE and INSERT (rangeEnd -> availEnd)
-                        console.log('CASE 2');
-                        notFound = false;
-                    }
-                } else if (rangeEnd === availEnd) { // second half selected, DELETE and INSERT (availStart -> rangeStart)
-                    console.log('CASE 3')
-                } else {
-                    console.log('CASE 4')
-                }
-            }
-        }
-        // START CODE FOR BLOCKING 
-
-        // END CODE FOR BLOCKING
-
-        // console.log(availability)
-        this.setState({
-          value: range,
-          states: states,
-        });
-        // console.log(this.state)
-      }
     booked = (date) => {
         var bookings = listings[0].currentBookings;
         for (var i = 0; i < bookings.length; i++) {
