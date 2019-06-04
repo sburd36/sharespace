@@ -168,7 +168,7 @@ class MyListing extends React.Component {
   
     } 
 
-    handleAdd = () => () => {
+    handleAdd = () => {
         this.setState({
             open: !this.state.open
         })
@@ -284,7 +284,7 @@ class MyListing extends React.Component {
                             aria-labelledby="scroll-dialog-title"
                         >
                             <DialogContent>
-                                <AddSpace user={this.props.user} updateListing={this.props.updateListing} saveListingID={this.saveListingID} onClick={this.handleAdd('')}></AddSpace>
+                                <AddSpace user={this.props.user} updateListing={this.props.updateListing} saveListingID={this.saveListingID} click={this.handleAdd}></AddSpace>
                             </DialogContent>       
                             <DialogActions>
                                 {/* <Button 

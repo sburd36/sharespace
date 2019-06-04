@@ -131,7 +131,6 @@ class Listing extends React.Component {
 		let keepA = []
 		let keepB = []
 		for(let key in this.state.amenities) {
-			
 			if (this.state.amenities[key] == true) {
 				keepA.push(key)
 			}
@@ -185,10 +184,9 @@ class Listing extends React.Component {
 				listObj['pastBookings'] = []
 				listObj['pendingBookings'] = []
 				this.props.saveListingID(key.key, listObj)
-
+				this.props.click()
 			} else {
 				console.log("no host signed in")
-
 			}
 	})
 

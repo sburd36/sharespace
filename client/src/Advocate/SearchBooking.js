@@ -98,7 +98,7 @@ class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            view: "calendar",
+            view: "list",
             guests: "",
             location: "",
             start: new Date(),
@@ -390,6 +390,9 @@ class Search extends React.Component {
                                         </p>
                                     </div>
                                 </div>
+                                {
+                                    this.state.allAvail.length === 0 && <p style={{paddingLeft: '30px'}}>No Available Availabilities</p>
+                                }
                             {this.state.view == "list" ? 
                                 <div className={classes.cardContainer}>
                                     {this.state.allAvail.map(

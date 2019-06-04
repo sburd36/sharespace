@@ -65,7 +65,6 @@ class Calendar extends React.Component {
         console.log("INSIDE COMPONENTT DID MOUNT")
         if(this.props.profile.listings === undefined || this.props.profile.listings.length == 0) {
             console.log("there are no current listings")
-
         } else {
             this.props.firebase.auth.onAuthStateChanged((user)=> {
                 if(user) {
@@ -76,7 +75,6 @@ class Calendar extends React.Component {
             
             this.setState({
                 listings: this.props.profile.listings,
-                
             })
         }
     }
@@ -154,10 +152,10 @@ class Calendar extends React.Component {
     }
 
     handleChange = (name) => (event) => {
+        console.log(event.target.value)
         this.setState({
             [name]: event.target.value
         })
-        console.log(this.state)
     }
 
     // eventStyleGetter = (event, start, end, isSelected) => {
@@ -176,13 +174,13 @@ class Calendar extends React.Component {
     //     };
     // }
     availability = (value) => {
-        const { listings } = this.state;
+        const { listings, space } = this.state;
+        // this.state.listings = this.props.profile.listings
         let availability = []
         
         if (listings !== undefined && listings.length !== 0) {
-            availability = listings[0].availability;
+            availability = listings[space].availability;
         }
-        console.log('hello')
 
         var length = availability.length;
         for (var i = 0; i < length; i++) {
@@ -212,7 +210,6 @@ class Calendar extends React.Component {
   
     }
   render() {
-      console.log(this.props)
       var style = {
           head: {
             display: 'flex',
@@ -232,6 +229,9 @@ class Calendar extends React.Component {
       } 
 
       const { guest, info, space, add, listings } = this.state;
+    //   this.state.listings = this.props.profile.listings
+    //   console.log(space)
+    //   console.log(this.state.listings[space])
       let currentBookings = []
       let availability = []
       if (listings !== undefined && listings.length > 0) {
@@ -244,11 +244,11 @@ class Calendar extends React.Component {
 
     //   const listings = this.props.profile.listings
         let check = false;
-      if (listings.length != 0) {
+      if (listings !== undefined && listings.length != 0) {
         currentBookings = listings[space].currentBookings;  
         check = true
       }
-    
+
       const dateCellWrapper = ({children, value}) => 
             React.cloneElement(Children.only(children), {
                 className:  children.props.className + (this.availability(value) ? '' : ' rbc-off-range-bg'),
@@ -295,7 +295,7 @@ class Calendar extends React.Component {
                         id='space'
                     >
                     {
-                        listings.map((listing, index) => {
+                        listings !== undefined && listings.map((listing, index) => {
                             return (
                                 <MenuItem value={index}>{listing.name}</MenuItem>
                             )
