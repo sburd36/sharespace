@@ -7,6 +7,10 @@ import Switch from '@material-ui/core/Switch';
 import HostCalendar from './HostCalendar';
 import Availability from './AddAvailability';
 
+// firebase
+import { compose } from 'recompose';
+import { withFirebase } from '../Firebase';
+
 const styles = theme => ({
     cards: {
         display: "flex",
@@ -31,82 +35,57 @@ const styles = theme => ({
     }
 })
 
-export default withStyles(styles)(class extends React.Component {
+class AvailCalendar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             view: 'calendar',
-            bookings: [
-                {
-                    guestID: 1349,
-                    homeName: 'Jimmy\'s Bedroom',
-                    numberOfGuest: 1,
-                    begin: '2019-04-10',
-                    end: '2019-04-29',
-                    notes: "Guest Notes Here",
-                    info: ['No Smoking', 'No Alcohol'],
-                    address: '1234 Mary Gates Way NE Apt. 430 Seattle, WA 98105',
-                    homeType: 'Entire Room',
-                    location: 'BEACON HILL',
-                    advocate: {
-                        name: 'Jenny Chen',
-                        phone: '(206)396-3860',
-                        email: 'jennychen@gmail.com'
-                    }
-                },
-                {
-                    guestID: 7859,
-                    homeName: 'Lakeview Apartments',
-                    numberOfGuest: 2,
-                    begin: '2019-05-14',
-                    end: '2019-05-20',
-                    notes: "Guest Notes Here",
-                    info: ['Young Child', 'Pets', 'Women Only', 'No Alcohol'],
-                    address: '1234 Mary Gates Way NE Apt. 430 Seattle, WA 98105',
-                    homeType: 'Entire Space',
-                    location: 'GREEN LAKE',
-                    advocate: {
-                        name: 'Jenny Chen',
-                        phone: '(206)396-3860',
-                        email: 'jennychen@gmail.com'
-                    }
-                },
-                {
-                    guestID: 8562,
-                    homeName: 'Lakeview Apartments',
-                    numberOfGuest: 1,
-                    begin: '2019-06-10',
-                    end: '2019-06-30',
-                    notes: "Guest Notes Here",
-                    info: ['Physical Disability', 'Service Animal'],
-                    address: '1234 Mary Gates Way NE Apt. 430 Seattle, WA 98105',
-                    homeType: 'Entire Space',
-                    location: 'GREEN LAKE',
-                    advocate: {
-                        name: 'Jenny Chen',
-                        phone: '(206)396-3860',
-                        email: 'jennychen@gmail.com'
-                    }
-                },
-                {
-                    guestID: 9757,
-                    homeName: 'Vacation House',
-                    numberOfGuest: 1,
-                    begin: '2019-07-10',
-                    end: '2019-07-20',
-                    notes: "Guest Notes Here",
-                    info: ['Young Child', 'High Chair'],
-                    address: '1234 Mary Gates Way NE Apt. 430 Seattle, WA 98105',
-                    homeType: 'Entire Space',
-                    location: 'DOWNTOWN',
-                    advocate: {
-                        name: 'Jenny Chen',
-                        phone: '(206)396-3860',
-                        email: 'jennychen@gmail.com'
-                    }
-                },
-            ]
+            bookings: []
+                // {
+                //     guestID: 1349,
+                //     homeName: 'Jimmy\'s Bedroom',
+                //     numberOfGuest: 1,
+                //     begin: '2019-04-10',
+                //     end: '2019-04-29',
+                //     notes: "Guest Notes Here",
+                //     info: ['No Smoking', 'No Alcohol'],
+                //     address: '1234 Mary Gates Way NE Apt. 430 Seattle, WA 98105',
+                //     homeType: 'Entire Room',
+                //     location: 'BEACON HILL',
+                //     advocate: {
+                //         name: 'Jenny Chen',
+                //         phone: '(206)396-3860',
+                //         email: 'jennychen@gmail.com'
+                //     }
+                // }
+            
         }
+    }
+
+    componentDidMount() {
+        this.props.firebase.auth.onAuthStateChanged((user)=> {
+            if(user) {
+                let listingQuery = this.props.firebase.availabilities();
+                listingQuery.on('value', snapshot =>{
+                    let obj = snapshot.val(); 
+                    console.log(obj)
+                    if (obj != null) {
+                        let listings = Object.keys(obj).map(key => ({
+                            ...obj[key],
+                          })); 
+                        
+                          this.setState({
+                            allListings: listings.slice(12,17)   
+                        })
+        
+                    } 
+                    console.log(this.state)    
+                }) 
+
+            } else {
+                console.log("no current user present")
+            }
+        });     
     }
 
     handleCardClick = () => {
@@ -181,4 +160,11 @@ export default withStyles(styles)(class extends React.Component {
             </div>
         )
     }
-})
+}
+
+const Bookings = compose(
+    withStyles(styles),
+    withFirebase,
+  )(AvailCalendar);
+
+  export default Bookings;

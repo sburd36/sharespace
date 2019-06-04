@@ -9,7 +9,7 @@ import Edit from '@material-ui/icons/Edit';
 import AddAvailabiliity from './AddAvailability';
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
-
+import BookingInfo from './BookingInfo';
 import { Button, Select, MenuItem, Input, FormControl, InputLabel, Chip, Dialog, DialogContent, DialogActions} from '@material-ui/core/';
 
 // import { listings } from '../filter';
@@ -62,39 +62,58 @@ class Calendar extends React.Component {
 
     // for firebase and data transfer
     componentDidMount() {
-        this.props.firebase.auth.onAuthStateChanged((user)=> {
-            if(user) {
-                let listings = []
-                let userQuery = this.props.firebase.availabilities().orderByChild("hostID").equalTo(user.uid);
-                userQuery.on('value', snapshot =>{
-                    let obj = snapshot.val(); 
-                    console.log(obj)
-                    if(obj != null) {
-                        if(obj.length == 1) {
-                           listings.push(obj) 
-                        } else {
-                            listings =  Object.keys(obj).map(key => ({
-                                ...obj[key],
-                                id: key
-                              })); 
-                        }
-                    }
+        console.log("INSIDE COMPONENTT DID MOUNT")
+        if(this.props.profile.listings === undefined || this.props.profile.listings.length == 0) {
+            console.log("there are no current listings")
 
-                    this.setState({
-                        listings: listings
-                    });
-
-                })
-
-
-                console.log(this.state)    
-
-
-            } else {
-                console.log("no current user present")
-            }
-        });     
+        } else {
+            this.props.firebase.auth.onAuthStateChanged((user)=> {
+                if(user) {
+                    this.state.userID = user.uid 
+                }
+    
+            }); 
+            
+            this.setState({
+                listings: this.props.profile.listings,
+                
+            })
+        }
     }
+    // componentDidMount() {
+    //     this.props.firebase.auth.onAuthStateChanged((user)=> {
+    //         if(user) {
+    //             let listings = []
+    //             let userQuery = this.props.firebase.availabilities().orderByChild("hostID").equalTo(user.uid);
+    //             userQuery.on('value', snapshot =>{
+    //                 let obj = snapshot.val(); 
+    //                 console.log(obj)
+    //                 if(obj != null) {
+    //                     if(obj.length == 1) {
+    //                        listings.push(obj) 
+    //                     } else {
+    //                         listings =  Object.keys(obj).map(key => ({
+    //                             ...obj[key],
+    //                             id: key
+    //                           })); 
+    //                     }
+    //                 }
+
+    //                 this.setState({
+    //                     listings: listings
+    //                 });
+
+    //             })
+
+
+    //             console.log(this.state)    
+
+
+    //         } else {
+    //             console.log("no current user present")
+    //         }
+    //     });     
+    // }
 
     // /* When you choose a particular slot on the calendar */
     // onSlotChange = (slotInfo) => {
@@ -309,7 +328,8 @@ class Calendar extends React.Component {
                 />
             </div>
         </Grid>
-            <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
+            {/* <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/> */}
+            {/* <BookingInfo></BookingInfo> */}
             <AddAvailabiliity open={add} currentUser={this.props.currentUser} listings={listings} click={this.handleClickAdd('')} profile={this.props.profile} updateAvailability={this.props.updateAvailability} deleteAvailability={this.props.deleteAvailability} userID={this.state.userID}  />
       </div>
       

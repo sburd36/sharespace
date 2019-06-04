@@ -136,10 +136,10 @@ class Availability extends React.Component {
             "ethnicities": hostData.ethnicities,
             "religion": hostData.religion,
             "story": hostData.story,
+            
             "listingData": listings[listingIndex]
-
         }
-
+        console.log(obj1)
         let obj2 = {
             "state": "available",
             "start": longStart,

@@ -252,7 +252,9 @@ export var Host =  [
         ],
     },
 ]
-
+var bookings = {
+    
+}
 export var advocate = [
     {
         ID: 1,

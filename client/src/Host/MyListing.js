@@ -168,8 +168,11 @@ class MyListing extends React.Component {
   
     } 
 
-
-
+    handleAdd = () => () => {
+        this.setState({
+            open: !this.state.open
+        })
+    }
     render() {
         console.log(this.state)
         console.log(this.props)
@@ -263,7 +266,6 @@ class MyListing extends React.Component {
                 <div className={classes.main}>
                     <div className={classes.head}>
                         <h3 class="m-3">MY LISTINGS</h3>
-                    
                         <Button 
                             variant="contained"
                             onClick={() => this.setState({ open: true})}
@@ -282,10 +284,10 @@ class MyListing extends React.Component {
                             aria-labelledby="scroll-dialog-title"
                         >
                             <DialogContent>
-                                <AddSpace user={this.props.user} updateListing={this.props.updateListing} saveListingID={this.saveListingID}></AddSpace>
+                                <AddSpace user={this.props.user} updateListing={this.props.updateListing} saveListingID={this.saveListingID} onClick={this.handleAdd('')}></AddSpace>
                             </DialogContent>       
                             <DialogActions>
-                                <Button 
+                                {/* <Button 
                                     variant="contained" 
                                     type="submit"
                                     onClick={() => 
@@ -294,7 +296,7 @@ class MyListing extends React.Component {
                                     id="button" 
                                 >
                                     Add Listing
-                                </Button>
+                                </Button> */}
                             </DialogActions>
                         </Dialog>
                         {/* end of dialog */}

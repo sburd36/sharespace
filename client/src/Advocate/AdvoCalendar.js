@@ -13,37 +13,54 @@ import "../style/App.css";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import HostInfo from './HostInfo';
 import { Host } from '../filter';
-
+import { withFirebase } from '../Firebase';
+import { compose } from 'recompose';
 const DnDCalendar = withDragAndDrop(BigCalendar);
 
 moment.locale('en-GB');
 
 const localizer = BigCalendar.momentLocalizer(moment)
 
-export default class Calendar extends React.Component {
+class Calendar extends React.Component {
     constructor(props) {
-      super(props);
-      var events = []
-      Host.map((host) => {
-        host.space[0].availability.map((available) => {
-          events.push({
-            id: events.length,
-            start: new Date(available.start),
-            end: new Date(available.end),
-            title: host.information.name, 
-            host: host
-          })
-        },
-        )
-      })
+      super(props); 
+      console.log(this.props)     
       this.state = {
-        events: events,
-        host: Host[0]
+        events: [],
+        avail: [],
+        userID: "",
+        host: ""
       }
     }
 
-    componentDidMount = () => {
-      // console.log(this.state.events)
+    componentDidMount() {
+
+      this.props.firebase.auth.onAuthStateChanged((user)=> {
+        if(user) {
+            this.setState({
+              userID: user.uid
+            });
+        }
+
+    }); 
+      if(this.props.allAvail != undefined && this.props.allAvail.length != 0) {
+      
+        var events = []    
+        this.props.allAvail.map((a) => {
+          console.log(a)
+            events.push({
+              id: a.key,
+              start: new Date(a.start),
+              end: new Date(a.end),
+              title: a.firstName + " " + a.lastName, 
+              host: a
+            })
+
+        })
+        this.setState({
+          events: events
+        })
+      }
     }
     onEventResize = (type, { event, start, end, allDay }) => {
         this.setState(state => {
@@ -80,8 +97,30 @@ export default class Calendar extends React.Component {
     }
 
   render() {
+    console.log(this.props.allAvail)
+    let events = []    
+
+    if(this.props.allAvail !== undefined && this.props.allAvail.length != 0) {
+      this.props.allAvail.map((a) => {
+          events.push({
+            id: a.key,
+            start: new Date(a.start),
+            end: new Date(a.end),
+            title: a.firstName + " " + a.lastName, 
+            host: a
+          })
+          console.log(events)
+      })
+    }
+    this.state.events = events
+
+    // console.log(this.state)
       return (
         <div className="App advocate-calendar calendar">
+        {
+          events.length === 0 && <h5>No Search Results</h5>
+        }
+        {console.log(this.state.events)}
             <DnDCalendar
             localizer={localizer}
             defaultDate={new Date()}
@@ -96,8 +135,18 @@ export default class Calendar extends React.Component {
             style={{ height: "65vh" }}
             views={['month', 'week', 'day']}
             />
-            <HostInfo booking={this.state.host} open={this.state.open} click={this.onEventClick}/>
+            {this.state.events !== undefined && this.state.events != 0  ?
+              <HostInfo booking={this.state.host} open={this.state.open} click={this.onEventClick} uid={this.state.userID}/>
+            : <h3>No Current Availabilities</h3>}
+            
       </div>
       )
   }
 }
+
+const AdvoCalendar = compose(
+  withFirebase,
+)(Calendar);
+
+export default AdvoCalendar;
+
