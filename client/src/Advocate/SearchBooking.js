@@ -14,6 +14,24 @@ import { DateFormatInput } from 'material-ui-next-pickers'
 import HostInfo from './HostInfo';
 import { Host, Location } from '../filter';
 
+// firebase
+import { compose } from 'recompose';
+import { withFirebase } from '../Firebase';
+
+const algoliasearch = require('algoliasearch');
+const dotenv = require('dotenv');
+
+// // load values from the .env file in this directory into process.env
+dotenv.config();
+
+// // configure algolia
+const algolia = algoliasearch(
+    "UI4XF6GAZS",
+    "d0d9a91e7c68fb44a286ce841f14333d"
+);
+
+const index = algolia.initIndex(process.env.ALGOLIA_INDEX_NAME);
+
 const styles = theme => ({
     root: {
       alignItems: "stretch"
@@ -76,30 +94,82 @@ const styles = theme => ({
 });
 
 
-export default withStyles(styles)(class extends React.Component {
+class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             view: "calendar",
             guests: "",
-            locations: "",
-            start: new Date()
+            location: "",
+            start: new Date(),
+            allAvail: [],
+            search: '',
+            user: {}
         }
     }
 
     componentDidMount() {
-        // const api = "http://www.zillow.com/webservice/GetRegionChildren.htm?zws-id=<ZWSID>&state=wa&city=seattle&childtype=neighborhood"
-        // const api = "https://pokeapi.co/api/v2/pokemon/ditto/"
-
-        // fetch(api)
-        //     .then(
-        //         data => console.log(data.abilities)
-        //     )
-        //     .catch(
-
-        //     )
+        console.log('MOUNTED')
+        this.props.firebase.auth.onAuthStateChanged((user)=> {
+            if(user) {
+                const availabilitiesRef = this.props.firebase.availabilities().orderByChild("state").equalTo("available").limitToLast(5);
+                availabilitiesRef.on('child_added', this.addOrUpdateIndexRecord);
+                availabilitiesRef.on('child_changed', this.addOrUpdateIndexRecord);
+                availabilitiesRef.on('child_removed', this.deleteIndexRecord);
+        
+                let listingQuery = this.props.firebase.availabilities().orderByChild("state").equalTo("available").limitToLast(5);
+                listingQuery.on('value', snapshot =>{
+                    let obj = snapshot.val(); 
+                    if (obj != null) {
+                        let listings = Object.keys(obj).map(key => ({
+                            ...obj[key], 
+                            id: key,
+                          })); 
+                          this.setState({
+                            allAvail: listings  
+                        })
+        
+                    } 
+                }) 
+                
+            } else {
+                console.log("no current user present")
+            }
+        })
     }
 
+    // For Algolia
+    addOrUpdateIndexRecord = (availability) => {
+        // Get Firebase object
+        const record = availability.val();
+        // Specify Algolia's objectID using the Firebase object key
+        record.objectID = availability.key;
+        // Add or update object
+        index
+          .saveObject(record)
+          .then(() => {
+            console.log('Firebase object indexed in Algolia', record.objectID);
+          })
+          .catch(error => {
+            console.error('Error when indexing availabilities into Algolia', error);
+            process.exit(1);
+          });
+      }
+      
+      deleteIndexRecord = ({key}) => {
+        // Get Algolia's objectID from the Firebase object key
+        const objectID = key;
+        // Remove the object from Algolia
+        index
+          .deleteObject(objectID)
+          .then(() => {
+            console.log('Firebase object deleted from Algolia', objectID);
+          })
+          .catch(error => {
+            console.error('Error when deleting availabilities from Algolia', error);
+            process.exit(1);
+          });
+      }
 
     handleInputChange = name => event => {
         // keep track of the valid dates 02/18 - 03/10
@@ -135,12 +205,88 @@ export default withStyles(styles)(class extends React.Component {
         };
     }
 
+    onSubmit = (event) => {
+        event.preventDefault();
+        index.search({
+            query: this.state.search,
+            attributesToRetrieve: [
+              'listingData.location',
+              'lastName'
+            ],
+            // numericFilters: [
+            //   [
+            //     'start >= ' + startRange,
+            //     'end <= ' + endRange
+            //   ]
+            // ],
+            // facetFilters: [
+            //   'firstName:Min'
+            // ]
+            },
+            (err, { hits } = {}) => {
+              if (err) throw err;
+
+              console.log(hits);
+              this.setState({
+                  allAvail: hits
+              })
+        })
+    }
+
+    onClick = () => {
+
+        // index.search({
+        //     query: this.state.search
+        //     // [
+        //     //     // {
+        //     //     //     indexName: 'listingData.location',
+        //     //     //     query: this.state.location
+        //     //     // }
+        //     //     {
+        //     //         indexName: 'listingData.number',
+        //     //         query: this.state.guests
+        //     //     }
+        //     // ],
+        //     // attributesToRetrieve: [
+        //     //   'listingData.location',
+        //     //   'lastName'
+        //     // ],
+        //     // numericFilters: [
+        //     //   [
+        //     //     'start >= ' + startRange,
+        //     //     'end <= ' + endRange
+        //     //   ]
+        //     // ],
+        //     // facetFilters: [
+        //     //   'firstName:Min'
+        //     // ]
+        //     },
+        //     (err, { hits } = {}) => {
+        //       if (err) throw err;
+        //       hits.slice(2, hits.length)
+
+        //       console.log(hits);
+        //       this.setState({
+        //         allAvail: hits,
+        //     })
+        // })
+        // .then(res => {
+        //     console.log(res)
+        // })
+    }
+    handleSelect = (type, value) => (event) => {
+        this.setState({
+            [type]: value
+        })
+    }
     render() {
         const { classes } = this.props;
         let {start, end} = this.state;
         let date = '';
         start = moment(start.toLocaleString()).format("YYYY-MM-DD")
         end = moment(start.toLocaleString()).format("YYYY-MM-DD")
+        console.log(this.state)
+        let calendar = <Calendar allAvail={this.state.allAvail}></Calendar>
         return (
             <div class="pt-4">
                 <Grid 
@@ -202,33 +348,31 @@ export default withStyles(styles)(class extends React.Component {
                                                 </Select>
                                             </FormControl>
                                             <FormControl className={classes.select} style={{flexGrow: 1}}>
-                                                <CustomSelect data={Location}/>
+                                                <CustomSelect data={Location} onSelect={this.handleSelect}/>
                                             </FormControl>
                                         </div>
                                         
                                         <Grid container space={6}>
                                             <Grid item xs={12}>
-                                                <div style={{marginBottom: "20px"}}>
-                                                    <PersonalSelect></PersonalSelect>
+                                                <div>
+                                                    <PersonalSelect onSelect={()=> console.log("")}></PersonalSelect>
                                                 </div>
                                             </Grid>
                                         </Grid>
                                         <SpaceSelect ></SpaceSelect>
-                                        <input type="search" placeholder="Search" class="mt-3 mb-3"></input>
+                                        <input type="search" placeholder="Search" class="mt-3 mb-3" onChange={(event)=>this.setState({search: event.target.value})}></input>
                                         <div style={{display: "flex", justifyContent:"space-between"}}>
-                                        <Link to="/currentbookings">
+                                        <Link to="/advocate/currentbookings">
                                             <Button variant="contained" color="primary" className={classes.button} id="buttonGray" style={{fontSize: "16px", padding:"0px 45px 0px 45px", height:"40px"}}>
                                                 Cancel
                                             </Button>
                                         </Link>
-                                            <Button variant="contained" color="primary" className={classes.button} id="button" style={{fontSize: "16px", padding:"0px 22px 0px 22px", height:"40px"}}>
+                                            <Button type="button" onClick={this.onClick} variant="contained" color="primary" className={classes.button} id="button" style={{fontSize: "16px", padding:"0px 22px 0px 22px", height:"40px"}}>
                                                 Search Hosts
                                             </Button>
                                         </div>  
                                     </FormControl>
-
                                     </form>
-                                    
                                 </Paper>
                         </Grid>
                         <Grid key={2} item>
@@ -248,9 +392,9 @@ export default withStyles(styles)(class extends React.Component {
                                 </div>
                             {this.state.view == "list" ? 
                                 <div className={classes.cardContainer}>
-                                    {Host.map(
+                                    {this.state.allAvail.map(
                                         (booking) => {
-                                            date = this.convertToDate(booking.space[0].availability[0].start, booking.space[0].availability[0].end)
+                                            date = this.convertToDate(booking.start, booking.end)
                                             
                                             return(
                                                 <Card className={classes.card}>
@@ -259,20 +403,20 @@ export default withStyles(styles)(class extends React.Component {
                                                             <img className={classes.avatar} src={person}></img>
                                                             <div>
                                                                 <h5 style={{color: "#202e57", marginBottom: 0}}>
-                                                                    {booking.information.name}
+                                                                    {booking.name}
                                                                 </h5>
                                                                 <Typography style={{color: "#da5c48"}} className={classes.bodyText}>
-                                                                    {booking.space[0].location}
+                                                                    {booking.listingData.location}
                                                                 </Typography>
                                                                 <Typography className={classes.bodyText}>
-                                                                    {booking.space[0].homeType}
+                                                                    {booking.listingData.type}
                                                                 </Typography>
                                                             </div>      
                                                         </div>  
                                                         
                                                         {/* click on date to trigger HostInfo dialog */}
                                                         <Button id='button-outline-date' onClick={this.handleHost} variant="outlined">                                                  
-                                                        {date.start} - {date.end}
+                                                            {date.start} - {date.end}
                                                         </Button>      
                                                         <HostInfo booking={booking} open={this.state.open} click={this.handleHost}></HostInfo>    
 
@@ -280,7 +424,7 @@ export default withStyles(styles)(class extends React.Component {
                                                         <p style={{marginBottom: 0, marginTop: "10px", fontSize: "14px"}}>Amenities:</p>
                                                         <div style={{display: 'flex', flexWrap: 'wrap', margin: '5px'}}>
                                                             {
-                                                                booking.space[0].amenities.map((amenity) => {
+                                                                booking.listingData.amenities.map((amenity) => {
                                                                     return(
                                                                         <div 
                                                                             id="tags"
@@ -303,11 +447,18 @@ export default withStyles(styles)(class extends React.Component {
                                         }
                                     )}
                                 </div> 
-                            : <Grid container> <Calendar></Calendar> </Grid> }
+                            : <Grid container> {calendar} </Grid> }
                             </Paper>
                         </Grid>
                 </Grid>
             </div>       
         )
     }
-})
+}
+
+const SearchBookings = compose(
+    withStyles(styles),
+    withFirebase,
+  )(Search);
+
+  export default SearchBookings;

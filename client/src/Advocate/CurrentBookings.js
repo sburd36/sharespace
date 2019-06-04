@@ -7,6 +7,10 @@ import HostInfo from './HostInfo';
 import { Host } from '../filter';
 import Calendar from './AdvoCalendar';
 
+// firebase
+import { compose } from 'recompose';
+import { withFirebase } from '../Firebase';
+
 import {Paper, Typography,Grid, Button, Card, CardContent, withStyles, Switch } from '@material-ui/core/'
 
 import moment from 'moment';
@@ -61,15 +65,78 @@ const styles = theme => ({
         fontWeight: 300
     }
   });
-
-export default withStyles(styles)(class extends React.Component {
+class Bookings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             view: 'list',
-            type: 'confirmed'
+            type: 'confirmed',
+            user: {},
+            name: "",
+            currentBookings: [],
+            pendingBookings: [],
         }
+
+        
     }
+
+    componentDidMount() {
+        let currentUser = "";
+        console.log(this.props)
+        this.props.firebase.auth.onAuthStateChanged((user)=> {
+            if(user) {
+                currentUser = user.uid 
+                this.props.firebase.user(user.uid).on('value', snapshot=>{
+                    let obj = snapshot.val(); 
+                    console.log(obj)
+                    this.setState({
+                        user: obj,
+                        name: obj.firstName
+                    });
+                })
+                console.log(user.uid)
+                console.log(this.state)
+                let listingQuery = this.props.firebase.availabilities();
+
+
+                listingQuery.orderByChild("state").equalTo("booked").on('value', snapshot=>{
+                    let obj = snapshot.val();
+                    console.log(obj);
+                    if (obj != null) {
+                        let book = Object.keys(obj).map(key => ({
+                            ...obj[key],
+                          })); 
+                        
+                          this.setState({
+                            currentBookings: book  
+                        })
+                    }
+                })
+                
+                listingQuery.orderByChild("state").equalTo("pending").on('value', snapshot=>{
+                    let obj = snapshot.val();
+                    console.log(obj);
+                    if (obj != null) {
+                        let book = Object.keys(obj).map(key => ({
+                            ...obj[key],
+                          })); 
+                        
+                          this.setState({
+                            pendingBookings: book  
+                        })
+                    }
+                })
+                
+            } else {
+                console.log('no valid ID')
+            }
+
+        })
+
+    }
+
+
+
 
     handleRequestType = (value) => (event) => {
         this.setState({
@@ -103,11 +170,16 @@ export default withStyles(styles)(class extends React.Component {
         const { classes } = this.props;
         const { view, type } = this.state;
         let title = '';
+        let bookings = [];
         if (type === 'confirmed') {
             title = 'CURRENT BOOKINGS'
+            bookings = this.state.currentBookings;
         } else {
             title = 'PENDING BOOKINGS REQUESTS'
+            bookings = this.state.pendingBookings;
         }
+
+        // {(this.state.current)}
         return (
             <div class="pt-4">
                 <Grid 
@@ -121,7 +193,7 @@ export default withStyles(styles)(class extends React.Component {
                                 alignItems="center">
                                 <Paper id="side" style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}} >
                                     <img src={women} className={classes.bigAvatar} />
-                                    <h4 style={{fontWeight: 300}}>Welcome, Sally</h4>
+                                    <h4 style={{fontWeight: 300}}>Welcome, {this.state.name}</h4>
                                     <Typography class="m-2 mb-3" color="textSecondary" style={{fontWeight: 300}}>What would you like to do today?</Typography>
                                     <Link to="/advocate/searchbookings">
                                         <Button variant="contained" color="primary" className={classes.button} id="button">
@@ -171,27 +243,32 @@ export default withStyles(styles)(class extends React.Component {
                                         
                                     </div>
                                 </div>
+                                {
+                                    
+                                    (type === 'confirmed' && bookings.length === 0) && <p style={{marginLeft: '30px'}}>You currently have no Bookings</p>
+                                }
                                 <Grid container spacing={3}>
 
                                 {
                                     view === 'list' ? 
+                                    
                                     <>
-                                        {Host.map(
+                                        {bookings.map(
                                             (booking) => {
-                                                let date = this.convertToDate(booking.space[0].availability[0].start, booking.space[0].availability[0].end)
+                                                let date = this.convertToDate(booking.start, booking.end)
                                                 return(
                                                     <Grid item xs={6}>                                  
                                                         <Card className={classes.card} onClick={this.handleCardClick} id="hoverCard">
                                                             <CardContent className={classes.content}>
                                                                 <div>
                                                                     <Typography className={classes.cardContent} style={{maxWidth: 200, fontSize: '14pt'}}>
-                                                                        <strong style={{fontWeight: 500}}>Host:</strong> {booking.information.name}
+                                                                        <strong style={{fontWeight: 500}}>Host:</strong> {booking.firstName  + " " + booking.lastName}
                                                                     </Typography>
                                                                     <Typography className={classes.cardContent} style={{fontSize: '12pt'}}>
-                                                                        <strong style={{fontWeight: 500}}>Guest #:</strong> {booking.space[0].guestID}
+                                                                        <strong style={{fontWeight: 500}}>Guest #:</strong> {booking.guest}
                                                                     </Typography> 
                                                                     <Typography className={classes.cardContent} style={{fontSize: '12pt'}}>
-                                                                        <strong style= {{fontWeight: 500}}>Advocate:</strong> {booking.advocate}
+                                                                        <strong style= {{fontWeight: 500}}>Advocate:</strong> {booking.advocateID}
                                                                     </Typography>
                                                                 </div>     
                                                                 <div>
@@ -204,12 +281,12 @@ export default withStyles(styles)(class extends React.Component {
                                                                         {date.start} - <br/>{date.end}
                                                                     </div>
                                                                     <Typography style={{color:'#da5c48', float:'right', fontSize: '12pt'}}>
-                                                                        {booking.space[0].location}
+                                                                        {booking.location}
                                                                     </Typography>
                                                                 </div>                                                                                                          
                                                             </CardContent>
                                                         </Card>
-                                                        <HostInfo type={type} booking={booking} open={this.state.open} click={this.handleCardClick}></HostInfo>    
+                                                        <HostInfo type={type} booking={booking} open={this.state.open} click={this.handleCardClick} user={this.state.user}></HostInfo>    
                                                     </Grid>
                                                 )
                                             }
@@ -226,4 +303,11 @@ export default withStyles(styles)(class extends React.Component {
             </div>       
         )
     }
-})
+}
+
+const CurrentBookings = compose(
+    withStyles(styles),
+    withFirebase,
+  )(Bookings);
+
+  export default CurrentBookings;

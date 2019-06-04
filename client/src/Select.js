@@ -26,15 +26,22 @@ export function makeOptions(filter) {
     return options;
 }
 export function CustomSelect(props) {
+    const [value, setValue] = React.useState(props.type);
+
+    function handleSelect(event) {
+        console.log(event.target)
+        // props.onSelect('location', event.target.value)
+        // setValue(event.target.value);
+    }
     return (
         <div style={{padding: "10px 0px"}}>
-            {props.data.name}
+            {props.data.type}
             <Select
                 closeMenuOnSelect={false}
                 components={Animated()}
                 isMulti
                 name={props.data.name}
-                // onChange={this.props.onSelect(data.type)}
+                // onChange={handleSelect}
                 options={makeOptions(props.data['values'])}
             />
         </div>
@@ -52,14 +59,15 @@ class PersonalSelect extends React.Component {
         return (
             Personal.map((data) => {
                 return( 
-                    <div style={{padding: "5px 0px"}}>
+                    <div style={{padding: "10px 0px", width: "100%"}}>
                         <p style={{fontSize: "10pt", color: "#ea6648"}}>{data.name}</p>
                         <Select
                             closeMenuOnSelect={false}
                             components={Animated()}
                             isMulti
                             name={data.name}
-                            // onChange={this.props.onSelect(data.type)}
+                            // DO NOT COMMENT THIS OUT
+                            onChange={this.props.onSelect(data.type)}
                             options={makeOptions(data['values'])}
                         />
                     </div>

@@ -7,6 +7,10 @@ import Switch from '@material-ui/core/Switch';
 import HostCalendar from './HostCalendar';
 import Availability from './AddAvailability';
 
+// firebase
+import { compose } from 'recompose';
+import { withFirebase } from '../Firebase';
+
 const styles = theme => ({
     cards: {
         display: "flex",
@@ -31,89 +35,74 @@ const styles = theme => ({
     }
 })
 
-export default withStyles(styles)(class extends React.Component {
+class AvailCalendar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             view: 'calendar',
-            bookings: [
-                {
-                    guestID: 1349,
-                    homeName: 'Jimmy\'s Bedroom',
-                    numberOfGuest: 1,
-                    begin: '2019-04-10',
-                    end: '2019-04-29',
-                    notes: "Guest Notes Here",
-                    info: ['No Smoking', 'No Alcohol'],
-                    address: '1234 Mary Gates Way NE Apt. 430 Seattle, WA 98105',
-                    homeType: 'Entire Room',
-                    location: 'BEACON HILL',
-                    advocate: {
-                        name: 'Jenny Chen',
-                        phone: '(206)396-3860',
-                        email: 'jennychen@gmail.com'
-                    }
-                },
-                {
-                    guestID: 7859,
-                    homeName: 'Lakeview Apartments',
-                    numberOfGuest: 2,
-                    begin: '2019-05-14',
-                    end: '2019-05-20',
-                    notes: "Guest Notes Here",
-                    info: ['Young Child', 'Pets', 'Women Only', 'No Alcohol'],
-                    address: '1234 Mary Gates Way NE Apt. 430 Seattle, WA 98105',
-                    homeType: 'Entire Space',
-                    location: 'GREEN LAKE',
-                    advocate: {
-                        name: 'Jenny Chen',
-                        phone: '(206)396-3860',
-                        email: 'jennychen@gmail.com'
-                    }
-                },
-                {
-                    guestID: 8562,
-                    homeName: 'Lakeview Apartments',
-                    numberOfGuest: 1,
-                    begin: '2019-06-10',
-                    end: '2019-06-30',
-                    notes: "Guest Notes Here",
-                    info: ['Physical Disability', 'Service Animal'],
-                    address: '1234 Mary Gates Way NE Apt. 430 Seattle, WA 98105',
-                    homeType: 'Entire Space',
-                    location: 'GREEN LAKE',
-                    advocate: {
-                        name: 'Jenny Chen',
-                        phone: '(206)396-3860',
-                        email: 'jennychen@gmail.com'
-                    }
-                },
-                {
-                    guestID: 9757,
-                    homeName: 'Vacation House',
-                    numberOfGuest: 1,
-                    begin: '2019-07-10',
-                    end: '2019-07-20',
-                    notes: "Guest Notes Here",
-                    info: ['Young Child', 'High Chair'],
-                    address: '1234 Mary Gates Way NE Apt. 430 Seattle, WA 98105',
-                    homeType: 'Entire Space',
-                    location: 'DOWNTOWN',
-                    advocate: {
-                        name: 'Jenny Chen',
-                        phone: '(206)396-3860',
-                        email: 'jennychen@gmail.com'
-                    }
-                },
-            ]
+            bookings: [],
+            // pendingBookings: []
         }
     }
 
+    componentDidMount() {
+        this.props.firebase.auth.onAuthStateChanged((user)=> {
+            if(user) {
+
+                this.props.firebase.availabilities().orderByChild("state").equalTo("pending").on('value', snapshot=>{
+                    let obj = snapshot.val();
+                    console.log(obj);
+                    if (obj !== null) {
+                        
+                        const book = Object.keys(obj).map(key => ({
+                            ...obj[key],
+                            id: key
+                            })); 
+                        console.log(book.key)
+                        this.setState({
+                            bookings: book  
+                        })
+
+                    }
+                    console.log(this.state)
+                })
+
+
+                
+            } else {
+                console.log("no current user present")
+            }
+        });     
+    }
+
     handleCardClick = () => {
+
         this.setState({
             open: !this.state.open
         })
+       
     }
+
+    handleFireClick = (obj, decide) => {
+
+        console.log(obj)
+        console.log(decide)
+        this.setState({
+            open: !this.state.open
+        })
+        if (obj !== undefined) {
+
+            if (decide == "accept") {
+                console.log("inside accept")
+                this.props.firebase.addPendingToBooked(obj)
+            } else {
+                console.log("inside decline")
+               this.props.firebase.addPendingToDelete(obj) 
+            }
+        }
+       
+    }
+
 
     handleSwitchView = (event) => {
         this.setState({
@@ -122,7 +111,16 @@ export default withStyles(styles)(class extends React.Component {
     }
 
     render() {
-        const { classes, type } = this.props;
+        const { classes, type, bookings } = this.props;
+        console.log(this.state)
+        // let bookings = []
+        // // type == 'confirmed' ? bookings = this.state.currentBookings : bookings =this.state.pendingBookings;
+        // if(type == 'confirmed') {
+        //     bookings = this.state.currentBookings
+        // } else {
+        //     bookings = this.state.pendingBookings
+        // }
+        console.log(bookings)
         // console.log(type)
         return(
             <div >
@@ -140,8 +138,8 @@ export default withStyles(styles)(class extends React.Component {
                                     <div className={classes.cardHeader}>
                                         <div>
                                             <p>Guest #: {data.guestID}</p>
-                                            <p style={{fontSize: "16px", fontWeight: 300}}>{data.numberOfGuest} Guests</p>
-                                            <p style={{fontSize: "16px", fontWeight: 300, color: "#da5c48"}}>{data.homeName}</p>
+                                            <p style={{fontSize: "16px", fontWeight: 300}}>{data.guest} Guests</p>
+                                            <p style={{fontSize: "16px", fontWeight: 300, color: "#da5c48"}}>{data.name}</p>
                                         </div>
                                         <div>
                                             {data.start} - <br/>
@@ -154,7 +152,7 @@ export default withStyles(styles)(class extends React.Component {
                                     <p style={{fontSize: "16px", fontWeight: 400}}>Guest Needs:</p>
                                     <div style={{display: 'flex', flexWrap: 'wrap'}}>
                                         {
-                                            data.info.map((amenity) =>{
+                                            data.ethnicities.map((amenity) =>{
                                                 return (
                                                     <div
                                                         id="tags"
@@ -171,7 +169,7 @@ export default withStyles(styles)(class extends React.Component {
                                             })
                                         }
                                     </div>
-                                    <BookingInfo booking={data} open={this.state.open} type={type} click={this.handleCardClick}></BookingInfo>
+                                    <BookingInfo booking={data} open={this.state.open} type={type} click={this.handleFireClick}></BookingInfo>
                                 </Paper>
                             )
                         }) 
@@ -181,4 +179,11 @@ export default withStyles(styles)(class extends React.Component {
             </div>
         )
     }
-})
+}
+
+const Bookings = compose(
+    withStyles(styles),
+    withFirebase,
+  )(AvailCalendar);
+
+  export default Bookings;

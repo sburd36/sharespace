@@ -103,8 +103,28 @@ class Listing extends React.Component {
 				checkin: "",
 				checkout: "",
 			}
+		}
+
+	// For Select
+	handleChange = name => event => {
+			this.setState({
+					[name]: event.target.value
+			})
+			console.log(this.state)
 	}
+
+	// For Input
+	onInputChange = (event) => {
+		this.setState({ [event.target.name]: event.target.value });
 	
+	}
+
+	handleChecked = (name, selected) => (event) => {
+		var obj = this.state[`${name}`];
+		obj[`${selected}`] = event.target.checked;
+		this.setState({[name]: obj})
+	}
+
 	onSubmit = event => {
 		event.preventDefault();
 		console.log(this.state.amenities)
@@ -145,7 +165,7 @@ class Listing extends React.Component {
 				}
 				console.log(user.uid)
 				console.log(this.state)
-				let key = this.props.firebase.listings().push({listObj})
+				let key = this.props.firebase.listings().push(listObj)
 				listObj['id'] = key.key
 				// .then(() => {
 				//   this.setState({...SPACE});
@@ -160,6 +180,10 @@ class Listing extends React.Component {
 					this.props.firebase.user(user.uid).update({'haveListing': true})
 
 				});
+				listObj['availability'] = []
+				listObj['currentBookings'] = []
+				listObj['pastBookings'] = []
+				listObj['pendingBookings'] = []
 				this.props.saveListingID(key.key, listObj)
 
 			} else {
@@ -167,220 +191,199 @@ class Listing extends React.Component {
 
 			}
 	})
-		console.log(this.state)
+
+	console.log(this.state)
 	};
-
-	// For Select
-	handleChange = name => event => {
-			this.setState({
-					[name]: event.target.value
-			})
-			console.log(this.state)
-	}
-
-	// For Input
-	onInputChange = (event) => {
-		this.setState({ [event.target.name]: event.target.value });
 	
-	}
-
-	handleChecked = (name, selected) => (event) => {
-		var obj = this.state[`${name}`];
-		obj[`${selected}`] = event.target.checked;
-		this.setState({[name]: obj})
-	}
-
-	handleClick = () => {
-	//console.log(this.state)
-	}
-
-
 	render() {
 			console.log(this.props)
 			const { classes } = this.props;
-
+			console.log(this.state)
 			return (
 					<main className={classes.main}>
 						<CssBaseline />
 						<form className={classes.form} onSubmit={this.onSubmit}>
-			<h4>Add Listing </h4>
-			<div className={classes.box}>
-			
-			{/* Listing Name */}
-			<FormControl variant="outlined" className={classes.formControl}>
-				<InputLabel style={{color: this.state.labelColor, flexGrow: 1}} htmlFor="name">Listing Name</InputLabel>
-				<Input id="name" name="name" required autoComplete="name" onChange={this.onInputChange}/>
-						</FormControl>
+								<h4>Add Listing </h4>
+								<div className={classes.box}>
+								
+								{/* Listing Name */}
+								<FormControl variant="outlined" className={classes.formControl}>
+									<InputLabel style={{color: this.state.labelColor, flexGrow: 1}} htmlFor="name">Listing Name</InputLabel>
+									<Input id="name" name="name" required autoComplete="name" onChange={this.onInputChange}/>
+											</FormControl>
 
-			{/* Location */}
-			<FormControl className={classes.formControl}>
-				<p className={classes.formLabel}>Location</p>
-				<Select
-					id="location"
-					value={this.state.location}
-					onChange={this.handleChange('location')}
-					input={<OutlinedInput/>}
-					style={{height: "40px"}}
-					//className={classes.select}
-					required
-				>
-					{Location.values.map((data) => {
-						return(
-							<MenuItem value={data}>{data}</MenuItem>
-						)
-					})}
-				</Select>
-			</FormControl>
-
-			{/* Home Type */}
-			<FormControl className={classes.formControl}>
-				<p className={classes.formLabel}>Home Type</p>
-					<Select
-						value={this.state.type}
-						onChange={this.handleChange('type')}
-						input={<OutlinedInput/>}
-						className={classes.select}
-						style={{height: "40px"}}
-					>
-					{HomeType.values.map((data) => {
-						return(
-							<MenuItem value={data}>{data}</MenuItem>
-						)
-					})}
-										</Select>
-							</FormControl>
-
-			{/* Address */}
-			<FormControl variant="outlined" className={classes.formControl}>
-				<InputLabel htmlFor="address" style={{flexGrow: 1}}>Address</InputLabel>
-				<Input id="address" name="address" required onChange={this.onInputChange}/>
-						</FormControl>
-
-			{/* Zipcode */}
-			<FormControl variant="outlined" className={classes.formControl}>
-				<InputLabel htmlFor="zip">Zip Code</InputLabel>
-				<Input id="zip" name="zip" required onChange={this.onInputChange}/>
-							</FormControl>
-
-			{/* Upload Photos */}
-			<input
-				accept="image/*"
-				className={classes.formControl}
-				id="contained-button-file"
-				multiple
-				type="file"
-				onChange={(e) => console.log(e.target.files)}
-			/>
-			
-			{/* Number of Guests */}
-			<FormControl className={classes.formControl}>
-										<p className={classes.formLabel}># of Guests</p>
-										<Select
-										value={this.state.guests}
-										onChange={this.handleChange('guests')}
+								{/* Location */}
+								<FormControl className={classes.formControl}>
+									<p className={classes.formLabel}>Location</p>
+									<Select
+										id="location"
+										value={this.state.location}
+										onChange={this.handleChange('location')}
 										input={<OutlinedInput/>}
-					className={classes.select}
-					style={{height: "40px"}}
-										>
-										{[1,2,3,4,5].map((data) => {
-												return(
-														<MenuItem value={data}>{data}</MenuItem>
-												)
+										style={{height: "40px"}}
+										//className={classes.select}
+										required
+									>
+										{Location.values.map((data) => {
+											return(
+												<MenuItem value={data}>{data}</MenuItem>
+											)
 										})}
-										</Select>
-							</FormControl>
+									</Select>
+								</FormControl>
 
-			{/* Check in time range */}
-			{/* <FormControl variant="outlined" className={classes.formControl}>
-				<InputLabel htmlFor="checkin">Check-in Time</InputLabel>
-				<Input id="checkin" name="checkin" required onChange={this.onInputChange}/>
-							</FormControl> */}
-	     <TextField
-					id="time"
-					label="Check-In Time"
-					type="time"
-					defaultValue="10:00"
-					className={classes.textField}
-					onChange={this.handleChange('checkin')}
-					InputLabelProps={{
-						shrink: true,
-					}}
-					inputProps={{
-						step: 300, // 5 min
-					}}
-				/>
+								{/* Home Type */}
+								<FormControl className={classes.formControl}>
+									<p className={classes.formLabel}>Home Type</p>
+										<Select
+											value={this.state.type}
+											onChange={this.handleChange('type')}
+											input={<OutlinedInput/>}
+											className={classes.select}
+											style={{height: "40px"}}
+										>
+										{HomeType.values.map((data) => {
+											return(
+												<MenuItem value={data}>{data}</MenuItem>
+											)
+										})}
+															</Select>
+												</FormControl>
 
-				<TextField
-					id="time"
-					label="Check-Out Time"
-					type="time"
-					defaultValue="15:00"
-					className={classes.textField}
-					onChange={this.handleChange('checkout')}
-					InputLabelProps={{
-						shrink: true,
-					}}
-					inputProps={{
-						step: 300, // 5 min
-					}}
-				/>		
+								{/* Address */}
+								<FormControl variant="outlined" className={classes.formControl}>
+									<InputLabel htmlFor="address" style={{flexGrow: 1}}>Address</InputLabel>
+									<Input id="address" name="address" required onChange={this.onInputChange}/>
+											</FormControl>
 
-			</div>
+								{/* Zipcode */}
+								<FormControl variant="outlined" className={classes.formControl}>
+									<InputLabel htmlFor="zip">Zip Code</InputLabel>
+									<Input id="zip" name="zip" required onChange={this.onInputChange}/>
+												</FormControl>
 
-			<div>
-					<div style={{display: "flex"}}>
-					<div style={{flexGrow: 1}}>
-						<p className={classes.formLabel}>Home Description</p>
-						<TextField
-							id="homeDescription"
-							className='pr-3'
-							multiline
-							fullWidth
-							label="Descibe your home..."
-							margin="normal"
-							onChange={this.onChange}
-							variant="outlined"
-							onChange={this.handleChange('description')}
-							style={{marginTop: 0}}
+								{/* Upload Photos */}
+								<input
+									accept="image/*"
+									className={classes.formControl}
+									id="contained-button-file"
+									multiple
+									type="file"
+									onChange={(e) => console.log(e.target.files)}
+								/>
+								
+								{/* Number of Guests */}
+								<FormControl className={classes.formControl}>
+															<p className={classes.formLabel}># of Guests</p>
+															<Select
+															value={this.state.guests}
+															onChange={this.handleChange('guests')}
+															input={<OutlinedInput/>}
+										className={classes.select}
+										style={{height: "40px"}}
+															>
+															{[1,2,3,4,5].map((data) => {
+																	return(
+																			<MenuItem value={data}>{data}</MenuItem>
+																	)
+															})}
+															</Select>
+												</FormControl>
+
+								{/* Check in time range */}
+								{/* <FormControl variant="outlined" className={classes.formControl}>
+									<InputLabel htmlFor="checkin">Check-in Time</InputLabel>
+									<Input id="checkin" name="checkin" required onChange={this.onInputChange}/>
+												</FormControl> */}
+									<TextField
+										id="time"
+										label="Check-In Time"
+										type="time"
+										defaultValue="10:00"
+										className={classes.textField}
+										onChange={this.handleChange('checkin')}
+										InputLabelProps={{
+											shrink: true,
+										}}
+										inputProps={{
+											step: 300, // 5 min
+										}}
+									/>
+
+									<TextField
+										id="time"
+										label="Check-Out Time"
+										type="time"
+										defaultValue="15:00"
+										className={classes.textField}
+										onChange={this.handleChange('checkout')}
+										InputLabelProps={{
+											shrink: true,
+										}}
+										inputProps={{
+											step: 300, // 5 min
+										}}
+									/>		
+
+								</div>
+
+								<div>
+										<div style={{display: "flex"}}>
+										<div style={{flexGrow: 1}}>
+											<p className={classes.formLabel}>Home Description</p>
+											<TextField
+												id="homeDescription"
+												className='pr-3'
+												multiline
+												fullWidth
+												margin="normal"
+												onChange={this.onChange}
+												variant="outlined"
+												onChange={this.handleChange('description')}
+												style={{marginTop: 0}}
+												
+											/>
+										</div>
+
+										<div style={{flexGrow: 1}}>
+											<p className={classes.formLabel}>Check-in Information</p>
+											<TextField
+												id="checkinInfo"
+												multiline
+												fullWidth
+												margin="normal"
+												variant="outlined"
+												onChange={this.handleChange('information')}
+												style={{marginTop: 0}}
+											/>
+										</div>
+														</div>
+								</div>
+
+								<hr style={{marginBottom: 0}}></hr>
+
+								<div>
+									<CustomExpand className={classes.expand} input={Amenities} select={this.handleChecked}></CustomExpand>
+								</div>
+
+								<div>
+									<CustomExpand input={Rules} select={this.handleChecked}></CustomExpand> 
+								</div>
+								<div style={{padding: "30px"}}>
+
+								</div>
+												{/* <Grid container spacing={36}>
+													<Grid item xs={12}>
+														
+														<CustomExpand input={Rules} select={this.handleChecked}></CustomExpand>         
+													</Grid>
+												</Grid> */}
+								<div style={{position: 'absolute', right: '10px', bottom: '10px', marginTop: '10px'}}>
+										<Button type='submit' id='button' onClick={this.onSubmit} >
+										Add
+									</Button>
+								</div>
 							
-						/>
-					</div>
-
-					<div style={{flexGrow: 1}}>
-						<p className={classes.formLabel}>Check-in Information</p>
-						<TextField
-							id="checkinInfo"
-							multiline
-							fullWidth
-							label="Check-in information..."
-							margin="normal"
-							variant="outlined"
-							onChange={this.handleChange('information')}
-							style={{marginTop: 0}}
-						/>
-					</div>
-									</div>
-			</div>
-
-			<hr style={{marginBottom: 0}}></hr>
-
-			<div>
-				<CustomExpand className={classes.expand} input={Amenities} select={this.handleChecked}></CustomExpand>
-			</div>
-
-			<div>
-				<CustomExpand input={Rules} select={this.handleChecked}></CustomExpand> 
-			</div>
-
-							{/* <Grid container spacing={36}>
-								<Grid item xs={12}>
-									
-									<CustomExpand input={Rules} select={this.handleChecked}></CustomExpand>         
-								</Grid>
-							</Grid> */}
-							{/* <button type='submit' onClick={this.onSubmit}>
-								Submit
-							</button> */}
 					</form>
 				</main>
 			)

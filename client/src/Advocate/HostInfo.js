@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import bedroom from "../img/bedroom.jpg";
 import { Host } from '../filter';
+import moment from 'moment';
+
 import { 
     Button, 
     withStyles, 
@@ -19,6 +21,10 @@ import { PersonalSelect } from '../Select'
 import { Needs } from '../filter';
 // import Map from './Map'
 
+// firebase
+import { compose } from 'recompose';
+import { withFirebase } from '../Firebase';
+
 const styles = theme => ({
     img: {
         height: '700px',
@@ -36,7 +42,12 @@ const styles = theme => ({
         marginTop: theme.spacing.unit,
         marginBottom: theme.spacing.unit,
         //marginRight: theme.spacing.unit * 2,
-        width: "50%",
+        width: "40%",
+    },
+    guests: {
+        marginTop: theme.spacing.unit,
+        marginBottom: theme.spacing.unit,
+        width: "30%"
     },
     input: {
         border: "0.5px solid "   
@@ -101,18 +112,45 @@ const styles = theme => ({
 })
 
 
-export default withStyles(styles)(class extends React.Component {
+class BookingForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             booking: {},
-            guest: '',
+            bookingID: "",
+            guest: 0,
+            start: new Date(),
+            end: new Date()
         }
     }
 
     handleInputChange = name => event => {
         this.setState({ [name]: event.target.value });
+        console.log(this.state)
     };
+
+    onSelect = (name) => (selected) => {
+		let clean = []
+		for (let i = 0; i < selected.length; i ++) {
+		  console.log(selected[i].label)
+		  clean.push(selected[i].label)
+		  console.log(clean)
+		}
+		this.setState({
+		  [name]: clean
+		})
+		console.log(this.state)
+	}
+
+
+    handleChecked = (name, selected) => (event) => {
+        console.log(name + '   ' + selected)
+		var obj = this.state[`${name}`];
+		obj[`${selected}`] = event.target.checked;
+        this.setState({[name]: obj})
+        console.log(this.state)
+	}
+
 
 
     handleCloseHost = () => {
@@ -120,18 +158,116 @@ export default withStyles(styles)(class extends React.Component {
         this.props.click();
     };
 
+    // firebase call
+    updateAvail = (obj) => {
+        // updates avail collection
+        this.props.firebase.availability(this.state.booking.id).update(obj);
+        console.log("AVAIL ID: "+this.state.booking.id)
+        // new book obj for listings
+        console.log(this.state.booking.listingData)
+        // updates listings collection
+        let listingPushID = this.props.firebase.updateAvailToPending(this.state.booking.listingData.id, this.state.booking.listingPushID, obj)
+        console.log("LISTINGID:  "+this.state.booking.listingData.id)
+        console.log("PUSH ID: "+ listingPushID)
+        // updates acailability collection with new listingPush ID
+        this.props.firebase.availability(this.state.booking.id).update({"listingPushID": listingPushID.key});
+    }
+    // moveAvailToPending = (obj) => {
+    //     // this.props.firebase.updateAvailToPending(obj.)
+    // }
+
     handleConfirmHost = () => {
+        const { start, end, booking, ethnicities, guest, guestID, languages, notes, religion } = this.state
         this.setState({
             confirm: true
         })
+        console.log(this.props.user)
+        let user = this.props.user
+        let availID = booking.id
+        let startSelected = new Date(start) * 1
+        let endSelected = new Date(end) * 1
+        let newAvailStart = new Date(booking.start) * 1
+        let newAvailEnd = new Date(booking.end) * 1
+        let pendObj= {
+            "state": "pending", 
+            "start": startSelected,
+            "end": endSelected,
+            "ethnicities": ethnicities,
+            "guestCount": guest, 
+            "guestID": guestID,
+            "languages": languages,
+            "notes": notes,
+            "religion": religion,
+            "advocateID": user.uid,
+            "advocateFirstName": user.firstName,
+            "advocateLastName": user.lastName,
+            "advocatePhone": "3609071245",
+            "advocateEmail": user.email,
+            "needs": ["Crib", "Public Transportation", "Pet Friendly"]
+            // "needs": 
+        }
+        console.log("OBJECT TO APPEND")
+        console.log(pendObj)
+        this.updateAvail(pendObj)
+        this.props.resetHost()
+        // let startCurrent = new Date(booking.start)
+        // let endCurrent = new Date(booking.end)
+        // if(startSelected === booking.start && endSelected === booking.end) {
+        //     console.log("CASE 1")
+        //     this.updateAvail(pendObj)
+        // } else {
+        //     console.log("NOT GONIG INTO CASE")
+        //     console.log("START")
+        //     console.log(new Date(booking.start))
+        //     console.log(new Date(startSelected))
+        //     console.log("END")
+        //     console.log(new Date(booking.end))
+        //     console.log(new Date(endSelected))
+        // }
+
     }
 
      render() {
-        const { classes, type } = this.props;
-        let host = this.props.booking;
-        if (host === undefined) {
-            host = Host[0]
+        const { classes, type, booking} = this.props;
+        let host = booking;
+        console.log(host)
+        if (host === undefined || host === "") {
+            host = {
+                email: "mary@gmail.com",
+                end: 1559520143997,
+                ethnicities: ["White"],
+                firstName: "Mary",
+                gender: "Female",
+                hostID: "61TAiL7K1vXy254SB1iekWo1KWk2",
+                lastName: "Huibregtse",
+                listingData: {
+                    address: "2525 minor Ave E",
+                    amenities: ["Kitchen", "Parking", "Bike Storage"],
+                    description: "hello",
+                    guest: 3,
+                    hostID: "zSrR3ts6r4cM9z1LG2TyW26uVR42",
+                    houseRules: ["No Smoking", "No Alcohol"],
+                    id: "-Lg9OGG55kjo4HuwA1B9",
+                    checkIn: "",
+                    checkOut: "",
+                    information: "world",
+                    location: "Belltown",
+                    name: "Listing A",
+                    photos: "no photos currently",
+                    type: "Hotel Room",
+                    zip: "98102"
+                },
+                phone: "1234567890",
+                religion: ["None"],
+                start: 1559520143997,
+                state: "available",
+                story: "none given",
+            }
+        } else {
+            this.state.booking = host
         }
+        console.log(this.state)
+        console.log(this.props)
         let render = '';
         if (type === 'confirmed') {
             render = <p className={classes.tag} style={{backgroundColor: "#da5c48", color: "white", border: "none"}}>Booked</p>
@@ -140,7 +276,7 @@ export default withStyles(styles)(class extends React.Component {
         } else {
             render = <p className={classes.tag} style={{backgroundColor: "#48704d", color: "white", border: "none"}}>Available</p>
         }
-        console.log(type)
+
         return(
             <div>
                 <Dialog
@@ -155,21 +291,18 @@ export default withStyles(styles)(class extends React.Component {
                         <img className={classes.img} src={bedroom} style={{width: "100%", height: "100%"}}></img>
                         {/* <Map /> */}
                         <div className={classes.insideContent}>
-                        <div className={classes.row}>
-                            <h3 style={{marginBottom: 0}}>Home by {host.information.name}</h3>
-                            <div>{render}</div>
-                        </div>
-                        <div className={classes.row}>
-                            <p style={{color: "#7e9fa8"}}>{host.space[0].location}</p>
-                            <p style={{fontSize: "12pt"}}>{host.space[0].homeType}</p>
+                        <h3>Home by {host.listingData.name}</h3>
+                        <p style={{color: "#7e9fa8"}}>{host.listingData.location}</p>
+                        <div style={{display: "flex"}}>
+                                {/* Need to add here the availablity. If available, render this, else render the second one */}
+                                {render}
+                                <p className={classes.tag}>{host.listingData.type}</p>
                         </div>
                             <DialogContentText style={{display:"flex", justifyContent: "space-between", alignItems: "flex-start"}}>
-                                <div style={{paddingRight: "10px"}}>
-                                    <p className={classes.body}>{host.space[0].description}</p>
-                                </div>
+                                <p className={classes.body}>{host.listingData.description}</p>
                                 <div>
-                                    <p className={classes.body} style={{color:"#da5c48", fontWeight: 400}}>Address</p>
-                                    <p className={classes.body}>{host.space[0].address}</p>
+                                    <b className={classes.body} style={{color:"#da5c48"}}>Address</b>
+                                    <p className={classes.body}>{host.listingData.address}</p>
                                 </div>
                             </DialogContentText>
                         <hr></hr>
@@ -177,9 +310,9 @@ export default withStyles(styles)(class extends React.Component {
                         <div style={{display: "flex", justifyContent: "space-between"}}>
                             <div style={{paddingRight: "10px"}}>
                                 <p className={classes.body}>
-                                    <b>{host.information.name}</b>
+                                    <b>{host.firstName  + " " + host.lastName}</b>
                                 </p>
-                                <p className={classes.body} >{host.information.description}</p>
+                                <p className={classes.body} >{host.story}</p>
                             </div>
                             <div>
                                 <p className={classes.body}><b style={{color:"#da5c48"}}>Languages:</b> English, Chinese</p>
@@ -188,14 +321,14 @@ export default withStyles(styles)(class extends React.Component {
                             </div>
                         </div>
                         <div style={{textAlign: "center", display: "flex", justifyContent: "center", marginTop: "5px"}}>
-                            <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.information.contact.phone}</p>
-                            <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.information.contact.email}</p>
+                            <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.phone}</p>
+                            <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.email}</p>
                         </div>
                         <hr></hr>
                         <h5 className={classes.title}>AMENITIES</h5>
                         <div style={{display: 'flex', flexWrap: 'wrap'}}>
                         {
-                            host.space[0].amenities.map((data) => {
+                            host.listingData.amenities.map((data) => {
                                 return( 
                                 <div 
                                     id="tags"
@@ -216,10 +349,10 @@ export default withStyles(styles)(class extends React.Component {
                         <h5 className={classes.title}>CHECK-IN INFORMATION</h5>
                         <div style={{display: "flex", justifyContent: "space-between"}}>
                             <p className={classes.body} style={{paddingRight: "10px"}}>
-                                {host.space[0].checkinInfo.description}
+                                {host.listingData.description}
                             </p>
                             <DialogContentText>
-                                <p className={classes.body}><b>Time: </b> {host.space[0].checkinInfo.time} </p>                          
+                                <p className={classes.body}><b>Time: </b> {host.listingData.checkin} </p>                          
                             </DialogContentText>
                         </div>
 
@@ -227,7 +360,7 @@ export default withStyles(styles)(class extends React.Component {
                         <h5 className={classes.title}>HOUSE RULES</h5>
                         <div style={{display: 'flex', flexWrap: 'wrap'}}>
                             {
-                                host.space[0].houseRules.map((data) => {
+                                host.listingData.houseRules.map((data) => {
                                     return(
                                     <div 
                                         id="tags"
@@ -265,7 +398,7 @@ export default withStyles(styles)(class extends React.Component {
                                         id="standard-select-currency"
                                         select
                                         label="# of guests"
-                                        className={classes.textField}
+                                        className={classes.guests}
                                         value={this.state.guest}
                                         onChange={this.handleInputChange('guest')}
                                         SelectProps={{
@@ -281,34 +414,46 @@ export default withStyles(styles)(class extends React.Component {
                                             </MenuItem>
                                         ))}
                                     </TextField>
-                                    <TextField
+                                </div>
+                                <TextField
                                         id="date"
                                         label="Start Date"
                                         type="date"
                                         className={classes.textField}
                                         style={{marginRight: "10px"}}
+                                        onChange={this.handleInputChange('start')}
                                         InputLabelProps={{
                                             shrink: true,
                                             className: classes.floatingLabelFocusStyle
                                         }}
+                                        inputProps={{
+                                            min: moment(new Date(this.state.booking.start).toLocaleString()).format("YYYY-MM-DD"),
+                                            max: moment(new Date(this.state.booking.end).toLocaleString()).format("YYYY-MM-DD")
+                                        }}
                                     /> 
+                                    {console.log(this.state.booking.start)}
                                     <TextField
                                         id="date"
                                         label="End Date"
                                         type="date"
                                         className={classes.textField}
+                                        onChange={this.handleInputChange('end')}
                                         InputLabelProps={{
                                             shrink: true,
                                             className: classes.floatingLabelFocusStyle
                                         }}
+                                        inputProps={{
+ 
+                                            min: moment(new Date(this.state.booking.start).toLocaleString()).format("YYYY-MM-DD"),
+                                            max: moment(new Date(this.state.booking.end).toLocaleString()).format("YYYY-MM-DD")
+                                        }}
                                     /> 
-                                </div>
-                                
+
                                 {/* Personal Information */}
                                 <div style={{paddingRight: "100px"}}>
-                                <PersonalSelect></PersonalSelect>
+                                <PersonalSelect onSelect={this.onSelect}></PersonalSelect>
                                 </div>
-                                
+
                                 {/* NEEDS FIELD GOES HERE */}
                                 <div class="mt-3">
                                     <p className={classes.title} style={{fontSize: "16px"}}>NEEDS</p>
@@ -319,6 +464,7 @@ export default withStyles(styles)(class extends React.Component {
                                                     <FormControlLabel 
                                                     style={{margin: 0}}
                                                     control={<Checkbox value={need} className={classes.checkboxes}/>}
+                                                    onChange={this.handleChecked('needs', need)}
                                                     label={need}
                                                     classes={{
                                                         label: classes.label
@@ -331,7 +477,7 @@ export default withStyles(styles)(class extends React.Component {
                                 
                                 {/* NOTES */}
                                 <p className={classes.title} style={{fontSize: "16px"}}>NOTES</p>
-                                <textarea style={{width: "100%"}}></textarea>
+                                <textarea style={{width: "100%"}} onChange={this.handleInputChange('notes')}></textarea>
                                 <Grid>
 
                             </Grid>
@@ -366,7 +512,7 @@ export default withStyles(styles)(class extends React.Component {
                     </DialogActions>
                     <Dialog
                         open={this.state.confirm}
-                        onClose={this.props.click}
+                        // onClose={this.props.click}
                         aria-labelledby="alert-dialog-title"
                         aria-describedby="alert-dialog-description"
                         >
@@ -385,4 +531,11 @@ export default withStyles(styles)(class extends React.Component {
             </div>
         )
     }
-})
+}
+
+const Bookings = compose(
+    withStyles(styles),
+    withFirebase,
+  )(BookingForm);
+
+  export default Bookings;

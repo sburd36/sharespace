@@ -710,8 +710,8 @@ button.rbc-input::-moz-focus-inner {
   direction: rtl;
 }
 
-.rbc-off-range {
-  color: #919FBC;
+.rbc-off-range-bg {
+  background-color: lightgray;
 }
 
 .rbc-header {
@@ -1422,6 +1422,7 @@ button.rbc-input::-moz-focus-inner {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  text-align: center;
 }
 
 .DateRangePicker__Legend {

@@ -252,7 +252,9 @@ export var Host =  [
         ],
     },
 ]
-
+var bookings = {
+    
+}
 export var advocate = [
     {
         ID: 1,
@@ -558,3 +560,12 @@ export const listings =  [
     //     ]
     // },
 ]
+
+export var availability = {
+    hostID: "",
+    advocateID: "",
+    listingPushID: "",
+    state: "",
+    range: "",
+
+}
