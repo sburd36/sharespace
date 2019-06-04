@@ -40,7 +40,12 @@ const styles = theme => ({
         marginTop: theme.spacing.unit,
         marginBottom: theme.spacing.unit,
         //marginRight: theme.spacing.unit * 2,
-        width: "50%",
+        width: "40%",
+    },
+    guests: {
+        marginTop: theme.spacing.unit,
+        marginBottom: theme.spacing.unit,
+        width: "30%"
     },
     input: {
         border: "0.5px solid "   
@@ -51,14 +56,15 @@ const styles = theme => ({
     tag: {
         color: "#202e57", 
         border: ".5px solid #202e57", 
-        maxWidth: "150px",
+        maxWidth: "100px",
         borderRadius: "10px",
         textAlign: "center",
         padding: "6px",
         //paddingTop: "6px"
         marginRight: "10px",
         marginTop: "10px",
-        marginBottom: "10px"
+        marginBottom: "10px",
+        fontSize: "12pt"
     }, 
     body: {
         color: "#202e57",
@@ -76,6 +82,30 @@ const styles = theme => ({
     },
     floatingLabelFocusStyle: {
         color: "#da5c48"
+    },
+    row: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: "10px"
+    },
+    checkboxes: {
+        paddingLeft: "10px",
+        paddingRight: "5px",
+        paddingTop: "5px",
+        paddingBottom: "5px",
+        fontWeight: 300
+    },
+    label: {
+        fontWeight: 300,
+        color: "#202e57"
+    },
+    buttonRow: {
+        display: "flex",
+        justifyContent: "space-between",
+        borderTop: "0.5px solid #d3dbee",
+        padding: "15px 20px",
+        margin: 0
     }
 })
 
@@ -200,7 +230,6 @@ class BookingForm extends React.Component {
 
         return(
             <div>
-
                 <Dialog
                     open={this.props.open}
                     onClose={this.props.click}
@@ -320,7 +349,7 @@ class BookingForm extends React.Component {
                                         id="standard-select-currency"
                                         select
                                         label="# of guests"
-                                        className={classes.textField}
+                                        className={classes.guests}
                                         value={this.state.guest}
                                         onChange={this.handleInputChange('guest')}
                                         SelectProps={{
@@ -336,16 +365,22 @@ class BookingForm extends React.Component {
                                             </MenuItem>
                                         ))}
                                     </TextField>
-                                    <TextField
+                                </div>
+                                <TextField
                                         id="date"
                                         label="Start Date"
                                         type="date"
                                         onChange={this.handleInputChange('start')}
                                         className={classes.textField}
                                         style={{marginRight: "10px"}}
+                                        onChange={this.handleInputChange('start')}
                                         InputLabelProps={{
                                             shrink: true,
                                             className: classes.floatingLabelFocusStyle
+                                        }}
+                                        inputProps={{
+                                            min: "2019-06-10",
+                                            max: "2019-06-20"
                                         }}
                                     /> 
                                     <TextField
@@ -358,24 +393,35 @@ class BookingForm extends React.Component {
                                             shrink: true,
                                             className: classes.floatingLabelFocusStyle
                                         }}
+                                        inputProps={{
+                                            min: "2019-06-10",
+                                            max: "2019-06-20"
+                                        }}
                                     /> 
-                                </div>
-                                
+
                                 {/* Personal Information */}
                                 <div style={{paddingRight: "100px"}}>
                                 <PersonalSelect onSelect={this.onSelect}></PersonalSelect>
                                 </div>
-                                
+
                                 {/* NEEDS FIELD GOES HERE */}
                                 <div class="mt-3">
                                     <p className={classes.title} style={{fontSize: "16px"}}>NEEDS</p>
-                                    {
-                                        Needs.values.map((need) => {
-                                            return(
-                                                <FormControlLabel control={<Checkbox value={need} select={this.handleChecked}/>} label={need}  />
-                                            )
-                                        })
-                                    }
+                                    <div styles={{marginBottom: "10px"}}>
+                                        {
+                                            Needs.values.map((need) => {
+                                                return(
+                                                    <FormControlLabel 
+                                                    style={{margin: 0}}
+                                                    control={<Checkbox value={need} className={classes.checkboxes}/>}
+                                                    label={need}
+                                                    classes={{
+                                                        label: classes.label
+                                                    }}/>
+                                                )
+                                            })
+                                        }
+                                    </div>
                                 </div>
                                 
                                 {/* NOTES */}
@@ -390,23 +436,23 @@ class BookingForm extends React.Component {
                         </FormControl>
                         </div>
                     </DialogContent>
-                    <DialogActions style={{display: "flex", justifyContent: "space-between", paddingRight: "20px", paddingLeft: "20px"}}>
+                    <DialogActions className={classes.buttonRow}>
                         {
                             type === 'confirmed' || type === 'pending' ?
                             <>
-                            <Button onClick={this.props.click} variant="contained" id="buttonGray" id="button" color="primary">
-                                Save
-                            </Button>
-                            <Button onClick={this.handleConfirmHost} variant="contained"  color="secondary" >
+                            <Button onClick={this.handleConfirmHost} variant="contained" id="buttonGray" >
                                 Cancel Booking
                             </Button> 
+                            <Button onClick={this.props.click} variant="contained" id="buttonGray" id="button">
+                                Done
+                            </Button>
                             </>
                             :
                             <>
                             <Button onClick={this.props.click} variant="contained" id="buttonGray" style={{color: "white"}}>
                                 Cancel
                             </Button>
-                            <Button onClick={this.handleConfirmHost} variant="contained"  color="primary" id="button">
+                            <Button onClick={this.handleConfirmHost} variant="contained" id="button">
                                 Confirm Host
                             </Button>
                             </>
@@ -419,13 +465,13 @@ class BookingForm extends React.Component {
                         aria-labelledby="alert-dialog-title"
                         aria-describedby="alert-dialog-description"
                         >
-                        <DialogContent>
-                            <DialogContentText id="alert-dialog-description" class="pb-0">
+                        <DialogContent style={{padding: "20px", paddingBottom: 0}}>
+                            <DialogContentText id="alert-dialog-description"  className={classes.body} style={{fontSize: "18px"}}>
                             Your booking is confirmed! 
                             </DialogContentText>
                         </DialogContent>
-                        <DialogActions>
-                            <Button onClick={this.handleCloseHost} color="primary" id="button" style={{color: "white"}}>
+                        <DialogActions style={{display: "flex", justifyContent: "center"}}>
+                            <Button onClick={this.handleCloseHost} id="button">
                             Done
                             </Button>
                         </DialogActions>

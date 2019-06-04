@@ -5,6 +5,10 @@ import { withStyles } from '@material-ui/core/styles';
 import MyListing from './MyListing';
 import person from '../img/icon1.png';
 
+// firebase
+import { compose } from 'recompose';
+import { withFirebase } from '../Firebase';
+
 const styles = theme => ({
     profile: {
         display: 'flex',
@@ -32,43 +36,97 @@ const styles = theme => ({
     }
 })
 
-export default withStyles(styles)(class extends React.Component {
+class Profile extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: {
+                firstName: "",
+                lastName: "",
+                gender: "",
+                email: "",
+                phone: "",
+                religion: [],
+                languages: [],
+                ethnicities: []
 
+            }
+        }
+    }
+    componentDidMount() {
+        this.props.firebase.auth.onAuthStateChanged((user)=> {
+            if(user) {
+                let currentUser = []
+                let userQuery = this.props.firebase.user(user.uid);
+                userQuery.on('value', snapshot =>{
+                    let obj = snapshot.val(); 
+                    console.log(obj)
+
+                    this.setState({
+                        user: obj
+                    });
+
+                })
+
+
+                console.log(this.state)    
+
+
+            } else {
+                console.log("no current user present")
+            }
+        });     
+    }
+ 
     render() {
-        console.log(this.props)
+        let user = {
+                firstName: " ",
+                lastName: " ",
+                gender: " ",
+                email: " ",
+                phone: " ",
+                religion: [" "],
+                languages: [" "],
+                ethnicities: [" "]
+        }
+        if(this.state.user !== null) {
+            user = this.state.user
+            console.log(user)
+        }
+        console.log(this.state.user)
         const { classes } = this.props;
         let profile = [
             {
                 type: 'First Name',
-                value: this.props.user.firstName
+                value: user.firstName
             },
             {
                 type: 'Last Name',
-                value: this.props.user.lastName
+                value: user.lastName
             },
             {
                 type: 'Gender',
-                value: this.props.profile.gender
+                value: user.gender
             },
             {
                 type: 'Email',
-                value: this.props.user.email
+                value: user.email
             },
             {
                 type: 'Phone',
-                value: this.props.profile.phone
+                value: user.phone
             },
             {
                 type: 'Religion',
-                value: this.props.profile.religion
+                value: user.religion
             },
             {
                 type: 'Ethnicities',
-                value: this.props.profile.ethnicities
+                value: user.ethnicities
             },
             {
                 type: 'Languages',
-                value: this.props.profile.languages
+                value: user.languages
             }
         ]
     
@@ -108,4 +166,11 @@ export default withStyles(styles)(class extends React.Component {
             </div>
         )
     }
-})
+}
+
+const HostProfile = compose(
+    withStyles(styles),
+    withFirebase,
+  )(Profile);
+
+  export default HostProfile;

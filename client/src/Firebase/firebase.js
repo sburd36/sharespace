@@ -56,17 +56,15 @@ const config = {
     
     availability = (id) => this.db.ref(`availabilities/${id}`)
 
-    deleteAvailInHost = (aid, obj) => {
+    // deleteAvail = (lid, aid) => this.db.ref(`listings/${lid}/availability/${aid}`).remove();
+    deleteAvailInHost = (obj) => {
+      let aid = obj.id
       let lid = obj.listingID
       let pushKey = obj.pushKey
       this.db.ref(`listings/${lid}/availability/${aid}`).remove();
-      this.db.ref(`availabilities/${pushKey}`).remove()
-
+      this.db.ref(`availabilities/${pushKey}`).remove();
     }
-    
     survivors = () => this.db.ref('survivors');
-
-
 
   }
   

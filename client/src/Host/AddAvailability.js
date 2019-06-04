@@ -7,7 +7,8 @@ import { compose } from 'recompose';
 import Add from '@material-ui/icons/AddCircleOutline';
 
 import DateRangePicker from 'react-daterange-picker'
-import "react-daterange-picker/dist/css/react-calendar.css";
+// import "react-daterange-picker/dist/css/react-calendar.css";
+import { listing } from '../filter';
 
 const styles = theme => ({
     property: {
@@ -15,45 +16,24 @@ const styles = theme => ({
         height: '40px'
     },
 })
-const dateRanges = [
-    {
-      state: 'enquire',
-      range: moment.range(
-        moment().add(2, 'weeks').subtract(5, 'days'),
-        moment().add(2, 'weeks').add(6, 'days')
-      ),
-    },
-    {
-      state: 'unavailable',
-      range: moment.range(
-        moment().add(3, 'weeks'),
-        moment().add(3, 'weeks').add(5, 'days')
-      ),
-    },
-    {
-        state: 'unavailable',
-        range: moment.range(
-          moment().add(5, 'weeks'),
-          moment().add(5, 'weeks').add(5, 'days')
-        ),
-      },
-  ];
-
-  const stateDefinitions = {
-    available: {
-      color: null,
-      label: 'Available',
-    },
-    enquire: {
-      color: '#ffd200',
-      label: 'Enquire',
-    },
-    unavailable: {
+let stateDefinitions = {
+    booked: {
       selectable: false,
       color: '#78818b',
-      label: 'Unavailable',
+      label: 'Booked',
     },
   };
+
+stateDefinitions.available = {
+    color: null,
+    label: 'Available Dates',
+}
+
+stateDefinitions.unavailable = {
+    color: '#fe8b6b',
+    label: 'Marked Unavailable',
+}
+
 class Availability extends React.Component {
     constructor(props) {
         super(props)        
@@ -64,13 +44,13 @@ class Availability extends React.Component {
         var date = yyyy + '-' + mm + '-' + dd
         console.log(date);
         this.state = {
-            property: "",
             userID: "",
-            properties: [],
+            listingIndex: null,
+            listings: [],
             // propertyObj: [],
             // for new calendar, firebase uses begin and end
-            start: new Date(),
-            end: new Date()
+            range: '',
+            type: 'addAvail',
         }
     }
 
@@ -117,166 +97,317 @@ class Availability extends React.Component {
 
     componentDidUpdate() {
         if (this.props.profile != undefined) {
-            this.state.properties = this.props.profile.listings
-
+            this.state.listings = this.props.profile.listings
         }
 
-        console.log("Inside componentDIdUpdate")
-        console.log(this.state)
+        // console.log("Inside componentDIdUpdate")
+        // console.log(this.state)
 
     }
 
+    deleteAvail = (avail, availIndex) => {
+        const { listings, listingIndex } = this.state;
+        let listingID = listings[listingIndex].id;
+        console.log(availIndex)
+        this.props.firebase.deleteAvailInHost(avail);
+        this.props.deleteAvailability(listingID, availIndex);
+    }
+
+    insertAvail = (rangeStart, rangeEnd) => {
+        const { listings, listingIndex } = this.state;
+        let hostData = this.props.profile;
+        let listingID = listings[listingIndex].id;
+        console.log(new Date(rangeStart))
+        console.log(new Date(rangeEnd))
+
+        let longStart = moment(new Date(rangeStart)).add(1, 'days') * 1;
+        let longEnd = moment(new Date(rangeEnd)).add(1, 'days') * 1;
+        
+        let obj1 = {
+            "state": "available",
+            "start": longStart,
+            "end": longEnd,
+            "hostID": this.props.userID,
+            "firstName": this.props.currentUser.firstName,
+            "lastName": this.props.currentUser.lastName, 
+            "gender": hostData.gender,
+            "phone": hostData.phone,
+            "email": this.props.currentUser.email,
+            "ethnicities": hostData.ethnicities,
+            "religion": hostData.religion,
+            "story": hostData.story,
+            "listingData": listings[listingIndex]
+
+        }
+
+        let obj2 = {
+            "state": "available",
+            "start": longStart,
+            "end": longEnd,
+            "listingID": listingID
+        }
+        let availID = this.props.firebase.availabilities().push(obj1)
+        console.log("AVAIL ADDED: " + availID.key)
+        obj2["pushKey"] = availID.key
+        // this.props.firebase.availability(availID.key).set({"start": "h", "end": check2})
+        // adding avail to firebase
+        let key = this.props.firebase.addAvailToListing(listingID).push(obj2)
+        obj2['id'] = key.key
+        console.log("LISTING AVAIL ADDED: " + key.key)
+        // for updating app
+        this.props.updateAvailability(listingID, obj2)
+    }
     // ************************ MIN AND STEPH********************
     // what do we want to do if host enters an invalid / no listing
     onSubmit = event => {
         event.preventDefault();
         this.props.click();
-        console.log(this.state)
-        const {start, end, properties, property} = this.state
+        const {type, range, listings, listingIndex} = this.state
         // for testing delete
-        let test = false
-        var rangeStart = moment(start.toLocaleString()).format("YYYYMMDD");
-        var rangeEnd = moment(end.toLocaleString()).format("YYYYMMDD");
-        // let check = this.props.firebase.listings().Timestamp.fromDate()
-        // console.log(check)
-        // let check2 = this.props.firebase.listings().Timestamp.now()
+        let availability = []
+        if (listings !== undefined) {
+            availability = listings[listingIndex].availability.sort((a, b) => moment(a.start).isBefore(moment(b.start)) ? -1 : 1)
+        }
+        var rangeStart = moment(range.start['_i'].toLocaleString()).format("YYYY-MM-DD");
+        var rangeEnd = moment(range.end['_i'].toLocaleString()).format("YYYY-MM-DD");
+        if (type === 'addAvail') {
+            // START CODE FOR ADD AVAILABILITY 
+            let notFound = true;
+            console.log(availability)
+            // console.log(new Date(rangeStart));
+            // console.log(new Date(rangeEnd));
+            console.log(rangeStart)
+            console.log(rangeEnd)
+            for (var i = 0; i < availability.length; i++) {
+                let currentAvail = availability[i];
+                console.log('HELLO')
 
-        if (properties.length != 0) {
-            if(test == false) {
-                let id = ""
-                console.log(properties)
+                var availStart = moment(new Date(availability[i].start).toLocaleString()).format("YYYY-MM-DD");
+                var availEnd  = moment(new Date(availability[i].end).toLocaleString()).format("YYYY-MM-DD");
+                console.log(availStart);
+                console.log(availEnd)
+                let nextAvailStart = '';
+                let nextAvailEnd = '';
+                if (availEnd === rangeStart) {
+                    if (i < availability.length - 1) {
+                        nextAvailStart = moment(new Date(availability[i + 1].start).toLocaleString()).format("YYYY-MM-DD");
+                        nextAvailEnd = moment(new Date(availability[i + 1].end).toLocaleString()).format("YYYY-MM-DD");
+                    } 
+                    console.log(nextAvailStart)
+                    // full range and grab/delete TWO availabilities and add ONE new availability
+                    if (nextAvailStart === rangeEnd) {
+                        console.log('CASE 1');
+                        notFound = false;
+                        this.deleteAvail(currentAvail, i);
+                        this.deleteAvail(availability[i + 1], i + 1)
+                        this.insertAvail(availStart, nextAvailEnd);
+                    } else {  // delete current availability and add new one with (availStart and rangeEnd)
+                        console.log('CASE 2')
+                        notFound = false;
+                        this.deleteAvail(currentAvail, i);
+                        this.insertAvail(availStart, rangeEnd);
+                    }
+                } else if (notFound && availStart === rangeEnd) { // delete current availability and add new one with (rangeStart and availEnd)
+                    console.log('CASE 3')
+                    notFound = false;
+                    this.deleteAvail(currentAvail, i);
+                    this.insertAvail(rangeStart, availEnd);
+                } 
+            }
 
-                let listingData = {}
-                for ( let i = 0; i < properties.length; i++) {
-                    let l = properties[i] 
-                    console.log(l)
-                    if (l.name  == property) {
-                        id = l.id
-                        listingData = l
-                        
+            if (notFound) { // add new availability with (rangeStart and rangeEnd)
+                console.log('CASE 4')
+                // Insert Avail 
+                this.insertAvail(rangeStart, rangeEnd);
+            }
+        } else { // START CODE FOR BLOCK DATES
+            console.log(availability)
+            for (var i = 0; i < availability.length; i++) {
+                let currentAvail = availability[i];
+
+                var availStart = moment(new Date(availability[i].start).toLocaleString()).format("YYYY-MM-DD");
+                var availEnd  = moment(new Date(availability[i].end).toLocaleString()).format("YYYY-MM-DD");
+
+                if (new Date(rangeStart) >= new Date(availStart) && new Date(rangeEnd) <= new Date(availEnd)) {
+                    console.log('HELLO');
+
+                    if (rangeStart === availStart) {
+                        console.log(rangeEnd);
+                        console.log(availEnd);
+                        this.deleteAvail(currentAvail, i);
+
+                        if (rangeEnd === availEnd) { // whole availability slot blocked so DELETE 
+                            console.log('BLOCK CASE 1');
+                        } else { // first half of availability selected, DELETE and INSERT (rangeEnd -> availEnd)
+                            console.log('BLOCK CASE 2');
+                            this.insertAvail(rangeEnd, availEnd);
+                        }
+                    } else if (rangeEnd === availEnd) { // second half selected, DELETE and INSERT (availStart -> rangeStart)
+                        console.log('BLOCK CASE 3')
+                        this.deleteAvail(currentAvail, i);
+                        this.insertAvail(availStart, rangeStart);
+                    } else { // DELETE current avail and split to two (availStart -> rangeStart, rangeEnd -> availEnd)
+                        console.log('BLOCK CASE 4')
+                        console.log("DELETED AVAIL: " + availability[i].pushKey)
+                        console.log("DELETED LISTINGID: " +listings[listingIndex].id + "    " + availability[i].id )
+                        this.deleteAvail(currentAvail, i);
+                        // first half
+                        this.insertAvail(availStart, rangeStart);
+                        // second half
+                        this.insertAvail(rangeEnd, availEnd)
                     }
                 }
-                let hostData = this.props.profile
-                let longStart = start * 1
-                console.log("date: " + start)
-                console.log("new date long: " + longStart)
-                let backStart = new Date(longStart).toString()
-                console.log("back to date: " + backStart)
-                let longEnd = end * 1
-                let dateRange = moment.range(start, end)
-                
-                let obj1 = {
-                    "state": "available",
-                    "start": longStart,
-                    "end": longEnd,
-                    "hostID": this.props.userID,
-                    "firstName": this.props.currentUser.firstName,
-                    "lastName": this.props.currentUser.lastName, 
-                    "gender": hostData.gender,
-                    "phone": hostData.phone,
-                    "email": this.props.currentUser.email,
-                    "ethnicities": hostData.ethnicities,
-                    "religion": hostData.religion,
-                    "story": hostData.story,
-                    "listingData": listingData
-
-                }
-
-                let obj2 = {
-                    "state": "available",
-                    "start": longStart,
-                    "end": longEnd,
-                    "listingID": id
-
-                }
-                let availID = this.props.firebase.availabilities().push(obj1)
-                obj2["pushKey"] = availID.key
-                // this.props.firebase.availability(availID.key).set({"start": "h", "end": check2})
-                // adding avail to firebase
-                let key = this.props.firebase.addAvailToListing(id).push(obj2)
-                obj2["id"] = key.key
-
-                console.log("LISTING KEY AVAIL WAS PUSHED TOO: " + id)
-                console.log("AVAILABILITY PUSH KEY: " + key.key)
-
-                
-                // for updating app
-                this.props.updateAvailability(id, obj2)
-            } else { 
-                console.log("insiede delete line 161")
-
-                // this deletes availablities, give Listing[id], availability[id]
-                this.props.firebase.deleteAvail("-Lg9OGG55kjo4HuwA1B9", "-LgKeD704IjsUDq-QZdK")
             }
-        } else {
-            console.log("no listing was selected")
         }
+        // this.state.range = ''
       };
 
     handleInputChange = name => event => {
-        console.log(event)
-        this.setState({ [name]: event.target.value });
-        console.log(this.state)
+        this.setState({
+            [name]: event.target.value,
+        });
     };
 
 
     handleSelect = (range, states) => {
-        // range is a moment-range object
         this.setState({
-          value: range,
+          range: range,
           states: states,
         });
-        console.log(this.state)
       }
+
+    handleAdd = (range) => () => {
+        const { listings, space } = this.props;
+    }
+
+    handleBlock = (range) => () => {
+        const { listings, space } = this.props; 
+    // END CODE FOR BLOCKING
+    }
+
+    makeDateRange = (dateRanges, listings, listingIndex) => {
+        // const { listings } = this.props;
+        if (listings !== undefined && listings.length > 0 && listingIndex !== null) {
+            const currentBookings = listings[listingIndex].currentBookings;
+            const availability = listings[listingIndex].availability;
+            console.log(availability)
+
+            for (var i = 0; i < currentBookings.length; i++) {
+                var bookedDates = {
+                    state: 'booked',
+                    range: moment.range(
+                            currentBookings[i].start,
+                            currentBookings[i].end
+                            )
+                }
+                dateRanges[i] = bookedDates;
+            }
+            var length = dateRanges.length;
+            for (var i = 0; i < availability.length; i++) {
+                var availableDates = {
+                    state: 'available',
+                    range: moment.range(
+                        availability[i].start,
+                        availability[i].end
+                    )
+                }
+                 dateRanges[length + i] = availableDates;
+            }
+        }
+        dateRanges.sort((a, b) => moment(a.range.start).isBefore(moment(b.range.start)) ? -1 : 1)
+    }
+
+    selectType = (event) => {
+        this.setState({
+            type: event.target.value
+        })
+    }
+
     timeSlot = () => {
         const { classes } = this.props;
-        let { start, end } = this.state;
-        // start = moment(start.toLocaleString()).format("YYYY-MM-DD")
-        // end = moment(start.toLocaleString()).format("YYYY-MM-DD")
-        // const { from, to } = this.state;
-        // const modifiers = { start: from, end: to };
-        console.log(this.state.property)
+        let { type, range, listings, listingIndex } = this.state;
+        let dateRanges = []
+        this.makeDateRange(dateRanges, listings, listingIndex)
+        let label = ''
+        console.log(stateDefinitions)
+        if (type === 'addAvail') {
+            stateDefinitions.available.selectable = false
+            stateDefinitions.unavailable.selectable = true
+            label = 'Mark Available'
+        } else {
+            stateDefinitions.unavailable.selectable = false
+            stateDefinitions.available.selectable = true
+            label = 'Mark Unavailable'
+        }
         return (
             <>
                 <FormControl>
-                    <label>Choose Listing</label>
+                    <label style={{fontWeight: 300, fontSize: "12pt"}}>Choose Listing</label>
                     <Select
                         id='property'
-                        value={this.state.property}
+                        value={listingIndex}
                         className={classes.property}
-                        onChange={this.handleInputChange('property')}
+                        onChange={this.handleInputChange('listingIndex')}
                         input={<OutlinedInput/>}
                         required
                     >
-                        {this.state.properties.map((data) => {
+                        {listings.map((data, index) => {
                             return(
-                                <MenuItem value={data.name}>{data.name}</MenuItem>
+                                <MenuItem value={index}>{data.name}</MenuItem>
                             )
                         })}
                     </Select>
-                </FormControl>     
-                <ToggleOption /> 
+                </FormControl>    
+                <ToggleOption handleSelect={this.selectType} type={type}/> 
                 {/* <div style={{display: 'flex', padding: '1rem'}}> */}
                     <DateRangePicker 
                         onSelect={this.handleSelect}
+                        value={range}
                         showLegend={true}
-                        singleDateRange={true}
-                        value={this.state.value}
                         stateDefinitions={stateDefinitions}
-                        defaultState="available"
+                        defaultState="unavailable"
                         selectionType='range'
                         dateStates={dateRanges}
+                        singleDateRange={true}
+                        minimumDate={new Date()}
+                        selectedLabel={label}
                     />
                 {/* </div> */}
             </>
         )
     }
+
     render() {
         const { classes } = this.props;
+        const { type, range, listingIndex } = this.state;
         console.log(this.props)
         console.log(this.state)
-
-
+        let button = ''
+        if (range !== undefined && listingIndex !== null) {
+            if (type === 'addAvail') {
+                button = 
+                <Button type="submit" variant="contained"  id="button" >
+                    Add
+                </Button>
+            } else {
+                button = 
+                <Button type="submit" variant="contained" id="button"  >
+                    Block
+                </Button>
+            }
+        } else {
+            if (type === 'addAvail') {
+                button = 
+                <Button type="submit" variant="contained"  disabled>
+                Add
+                </Button>
+            } else {
+                button = <Button type="submit" variant="contained" disabled>
+                    Block
+                </Button>
+            }
+        }
+        
         return (
             <div class="d-flex justify-content-around">
 
@@ -289,13 +420,12 @@ class Availability extends React.Component {
                         <DialogContent className={classes.content}>
                             <h3>Add Availability</h3>
                                 {this.timeSlot()}
-                                <hr></hr>
+                                {/* <hr></hr> */}
                                 {/* <button style={{border: 'none', color: "#da5c48", display: "flex", align: "baseline"}}><Add></Add>Add another time slot</button> */}
+                            
                             </DialogContent>
-                        <DialogActions >
-                            <Button type="submit" variant="contained"  color="primary">
-                                Add
-                            </Button>
+                        <DialogActions style={{borderTop: "1px solid #d4dbee", paddingTop: "15px", display: "flex", justifyContent: "center"}} >
+                            {button}             
                         </DialogActions>
                     </form>
                 </Dialog>
@@ -303,24 +433,29 @@ class Availability extends React.Component {
         )
     }
 }
-function ToggleOption() {
-    const [value, setValue] = React.useState('female');
+function ToggleOption(props) {
+    const [value, setValue] = React.useState(props.type);
     const style = {
         group: {
             flexDirection: 'row',
             justifyContent: 'space-around'
         }
     }
+    function handleSelect(event) {
+        props.handleSelect(event)
+        setValue(event.target.value)
+    }
     return (
             <RadioGroup
                     aria-label="Gender"
                     name="gender1"
                     value={value}
-                    onChange={(event)=> setValue(event.target.value)}
+                    onChange={(event)=> handleSelect(event)}
                     style={style.group}
                 >
-                <FormControlLabel value="addAvail" control={<Radio />} label="Add Availability" />
-                <FormControlLabel value="addUnavail" control={<Radio />} label="Block Dates" />
+                <FormControlLabel value="addAvail" control={<Radio />} label="Add Availability" 
+                />
+                <FormControlLabel value="addUnavail" control={<Radio />} label="Mark Unavailable" />
             </RadioGroup>
     )
 }

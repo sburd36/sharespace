@@ -20,19 +20,20 @@ import { withFirebase } from '../Firebase';
 
 const styles = theme => ({
     root: {
-      flexGrow: 1,
+      alignItems: "stretch"
     },
     bodyText: {
         color: '#202e57'
     },
     side: {
-      height: "85vh",
+      //height: "85vh",
       width: window.innerWidth / 4 + 100,
       padding: '2rem'
+
     }, 
     hosts: {
-        height: "85vh",
-        width: window.innerWidth / 2 + 230,
+        //height: "791px",
+        width: window.innerWidth / 2 + 230
     },
     textField: {
         marginLeft: theme.spacing.unit,
@@ -40,8 +41,8 @@ const styles = theme => ({
         width: 200,
     },
     card: {
-        width: 400,
-        margin: "0rem 5rem 1rem 3rem",
+        width: 460,
+        margin: "0rem 1rem 1rem 1rem",
         border: "0.5px solid #d3dbee",
         boxShadow: "none",
         fontFamily: 'Source Sans Pro',
@@ -70,6 +71,11 @@ const styles = theme => ({
     },
     floatingLabelFocusStyle: {
         color: "#da5c48"
+    },
+    cardContainer: {
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center"
     }
 });
 
@@ -160,7 +166,7 @@ class Search extends React.Component {
                 <Grid 
                     container 
                     className={classes.root} 
-                    justify="space-evenly" >
+                    justify="space-evenly">
                         <Grid key={1} item>
                                 <Paper className={classes.side} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}} >
                                 <Link to="/advocate/currentbookings">
@@ -200,7 +206,7 @@ class Search extends React.Component {
                                         />
                                             
                                         </div>
-                                        <div style={{display: "flex", marginBottom: "10px"}}>
+                                        <div style={{display: "flex", marginBottom: "10px", alignItems: "center"}}>
                                             <FormControl className={classes.select} style={{flexGrow: 1, marginRight: "20px"}}>
                                                 <InputLabel  htmlFor="select-multiple-checkbox"># of Guests</InputLabel>
                                                 <Select
@@ -220,7 +226,7 @@ class Search extends React.Component {
                                             </FormControl>
                                         </div>
                                         
-                                        <Grid containter space={6}>
+                                        <Grid container space={6}>
                                             <Grid item xs={12}>
                                                 <div>
                                                     <PersonalSelect onSelect={()=> console.log("")}></PersonalSelect>
@@ -246,21 +252,26 @@ class Search extends React.Component {
                                 </Paper>
                         </Grid>
                         <Grid key={2} item>
-                            <Paper className={classes.hosts} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}}>
+                            <Paper className={classes.hosts} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px", height: "791px"}}>
                                 <div style={{display: 'flex', justifyContent: 'space-between', padding: '30px'}}>
                                     <h3 class="mt-4">
                                         AVAILABLE BOOKINGS
                                     </h3>
                                     <div>
-                                        Show Calendar
-                                        <Switch value="view" onChange={this.handleSwitchView}/>
+                                        <p style={{fontSize: "12pt", fontWeight: "300", paddingTop: "30px"}}>
+                                            Show Calendar
+                                            <Switch 
+                                                value="view" 
+                                                onChange={this.handleSwitchView}/>
+                                        </p>
                                     </div>
                                 </div>
                             {this.state.view == "list" ? 
-                                <Grid container spacing={6}>
+                                <div className={classes.cardContainer}>
                                     {Host.map(
                                         (booking) => {
                                             date = this.convertToDate(booking.space[0].availability[0].start, booking.space[0].availability[0].end)
+                                            
                                             return(
                                                 <Card className={classes.card}>
                                                     <CardContent>
@@ -311,8 +322,8 @@ class Search extends React.Component {
                                             )
                                         }
                                     )}
-                                </Grid> 
-                            : <Calendar allAvail={this.state.allAvail}></Calendar>}
+                                </div> 
+                            : <Grid container> <Calendar  allAvail={this.state.allAvail}></Calendar> </Grid> }
                             </Paper>
                         </Grid>
                 </Grid>

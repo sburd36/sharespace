@@ -3,49 +3,23 @@ import React, {Children} from 'react'
 // import './main.scss' // webpack must be configured to do this
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
-import 'react-big-calendar/lib/css/react-big-calendar.css';
+//import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../style/App.css";
-import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-import Add from '@material-ui/icons/AddCircleOutline';
-import TimeSlotForm from './AddAvailability';
+import Edit from '@material-ui/icons/Edit';
+import AddAvailabiliity from './AddAvailability';
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
-
-import DateRangePicker from 'react-daterange-picker'
-import "react-daterange-picker/dist/css/react-calendar.css";
-
-import 'react-dates/initialize';
 
 import { Button, Select, MenuItem, Input, FormControl, InputLabel, Chip, Dialog, DialogContent, DialogActions} from '@material-ui/core/';
 
 // import { listings } from '../filter';
-import { Checkbox } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 moment.locale('en-GB');
 
 const localizer = BigCalendar.momentLocalizer(moment)
-  
-  const stateDefinitions = {
-    available: {
-      color: null,
-      label: 'Available',
-    },
-    enquire: {
-      color: '#ffd200',
-      label: 'Enquire',
-    },
-    unavailable: {
-      selectable: false,
-      color: '#78818b',
-      label: 'Unavailable',
-    },
-    unavailable: {
-        selectable: false,
-        color: '#78818b',
-        label: 'Unavailable',
-      },
-  };
-  var currentBookings = []
+
+var currentBookings = []
 class Calendar extends React.Component {
     constructor(props) {
       super(props);
@@ -76,6 +50,7 @@ class Calendar extends React.Component {
             view: [],
             space: 0,
             info: '',
+            selectedLabel: 'Block',
             // currentBookings: [],
             // ****** values from firebase, use to update calendar *****
             // passed props have stored availability i.e this.props.profile.listings.availability
@@ -105,43 +80,59 @@ class Calendar extends React.Component {
             })
         }
     }
+    // componentDidMount() {
+    //     this.props.firebase.auth.onAuthStateChanged((user)=> {
+    //         if(user) {
+    //             let listings = []
+    //             let userQuery = this.props.firebase.availabilities().orderByChild("hostID").equalTo(user.uid);
+    //             userQuery.on('value', snapshot =>{
+    //                 let obj = snapshot.val(); 
+    //                 console.log(obj)
+    //                 if(obj != null) {
+    //                     if(obj.length == 1) {
+    //                        listings.push(obj) 
+    //                     } else {
+    //                         listings =  Object.keys(obj).map(key => ({
+    //                             ...obj[key],
+    //                             id: key
+    //                           })); 
+    //                     }
+    //                 }
 
-    onEventResize = (type, { event, start, end, allDay }) => {
-        this.setState(state => {
-            state.events[0].start = start;
-            state.events[0].end = end;
-            return { events: state.events };
-        });
-    };
+    //                 this.setState({
+    //                     listings: listings
+    //                 });
 
-    onEventDrop = ({ event, start, end, allDay }) => {
-        this.setState(state => {
-            console.log(event)
-            state.events[event.id].start = start;
-            state.events[event.id].end = end;
-            return { events: state.events };
-        });
-        // console.log(start)
-    };
+    //             })
 
-    /* When you choose a particular slot on the calendar */
-    onSlotChange = (slotInfo) => {
-      var start = moment(slotInfo.start.toLocaleString()).format("YYYY-MM-DDm:ss");
-      var end = moment(slotInfo.end.toLocaleString()).format("YYYY-MM-DDm:ss");
-    //   var newAvailability = {
-    //       id: .length,
-    //       start: start,
-    //       end: end,
-    //       title: slotInfo.host.information.name
+
+    //             console.log(this.state)    
+
+
+    //         } else {
+    //             console.log("no current user present")
+    //         }
+    //     });     
+    // }
+
+    // /* When you choose a particular slot on the calendar */
+    // onSlotChange = (slotInfo) => {
+    //   var start = moment(slotInfo.start.toLocaleString()).format("YYYY-MM-DDm:ss");
+    //   var end = moment(slotInfo.end.toLocaleString()).format("YYYY-MM-DDm:ss");
+    // //   var newAvailability = {
+    // //       id: .length,
+    // //       start: start,
+    // //       end: end,
+    // //       title: slotInfo.host.information.name
+    // //   }
+    //   console.log(start); //shows the start time chosen
+    //   console.log(end); //shows the end time chosen
+    //   return{
+    //       style: {
+    //           backgroundColor: '#9138fd'
+    //       }
     //   }
-      console.log(start); //shows the start time chosen
-      console.log(end); //shows the end time chosen
-      return{
-          style: {
-              backgroundColor: '#9138fd'
-          }
-      }
-    }
+    // }
 
     /* When you click on an already booked slot */
     onEventClick = (event) => {
@@ -185,27 +176,30 @@ class Calendar extends React.Component {
     //     };
     // }
     availability = (value) => {
-        var availability = this.state.listings[0].availability;
-        var length = availability.length;
+        const { listings } = this.state;
+        let availability = []
+        
+        if (listings !== undefined) {
+            if(listings.availability !== undefined) {
+                availability = listings[0].availability;
+            }
+            
 
+        }
+        console.log('hello')
+
+        var length = availability.length;
         for (var i = 0; i < length; i++) {
-            var start = new Date(availability[i].start);
-            var end = new Date(availability[i].end);
-            if (value < end && value > start) {
+            var start = new Date(availability[i].start).setHours(0,0,0,0);
+            var end = new Date(availability[i].end).setHours(0,0,0,0);
+            
+            if (value <= end && value >= start) {
                 return true;
             }
         }
         return false;
     }
-    // onSelect = dates => this.setState({dates})
-    handleSelect = (range, states) => {
-        // range is a moment-range object
-        this.setState({
-          value: range,
-          states: states,
-        });
-        console.log(this.state)
-      }
+
     booked = (date) => {
         const {listings} = this.state
         if (listings.length != 0 && currentBookings.length != 0 ) {
@@ -227,25 +221,38 @@ class Calendar extends React.Component {
           head: {
             display: 'flex',
             justifyContent: 'space-between',
-            padding: '10px'
+            padding: '20px'
           },
           view: {
             width: '10rem'
           },
           controls: {
-              width: '50%',
+              //width: '50%',
               display: 'flex',
               justifyContent: 'around',
-              alignItems: 'center'
+              alignItems: 'center',
+              marginRight: "20px"
           }
       } 
+
+      const { guest, info, space, add, listings } = this.state;
+      let currentBookings = []
+      let availability = []
+      if (listings !== undefined && listings.length > 0) {
+          console.log(listings)
+        currentBookings = listings[space].currentBookings;
+        availability = listings[space].availability;
+      }
+      // !!!use firebase listings not imported listings
+
+
     //   const listings = this.props.profile.listings
-      const { guest, info, space, add, listings} = this.state;
-      
+        let check = false;
       if (listings.length != 0) {
         currentBookings = listings[space].currentBookings;  
+        check = true
       }
- 
+    
       const dateCellWrapper = ({children, value}) => 
             React.cloneElement(Children.only(children), {
                 className:  children.props.className + (this.availability(value) ? '' : ' rbc-off-range-bg'),
@@ -256,26 +263,31 @@ class Calendar extends React.Component {
                 //     backgroundColor: this.booked(value) ? 'white' : 'lightgray',
                 // }, 
         });       
-        let dateRanges = []
-        for (var i = 0; i < currentBookings.length; i+=2) {
-            var bookedDates = {
-                state: 'unavailable',
-                range: 
-                moment.range(
-                    currentBookings[i].start,
-                    currentBookings[i].end
-                )
-            }
-            dateRanges[i] = bookedDates;
-        }
-        
-       return (
+    return (
         <div className="App" style={{width: "100%"}}>
         <div style={style.head}>
-            <Button id="button" variant="contained" color="primary" onClick={this.handleClickAdd('')} >
-                <Add /> 
-                Add Availability
-            </Button>
+        {
+            check ? 
+            <Button 
+                id="button"
+                style={{fontSize: "14pt", padding: "0px 25px"}}
+                variant="contained"
+                onClick={this.handleClickAdd('')} 
+                >
+                <Edit style={{width: "2em"}}/> 
+                Edit Availability
+            </Button> : 
+            <Button 
+            id="button"
+            style={{fontSize: "14pt", padding: "0px 25px", color: "gray", backgroundColor: 'lightgray', borderColor: 'gray'}}
+            variant="contained"
+            onClick={this.handleClickAdd('')} 
+            disabled>
+            <Edit style={{width: "2em"}}/> 
+            Edit Availability
+        </Button>
+        }
+            
             <div style={style.controls}>
                 {/* <MultiSelect handleView={this.handleView}/> */}
                 <FormControl style={style.view}>
@@ -297,38 +309,33 @@ class Calendar extends React.Component {
                 </FormControl>
             </div>
         </div>
-        <DateRangePicker 
-            onSelect={this.handleSelect}
-            value={this.state.value}
-            showLegend={true}
-            stateDefinitions={stateDefinitions}
-            defaultState="available"
-            selectionType='range'
-            dateStates={dateRanges}
-            singleDateRange={true}
-            minimumDate={new Date()}
-        />
-            {/* <BigCalendar
-                localizer={localizer}
-                defaultDate={new Date()}
-                defaultView="month"
-                events={currentBookings}
-                resizable
-                onSelectEvent={this.onEventClick}
-                onSelectSlot={(this.onSlotChange)}
-                // dayPropGetter={dayPropGetter}
-                // eventPropGetter={(this.eventStyleGetter)}
 
-                components={{
-                    // you have to pass your custom wrapper here
-                    // so that it actually gets used
-                    dateCellWrapper: dateCellWrapper,
-                }}
-                style={{ height: "80vh" }}
-            /> */}
+        <Grid container>
+            <div className="calendar">
+                <BigCalendar
+                    localizer={localizer}
+                    defaultDate={new Date()}
+                    defaultView="month"
+                    events={currentBookings}
+                    resizable
+                    onSelectEvent={this.onEventClick}
+                    onSelectSlot={(this.onSlotChange)}
+                    views={['month', 'week', 'day']}
+                    // dayPropGetter={dayPropGetter}
+                    // eventPropGetter={(this.eventStyleGetter)}
+                    components={{
+                        // you have to pass your custom wrapper here
+                        // so that it actually gets used
+                        dateCellWrapper: dateCellWrapper,
+                    }}
+                    style={{ height: "70vh" }}
+                />
+            </div>
+        </Grid>
             <GuestInfo open={guest} info={info} click={() => this.setState({guest: false})}/>
-            <TimeSlotForm open={add} currentUser={this.props.currentUser} bookings={currentBookings} click={this.handleClickAdd('')} profile={this.props.profile} updateAvailability={this.props.updateAvailability} userID={this.state.userID} />
+            <AddAvailabiliity open={add} currentUser={this.props.currentUser} listings={listings} click={this.handleClickAdd('')} profile={this.props.profile} updateAvailability={this.props.updateAvailability} deleteAvailability={this.props.deleteAvailability} userID={this.state.userID}  />
       </div>
+      
       )
   }
 }

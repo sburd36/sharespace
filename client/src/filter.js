@@ -321,30 +321,31 @@ export const listings =  [
         houseRules: ["No Smoking", "No Alcohol"],
         availability: [
             {
-                start: "June 01 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "June 03 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                start: "June 4 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 8 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
             }, 
             {
-                start: "June 10 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "June 14 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                start: "June 13 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 16 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
             }, 
-            {
-                start: "June 22 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "June 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-            }, 
+            // {
+            //     start: "June 22 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            //     end: "June 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            // }, 
+            
         ],
         currentBookings: [
-            {
-                start: "June 04 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "June 08 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                title: 'Mary\'s Space',
-                information: {
-                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal'],
-                    notes: 'This is a note',
-                    guests: 0,
-                    guestID: 0
-                }
-            },
+            // {
+            //     start: "June 04 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            //     end: "June 08 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+            //     title: 'Mary\'s Space',
+            //     information: {
+            //         needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal'],
+            //         notes: 'This is a note',
+            //         guests: 0,
+            //         guestID: 0
+            //     }
+            // },
             {
                 start: "June 18 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
                 end: "June 19 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
@@ -408,22 +409,22 @@ export const listings =  [
         houseRules: ["No Smoking", "No Alcohol"],
         availability: [
             {
-                start: "May 23 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "May 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                start: "June 02 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 4 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
             }, 
             {
-                start: "June 03 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "June 09 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                start: "June 11 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 13 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
             }, 
             {
-                start: "June 14 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "June 21 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                start: "June 25 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 29 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
             }, 
         ],
         currentBookings: [
             {
-                start: "Thu June 03 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "Tue June 8 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                start: "Thu June 5 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "Tue June 10 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
                 title: 'Home 1',
                 information: {
                     needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
@@ -460,22 +461,40 @@ export const listings =  [
         houseRules: ["No Smoking", "No Alcohol"],
         availability: [
             {
-                start: "May 23 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "May 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                start: "June 1 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 32019 21:01:57 GMT-0700 (Pacific Daylight Time)",
             }, 
             {
-                start: "June 03 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "June 09 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-            }, 
-            {
-                start: "June 14 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "June 21 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                start: "June 13 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 15 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
             }, 
         ],
         currentBookings: [
             {
-                start: "Thu May 30 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "Tue June 4 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                start: "June 6 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 12 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                title: 'Home 1',
+                information: {
+                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+                    notes: 'This is a note',
+                    guests: 0,
+                    guestID: 0
+                }
+            },
+            {
+                start: "June 17 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 23 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                title: 'Home 1',
+                information: {
+                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+                    notes: 'This is a note',
+                    guests: 0,
+                    guestID: 0
+                }
+            },
+            {
+                start: "June 28 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+                end: "June 30 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
                 title: 'Home 1',
                 information: {
                     needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
@@ -486,58 +505,58 @@ export const listings =  [
             }
         ]
     },
-    {
-        ID: 4,
-        guestID: 2059,
-        name: 'Home 3',
-        address: "1234 24th Sunset Bld",
-        location: 'GREEN LAKE',
-        homeType: 'Shared Space',
-        amenities: ['Parking', 'Kitchen', 'Refrigerator', 'Microwave', 'Wifi', 'Computer Access'],
-        checkinInfo: {
-            time: "10am - 9pm",
-            description: "*Have a dog named Benly, he is very friendly but please do not pet him."
-        },
-        houseRules: ["No Smoking", "No Alcohol"],
-        availability: [
-            {
-                start: "May 23 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "May 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-            }, 
-            {
-                start: "June 03 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "June 09 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-            }, 
-            {
-                start: "June 14 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "June 21 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-            }, 
-        ],
-        currentBookings: [
-            {
-                start: "Thu May 30 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "Tue June 4 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                title: 'Home 1',
-                information: {
-                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
-                    notes: 'This is a note',
-                    guests: 0,
-                    guestID: 0
-                }
-            },
-            {
-                start: "Thu May 30 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                end: "Tue June 4 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
-                title: 'Home 1',
-                information: {
-                    needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
-                    notes: 'This is a note',
-                    guests: 0,
-                    guestID: 0
-                }
-            },
-        ]
-    },
+    // {
+    //     ID: 4,
+    //     guestID: 2059,
+    //     name: 'Home 3',
+    //     address: "1234 24th Sunset Bld",
+    //     location: 'GREEN LAKE',
+    //     homeType: 'Shared Space',
+    //     amenities: ['Parking', 'Kitchen', 'Refrigerator', 'Microwave', 'Wifi', 'Computer Access'],
+    //     checkinInfo: {
+    //         time: "10am - 9pm",
+    //         description: "*Have a dog named Benly, he is very friendly but please do not pet him."
+    //     },
+    //     houseRules: ["No Smoking", "No Alcohol"],
+    //     availability: [
+    //         {
+    //             start: "May 23 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+    //             end: "May 26 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+    //         }, 
+    //         {
+    //             start: "June 03 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+    //             end: "June 09 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+    //         }, 
+    //         {
+    //             start: "June 14 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+    //             end: "June 21 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+    //         }, 
+    //     ],
+    //     currentBookings: [
+    //         {
+    //             start: "Thu May 30 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+    //             end: "Tue June 4 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+    //             title: 'Home 1',
+    //             information: {
+    //                 needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+    //                 notes: 'This is a note',
+    //                 guests: 0,
+    //                 guestID: 0
+    //             }
+    //         },
+    //         {
+    //             start: "Thu May 30 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+    //             end: "Tue June 4 2019 21:01:57 GMT-0700 (Pacific Daylight Time)",
+    //             title: 'Home 1',
+    //             information: {
+    //                 needs: ['Crib', 'High Chair', 'Pregnant', 'Pets', 'Service Animal', ],
+    //                 notes: 'This is a note',
+    //                 guests: 0,
+    //                 guestID: 0
+    //             }
+    //         },
+    //     ]
+    // },
 ]
 
 export var availability = {

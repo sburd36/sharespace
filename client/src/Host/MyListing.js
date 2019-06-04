@@ -24,6 +24,10 @@ const styles = theme => ({
         alignItems: 'center', 
         width: "100%",
     },
+    main: {
+        width: "100%",
+        paddingRight: "3rem"
+    },
     info: {
         display: 'flex',
         flexWrap: 'wrap',
@@ -256,17 +260,16 @@ class MyListing extends React.Component {
         console.log(allListing)
 
             return (
-                <div className={classes.main} style={{paddingRight: "3rem"}}>
+                <div className={classes.main}>
                     <div className={classes.head}>
                         <h3 class="m-3">MY LISTINGS</h3>
                     
                         <Button 
-                            variant="contained" 
-                            color="primary"
+                            variant="contained"
                             onClick={() => this.setState({ open: true})}
                             id="button"
                         >
-                            <Add style={{marginRight: "5px"}}></Add> New Listing
+                            <Add style={{marginRight: "5px"}}></Add> Add Listing
                         </Button>
                         {/* start of dialog */}
                         <Dialog
@@ -281,15 +284,13 @@ class MyListing extends React.Component {
                             <DialogContent>
                                 <AddSpace user={this.props.user} updateListing={this.props.updateListing} saveListingID={this.saveListingID}></AddSpace>
                             </DialogContent>       
-                            <DialogActions >
+                            <DialogActions>
                                 <Button 
                                     variant="contained" 
-                                    color="primary" 
                                     type="submit"
                                     onClick={() => 
                                         this.setState({ open: false})
                                     }
-                                   
                                     id="button" 
                                 >
                                     Add Listing
@@ -305,7 +306,7 @@ class MyListing extends React.Component {
                         allListing.map((data) => {
                             return (
                                 <ExpansionPanel style={{boxShadow:"none", backgroundColor: "#fdfdfe", borderBottom: ".5px solid #7e9fa8", color:"#202e57", 
-                                fontFamily: "Source Sans Pro", borderRadius: 0 }}>
+                                fontFamily: "Source Sans Pro", borderRadius: 0, marginLeft: "20px"}}>
                                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} style={{paddingLeft: 0}}>
                                         <Typography style={{fontSize: "16px", color: "#202e57"}}>{data[0].value}</Typography>
                                     </ExpansionPanelSummary>
