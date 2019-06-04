@@ -139,7 +139,7 @@ class Availability extends React.Component {
             "listingData": listings[listingIndex]
 
         }
-
+        console.log(obj1)
         let obj2 = {
             "state": "available",
             "start": longStart,

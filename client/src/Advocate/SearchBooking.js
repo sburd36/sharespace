@@ -106,7 +106,7 @@ class Search extends React.Component {
                           })); 
                           console.log(listings)
                           this.setState({
-                            allAvail: listings.slice(14,20)   
+                            allAvail: listings  
                         })
         
                     } 

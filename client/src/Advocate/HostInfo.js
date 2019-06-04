@@ -156,6 +156,14 @@ class BookingForm extends React.Component {
         this.props.click();
     };
 
+    updateAvail = (start, end, state, id, listID, pushId) => {
+        this.props.firebase.availability(id).update({
+            "state": state, 
+            "start": start, 
+            "end": end,
+        });
+    }
+
     handleConfirmHost = () => {
         const { start, end, booking } = this.state
         this.setState({
