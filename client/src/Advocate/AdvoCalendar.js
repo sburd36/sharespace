@@ -24,23 +24,34 @@ const localizer = BigCalendar.momentLocalizer(moment)
 class Calendar extends React.Component {
     constructor(props) {
       super(props); 
-      console.log(this.props)     
+      console.log(this.props)    
+      this.resetHost.bind(this) 
       this.state = {
         events: [],
         avail: [],
-        userID: "",
+        user: {},
         host: ""
       }
     }
-
+    resetHost = () => {
+      this.setState({
+        host: ""
+      })
+    }
     componentDidMount() {
       console.log(this.props)
 
       this.props.firebase.auth.onAuthStateChanged((user)=> {
         if(user) {
+          this.props.firebase.user(user.uid).on('value', snapshot=>{
+           const currentAdv = snapshot.val()
+            currentAdv['uid'] = user.uid
             this.setState({
-              userID: user.uid
+              user: currentAdv
             });
+            
+          })
+
         }
 
     }); 
@@ -92,14 +103,22 @@ class Calendar extends React.Component {
 
     /* When you click on an already booked slot */
     onEventClick = (event) => {
+      if(event !== undefined) {
         this.setState({
           open: !this.state.open,
           host: event.host
         })
+
+      } else {
+        this.setState({
+          open: !this.state.open,
+        })
+      }
     }
 
   render() {
     console.log(this.props.allAvail)
+    console.log(this.state.host)
     if(this.props.allAvail !== undefined && this.props.allAvail.length != 0) {
       var events = []    
       this.props.allAvail.map((a) => {
@@ -135,7 +154,7 @@ class Calendar extends React.Component {
             views={['month', 'week', 'day']}
             />
             {this.state.events !== undefined && this.state.events != 0  ?
-              <HostInfo booking={this.state.host} open={this.state.open} click={this.onEventClick} uid={this.state.userID}/>
+              <HostInfo booking={this.state.host} open={this.state.open} click={this.onEventClick} user={this.state.user} resetHost={this.resetHost}/>
             : <h3>No Current Availabilities</h3>}
             
       </div>

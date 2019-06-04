@@ -88,14 +88,15 @@ class Search extends React.Component {
             guests: "",
             locations: "",
             start: new Date(),
-            allAvail: []
+            allAvail: [],
+            user: {}
         }
     }
 
     componentDidMount() {
         this.props.firebase.auth.onAuthStateChanged((user)=> {
             if(user) {
-                let listingQuery = this.props.firebase.availabilities().orderByChild("state").equalTo("available");
+                let listingQuery = this.props.firebase.availabilities().orderByChild("state").equalTo("available").limitToLast(5);
                 listingQuery.on('value', snapshot =>{
                     let obj = snapshot.val(); 
                     console.log(obj)
@@ -112,6 +113,7 @@ class Search extends React.Component {
                     } 
                     console.log(this.state)    
                 }) 
+                
 
             } else {
                 console.log("no current user present")

@@ -79,6 +79,11 @@ export default withStyles(styles)(class extends React.Component {
         this.props.click();
     };
 
+    handleClick = (host,type) => (event) => {
+        console.log(host)
+        console.log(type)
+        this.props.click(host, type)
+    }
 
     render() {
         const { classes, type } = this.props;
@@ -97,7 +102,7 @@ export default withStyles(styles)(class extends React.Component {
                 >
                     <DialogContent>
                         <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-                            <h3>{host.homeName}</h3>
+                            <h3>{host.name}</h3>
                             <div style={{display: "flex"}}>
                                 {
                                     type === 'confirmed' ?  
@@ -111,7 +116,7 @@ export default withStyles(styles)(class extends React.Component {
                             <div style={{display: "flex", justifyContent: "space-between"}}>
                                 <div>
                                     <p style={{color:"#da5c48"}}>{host.location}</p>
-                                    <p style={{fontSize: "12pt"}}>{host.homeType}</p>
+                                    <p style={{fontSize: "12pt"}}>{host.type}</p>
                                     
                                 </div>
 
@@ -136,7 +141,7 @@ export default withStyles(styles)(class extends React.Component {
                         <h5 className={classes.title}>INFORMATION</h5>
                         <div style={{display: 'flex', flexWrap: 'wrap'}}>
                         {
-                            host.info.map((data) => {
+                            host.languages.map((data) => {
                                 return( 
                                 <div 
                                     id="tags"
@@ -155,13 +160,13 @@ export default withStyles(styles)(class extends React.Component {
                         </div>
                         <hr></hr>
                         <h5 className={classes.title}>NOTES</h5>
-                        <p className={classes.body}>Insert route to notes here</p>
+                        <p className={classes.body}>{host.notes}</p>
                         <hr></hr>
                         <h5 className={classes.title}>ADVOCATE INFORMATION</h5>
-                        <p className={classes.body} style={{fontWeight: 400}}>{host.advocate.name}</p>
+                        <p className={classes.body} style={{fontWeight: 400}}>{host.advocateFirstName + " " + host.advocateLastName}</p>
                         <div style={{textAlign: "center", display: "flex", justifyContent: "center", marginTop: "5px"}}>
-                            <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.advocate.phone}</p>
-                            <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.advocate.email}</p>
+                            <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.advocatePhone}</p>
+                            <p style={{flexGrow: "1"}} className={`${classes.contact} ${classes.body}`}>{host.advocateEmail}</p>
                         </div>  
                     </DialogContent>
                     <DialogActions style={{display: 'flex', justifyContent: 'space-between', padding: "20px", paddingBottom: "10px", borderTop: "0.5px solid #d3dbee"}}>
@@ -175,10 +180,10 @@ export default withStyles(styles)(class extends React.Component {
                             </>
                         :
                         <>
-                        <Button onClick={this.props.click} variant="contained"  color="primary" id="buttonGray">
+                        <Button onClick={this.handleClick(host, "decline")} variant="contained"  color="primary" id="buttonGray">
                             Decline Request
                         </Button>
-                        <Button onClick={this.props.click} variant="contained" id="btn-drk-blue-fill">
+                        <Button onClick={this.handleClick(host, 'accept')} variant="contained" id="btn-drk-blue-fill">
                             Accept Request
                         </Button>
                         </>

@@ -170,13 +170,13 @@ class Bookings extends React.Component {
         const { classes } = this.props;
         const { view, type } = this.state;
         let title = '';
-        let bookings = '';
+        let bookings = [];
         if (type === 'confirmed') {
             title = 'CURRENT BOOKINGS'
             bookings = this.state.currentBookings;
         } else {
             title = 'PENDING BOOKINGS REQUESTS'
-            bookings = this.state.pedningBookings;
+            bookings = this.state.pendingBookings;
         }
 
         // {(this.state.current)}
@@ -260,13 +260,13 @@ class Bookings extends React.Component {
                                                             <CardContent className={classes.content}>
                                                                 <div>
                                                                     <Typography className={classes.cardContent} style={{maxWidth: 200, fontSize: '14pt'}}>
-                                                                        <strong style={{fontWeight: 500}}>Host:</strong> {booking.information.name}
+                                                                        <strong style={{fontWeight: 500}}>Host:</strong> {booking.firstName  + " " + booking.lastName}
                                                                     </Typography>
                                                                     <Typography className={classes.cardContent} style={{fontSize: '12pt'}}>
-                                                                        <strong style={{fontWeight: 500}}>Guest #:</strong> {booking.space[0].guestID}
+                                                                        <strong style={{fontWeight: 500}}>Guest #:</strong> {booking.guest}
                                                                     </Typography> 
                                                                     <Typography className={classes.cardContent} style={{fontSize: '12pt'}}>
-                                                                        <strong style= {{fontWeight: 500}}>Advocate:</strong> {booking.advocate}
+                                                                        <strong style= {{fontWeight: 500}}>Advocate:</strong> {booking.advocateID}
                                                                     </Typography>
                                                                 </div>     
                                                                 <div>
@@ -279,12 +279,12 @@ class Bookings extends React.Component {
                                                                         {date.start} - <br/>{date.end}
                                                                     </div>
                                                                     <Typography style={{color:'#da5c48', float:'right', fontSize: '12pt'}}>
-                                                                        {booking.space[0].location}
+                                                                        {booking.location}
                                                                     </Typography>
                                                                 </div>                                                                                                          
                                                             </CardContent>
                                                         </Card>
-                                                        <HostInfo type={type} booking={bookings} open={this.state.open} click={this.handleCardClick}></HostInfo>    
+                                                        <HostInfo type={type} booking={booking} open={this.state.open} click={this.handleCardClick} user={this.state.user}></HostInfo>    
                                                     </Grid>
                                                 )
                                             }

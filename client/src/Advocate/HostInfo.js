@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import bedroom from "../img/bedroom.jpg";
 import { Host } from '../filter';
+import moment from 'moment';
+
 import { 
     Button, 
     withStyles, 
@@ -156,34 +158,72 @@ class BookingForm extends React.Component {
         this.props.click();
     };
 
-    updateAvail = (start, end, state, id, listID, pushId) => {
-        this.props.firebase.availability(id).update({
-            "state": state, 
-            "start": start, 
-            "end": end,
-        });
+    // firebase call
+    updateAvail = (obj) => {
+        // updates avail collection
+        this.props.firebase.availability(this.state.booking.id).update(obj);
+        console.log("AVAIL ID: "+this.state.booking.id)
+        // new book obj for listings
+        console.log(this.state.booking.listingData)
+        // updates listings collection
+        let listingPushID = this.props.firebase.updateAvailToPending(this.state.booking.listingData.id, this.state.booking.listingPushID, obj)
+        console.log("LISTINGID:  "+this.state.booking.listingData.id)
+        console.log("PUSH ID: "+ listingPushID)
+        // updates acailability collection with new listingPush ID
+        this.props.firebase.availability(this.state.booking.id).update({"listingPushID": listingPushID.key});
     }
+    // moveAvailToPending = (obj) => {
+    //     // this.props.firebase.updateAvailToPending(obj.)
+    // }
 
     handleConfirmHost = () => {
-        const { start, end, booking } = this.state
+        const { start, end, booking, ethnicities, guest, guestID, languages, notes, religion } = this.state
         this.setState({
             confirm: true
         })
-        let uid = this.props.uid
+        console.log(this.props.user)
+        let user = this.props.user
         let availID = booking.id
         let startSelected = new Date(start) * 1
         let endSelected = new Date(end) * 1
-        let newAvailStart = booking.start
-        let newAvailEnd = booking.end
+        let newAvailStart = new Date(booking.start) * 1
+        let newAvailEnd = new Date(booking.end) * 1
+        let pendObj= {
+            "state": "pending", 
+            "start": startSelected,
+            "end": endSelected,
+            "ethnicities": ethnicities,
+            "guestCount": guest, 
+            "guestID": guestID,
+            "languages": languages,
+            "notes": notes,
+            "religion": religion,
+            "advocateID": user.uid,
+            "advocateFirstName": user.firstName,
+            "advocateLastName": user.lastName,
+            "advocatePhone": "3609071245",
+            "advocateEmail": user.email,
+            "needs": ["Crib", "Public Transportation", "Pet Friendly"]
+            // "needs": 
+        }
+        console.log("OBJECT TO APPEND")
+        console.log(pendObj)
+        this.updateAvail(pendObj)
+        this.props.resetHost()
         // let startCurrent = new Date(booking.start)
         // let endCurrent = new Date(booking.end)
-        if(startSelected === booking.start && endSelected === booking.end) {
-        }
-  
-
-         
-        
-   
+        // if(startSelected === booking.start && endSelected === booking.end) {
+        //     console.log("CASE 1")
+        //     this.updateAvail(pendObj)
+        // } else {
+        //     console.log("NOT GONIG INTO CASE")
+        //     console.log("START")
+        //     console.log(new Date(booking.start))
+        //     console.log(new Date(startSelected))
+        //     console.log("END")
+        //     console.log(new Date(booking.end))
+        //     console.log(new Date(endSelected))
+        // }
 
     }
 
@@ -191,7 +231,7 @@ class BookingForm extends React.Component {
         const { classes, type, booking} = this.props;
         let host = booking;
         console.log(host)
-        if (host === undefined || host == "") {
+        if (host === undefined || host === "") {
             host = {
                 email: "mary@gmail.com",
                 end: 1559520143997,
@@ -227,6 +267,7 @@ class BookingForm extends React.Component {
             this.state.booking = host
         }
         console.log(this.state)
+        console.log(this.props)
         let render = '';
         if (type === 'confirmed') {
             render = <p className={classes.tag} style={{backgroundColor: "#da5c48", color: "white", border: "none"}}>Booked</p>
@@ -311,7 +352,7 @@ class BookingForm extends React.Component {
                                 {host.listingData.description}
                             </p>
                             <DialogContentText>
-                                <p className={classes.body}><b>Time: </b> {host.listingData.checkIn} </p>                          
+                                <p className={classes.body}><b>Time: </b> {host.listingData.checkin} </p>                          
                             </DialogContentText>
                         </div>
 
@@ -378,7 +419,6 @@ class BookingForm extends React.Component {
                                         id="date"
                                         label="Start Date"
                                         type="date"
-                                        onChange={this.handleInputChange('start')}
                                         className={classes.textField}
                                         style={{marginRight: "10px"}}
                                         onChange={this.handleInputChange('start')}
@@ -387,10 +427,11 @@ class BookingForm extends React.Component {
                                             className: classes.floatingLabelFocusStyle
                                         }}
                                         inputProps={{
-                                            min: "2019-06-10",
-                                            max: "2019-06-20"
+                                            min: moment(new Date(this.state.booking.start).toLocaleString()).format("YYYY-MM-DD"),
+                                            max: moment(new Date(this.state.booking.end).toLocaleString()).format("YYYY-MM-DD")
                                         }}
                                     /> 
+                                    {console.log(this.state.booking.start)}
                                     <TextField
                                         id="date"
                                         label="End Date"
@@ -402,8 +443,9 @@ class BookingForm extends React.Component {
                                             className: classes.floatingLabelFocusStyle
                                         }}
                                         inputProps={{
-                                            min: "2019-06-10",
-                                            max: "2019-06-20"
+ 
+                                            min: moment(new Date(this.state.booking.start).toLocaleString()).format("YYYY-MM-DD"),
+                                            max: moment(new Date(this.state.booking.end).toLocaleString()).format("YYYY-MM-DD")
                                         }}
                                     /> 
 
@@ -422,6 +464,7 @@ class BookingForm extends React.Component {
                                                     <FormControlLabel 
                                                     style={{margin: 0}}
                                                     control={<Checkbox value={need} className={classes.checkboxes}/>}
+                                                    onChange={this.handleChecked('needs', need)}
                                                     label={need}
                                                     classes={{
                                                         label: classes.label
@@ -469,7 +512,7 @@ class BookingForm extends React.Component {
                     </DialogActions>
                     <Dialog
                         open={this.state.confirm}
-                        onClose={this.props.click}
+                        // onClose={this.props.click}
                         aria-labelledby="alert-dialog-title"
                         aria-describedby="alert-dialog-description"
                         >

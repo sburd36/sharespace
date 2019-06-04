@@ -40,48 +40,35 @@ class AvailCalendar extends React.Component {
         super(props);
         this.state = {
             view: 'calendar',
-            bookings: []
-                // {
-                //     guestID: 1349,
-                //     homeName: 'Jimmy\'s Bedroom',
-                //     numberOfGuest: 1,
-                //     begin: '2019-04-10',
-                //     end: '2019-04-29',
-                //     notes: "Guest Notes Here",
-                //     info: ['No Smoking', 'No Alcohol'],
-                //     address: '1234 Mary Gates Way NE Apt. 430 Seattle, WA 98105',
-                //     homeType: 'Entire Room',
-                //     location: 'BEACON HILL',
-                //     advocate: {
-                //         name: 'Jenny Chen',
-                //         phone: '(206)396-3860',
-                //         email: 'jennychen@gmail.com'
-                //     }
-                // }
-            
+            bookings: [],
+            // pendingBookings: []
         }
     }
 
     componentDidMount() {
         this.props.firebase.auth.onAuthStateChanged((user)=> {
             if(user) {
-                let listingQuery = this.props.firebase.availabilities();
-                listingQuery.on('value', snapshot =>{
-                    let obj = snapshot.val(); 
-                    console.log(obj)
-                    if (obj != null) {
-                        let listings = Object.keys(obj).map(key => ({
-                            ...obj[key],
-                          })); 
-                        
-                          this.setState({
-                            allListings: listings.slice(12,17)   
-                        })
-        
-                    } 
-                    console.log(this.state)    
-                }) 
 
+                this.props.firebase.availabilities().orderByChild("state").equalTo("pending").on('value', snapshot=>{
+                    let obj = snapshot.val();
+                    console.log(obj);
+                    if (obj !== null) {
+                        
+                        const book = Object.keys(obj).map(key => ({
+                            ...obj[key],
+                            id: key
+                            })); 
+                        console.log(book.key)
+                        this.setState({
+                            bookings: book  
+                        })
+
+                    }
+                    console.log(this.state)
+                })
+
+
+                
             } else {
                 console.log("no current user present")
             }
@@ -89,10 +76,33 @@ class AvailCalendar extends React.Component {
     }
 
     handleCardClick = () => {
+
         this.setState({
             open: !this.state.open
         })
+       
     }
+
+    handleFireClick = (obj, decide) => {
+
+        console.log(obj)
+        console.log(decide)
+        this.setState({
+            open: !this.state.open
+        })
+        if (obj !== undefined) {
+
+            if (decide == "accept") {
+                console.log("inside accept")
+                this.props.firebase.addPendingToBooked(obj)
+            } else {
+                console.log("inside decline")
+               this.props.firebase.addPendingToDelete(obj) 
+            }
+        }
+       
+    }
+
 
     handleSwitchView = (event) => {
         this.setState({
@@ -101,7 +111,16 @@ class AvailCalendar extends React.Component {
     }
 
     render() {
-        const { classes, type } = this.props;
+        const { classes, type, bookings } = this.props;
+        console.log(this.state)
+        // let bookings = []
+        // // type == 'confirmed' ? bookings = this.state.currentBookings : bookings =this.state.pendingBookings;
+        // if(type == 'confirmed') {
+        //     bookings = this.state.currentBookings
+        // } else {
+        //     bookings = this.state.pendingBookings
+        // }
+        console.log(bookings)
         // console.log(type)
         return(
             <div >
@@ -119,8 +138,8 @@ class AvailCalendar extends React.Component {
                                     <div className={classes.cardHeader}>
                                         <div>
                                             <p>Guest #: {data.guestID}</p>
-                                            <p style={{fontSize: "16px", fontWeight: 300}}>{data.numberOfGuest} Guests</p>
-                                            <p style={{fontSize: "16px", fontWeight: 300, color: "#da5c48"}}>{data.homeName}</p>
+                                            <p style={{fontSize: "16px", fontWeight: 300}}>{data.guest} Guests</p>
+                                            <p style={{fontSize: "16px", fontWeight: 300, color: "#da5c48"}}>{data.name}</p>
                                         </div>
                                         <div>
                                             {data.start} - <br/>
@@ -133,7 +152,7 @@ class AvailCalendar extends React.Component {
                                     <p style={{fontSize: "16px", fontWeight: 400}}>Guest Needs:</p>
                                     <div style={{display: 'flex', flexWrap: 'wrap'}}>
                                         {
-                                            data.info.map((amenity) =>{
+                                            data.ethnicities.map((amenity) =>{
                                                 return (
                                                     <div
                                                         id="tags"
@@ -150,7 +169,7 @@ class AvailCalendar extends React.Component {
                                             })
                                         }
                                     </div>
-                                    <BookingInfo booking={data} open={this.state.open} type={type} click={this.handleCardClick}></BookingInfo>
+                                    <BookingInfo booking={data} open={this.state.open} type={type} click={this.handleFireClick}></BookingInfo>
                                 </Paper>
                             )
                         }) 
