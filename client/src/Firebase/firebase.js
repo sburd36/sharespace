@@ -235,6 +235,35 @@ const config = {
 
     listing = id => this.db.ref(`listings/${id}`);
     
+    updateAvailToPending = (lid, aid, obj) => {
+      this.db.ref(`listings/${lid}/availability/${aid}`).remove();
+      var key = this.db.ref(`listings/${lid}/pendingBooking`).push(obj)
+      return key
+    }
+
+    addPendingToBooked = (obj) => {
+      let listID = obj.listingData.id
+      let listPushID = obj.listingPushID
+      let pendID = obj.id
+      let pushID = this.db.ref(`listings/${listID}/booked`).push(obj)
+      let key = pushID.key
+      let availID = this.db.ref(`availabilities/${pendID}`).update({'state': 'booked', "listingPushID": pushID.key})
+      // this.db.ref(`listings/${listID}/booked/${key}`).update({"availID": availID.key})
+      this.db.ref(`listings/${listID}/pending/${listPushID}`).remove()
+
+      console.log(listID)
+      console.log(pushID.key)
+      console.log(availID.key)
+    }
+
+    addPendingToDelete = (obj) => {
+      let listID = obj.listingData.id
+      let listPushID = obj.listingPushID
+      let pendID = obj.id
+      this.db.ref(`listings/${listID}/pending/${listPushID}`).remove()
+      this.db.ref(`availabilities/${pendID}`).remove()
+    }
+    
     addAvailToListing = id => this.db.ref(`listings/${id}/availability`);
     
     availabilities = () => this.db.ref('availabilities')

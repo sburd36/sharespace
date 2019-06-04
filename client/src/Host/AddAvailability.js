@@ -153,6 +153,7 @@ class Availability extends React.Component {
         // adding avail to firebase
         let key = this.props.firebase.addAvailToListing(listingID).push(obj2)
         obj2['id'] = key.key
+        this.props.firebase.availability(availID.key).update({"listingPushID": key.key})
         console.log("LISTING AVAIL ADDED: " + key.key)
         // for updating app
         this.props.updateAvailability(listingID, obj2)

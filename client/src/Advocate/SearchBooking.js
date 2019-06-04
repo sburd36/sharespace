@@ -107,7 +107,8 @@ class Search extends React.Component {
             location: "",
             start: new Date(),
             allAvail: [],
-            search: ''
+            search: '',
+            user: {}
         }
     }
 
@@ -115,12 +116,12 @@ class Search extends React.Component {
         console.log('MOUNTED')
         this.props.firebase.auth.onAuthStateChanged((user)=> {
             if(user) {
-                const availabilitiesRef = this.props.firebase.availabilities().orderByChild("state").equalTo("available");
+                const availabilitiesRef = this.props.firebase.availabilities().orderByChild("state").equalTo("available").limitToLast(5);
                 availabilitiesRef.on('child_added', this.addOrUpdateIndexRecord);
                 availabilitiesRef.on('child_changed', this.addOrUpdateIndexRecord);
                 availabilitiesRef.on('child_removed', this.deleteIndexRecord);
         
-                let listingQuery = this.props.firebase.availabilities().orderByChild("state").equalTo("available");
+                let listingQuery = this.props.firebase.availabilities().orderByChild("state").equalTo("available").limitToLast(5);
                 listingQuery.on('value', snapshot =>{
                     let obj = snapshot.val(); 
                     if (obj != null) {
@@ -134,8 +135,8 @@ class Search extends React.Component {
         
                     } 
                 }) 
-            }
-            else {
+                
+            } else {
                 console.log("no current user present")
             }
         })
