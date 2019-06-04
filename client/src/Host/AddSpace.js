@@ -185,11 +185,12 @@ class Listing extends React.Component {
 				listObj['pastBookings'] = []
 				listObj['pendingBookings'] = []
 				this.props.saveListingID(key.key, listObj)
-
+				this.props.click()
 			} else {
 				console.log("no host signed in")
 
 			}
+
 	})
 
 	console.log(this.state)
@@ -380,7 +381,7 @@ class Listing extends React.Component {
 												</Grid> */}
 								<div style={{position: 'absolute', right: '10px', bottom: '10px', marginTop: '10px'}}>
 										<Button type='submit' id='button' onClick={this.onSubmit} >
-										Add
+											Add
 									</Button>
 								</div>
 							

@@ -20,8 +20,9 @@ const styles = theme => ({
       flexGrow: 1
     },
     bookings: {
-        height: window.innerHeight,
-        width: window.innerWidth / 2 + 230,
+        //height: window.innerHeight,
+        height: '100%',
+        width: window.innerWidth / 2 + 230
     },
     bigAvatar: {
         marginTop: "50px",
@@ -228,8 +229,8 @@ class Bookings extends React.Component {
                             </Grid>
                         </Grid>
                         <Grid key={2} item>
-                            <Paper className={classes.bookings} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}} >
-                                <div style={{display: 'flex', justifyContent: 'space-between', padding: '30px', paddingBottom: '20px'}}>
+                            <Paper className={classes.bookings} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px", paddingBottom: "20px"}} >
+                                <div style={{display: 'flex', justifyContent: 'space-between', padding: '30px'}}>
                                     <h3 class="mt-4">
                                     {title}
                                     </h3>
