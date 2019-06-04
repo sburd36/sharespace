@@ -71,7 +71,8 @@ export default withStyles(styles)(class extends React.Component {
                 value: this.props.profile.languages
             }
         ]
-    
+        {console.log(profile)}
+
         return (
             <div class="pl-5">
                 <h3 class="m-3">MY PROFILE</h3>
@@ -81,27 +82,52 @@ export default withStyles(styles)(class extends React.Component {
                         {
                             profile.map((data) => {
                                 return (
-                                    <div style={{
-                                        width: '25%',
-                                        margin: '5px 15px'
-                                    }}>
-                                        <p className={classes.type}>{data.type}</p>
-                                        <p className={classes.value}>
-                                        {
-                                            typeof data.value == 'string' ? 
-                                                data.value 
-                                                :
-                                                data.value.map((d) => {
-                                                    return(d + " ")
-                                                })
-                                        }
-                                        </p>
-                                        <hr style={{position: 'relative', bottom: '10px'}}/>
-                                    </div> 
+                                    typeof data.value === 'string'  && 
+
+                                        <div style={{
+                                            width: '25%',
+                                            margin: '5px 15px'
+                                        }}>
+                                            <p className={classes.type}>{data.type}</p>
+                                            <p className={classes.value}>
+                                                {data.value}
+                                            </p>
+                                            <hr style={{position: 'relative', bottom: '10px'}}/>
+                                        </div> 
+                                        
                                 )
                             })
                         }
-                    </div>
+                    {
+                        profile.slice(profile.length - 3, profile.length).map((value) => {
+                            return(
+                            <div>
+                                <p className={classes.value} style={{fontWeight: 400}}>{value.type}:</p>
+                                <div style={{display: 'flex', flexWrap: 'wrap', margin: '5px', marginBottom: '20px'}}>
+                                {
+                                value.value.map((d) => {
+                                    return(
+                                        <div 
+                                            id="tags"
+                                            style={{
+                                                border: "0.5px solid",
+                                                borderRadius: '0.5rem',
+                                                padding: '4px 12px 4px 12px',
+                                                margin: '2px'
+                                            }}
+                                        >
+                                        {d}
+                                        </div>
+                                    )
+                                    })
+                                }   
+                                </div>
+                            </div>  
+                            )
+                        })    
+                    }
+                        
+                    </div>        
                 </div>
                 
                 {/* <MyListing user={this.props.user} profile={this.props.profile} updateListing={this.props.updateListing} ></MyListing> */}

@@ -119,6 +119,7 @@ class SignUpFormBase extends Component {
 		this.setState({ [event.target.name]: event.target.value });
 		console.log(this.state)
 	};
+
 	onSelect = (name) => (selected) => {
 		let clean = []
 		for (let i = 0; i < selected.length; i ++) {
@@ -167,15 +168,9 @@ class SignUpFormBase extends Component {
 								</FormControl>
 							</div>
 							<div style={{
-								display: 'flex',
-								flexWrap: 'wrap',
-								justifyContent: 'space-between',
-								paddingTop: '10px'
+								paddingTop: '10px',
 							}}>
-
-								<div style={{ width: '50%', padding: '3px 5px', dislay: 'flex', }}>
 									<PersonalSelect size="6" onSelect={this.onSelect} />
-								</div>
 
 							</div>
 							<p style={{ margin: 0, paddingTop: '10px' }}>Personal Statement</p>

@@ -62,23 +62,38 @@ class Calendar extends React.Component {
 
     // for firebase and data transfer
     componentDidMount() {
-        console.log("INSIDE COMPONENTT DID MOUNT")
-        if(this.props.profile.listings === undefined || this.props.profile.listings.length == 0) {
-            console.log("there are no current listings")
+        this.props.firebase.auth.onAuthStateChanged((user)=> {
+            if(user) {
+                let listings = []
+                let userQuery = this.props.firebase.availabilities().orderByChild("hostID").equalTo(user.uid);
+                userQuery.on('value', snapshot =>{
+                    let obj = snapshot.val(); 
+                    console.log(obj)
+                    if(obj != null) {
+                        if(obj.length == 1) {
+                           listings.push(obj) 
+                        } else {
+                            listings =  Object.keys(obj).map(key => ({
+                                ...obj[key],
+                                id: key
+                              })); 
+                        }
+                    }
 
-        } else {
-            this.props.firebase.auth.onAuthStateChanged((user)=> {
-                if(user) {
-                    this.state.userID = user.uid 
-                }
-    
-            }); 
-            
-            this.setState({
-                listings: this.props.profile.listings,
-                
-            })
-        }
+                    this.setState({
+                        listings: listings
+                    });
+
+                })
+
+
+                console.log(this.state)    
+
+
+            } else {
+                console.log("no current user present")
+            }
+        });     
     }
 
     // /* When you choose a particular slot on the calendar */
@@ -145,9 +160,8 @@ class Calendar extends React.Component {
         const { listings } = this.state;
         let availability = []
         
-        if (listings !== undefined) {
+        if (listings !== undefined && listings.length !== 0) {
             availability = listings[0].availability;
-
         }
         console.log('hello')
 
