@@ -29,10 +29,6 @@ const algolia = algoliasearch(
     "UI4XF6GAZS",
     "d0d9a91e7c68fb44a286ce841f14333d"
 );
-// const algolia = algoliasearch(
-//     process.env.ALGOLIA_APP_ID,
-//     process.env.ALGOLIA_API_KEY
-// );
 
 const index = algolia.initIndex(process.env.ALGOLIA_INDEX_NAME);
 
@@ -209,52 +205,14 @@ class Search extends React.Component {
         };
     }
 
-    // onSubmit = (event) => {
-    //     event.preventDefault();
-    //     index.search({
-    //         query: this.state.search,
-    //         attributesToRetrieve: [
-    //           'listingData.location',
-    //           'lastName'
-    //         ],
-    //         // numericFilters: [
-    //         //   [
-    //         //     'start >= ' + startRange,
-    //         //     'end <= ' + endRange
-    //         //   ]
-    //         // ],
-    //         // facetFilters: [
-    //         //   'firstName:Min'
-    //         // ]
-    //         },
-    //         (err, { hits } = {}) => {
-    //           if (err) throw err;
-
-    //           console.log(hits);
-    //           this.setState({
-    //               allAvail: hits
-    //           })
-    //     })
-    // }
-
-    onClick = () => {
-
+    onSubmit = (event) => {
+        event.preventDefault();
         index.search({
-            query: this.state.search
-            // [
-            //     // {
-            //     //     indexName: 'listingData.location',
-            //     //     query: this.state.location
-            //     // }
-            //     {
-            //         indexName: 'listingData.number',
-            //         query: this.state.guests
-            //     }
-            // ],
-            // attributesToRetrieve: [
-            //   'listingData.location',
-            //   'lastName'
-            // ],
+            query: this.state.search,
+            attributesToRetrieve: [
+              'listingData.location',
+              'lastName'
+            ],
             // numericFilters: [
             //   [
             //     'start >= ' + startRange,
@@ -267,13 +225,51 @@ class Search extends React.Component {
             },
             (err, { hits } = {}) => {
               if (err) throw err;
-              hits.slice(2, hits.length)
 
               console.log(hits);
               this.setState({
-                allAvail: hits,
-            })
+                  allAvail: hits
+              })
         })
+    }
+
+    onClick = () => {
+
+        // index.search({
+        //     query: this.state.search
+        //     // [
+        //     //     // {
+        //     //     //     indexName: 'listingData.location',
+        //     //     //     query: this.state.location
+        //     //     // }
+        //     //     {
+        //     //         indexName: 'listingData.number',
+        //     //         query: this.state.guests
+        //     //     }
+        //     // ],
+        //     // attributesToRetrieve: [
+        //     //   'listingData.location',
+        //     //   'lastName'
+        //     // ],
+        //     // numericFilters: [
+        //     //   [
+        //     //     'start >= ' + startRange,
+        //     //     'end <= ' + endRange
+        //     //   ]
+        //     // ],
+        //     // facetFilters: [
+        //     //   'firstName:Min'
+        //     // ]
+        //     },
+        //     (err, { hits } = {}) => {
+        //       if (err) throw err;
+        //       hits.slice(2, hits.length)
+
+        //       console.log(hits);
+        //       this.setState({
+        //         allAvail: hits,
+        //     })
+        // })
         // .then(res => {
         //     console.log(res)
         // })

@@ -153,9 +153,9 @@ class Calendar extends React.Component {
             style={{ height: "65vh" }}
             views={['month', 'week', 'day']}
             />
-            {this.state.events !== undefined && this.state.events != 0  ?
+            {/* {this.state.events !== undefined && this.state.events != 0  ? */}
               <HostInfo booking={this.state.host} open={this.state.open} click={this.onEventClick} user={this.state.user} resetHost={this.resetHost}/>
-            : <h3>No Current Availabilities</h3>}
+            
             
       </div>
       )
