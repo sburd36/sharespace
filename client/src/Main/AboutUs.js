@@ -69,7 +69,7 @@ export default class Nav extends React.Component {
                         <img src={Abby} class="team-img col-md-6 col-12"/>
                         <div class="col-md-6 col-12">
                             <h5 class="">Abby Huang</h5>
-                            <p id="position">Project Manager</p>
+                            <p id="position">Product Manager</p>
                             <p class="font-light">A Seattle native, Abby is an active advocate for
                                 immigration law, POC in politics, closing the gender gap, LGBTQ allyship,
                                 and reducing barriers to entry in entrepreneurship.</p>

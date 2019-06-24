@@ -168,7 +168,7 @@ class MyListing extends React.Component {
   
     } 
 
-    handleAdd = () => {
+    handleAdd =  () => {
         this.setState({
             open: !this.state.open
         })
@@ -338,10 +338,10 @@ class MyListing extends React.Component {
                                         </div>
                                     </ExpansionPanelDetails>
                                     <div>
-                                        <p className={classes.value} style={{fontWeight: 400}}>Home Description:</p>
+                                        {/* <p className={classes.value} style={{fontWeight: 400}}>Home Description:</p>
                                         <p className={classes.homeDesc}>
                                         {data[data.length - 3].value}
-                                        </p>
+                                        </p> */}
                                     </div>
                                     
                                         {

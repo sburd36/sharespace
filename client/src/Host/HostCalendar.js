@@ -234,18 +234,13 @@ class Calendar extends React.Component {
     //   console.log(this.state.listings[space])
       let currentBookings = []
       let availability = []
-      if (listings !== undefined && listings.length > 0) {
-          console.log(listings)
-        currentBookings = listings[space].currentBookings;
-        availability = listings[space].availability;
-      }
-      // !!!use firebase listings not imported listings
-
+      let check = false;
 
     //   const listings = this.props.profile.listings
-        let check = false;
       if (listings !== undefined && listings.length != 0) {
         currentBookings = listings[space].currentBookings;  
+        availability = listings[space].availability;
+
         check = true
       }
 

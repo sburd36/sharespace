@@ -256,13 +256,13 @@ const config = {
       console.log(availID.key)
     }
 
-    addPendingToDelete = (obj) => {
-      let listID = obj.listingData.id
-      let listPushID = obj.listingPushID
-      let pendID = obj.id
-      this.db.ref(`listings/${listID}/pending/${listPushID}`).remove()
-      this.db.ref(`availabilities/${pendID}`).remove()
-    }
+    // addPendingToDelete = (obj) => {
+    //   let listID = obj.listingData.id
+    //   let listPushID = obj.listingPushID
+    //   let pendID = obj.id
+    //   this.db.ref(`listings/${listID}/pending/${listPushID}`).remove()
+    //   this.db.ref(`availabilities/${pendID}`).remove()
+    // }
     
     addAvailToListing = id => this.db.ref(`listings/${id}/availability`);
     

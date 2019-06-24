@@ -523,7 +523,7 @@ class BookingForm extends React.Component {
                         </DialogContent>
                         <DialogActions style={{display: "flex", justifyContent: "center"}}>
                             <Button onClick={this.handleCloseHost} id="button">
-                            Done
+                                Done
                             </Button>
                         </DialogActions>
                         </Dialog>

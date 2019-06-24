@@ -209,10 +209,6 @@ class Search extends React.Component {
         event.preventDefault();
         index.search({
             query: this.state.search,
-            attributesToRetrieve: [
-              'listingData.location',
-              'lastName'
-            ],
             // numericFilters: [
             //   [
             //     'start >= ' + startRange,
@@ -295,13 +291,16 @@ class Search extends React.Component {
                     justify="space-evenly">
                         <Grid key={1} item>
                                 <Paper className={classes.side} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px"}} >
+                                <div style={{display: "flex", flexDirection: "column"}}>
+                                    <div>
                                 <Link to="/advocate/currentbookings">
                                     <p id="back"> &#60; Back</p>
                                 </Link>
                                     <h3 class="mb-4">SEARCH BOOKINGS</h3>
+                                </div>
                                     <form>
                                     <FormControl>                                      
-                                        <div style={{display: "flex"}}>
+                                        <div style={{display: "flex", width: "100%"}}>
                                             <TextField
                                                 id="date"
                                                 label="Start Date"
@@ -314,6 +313,9 @@ class Search extends React.Component {
                                                 }}
                                                 inputProps={{
                                                     min: start
+                                                }}
+                                                style= {{
+                                                    width: "100%"
                                                 }}
                                             />
                                         <TextField
@@ -328,6 +330,9 @@ class Search extends React.Component {
                                             }}
                                             inputProps={{
                                                 min: start
+                                            }}
+                                            style= {{
+                                                width: "100%"
                                             }}
                                         />
                                             
@@ -373,11 +378,12 @@ class Search extends React.Component {
                                         </div>  
                                     </FormControl>
                                     </form>
+                                    </div>
                                 </Paper>
                         </Grid>
                         <Grid key={2} item>
-                            <Paper className={classes.hosts} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px", height: "791px"}}>
-                                <div style={{display: 'flex', justifyContent: 'space-between', padding: '30px'}}>
+                            <Paper className={classes.hosts} style={{boxShadow: "none", border:"0.5px solid #d3dbee", backgroundColor: "#fdfdfe", borderRadius: "12px", height: "100%"}}>
+                                <div style={{display: 'flex', justifyContent: 'space-between', padding: '30px', paddingBottom: "10px"}}>
                                     <h3 class="mt-4">
                                         AVAILABLE BOOKINGS
                                     </h3>

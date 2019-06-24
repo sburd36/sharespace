@@ -158,7 +158,7 @@ class App extends Component {
           <div>
             <Nav />
               <Switch>
-                  <Route exact path="/" component={Landing} />
+                  <Route exact path="/sharespace" component={Landing} />
                   <Route path="/signup" render={(props) => <SignUp {...props} updateUser={this.updateUser}/>} />
                   <Route path="/stay" component={Stay} />
                   <Route path="/aboutus" component={AboutUs} />

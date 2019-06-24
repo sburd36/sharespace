@@ -6,7 +6,7 @@ import { Host } from '../filter';
 import Switch from '@material-ui/core/Switch';
 import HostCalendar from './HostCalendar';
 import Availability from './AddAvailability';
-
+import moment from 'moment'
 // firebase
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
@@ -48,27 +48,43 @@ class AvailCalendar extends React.Component {
     componentDidMount() {
         this.props.firebase.auth.onAuthStateChanged((user)=> {
             if(user) {
-
-                this.props.firebase.availabilities().orderByChild("state").equalTo("pending").on('value', snapshot=>{
-                    let obj = snapshot.val();
-                    console.log(obj);
-                    if (obj !== null) {
-                        
-                        const book = Object.keys(obj).map(key => ({
-                            ...obj[key],
-                            id: key
-                            })); 
-                        console.log(book.key)
-                        this.setState({
-                            bookings: book  
-                        })
-
-                    }
-                    console.log(this.state)
-                })
-
-
-                
+                if (this.props.type === 'confirmed') {
+                    this.props.firebase.availabilities().orderByChild("state").equalTo("booked").on('value', snapshot=>{
+                        let obj = snapshot.val();
+                        console.log(obj);
+                        if (obj !== null) {
+                            
+                            const book = Object.keys(obj).map(key => ({
+                                ...obj[key],
+                                id: key
+                                })); 
+                            console.log(book.key)
+                            this.setState({
+                                bookings: book  
+                            })
+    
+                        }
+                        console.log(this.state)
+                    })
+                } else {
+                    this.props.firebase.availabilities().orderByChild("state").equalTo("pending").on('value', snapshot=>{
+                        let obj = snapshot.val();
+                        console.log(obj);
+                        if (obj !== null) {
+                            
+                            const book = Object.keys(obj).map(key => ({
+                                ...obj[key],
+                                id: key
+                                })); 
+                            console.log(book.key)
+                            this.setState({
+                                bookings: book  
+                            })
+    
+                        }
+                        console.log(this.state)
+                    })
+                }
             } else {
                 console.log("no current user present")
             }
@@ -90,16 +106,15 @@ class AvailCalendar extends React.Component {
         this.setState({
             open: !this.state.open
         })
-        if (obj !== undefined) {
-
-            if (decide == "accept") {
-                console.log("inside accept")
-                this.props.firebase.addPendingToBooked(obj)
-            } else {
-                console.log("inside decline")
-               this.props.firebase.addPendingToDelete(obj) 
-            }
-        }
+        // if (obj !== undefined ) {
+        //     if (decide == "accept") {
+        //         console.log("inside accept")
+        //         this.props.firebase.addPendingToBooked(obj)
+        //     } else {
+        //         console.log("inside decline")
+        //        this.props.firebase.addPendingToDelete(obj) 
+        //     }
+        // }
        
     }
 
@@ -124,6 +139,7 @@ class AvailCalendar extends React.Component {
         // console.log(type)
         return(
             <div >
+                {}
                 {
                     type === 'confirmed' ? <h4 class="pl-5 pb-2">CURRENT BOOKINGS</h4>
                     :    <h4 class="pl-5 pb-2">BOOKING REQUESTS</h4>
@@ -142,8 +158,8 @@ class AvailCalendar extends React.Component {
                                             <p style={{fontSize: "16px", fontWeight: 300, color: "#da5c48"}}>{data.name}</p>
                                         </div>
                                         <div>
-                                            {data.start} - <br/>
-                                            {data.end}
+                                            {moment(new Date(data.start).toLocaleString()).format('MMMM DD')} - <br/>
+                                            {moment(new Date(data.end).toLocaleString()).format('MMMM DD')}
                                         </div>
                                     </div>
                                     

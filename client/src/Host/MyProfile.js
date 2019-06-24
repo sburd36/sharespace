@@ -61,14 +61,11 @@ class Profile extends React.Component {
                 userQuery.on('value', snapshot =>{
                     let obj = snapshot.val(); 
                     console.log(obj)
-
                     this.setState({
                         user: obj
                     });
 
                 })
-
-
                 console.log(this.state)    
 
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-
+import moment from 'moment'
 // import Map from './Map'
 // For host pop-up
 import Dialog from '@material-ui/core/Dialog';
@@ -115,14 +115,14 @@ export default withStyles(styles)(class extends React.Component {
                          <DialogContentText>
                             <div style={{display: "flex", justifyContent: "space-between"}}>
                                 <div>
-                                    <p style={{color:"#da5c48"}}>{host.location}</p>
-                                    <p style={{fontSize: "12pt"}}>{host.type}</p>
+                                    <p style={{color:"#da5c48"}}>{host.listingData.location}</p>
+                                    <p style={{fontSize: "12pt"}}>{host.listingData.type}</p>
                                     
                                 </div>
 
                                 <div>
                                     <b className={classes.body} style={{color:"#da5c48", fontWeight: 400}}>Address</b>
-                                    <p className={classes.body} style={{maxWidth: "200px"}}>{host.address}</p>
+                                    <p className={classes.body} style={{maxWidth: "200px"}}>{host.listingData.address}</p>
                                 </div>
                             </div>
                         </DialogContentText>
@@ -134,7 +134,7 @@ export default withStyles(styles)(class extends React.Component {
                                 {host.numberOfGuest} Guests
                             </div>
                             <div className={classes.body}>
-                                {host.begin} - <br/> {host.end}
+                                {moment(new Date(host.start).toLocaleString()).format('MMMM DD')} - <br/> {moment(new Date(host.end).toLocaleString()).format('MMMM DD')}
                             </div>
                         </div>  
                         <hr></hr>

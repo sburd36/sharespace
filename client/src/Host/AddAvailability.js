@@ -119,48 +119,70 @@ class Availability extends React.Component {
         let listingID = listings[listingIndex].id;
         console.log(new Date(rangeStart))
         console.log(new Date(rangeEnd))
-
+        let obj1 = '';
         let longStart = moment(new Date(rangeStart)).add(1, 'days') * 1;
         let longEnd = moment(new Date(rangeEnd)).add(1, 'days') * 1;
-        
-        let obj1 = {
-            "state": "available",
-            "start": longStart,
-            "end": longEnd,
-            "hostID": this.props.userID,
-            "firstName": this.props.currentUser.firstName,
-            "lastName": this.props.currentUser.lastName, 
-            "gender": hostData.gender,
-            "phone": hostData.phone,
-            "email": this.props.currentUser.email,
-            "ethnicities": hostData.ethnicities,
-            "religion": hostData.religion,
-            "story": hostData.story,
-            
-            "listingData": listings[listingIndex]
-        }
-        console.log(obj1)
-        let obj2 = {
-            "state": "available",
-            "start": longStart,
-            "end": longEnd,
-            "listingID": listingID
-        }
-        let availID = this.props.firebase.availabilities().push(obj1)
-        console.log("AVAIL ADDED: " + availID.key)
-        obj2["pushKey"] = availID.key
+        this.props.firebase.auth.onAuthStateChanged((user)=> {
+            if(user) {
+                let currentUser = []
+                let userQuery = this.props.firebase.user(user.uid);
+                userQuery.on('value', snapshot =>{
+                    let userInfo = snapshot.val(); 
+                    console.log(userInfo)
+                    console.log(snapshot)
+                    console.log(user)
+                    obj1 = {
+                        "state": "available",
+                        "start": longStart,
+                        "end": longEnd,
+                        "hostID": user.uid,
+                        "firstName": userInfo.firstName,
+                        "lastName": userInfo.lastName, 
+                        "gender": userInfo.gender,
+                        "phone": userInfo.phone,
+                        "email": userInfo.email,
+                        "ethnicities": userInfo.ethnicities,
+                        "religion": userInfo.religion,
+                        "story": userInfo.story,
+                        "listingData": listings[listingIndex]
+                    }
+                    let obj2 = {
+                        "state": "available",
+                        "start": longStart,
+                        "end": longEnd,
+                        "listingID": listingID
+                    }
+
+                    let availID = this.props.firebase.availabilities().push(obj1)
+                    console.log("AVAIL ADDED: " + availID.key)
+                    obj2["pushKey"] = availID.key
+                    // this.setState({
+                    //     user: obj
+                    // });
+                    let key = this.props.firebase.addAvailToListing(listingID).push(obj2)
+
+                    obj2['id'] = key.key
+                    this.props.firebase.availability(availID.key).update({"listingPushID": key.key})
+                    this.props.updateAvailability(listingID, obj2)
+                    console.log(obj1)
+                    console.log("LISTING AVAIL ADDED: " + key.key)
+                })
+                console.log(this.state)    
+
+            } else {
+                console.log("no current user present")
+            }
+        });
+
         // this.props.firebase.availability(availID.key).set({"start": "h", "end": check2})
         // adding avail to firebase
-        let key = this.props.firebase.addAvailToListing(listingID).push(obj2)
-        obj2['id'] = key.key
-        this.props.firebase.availability(availID.key).update({"listingPushID": key.key})
-        console.log("LISTING AVAIL ADDED: " + key.key)
+
         // for updating app
-        this.props.updateAvailability(listingID, obj2)
     }
     // ************************ MIN AND STEPH********************
     // what do we want to do if host enters an invalid / no listing
     onSubmit = event => {
+        console.log("++++++++++++++++++++++INSIDE SUBMIt FOR AVAIL++++++++++++++++++++++++")
         event.preventDefault();
         this.props.click();
         const {type, range, listings, listingIndex} = this.state

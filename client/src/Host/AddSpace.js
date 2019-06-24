@@ -127,7 +127,7 @@ class Listing extends React.Component {
 
 	onSubmit = event => {
 		event.preventDefault();
-		console.log(this.state.amenities)
+		console.log("****************INSIDE SUBMIT++++++++++++++++++++++")
 		let keepA = []
 		let keepB = []
 		for(let key in this.state.amenities) {
@@ -188,6 +188,7 @@ class Listing extends React.Component {
 			} else {
 				console.log("no host signed in")
 			}
+
 	})
 
 	console.log(this.state)
@@ -378,7 +379,7 @@ class Listing extends React.Component {
 												</Grid> */}
 								<div style={{position: 'absolute', right: '10px', bottom: '10px', marginTop: '10px'}}>
 										<Button type='submit' id='button' onClick={this.onSubmit} >
-										Add
+											Add
 									</Button>
 								</div>
 							
