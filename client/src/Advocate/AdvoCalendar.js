@@ -10,12 +10,12 @@ import moment from 'moment'
 //import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../style/App.css";
 //import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+// import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import HostInfo from './HostInfo';
 import { Host } from '../filter';
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
-const DnDCalendar = withDragAndDrop(BigCalendar);
+// const DnDCalendar = withDragAndDrop(BigCalendar);
 
 moment.locale('en-GB');
 
@@ -106,7 +106,6 @@ class Calendar extends React.Component {
           open: !this.state.open,
           host: event.host
         })
-
       } else {
         this.setState({
           open: !this.state.open,
@@ -131,15 +130,14 @@ class Calendar extends React.Component {
       })
     }
     this.state.events = events
-
     // console.log(this.state)
       return (
         <div className="App advocate-calendar calendar">
         {
-          events.length === 0 && <h5>No Search Results</h5>
+          (this.props.type !== 'confirmed' && events.length === 0) ? <h5>No Search Results</h5> : <h5>You currently have no bookings</h5>
         }
         {console.log(this.state.events)}
-            <DnDCalendar
+            <BigCalendar
             localizer={localizer}
             defaultDate={new Date()}
             defaultView="month"
@@ -147,9 +145,7 @@ class Calendar extends React.Component {
             onEventDrop={this.onEventDrop}
             onEventResize={this.onEventResize}
             resizable
-            selectable
             onSelectEvent={this.onEventClick}
-            onSelectSlot={this.onSlotChange}
             style={{ height: "65vh" }}
             views={['month', 'week', 'day']}
             />

@@ -16,9 +16,9 @@ import People from '@material-ui/icons/People';
 import Clock from '@material-ui/icons/AccessTime';
 import Face from '@material-ui/icons/Face';
 
-import MyProfile from './MyProfile';
-import Availability from './AddAvailability';
-import MyListings from './MyListing';
+import MyProfile from './Profile';
+import Availability from './EditAvailability';
+import MyListings from './Listing';
 import HostCalendar from './HostCalendar';
 
 import Bookings from './Bookings';

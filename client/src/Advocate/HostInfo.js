@@ -128,7 +128,7 @@ class BookingForm extends React.Component {
         this.setState({ [name]: event.target.value });
         console.log(this.state)
     };
-
+    
     onSelect = (name) => (selected) => {
 		let clean = []
 		for (let i = 0; i < selected.length; i ++) {

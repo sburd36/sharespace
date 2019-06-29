@@ -84,7 +84,6 @@ class SignUpFormBase extends Component {
 		if(this.props.user.iud != "") {
 			this.props.firebase.auth.onAuthStateChanged((user) => {
 				if (user) {
-				  
 				  this.props.firebase.user(user.uid).update({
 					'phone': phone, 
 					'gender': gender, 
@@ -104,8 +103,8 @@ class SignUpFormBase extends Component {
 				  });
 		  
 				} else {
-				  console.log("no host signed in")
-		  
+					alert("Need to sign in/sign up as host! This is just a dummy page for now! Thank you :)")
+				  	console.log("no host signed in")
 				}
 			})
 
@@ -114,10 +113,7 @@ class SignUpFormBase extends Component {
 	};
 
 	onChange = event => {
-		console.log(this.props.user)
-
 		this.setState({ [event.target.name]: event.target.value });
-		console.log(this.state)
 	};
 
 	onSelect = (name) => (selected) => {

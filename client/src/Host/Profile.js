@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
 // import Edit from '@material-ui/icons/edit'
-import MyListing from './MyListing';
+import MyListing from './Listing';
 import person from '../img/icon1.png';
 
 // firebase

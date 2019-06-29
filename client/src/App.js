@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './style/index.css';
 import Nav from './Main/Nav'
-import SignUp from './Signup'
+import SignUp from './Main/SignUp'
 import Stay from './Stay'
 import Landing from './Main/landing'
 import Footer from './Main/Footer'
@@ -10,7 +10,7 @@ import OurTool from './Main/OurTool'
 import CurrentBookings from './Advocate/CurrentBookings'
 import SignIn from './Main/SignIn'
 import Calendar from './Advocate/AdvoCalendar'
-import Situation from './Situation'
+import Situation from './Main/Situation'
 import { withAuthentication } from './Sessions';
 import SearchBooking from './Advocate/SearchBooking';
 import PasswordForgetPage from './PassForget';
@@ -19,7 +19,7 @@ import SignUpHost from './SignUpHost';
 import HostDash from './Host/HostDash';
 import CreateProfile from './Host/CreateProfile'
 import {BrowserRouter as Router, Switch, Redirect, Route} from "react-router-dom";
-import MyListing from './Host/MyListing'
+import MyListing from './Host/Listing'
 import { listing } from './filter';
 
 class App extends Component {
@@ -174,7 +174,7 @@ class App extends Component {
                   <Route path="/advocate/searchbookings" component={SearchBooking} />
 
                   {/* Host */}
-                  <Route path="/createprofile" render={(props) => <CreateProfile {...props} updateProfile={this.updateProfile} user={this.state.currentUser}/>} />
+                  <Route path="/host/createprofile" render={(props) => <CreateProfile {...props} updateProfile={this.updateProfile} user={this.state.currentUser}/>} />
                   {/* <Route path="/listing" render={(props) => <MyListing {...props} updateListing={this.updateListing} user={this.state.currentUser}/>} /> */}
 
                   {/* <Route path="/hostdash" component={HostDash} /> */}

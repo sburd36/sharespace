@@ -136,9 +136,6 @@ class Bookings extends React.Component {
 
     }
 
-
-
-
     handleRequestType = (value) => (event) => {
         this.setState({
             type: value
@@ -244,16 +241,16 @@ class Bookings extends React.Component {
                                         
                                     </div>
                                 </div>
-                                {
-                                    
-                                    (type === 'confirmed' && bookings.length === 0) && <p style={{marginLeft: '30px'}}>You currently have no Bookings</p>
-                                }
+
                                 <Grid container spacing={3}>
 
                                 {
                                     view === 'list' ? 
                                     
                                     <>
+                                    {   
+                                        (type === 'confirmed' && bookings.length === 0) && <p style={{marginLeft: '30px'}}>You currently have no bookings</p>
+                                    }
                                         {bookings.map(
                                             (booking) => {
                                                 let date = this.convertToDate(booking.start, booking.end)
@@ -294,7 +291,7 @@ class Bookings extends React.Component {
                                         )}
                                     </>
                                     :
-                                    <Calendar/>
+                                    <Calendar type="confirmed"/>
                                 }
                                     
                                 </Grid>

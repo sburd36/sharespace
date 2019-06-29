@@ -396,11 +396,11 @@ class Search extends React.Component {
                                         </p>
                                     </div>
                                 </div>
-                                {
-                                    this.state.allAvail.length === 0 && <p style={{paddingLeft: '30px'}}>No Available Availabilities</p>
-                                }
                             {this.state.view == "list" ? 
                                 <div className={classes.cardContainer}>
+                                    {
+                                        this.state.allAvail.length === 0 && <p style={{paddingLeft: '30px'}}>No result</p>
+                                    }
                                     {this.state.allAvail.map(
                                         (booking) => {
                                             date = this.convertToDate(booking.start, booking.end)

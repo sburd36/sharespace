@@ -1,6 +1,6 @@
 import React from 'react';
 import { compose } from 'recompose';
-import AddSpace from './AddSpace';
+import AddSpace from './AddListings';
 import { Amenities, Rules } from '../filter';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';

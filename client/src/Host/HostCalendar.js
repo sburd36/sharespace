@@ -6,7 +6,7 @@ import moment from 'moment'
 //import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../style/App.css";
 import Edit from '@material-ui/icons/Edit';
-import AddAvailabiliity from './AddAvailability';
+import AddAvailabiliity from './EditAvailability';
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
 import BookingInfo from './BookingInfo';

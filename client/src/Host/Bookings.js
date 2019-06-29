@@ -5,7 +5,7 @@ import BookingInfo from './BookingInfo';
 import { Host } from '../filter';
 import Switch from '@material-ui/core/Switch';
 import HostCalendar from './HostCalendar';
-import Availability from './AddAvailability';
+import Availability from './EditAvailability';
 import moment from 'moment'
 // firebase
 import { compose } from 'recompose';
@@ -126,7 +126,7 @@ class AvailCalendar extends React.Component {
     }
 
     render() {
-        const { classes, type, bookings } = this.props;
+        const { classes, type} = this.props;
         console.log(this.state)
         // let bookings = []
         // // type == 'confirmed' ? bookings = this.state.currentBookings : bookings =this.state.pendingBookings;
@@ -136,17 +136,29 @@ class AvailCalendar extends React.Component {
         //     bookings = this.state.pendingBookings
         // }
         console.log(bookings)
-        // console.log(type)
+        let title = '';
+        let bookings = []
+        if (type === 'confirmed') {
+            title = 'CURRENT BOOKINGS'
+            bookings = this.state.currentBookings;
+        } else {
+            title = 'PENDING BOOKINGS REQUESTS'
+            bookings = this.state.pendingBookings;
+        }
         return(
             <div >
                 {}
-                {
+                {/* {
                     type === 'confirmed' ? <h4 class="pl-5 pb-2">CURRENT BOOKINGS</h4>
-                    :    <h4 class="pl-5 pb-2">BOOKING REQUESTS</h4>
-
-                }
+                    :    <h3 class="pl-5 pb-2">BOOKING REQUESTS</h3>
+                } */}
+                <h3 class="m-4">
+                    {title}
+                </h3>
                 <div className={classes.cards}>
-
+                {   
+                    (this.state.bookings !== undefined && this.state.bookings.length === 0) && <p style={{marginLeft: '30px'}}>You currently have no bookings</p>
+                }
                     {
                         this.state.bookings.map((data) => {
                             return(
