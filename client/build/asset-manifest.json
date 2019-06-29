@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "main.css": "/sharespace/static/css/main.0221b8dd.chunk.css",
   "main.js": "/sharespace/static/js/main.1520bce3.chunk.js",
   "main.js.map": "/sharespace/static/js/main.1520bce3.chunk.js.map",
@@ -32,4 +33,47 @@
   "static/media/section2-graphic.png": "/sharespace/static/media/section2-graphic.5e032f14.png",
   "static/media/shoppingcart.jpg": "/sharespace/static/media/shoppingcart.cb57c60a.jpg",
   "static/media/stephanie-burd.JPG": "/sharespace/static/media/stephanie-burd.ccc49cec.JPG"
+=======
+  "files": {
+    "main.css": "/sharespace/static/css/main.e4bbd1fc.chunk.css",
+    "main.js": "/sharespace/static/js/main.7e5072f2.chunk.js",
+    "main.js.map": "/sharespace/static/js/main.7e5072f2.chunk.js.map",
+    "runtime~main.js": "/sharespace/static/js/runtime~main.c54fbb83.js",
+    "runtime~main.js.map": "/sharespace/static/js/runtime~main.c54fbb83.js.map",
+    "static/js/2.71f45408.chunk.js": "/sharespace/static/js/2.71f45408.chunk.js",
+    "static/js/2.71f45408.chunk.js.map": "/sharespace/static/js/2.71f45408.chunk.js.map",
+    "index.html": "/sharespace/index.html",
+    "precache-manifest.55f55a8049684ef2cfda9077821964dc.js": "/sharespace/precache-manifest.55f55a8049684ef2cfda9077821964dc.js",
+    "service-worker.js": "/sharespace/service-worker.js",
+    "static/css/main.e4bbd1fc.chunk.css.map": "/sharespace/static/css/main.e4bbd1fc.chunk.css.map",
+    "static/media/53-.jpg": "/sharespace/static/media/53-.0a7e4fee.jpg",
+    "static/media/YWCA.png": "/sharespace/static/media/YWCA.60f55131.png",
+    "static/media/abby-huang.JPG": "/sharespace/static/media/abby-huang.c1532288.JPG",
+    "static/media/analytics.png": "/sharespace/static/media/analytics.c75da5c2.png",
+    "static/media/apichaya.png": "/sharespace/static/media/apichaya.10feae14.png",
+    "static/media/bedroom.jpg": "/sharespace/static/media/bedroom.0b2debb5.jpg",
+    "static/media/children.jpg": "/sharespace/static/media/children.e1dca237.jpg",
+    "static/media/connect.png": "/sharespace/static/media/connect.065f26d8.png",
+    "static/media/dash.png": "/sharespace/static/media/dash.468523ff.png",
+    "static/media/finances.jpg": "/sharespace/static/media/finances.560b4417.jpg",
+    "static/media/group.png": "/sharespace/static/media/group.b3c6c953.png",
+    "static/media/host-display.png": "/sharespace/static/media/host-display.948f6572.png",
+    "static/media/iSchool.png": "/sharespace/static/media/iSchool.c8b529d9.png",
+    "static/media/icon1.png": "/sharespace/static/media/icon1.3d8ba413.png",
+    "static/media/icon2.png": "/sharespace/static/media/icon2.4c7ced2a.png",
+    "static/media/landing-graphic1.png": "/sharespace/static/media/landing-graphic1.df0598d3.png",
+    "static/media/mary-huibregtse.png": "/sharespace/static/media/mary-huibregtse.68ae72c7.png",
+    "static/media/mental-health.jpg": "/sharespace/static/media/mental-health.cc733888.jpg",
+    "static/media/min_yang.jpg": "/sharespace/static/media/min_yang.8041ce34.jpg",
+    "static/media/month-view.png": "/sharespace/static/media/month-view.bf14390e.png",
+    "static/media/need-help.png": "/sharespace/static/media/need-help.64788a3d.png",
+    "static/media/pastry.jpg": "/sharespace/static/media/pastry.5bbaad3f.jpg",
+    "static/media/physical-safety.jpg": "/sharespace/static/media/physical-safety.98398147.jpg",
+    "static/media/refer-members.png": "/sharespace/static/media/refer-members.0dea4533.png",
+    "static/media/section2-graphic.png": "/sharespace/static/media/section2-graphic.057d340e.png",
+    "static/media/stephanie-burd.JPG": "/sharespace/static/media/stephanie-burd.ab594caa.JPG",
+    "static/media/team.JPG": "/sharespace/static/media/team.19eb721f.JPG",
+    "static/media/what-is-sharespace.png": "/sharespace/static/media/what-is-sharespace.22acba09.png"
+  }
+>>>>>>> miny
 }

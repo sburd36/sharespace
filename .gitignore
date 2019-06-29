@@ -1,5 +1,7 @@
 # dependencies
-/node_modules
+/client/node_modules
+/client/key.js
+/client/src/firebase/credentials.env
 /.pnp
 .pnp.js
 node_modules

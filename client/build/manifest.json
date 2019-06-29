@@ -1,9 +1,17 @@
 {
+<<<<<<< HEAD
   "short_name": "React App",
   "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",
+=======
+  "short_name": "Share Space",
+  "name": "Share Space",
+  "icons": [
+    {
+      "src": "logo-new.png",
+>>>>>>> miny
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }

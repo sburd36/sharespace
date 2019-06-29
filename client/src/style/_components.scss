@@ -1,5 +1,9 @@
+p {
+    margin-bottom: 3px;
+}
+
 .btn {
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: 12pt;
     padding: 8px 12px 8px 12px;
     border-radius: .25rem;
@@ -18,11 +22,11 @@
 }
 .btn-yellow-fill {
     color: white;
-    background-color: $dark-yellow;
-    border: 1.5px solid $dark-yellow;
+    background-color: $light-orange;
+    border: 1.5px solid $light-orange;
 
     &:hover {
-        color: $dark-yellow;
+        color: $light-orange;
         background-color: transparent;
     }
 }
@@ -82,6 +86,18 @@
     }
 }
 
+#btn-drk-blue-fill {
+    color: white;
+    background-color: $dark-blue;
+    border: 1.5px solid $dark-blue;
+    text-transform: none;
+
+    &:hover {
+        color: $dark-blue;
+        background-color: white;
+    }
+}
+
 .divider {
     margin: 45px auto 0;
     width: 300px;
@@ -136,6 +152,7 @@
     align-items: center;
 
     #contact { 
+
         p, #social {
             display: inline-block;
             vertical-align: middle;
@@ -144,7 +161,7 @@
 }
 
 a {
-    color: $light-pink;
+    color: $light-orange;
 
     &:hover {
         color: $teal;
@@ -171,5 +188,72 @@ a {
 
     &:hover {
         text-decoration: none;
+    }
+}
+
+#button {  
+    background-color: #202e57;
+    border: 2px solid #202e57;
+    text-decoration: none;
+    text-transform: none;
+    box-shadow: none;
+    font-family: Source Sans Pro;
+    color: white;
+
+    &:hover {
+        color: #202e57;
+        background-color: white;
+    }
+}
+
+#buttonGray {  
+    background-color: #aaaaaa;
+    border: 2px solid #aaaaaa;
+    text-decoration: none;
+    text-transform: none;
+    box-shadow: none;
+    color: white;
+
+    &:hover {
+        color: #aaaaaa;
+        background-color: white;
+    }
+}
+
+a {
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+label {
+    color: #da5c48;
+}
+
+#label {
+    color: #da5c48;
+    font-size: 12.5px;
+}
+
+#hoverCard {
+
+    &:hover {
+        border-color:#7e9fa8;
+    }
+}
+
+.navContact {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.card {
+    //align-content: center;
+    .card-img-top {
+        //max-height: 275px;
+        margin: 20px;
+        width: 75%;
+        //padding:20px;
     }
 }

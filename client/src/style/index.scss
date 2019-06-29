@@ -2,6 +2,9 @@
 @import "fonts";
 @import "components";
 @import "signup";
+@import "calendar";
+@import "bigCalendar";
+@import "dateRangePicker";
 
 body {
     text-align: left; 
@@ -24,11 +27,12 @@ section {
 
 .nav-item {
     color: $teal;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: 15pt;
+    font-weight: 300;
 
     &:hover {
-        color: $light-orange;
+        color: $medium-orange;
     }
 }
 
@@ -198,12 +202,15 @@ section {
     }
 
     img {
-        max-width: 100%;
+        max-width: 75%;
+        float: right;
     }
+
 
     .row {
         display: flex;
         align-items: center;
+        justify-content: space-between;
     }
 }
 
@@ -248,12 +255,13 @@ section {
 
         .nav-item {
             margin: 0px 25px 0px 10px;
+            flex-grow: 1;
         }
     }
 
     .navbar-nav {
         justify-content: space-between;  
-        flex-grow: 2;
+        flex-grow: 1;
         margin: 0px 40px 0px 40px;
     }
 
@@ -278,14 +286,16 @@ section {
         
         h4 {
             margin-bottom: 0;
-            padding-right: 800px;
-        }
-        p {
-            margin-top: 10px;
-            padding-right: 750px;
+            padding-right: 80px;
         }
         img {
             margin: 0;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
     }
 
@@ -299,6 +309,7 @@ section {
     #section-4 {
         text-align: left;
         margin-top: 50px;
+        margin-bottom: 50px;
 
         h4 {
             margin-bottom: 20px;
@@ -311,13 +322,19 @@ section {
 
         img {
             max-width: 150px;
-            max-height: 100px;
+            height: auto;
         }
 
         .row {
             display: flex;
             margin-top: 15px;
             margin-bottom: 15px;
+            align-items: flex-start;
+        }
+
+        .org {
+            margin-top: 50px;
+            align-items: center;
         }
 
         .support-cards {
@@ -331,9 +348,19 @@ section {
 
             .card {
                 border: none;
+                margin-bottom: 20px;
+
+                .card-img-top {
+                    max-width: 100px;
+                    margin: 10px;
+                }
 
                 .card-title {
                     color: $dark-blue;
+                }
+
+                .card-body {
+                    padding: 10px;
                 }
             }
         }
@@ -352,7 +379,25 @@ section {
         }
     }
 
+    #what-we-do {
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .graphic1 {
+            //max-width: 80%;
+            float: right;
+        }
+    }
+
     #what-is-sharespace {
+        .row {
+            display: flex;
+            align-items: center;
+        }
+        
         margin-top: 75px;
 
         p {
@@ -364,7 +409,12 @@ section {
         }
 
         .phone-img {
-            padding-left: 150px;
+            padding-left: 50px;
+            max-width: 600px;
+        }
+
+        button {
+            margin-top: 10px;
         }
     }
 
@@ -448,24 +498,129 @@ section {
     }
 }
 
+/* for side bar (Min actually use css instead of inline sometimes... LOL) */
+#side {
+    height: 100vh;
+    width: 30vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  
+  #button-outline-date {
+    background-color: #202e57;
+    color: white;
+    border: 1px solid #202e57;
+
+    &:hover {
+        color: #202e57;
+        background-color: white;
+    }
+
+  }
+  
+  #tags {
+    color: #da5c48;
+  }
+  
+  #date {
+      color:#aaaaaa;
+  }
+
 
 //These numbers will depend on the content in the nav bar. The buttons show up as the
 //navbar grows. This is to prevent the nav from wrapping gross.
-@media (min-width: 1035px) {
-    .last-nav-item {
-        display: inline;
+// @media (min-width: 1035px) {
+//     .last-nav-item {
+//         display: inline;
+//     }
+// }
+
+// @media (min-width: 1170px) {
+//     #sign-up {
+//         display: inline;
+//     }
+// }
+
+// @media (min-width: 1289px) {
+//         #donate {
+//             display: inline;
+//         }
+// }
+
+/* for search */
+
+input {
+	outline: none;
+}
+input[type=search] {
+	-webkit-appearance: textfield;
+	//-webkit-box-sizing: content-box;
+	font-family: inherit;
+	font-size: 100%;
+}
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button {
+	display: none; 
+}
+
+
+input[type=search] {
+	background: white url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+	border: solid 1px #7e9fa8;
+	padding: 5px 5px 5px 32px;
+    width: 100px;
+	
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	
+	-webkit-transition: all .5s;
+	-moz-transition: all .5s;
+	transition: all .5s;
+}
+input[type=search]:focus {
+	width: 400px;
+	background-color: #fff;
+	//border-color: #66CC75;
+	
+	-webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
+	-moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
+	box-shadow: 0 0 5px rgba(109,207,246,.5);
+}
+
+
+input:-moz-placeholder {
+	color: #999;
+}
+input::-webkit-input-placeholder {
+	color: #999;
+}
+
+#back {
+    color: #aaaaaa;
+
+    &:hover {
+        color: #da5c48;
     }
 }
 
-@media (min-width: 1170px) {
-    #sign-up {
-        display: inline;
-    }
-}
+#situation, #place-to-stay {
+    .card {
+        align-content: center;
+        max-width: 500px;
+        margin-right: 30px;
 
-@media (min-width: 1289px) {
-        #donate {
-            display: inline;
+        .card-img-top {
+            margin-left: auto;
+            margin-right: auto;
         }
+    }
+}
+
+#place-to-stay {
+    margin: 75px;
 }
 
